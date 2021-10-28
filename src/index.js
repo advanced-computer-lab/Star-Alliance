@@ -7,6 +7,7 @@ const mongoose = require('mongoose');
 var cors = require("cors");
 require("dotenv").config();
 
+const User = require('../Models/user.js');
 
 const app = express();
 app.use(
@@ -33,6 +34,14 @@ db.once("open", () => {
     console.log("Database connected");
 });
 
+const createAdmin = async(req,res) =>{
+    const newAd = new User();
+    newAd.firstName = "Adminstrator";
+    newAd.isAdmin = true;
+    await newAd.save();
+    //await User.deleteMany();
+  };
+//createAdmin();
 
 app.get("/", (req, res) => {
   // console.log(req.cookies);
