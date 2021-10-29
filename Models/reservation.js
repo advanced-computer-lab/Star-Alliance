@@ -1,22 +1,34 @@
 const mongoose = require('mongoose');
 const User = require('./user');
 const Flight = require('./flight');
+const Companion = require('./companion');
 const Schema = mongoose.Schema;
 
 const reservationSchema = new Schema({
-   flight: {  
+    user: {  
+        type: Schema.Types.ObjectId,
+        ref: 'User'
+     },
+    flight: {  
        type: Schema.Types.ObjectId,
        ref: 'Flight'
     },
-   users: [
+    
+   companions: [
     {
         type: Schema.Types.ObjectId,
-        ref: 'User'
+        ref: 'companion'
     }
 ],
+    cabinClass:{type:String, 
+    enum : ['Business','Economy','First'],},
+    baggageAllowance: {
+        weight:{type: Number, default:23},
+        number:{type: Number, default:2}
+    }
 });
 
-
+/* 
 reservationSchema.post('findOneAndDelete', async function (doc) {
     if (doc) {
         await User.deleteMany({
@@ -25,6 +37,6 @@ reservationSchema.post('findOneAndDelete', async function (doc) {
             }
         })
     }
-});
+}); */
 
 module.exports = mongoose.model('Reservation', reservationSchema);

@@ -26,7 +26,7 @@ const Naavbar = () => {
   <Navbar style={{backgroundColor:"#112D4E"}} expand="lg">
   <Container>
     <Navbar.Brand href="#home" style={{color:"#DBE2EF"}}>React-Bootstrap</Navbar.Brand>
-    <Navbar.Toggle aria-controls="basic-navbar-nav" />
+    <Navbar.Toggle aria-controls="basic-navbar-nav"/>
     <Navbar.Collapse id="basic-navbar-nav">
       <Nav className="me-auto">
         <Nav.Link href="#home" style={{color:"#DBE2EF"}}>Home</Nav.Link>

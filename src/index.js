@@ -8,6 +8,11 @@ var cors = require("cors");
 require("dotenv").config();
 
 const User = require('../Models/user.js');
+const Reservation = require('../Models/reservation.js');
+const Flight = require('../Models/flight.js');
+const CreditCard = require('../Models/creditcard.js');
+const Companion = require('../Models/companion.js');
+const creditcard = require("../Models/creditcard.js");
 
 const app = express();
 app.use(
@@ -42,6 +47,38 @@ const createAdmin = async(req,res) =>{
     //await User.deleteMany();
   };
 //createAdmin();
+
+const createCompanion = async(req,res) =>{
+/*   const compan = new Companion();
+  compan.firstName="Mohamed";
+  compan.lastName="Ahmed";
+  compan.passportNumber="123456789";
+  compan.countryCode="+20";
+  compan.phoneNumbers="123456789";
+  compan.birthDate=Date.now();
+  const fl = new Flight();
+  fl.flightNumber = "123456789";*/
+  const x = await User.find({firstName:"ahmed"});
+  const us = new User();
+  us.firstName="ahmed"; 
+  const cr = new creditcard();
+  cr.number="123456";
+  cr.cvv = "123";
+  const t = await CreditCard.find({});
+  us.creditcards = t;
+  const ress = new Reservation();
+  ress.user=x[0];
+  //ress.flight = fl;
+  //ress.companions=compan;
+  await ress.save();
+}
+//createCompanion();
+
+const testdeleteReservation = async(req, res) =>{
+  await User.deleteMany({firstName:"ahmed"});
+  //await User.findOneAndDelete({firstName:"ahmed"});
+}
+testdeleteReservation();
 
 app.get("/", (req, res) => {
   // console.log(req.cookies);

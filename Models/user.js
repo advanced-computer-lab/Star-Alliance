@@ -1,12 +1,14 @@
 const mongoose = require('mongoose');
 const Creditcard = require('./creditcard')
+const Flight = require('./flight')
+const reservation = require('./reservation');
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
-    firstName: {type:String, required:true},
-    lastName: {type:String, required:true},
-    passportNumber: {type:String, required:true},
-    countryCode: {type:String, required:true},
+    firstName: {type:String},
+    lastName: {type:String},
+    passportNumber: {type:String},
+    countryCode: {type:String},
     address: {
         country:String, 
         city:String,
@@ -15,30 +17,52 @@ const userSchema = new Schema({
         floorNumber:Number,
         appartmentNumber:Number
         },
-    password: {type:String, required:true},
-    birthDate: {type:String, required:true},
+    password: {type:String},
+    birthDate: {type:String},
     job: {type:String},
-    isAdmin: {type:Boolean, required:true},
+    isAdmin: {type:Boolean},
     phoneNumbers: [{type:String}],
     creditcards: [
         {
             type: Schema.Types.ObjectId,
             ref: 'Creditcard'
         }
-    ]
+    ],
+    /* flights: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'Flight'
+        }
+    ] */
 });
 
 
-
 userSchema.post('findOneAndDelete', async function (doc) {
+    console.log('findOneAndDelete Credit card', doc);    
     if (doc) {
         await Creditcard.deleteMany({
             _id: {
                 $in: doc.creditcards
             }
         })
+
     }
 });
+
+
+userSchema.post('deleteMany', async function (doc) {
+    console.log('doc.firstname = ?', doc);
+    console.log('doc is Row ?', doc);    
+    
+    if (doc) {
+        await reservation.deleteMany({
+            user_id: {
+                    $in: doc._id
+            }
+        })
+    }
+});
+
 
 /* UserSchema.pre('save', function(next) {
     var user = this;

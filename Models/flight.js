@@ -3,15 +3,17 @@ const Schema = mongoose.Schema;
 
 
 const flightSchema = new Schema({
-    flightNumber: {type:String, required:true},
-    arrivalTime: {type:Date, required:true},
-    departureTime: {type:Date, required:true},
-    arrivalDate: {type:Date, required:true},
-    departureDate: {type:Date, required:true},
-    economySeatsNum: {type:Number, required:true},
-    businessSeatsNum: {type:Number, required:true},
-    departureAirport: {type:String, required:true},
-    arrivalAirport: {type:String, required:true}
+    flightNumber: {type:String},
+    arrivalTime: {type:Date},
+    departureTime: {type:Date},
+    arrivalDate: {type:Date},
+    departureDate: {type:Date},
+    economySeatsNum: {type:Number},
+    businessSeatsNum: {type:Number},
+    firstSeatsNum: {type:Number},
+    departureAirport: {type:String},
+    arrivalAirport: {type:String},
+    price:{type:Number},
     
 });
 module.exports = mongoose.model('Flight', flightSchema);
