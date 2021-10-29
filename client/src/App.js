@@ -1,10 +1,11 @@
 import Naavbar from "./Components/Naavbar";
+import Main from "./pages/Main.js";
 
 function App() {
   return (
     <>
     <Naavbar />
-    <h1>Working</h1>
+    <Main />
     </>
   );
 } 

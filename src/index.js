@@ -78,7 +78,7 @@ const testdeleteReservation = async(req, res) =>{
   await User.deleteMany({firstName:"ahmed"});
   //await User.findOneAndDelete({firstName:"ahmed"});
 }
-testdeleteReservation();
+//testdeleteReservation();
 
 app.get("/", (req, res) => {
   // console.log(req.cookies);
