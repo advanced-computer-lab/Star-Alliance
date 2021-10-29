@@ -5,7 +5,7 @@ import Carousel from 'react-bootstrap/Carousel'
 
 const home = () => {
     return (
- <div style={{backgroundColor:"black"}}>
+ <div style={{backgroundColor:"white"}}>
 <div style={{height:'10cm'}}>
     <Carousel>
   <Carousel.Item>
@@ -56,7 +56,7 @@ const home = () => {
     </br>
     <br>
     </br>
-    <div class="try">
+    <div>
     <div   className="border d-flex align-items-center justify-content-center" >
       <div>
       <Card style={{ width: '18rem',marginLeft:'1cm',marginRight:'1cm' }}>
@@ -67,7 +67,7 @@ const home = () => {
       Some quick example text to build on the card title and make up the bulk of
       the card's content.
     </Card.Text>
-    <Button variant="primary">More</Button>
+    <Button variant="primary"  href="/crFlight">More</Button>
   </Card.Body>
 </Card>
       </div>
@@ -80,7 +80,7 @@ const home = () => {
       Some quick example text to build on the card title and make up the bulk of
       the card's content.
     </Card.Text>
-    <Button variant="primary">More</Button>
+    <Button variant="primary" href="/deleteFlight">More</Button>
   </Card.Body>
 </Card>
       </div>

@@ -23,7 +23,7 @@ const Naavbar = () => {
     </Container>
   </Navbar> */}
   {/* <h1>Hello</h1> */}
-  <Navbar style={{backgroundColor:"#112D4E"}} expand="lg">
+  <Navbar  fixed="top" style={{backgroundColor:"#112D4E"}} expand="lg">
   <Container>
     <Navbar.Brand href="#home" style={{color:"#DBE2EF"}}>React-Bootstrap</Navbar.Brand>
     <Navbar.Toggle aria-controls="basic-navbar-nav"/>
