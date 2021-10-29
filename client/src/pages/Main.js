@@ -8,6 +8,8 @@ import {
 
 import home from "./home.js";
 import UpdateForm from "../Components/UpdateForm.js";
+import deletePopup from "./deletePopup";
+import create from "./createFlight.js";
 
 const Main = () => {
   return (
@@ -17,9 +19,8 @@ const Main = () => {
         <Route exact path="/" component={home} />
         <Route exact path="/UpdateForm" component={UpdateForm} />
 
-        {/* <Route path="*">
-            <PageNotFound />
-          </Route> */}
+        <Route exact path="/deleteFlight" component={deletePopup}></Route>
+        <Route exact path="/createFlight" component={create}></Route>
       </Switch>
     </>
   );
