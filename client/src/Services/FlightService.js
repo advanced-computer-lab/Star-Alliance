@@ -4,6 +4,9 @@ class FlightService {
   updateFlight(data) {
     return http.post("/Admin/UpdateFlight", data);
   }
+  GetFlightInfo(data) {
+    return http.post("/Admin/GetFlightInfo", data);
+  }
   //   empGetAll() {
   //     return http.get("/badge/EmployeeGainedBadges");
   //   }

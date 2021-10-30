@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const db = require("../Service/DBService.js");
 const { flight } = require("../Models/export");
+
 var cors = require("cors");
 require("dotenv").config();
 
@@ -32,17 +33,37 @@ app.get("/a", async (req, res) => {
   res.send("ok");
 });
 
+app.post("/GetFlightInfo", async (req, res) => {
+  const { flightNumber } = req.body;
+  console.log(flightNumber);
+
+  const result = await flight.findOne({ flightNumber: flightNumber });
+  console.log("result from GetFlightInfo", result);
+  if (result == null) {
+    res.status(404).send("No flight with this Number");
+    return;
+  }
+
+  res.send(result);
+});
+
 app.post("/UpdateFlight", async (req, res) => {
   const data = req.body;
   console.log(data);
-  // const updatedFlight = new flight(data);
+
   const result = await flight.updateOne(
-    { flightNumber: data.flightNumber },
+    { flightNumber: data.findFlightNumber },
     data
   );
-  // if (result.modifiedCount == 0) {
-  //   res.status(400).send("no rows has been updated");
-  // }
+
+  if (result.matchedCount == 0) {
+    res.status(404).send("No flight with this Number");
+    return;
+  }
+  if (result.modifiedCount == 0) {
+    res.status(400).send("no row has been updated");
+    return;
+  }
   res.send(result);
 });
 
