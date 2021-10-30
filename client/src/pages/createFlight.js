@@ -26,7 +26,7 @@ const createFlight = () => {
     </Form.Group>
     </Row>
 
-    <Row className="mb-3">
+    <Row  className="mb-3">
 
   <Form.Group className="mb-3" controlId="formGridEconomy">
     <Form.Label>Number of Economy seats</Form.Label>
