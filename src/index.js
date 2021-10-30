@@ -24,7 +24,7 @@ const {
 const app = express();
 app.use(
   cors({
-    origin: process.env.React_Server_Origin,
+    origin: "http://localhost:3000",
     credentials: true,
     optionSuccessStatus: 200,
   })
@@ -83,5 +83,24 @@ app.get("/", (req, res) => {
   res.json({ message: "From the Node Server !" });
 });
 
+app.post("/createFlight", async(req, res) => {
+
+  const Flight= new flight();
+  Flight.flightNumber=req.body.flightNumber;
+  Flight.arrivalTime=req.body.arrivalTime;
+  Flight.departureTime=req.body.departureTime;
+  Flight.economySeatsNum=req.body.economySeatsNum;
+  Flight.businessSeatsNum=req.body.businessSeatsNum;
+  Flight.departureAirport=req.body.departureAirport;
+  Flight.arrivalAirport=req.body.arrivalAirport;
+  Flight.firstClassPrice=req.body.firstClassPrice;
+  Flight.economyClassPrice=req.body.economyClassPrice;
+  Flight.businessClassPrice=req.body.businessClassPrice;
+  Flight.firstSeatsNum=req.body.firstSeatsNum;
+
+
+  await Flight.save();
+
+});
 const port = process.env.PORT || 8080;
 app.listen(port, () => console.log(`server at localhost:${port}`));
