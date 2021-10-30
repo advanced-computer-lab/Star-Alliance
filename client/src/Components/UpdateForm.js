@@ -5,35 +5,34 @@ import { Nav, NavDropdown, Link } from "react-bootstrap";
 //import { NavLink, Link, Redirect, useHistory } from "react-router-dom";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-import Navbar from "react-bootstrap/Navbar";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import moment from "moment";
 
 import FlightService from "../Services/FlightService";
 
 const updateFormRef = createRef();
 
+var findFlightNumber = 0;
+
 const handleSubmit = (e) => {
   e.preventDefault();
-  const flNumber = e.target.flNumber.value;
-  const flArrivalTime = e.target.flArrivalTime.value;
-  const flDepartureTime = e.target.flDepartureTime.value;
-  const flEconomySeatsNum = e.target.flEconomySeatsNum.value;
-  const flBusinessSeatNum = e.target.flBusinessSeatNum.value;
-  const flFirstSeatNum = e.target.flFirstSeatNum.value;
-  const flDepartureAirport = e.target.flDepartureAirport.value;
-  const flArrivalAirport = e.target.flArrivalAirport.value;
-  const flPrice = e.target.flPrice.value;
 
   // datetime example "2016-05-18T16:00:00Z"
   const data = {
-    flightNumber: flNumber,
-    arrivalTime: flArrivalTime,
-    departureTime: flDepartureTime,
-    economySeatsNum: flEconomySeatsNum,
-    businessSeatsNum: flBusinessSeatNum,
-    firstSeatsNum: flFirstSeatNum,
-    departureAirport: flDepartureAirport,
-    arrivalAirport: flArrivalAirport,
-    price: flPrice,
+    findFlightNumber: findFlightNumber,
+    flightNumber: e.target.flNumber.value,
+    arrivalTime: e.target.flArrivalTime.value,
+    departureTime: e.target.flDepartureTime.value,
+    economySeatsNum: e.target.flEconomySeatsNum.value,
+    businessSeatsNum: e.target.flBusinessSeatNum.value,
+    firstSeatsNum: e.target.flFirstSeatNum.value,
+    departureAirport: e.target.flDepartureAirport.value,
+    arrivalAirport: e.target.flArrivalAirport.value,
+
+    firstClassPrice: e.target.flPriceFirst.value,
+    businessClassPrice: e.target.flPriceBusiness,
+    economyClassPrice: e.target.flPriceEconomy,
   };
 
   console.log("data", data);
@@ -44,6 +43,7 @@ const handleSubmit = (e) => {
     })
     .catch((err) => {
       console.log("errr <===", err);
+      console.log("data", err);
     });
   // BadgeService.editBadge({ id, name, desc, points, type, disabled })
   //   .then((res) => {
@@ -57,71 +57,155 @@ const handleSubmit = (e) => {
   //   });
 };
 
+const updateFormValues = (data) => {
+  const {
+    arrivalTime,
+    departureTime,
+    economySeatsNum,
+    businessSeatsNum,
+    firstSeatsNum,
+    departureAirport,
+    arrivalAirport,
+    firstClassPrice,
+    businessClassPrice,
+    economyClassPrice,
+  } = data;
+  // The specified value "2021-10-12T19:54:00.000Z" does not conform to the required format.  The format is "yyyy-MM-ddThh:mm" followed by optional ":ss" or ":ss.SSS".
+  updateFormRef.current.flArrivalTime.value =
+    moment(arrivalTime).format("yyyy-MM-DDThh:mm");
+  updateFormRef.current.flDepartureTime.value =
+    moment(departureTime).format("yyyy-MM-DDThh:mm");
+  updateFormRef.current.flEconomySeatsNum.value = economySeatsNum;
+  updateFormRef.current.flBusinessSeatNum.value = businessSeatsNum;
+  updateFormRef.current.flFirstSeatNum.value = firstSeatsNum;
+  updateFormRef.current.flDepartureAirport.value = departureAirport;
+  updateFormRef.current.flArrivalAirport.value = arrivalAirport;
+
+  updateFormRef.current.flPriceFirst.value = firstClassPrice;
+  updateFormRef.current.flPriceBuissness.value = businessClassPrice;
+  updateFormRef.current.flPriceEconomy.value = economyClassPrice;
+};
+
+const handleFindBtn = () => {
+  const flightNumber = updateFormRef.current.flNumber.value;
+  FlightService.GetFlightInfo({ flightNumber: flightNumber })
+    .then(({ data }) => {
+      console.log("recived", data);
+      findFlightNumber = data.flightNumber;
+      updateFormValues(data);
+    })
+    .catch((err) => console.log(err));
+};
+
 const UpdateForm = () => {
   return (
     <>
       <Form ref={updateFormRef} onSubmit={handleSubmit}>
-        <Form.Group className="mb-3">
+        <Form.Group>
           <Form.Label>Flight Number</Form.Label>
-          <Form.Control
-            name="flNumber"
-            type="number"
-            placeholder="Enter Flight Number"
-          />
+          <div class="input-group ">
+            <Form.Control
+              name="flNumber"
+              type="string"
+              placeholder="Enter Flight Number"
+            />
+            <div class="input-group-append">
+              <Button variant="primary" onClick={handleFindBtn}>
+                Find
+              </Button>
+            </div>
+          </div>
+          <Row>
+            <Col>
+              <Form.Label>Arrival Time</Form.Label>
+              <Form.Control
+                name="flArrivalTime"
+                type="datetime-local"
+                placeholder="Enter Arrival Number"
+              />
+            </Col>
+            <Col>
+              <Form.Label>Departure Time</Form.Label>
+              <Form.Control
+                name="flDepartureTime"
+                type="datetime-local"
+                placeholder="Enter Departure Time"
+              />
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <Form.Label>First Seats Number</Form.Label>
+              <Form.Control
+                name="flFirstSeatNum"
+                type="number"
+                placeholder="Enter Economy Seats Number"
+              />
+            </Col>
+            <Col>
+              <Form.Label>First Class Price</Form.Label>
+              <Form.Control
+                name="flPriceFirst"
+                type="number"
+                placeholder="Please Enter the price"
+              />
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <Form.Label>Business Seat Numbers</Form.Label>
+              <Form.Control
+                name="flBusinessSeatNum"
+                type="number"
+                placeholder="Enter Business Seat Numbers "
+              />
+            </Col>
+            <Col>
+              <Form.Label>Buissness Class Price</Form.Label>
+              <Form.Control
+                name="flPriceBusiness"
+                type="number"
+                placeholder="Please Enter the price"
+              />
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <Form.Label>Economy Seats Number</Form.Label>
+              <Form.Control
+                name="flEconomySeatsNum"
+                type="number"
+                placeholder="Enter Economy Seats Number"
+              />
+            </Col>
+            <Col>
+              <Form.Label>Economy Class Price</Form.Label>
+              <Form.Control
+                name="flPriceEconomy"
+                type="number"
+                placeholder="Please Enter the price"
+              />
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <Form.Label>Departure Airport</Form.Label>
+              <Form.Control
+                name="flDepartureAirport"
+                type="string"
+                placeholder="Please Enter the Departure Airport"
+              />
+            </Col>
+            <Col>
+              <Form.Label>Arrival Airport</Form.Label>
+              <Form.Control
+                name="flArrivalAirport"
+                type="string"
+                placeholder="Please Enter the Arival Airport"
+              />
+            </Col>
+          </Row>
 
-          <Form.Label>Arrival Time</Form.Label>
-          <Form.Control
-            name="flArrivalTime"
-            type="datetime-local"
-            placeholder="Enter Arrival Number"
-          />
-          <Form.Label>Departure Time</Form.Label>
-          <Form.Control
-            name="flDepartureTime"
-            type="datetime-local"
-            placeholder="Enter Departure Time"
-          />
-
-          <Form.Label>Economy Seats Number</Form.Label>
-          <Form.Control
-            name="flEconomySeatsNum"
-            type="number"
-            placeholder="Enter Economy Seats Number"
-          />
-
-          <Form.Label>Business Seat Numbers</Form.Label>
-          <Form.Control
-            name="flBusinessSeatNum"
-            type="number"
-            placeholder="Enter Business Seat Numbers "
-          />
-
-          <Form.Label>First Seats Number</Form.Label>
-          <Form.Control
-            name="flFirstSeatNum"
-            type="number"
-            placeholder="Enter Economy Seats Number"
-          />
-
-          <Form.Label>Departure Airport</Form.Label>
-          <Form.Control
-            name="flDepartureAirport"
-            type="string"
-            placeholder="Please Enter the Departure Airport"
-          />
-
-          <Form.Label>Arrival Airport</Form.Label>
-          <Form.Control
-            name="flArrivalAirport"
-            type="string"
-            placeholder="Please Enter the Arival Airport"
-          />
-          <Form.Label>Price</Form.Label>
-          <Form.Control
-            name="flPrice"
-            type="number"
-            placeholder="Please Enter the price"
-          />
           <Button variant="primary" type="submit">
             Update Flight
           </Button>

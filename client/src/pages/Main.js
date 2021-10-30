@@ -18,7 +18,6 @@ const Main = () => {
         {/* The Switch decides which component to show based on the current URL.*/}
         <Route exact path="/" component={home} />
         <Route exact path="/UpdateForm" component={UpdateForm} />
-
         <Route exact path="/deleteFlight" component={deletePopup}></Route>
         <Route exact path="/createFlight" component={create}></Route>
       </Switch>

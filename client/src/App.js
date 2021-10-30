@@ -4,11 +4,10 @@ import Main from "./pages/Main.js";
 function App() {
   return (
     <>
-    <Naavbar />
-    <Main />
+      <Naavbar />
+      <Main />
     </>
   );
-} 
-
+}
 
 export default App;
