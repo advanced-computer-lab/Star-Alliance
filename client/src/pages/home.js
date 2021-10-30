@@ -64,10 +64,9 @@ const home = () => {
   <Card.Body>
     <Card.Title>Create Flight</Card.Title>
     <Card.Text>
-      Some quick example text to build on the card title and make up the bulk of
-      the card's content.
+      creating new flights
     </Card.Text>
-    <Button variant="primary"  href="/createFlight">More</Button>
+    <Button style={{width:"7cm"}} href="/createFlight" variant="outline-primary">More</Button>
   </Card.Body>
 </Card>
       </div>
@@ -77,10 +76,9 @@ const home = () => {
   <Card.Body>
     <Card.Title>Delete Flight</Card.Title>
     <Card.Text>
-      Some quick example text to build on the card title and make up the bulk of
-      the card's content.
+     Deleting existing flights
     </Card.Text>
-    <Button variant="primary" href="/deleteFlight">More</Button>
+    <Button style={{width:"7cm"}}  href="/deleteFlight" variant="outline-primary">More</Button>
   </Card.Body>
 </Card>
       </div>
@@ -90,10 +88,9 @@ const home = () => {
   <Card.Body>
     <Card.Title>Show All Flights</Card.Title>
     <Card.Text>
-      Some quick example text to build on the card title and make up the bulk of
-      the card's content.
+    showing all existing flights
     </Card.Text>
-    <Button variant="primary">More</Button>
+    <Button style={{width:"7cm"}} variant="outline-primary">More</Button>
   </Card.Body>
 </Card>
       </div>
@@ -103,10 +100,10 @@ const home = () => {
   <Card.Body>
     <Card.Title>Update</Card.Title>
     <Card.Text>
-      Some quick example text to build on the card title and make up the bulk of
-      the card's content.
+    updating existing flights
+
     </Card.Text>
-    <Button variant="primary">More</Button>
+    <Button style={{width:"7cm"}} variant="outline-primary">More</Button>
   </Card.Body>
 </Card>
       </div>

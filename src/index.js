@@ -69,6 +69,7 @@ const createCompanion = async (req, res) => {
   //ress.flight = fl;
   //ress.companions=compan;
   await ress.save();
+
 };
 //createCompanion();
 
@@ -84,7 +85,6 @@ app.get("/", (req, res) => {
 });
 
 app.post("/createFlight", async(req, res) => {
-
   const Flight= new flight();
   Flight.flightNumber=req.body.flightNumber;
   Flight.arrivalTime=req.body.arrivalTime;
@@ -97,9 +97,17 @@ app.post("/createFlight", async(req, res) => {
   Flight.economyClassPrice=req.body.economyClassPrice;
   Flight.businessClassPrice=req.body.businessClassPrice;
   Flight.firstSeatsNum=req.body.firstSeatsNum;
-
-
   await Flight.save();
+
+
+  //res.write("<h1>Flight was added successfully ✅</h1>")
+  //res.send();
+
+
+  //setTimeout(function(){
+    //res.redirect("http://localhost:3000/createFlight")
+  //}, 5000);
+
 
 });
 const port = process.env.PORT || 8080;

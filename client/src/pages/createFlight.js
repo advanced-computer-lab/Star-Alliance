@@ -5,6 +5,7 @@ import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col'
 
+import TextField from '@mui/material/TextField';
 
 const createFlight = () => {
   return (
@@ -17,25 +18,25 @@ const createFlight = () => {
        
        </br>
 
-<Form style={{marginLeft:"1cm",marginRight:"1cm"}}>
+<Form action="http://localhost:8080/createFlight" method="post" style={{marginLeft:"1cm",marginRight:"1cm"}}>
 <h3 style={{marginBottom:"1cm"}}> Create Flight</h3>
 
 <Row className="mb-3"> 
-    <Form.Group  as={Col} controlId="formGridflightNumber">
+    <Form.Group  as={Col} controlId="formGridflightNumber" >
       <Form.Label>Flight Number</Form.Label>
       <Form.Control name="flightNumber" placeholder="Enter Flight Number" />
     </Form.Group>
      
-    <Form.Group type="datetime-local" as={Col} controlId="formGridArrivalTime">
+    <Form.Group  as={Col} controlId="formGridArrivalTime">
       <Form.Label>Arrival Time</Form.Label>
-      <Form.Control  name="arrivalTime"  placeholder="Enter Arrival Time" />
+      <Form.Control type="datetime-local"  name="arrivalTime"  placeholder="Enter Arrival Time" />
     </Form.Group>
 </Row>
 <Row className="mb-3"> 
 
-    <Form.Group type="datetime-local" as={Col} controlId="formGridDepartureTime">
+    <Form.Group  as={Col} controlId="formGridDepartureTime">
       <Form.Label>Departure Time</Form.Label>
-      <Form.Control  name="departureTime" placeholder="Enter Departure Time" />
+      <Form.Control type="datetime-local"  name="departureTime" placeholder="Enter Departure Time" />
     </Form.Group>
 
 
@@ -93,7 +94,7 @@ const createFlight = () => {
 
   </div>
   <div  style={{height:"3cm",width:"19cm",marginTop:"0.8cm"}}>
-  <Button as={Col} variant="primary" type="submit">
+  <Button   variant="primary" type="submit">
     Submit
   </Button>
   </div>
