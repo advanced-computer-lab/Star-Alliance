@@ -24,8 +24,11 @@ const Naavbar = () => {
   </Navbar> */}
   {/* <h1>Hello</h1> */}
   <Navbar  fixed="top" style={{backgroundColor:"#112D4E"}} expand="lg">
+    
+
   <Container>
-    <Navbar.Brand href="#home" style={{color:"#DBE2EF"}}>React-Bootstrap</Navbar.Brand>
+  <Navbar.Brand href="#home" style={{color:"#DBE2EF"}}>Star-Alliance</Navbar.Brand>
+
     <Navbar.Toggle aria-controls="basic-navbar-nav"/>
     <Navbar.Collapse id="basic-navbar-nav">
       <Nav className="me-auto">

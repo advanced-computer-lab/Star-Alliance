@@ -60,6 +60,10 @@ const handleSubmit = (e) => {
 const UpdateForm = () => {
   return (
     <>
+    <br></br>
+    <br></br>
+    <br></br>
+
       <Form ref={updateFormRef} onSubmit={handleSubmit}>
         <Form.Group className="mb-3">
           <Form.Label>Flight Number</Form.Label>
