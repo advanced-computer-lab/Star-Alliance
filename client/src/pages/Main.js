@@ -8,7 +8,7 @@ import {
 
 import home from "./home.js";
 import UpdateForm from "../Components/UpdateForm.js";
-import deletePopup from "./deletePopup";
+import deletePopup from "../Components/deletePopup.js";
 import create from "./createFlight.js";
 
 const Main = () => {
