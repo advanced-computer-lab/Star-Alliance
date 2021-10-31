@@ -69,7 +69,6 @@ const createCompanion = async (req, res) => {
   //ress.flight = fl;
   //ress.companions=compan;
   await ress.save();
-
 };
 //createCompanion();
 
@@ -84,31 +83,32 @@ app.get("/", (req, res) => {
   res.json({ message: "From the Node Server !" });
 });
 
-app.post("/createFlight", async(req, res) => {
-  const Flight= new flight();
-  Flight.flightNumber=req.body.flightNumber;
-  Flight.arrivalTime=req.body.arrivalTime;
-  Flight.departureTime=req.body.departureTime;
-  Flight.economySeatsNum=req.body.economySeatsNum;
-  Flight.businessSeatsNum=req.body.businessSeatsNum;
-  Flight.departureAirport=req.body.departureAirport;
-  Flight.arrivalAirport=req.body.arrivalAirport;
-  Flight.firstClassPrice=req.body.firstClassPrice;
-  Flight.economyClassPrice=req.body.economyClassPrice;
-  Flight.businessClassPrice=req.body.businessClassPrice;
-  Flight.firstSeatsNum=req.body.firstSeatsNum;
+app.post("/createFlight", async (req, res) => {
+  const Flight = new flight();
+  Flight.flightNumber = req.body.flightNumber;
+  Flight.arrivalTime = req.body.arrivalTime;
+  Flight.departureTime = req.body.departureTime;
+  Flight.economySeatsNum = req.body.economySeatsNum;
+  Flight.businessSeatsNum = req.body.businessSeatsNum;
+  Flight.departureAirport = req.body.departureAirport;
+  Flight.arrivalAirport = req.body.arrivalAirport;
+  Flight.firstClassPrice = req.body.firstClassPrice;
+  Flight.economyClassPrice = req.body.economyClassPrice;
+  Flight.businessClassPrice = req.body.businessClassPrice;
+  Flight.firstSeatsNum = req.body.firstSeatsNum;
   await Flight.save();
-
 
   //res.write("<h1>Flight was added successfully ✅</h1>")
   //res.send();
 
-
   //setTimeout(function(){
-    //res.redirect("http://localhost:3000/createFlight")
+  //res.redirect("http://localhost:3000/createFlight")
   //}, 5000);
-
-
 });
+// (async () => {
+//   const res = await flight.deleteMany({ flightNumber: "" });
+//   console.log(res);
+// })();
+
 const port = process.env.PORT || 8080;
 app.listen(port, () => console.log(`server at localhost:${port}`));

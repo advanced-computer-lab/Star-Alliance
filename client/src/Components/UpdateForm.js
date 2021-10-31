@@ -8,101 +8,116 @@ import Button from "react-bootstrap/Button";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import moment from "moment";
+import Alert from "./Alert.js";
 
 import FlightService from "../Services/FlightService";
 
-const updateFormRef = createRef();
+const UpdateForm = () => {
+  const [alertOpen, setalertOpen] = useState(false);
+  const [alertMessage, setalertMessage] = useState("");
+  const updateFormRef = createRef();
 
-var findFlightNumber = 0;
+  var findFlightNumber = 0;
 
-const handleSubmit = (e) => {
-  e.preventDefault();
+  const handleSubmit = (e) => {
+    e.preventDefault();
 
-  // datetime example "2016-05-18T16:00:00Z"
-  const data = {
-    findFlightNumber: findFlightNumber,
-    flightNumber: e.target.flNumber.value,
-    arrivalTime: e.target.flArrivalTime.value,
-    departureTime: e.target.flDepartureTime.value,
-    economySeatsNum: e.target.flEconomySeatsNum.value,
-    businessSeatsNum: e.target.flBusinessSeatNum.value,
-    firstSeatsNum: e.target.flFirstSeatNum.value,
-    departureAirport: e.target.flDepartureAirport.value,
-    arrivalAirport: e.target.flArrivalAirport.value,
+    // datetime example "2016-05-18T16:00:00Z"
+    const data = {
+      findFlightNumber: findFlightNumber,
+      flightNumber: e.target.flNumber.value,
+      arrivalTime: e.target.flArrivalTime.value,
+      departureTime: e.target.flDepartureTime.value,
+      economySeatsNum: e.target.flEconomySeatsNum.value,
+      businessSeatsNum: e.target.flBusinessSeatNum.value,
+      firstSeatsNum: e.target.flFirstSeatNum.value,
+      departureAirport: e.target.flDepartureAirport.value,
+      arrivalAirport: e.target.flArrivalAirport.value,
+      firstClassPrice: e.target.flPriceFirst.value,
+      businessClassPrice: e.target.flPriceBusiness.value,
+      economyClassPrice: e.target.flPriceEconomy.value,
+    };
 
-    firstClassPrice: e.target.flPriceFirst.value,
-    businessClassPrice: e.target.flPriceBusiness,
-    economyClassPrice: e.target.flPriceEconomy,
+    console.log("data", data);
+
+    FlightService.updateFlight(data)
+      .then((res) => {
+        console.log("OK ===> ", res);
+      })
+      .catch((err) => {
+        console.log("errr <===", err.response);
+        const errorMessage = err.response.data;
+        // alert(errorMessage);
+        showAlert(errorMessage);
+      });
   };
 
-  console.log("data", data);
+  const updateFormValues = (data) => {
+    const {
+      arrivalTime,
+      departureTime,
+      economySeatsNum,
+      businessSeatsNum,
+      firstSeatsNum,
+      departureAirport,
+      arrivalAirport,
+      firstClassPrice,
+      businessClassPrice,
+      economyClassPrice,
+    } = data;
+    // The specified value "2021-10-12T19:54:00.000Z" does not conform to the required format.  The format is "yyyy-MM-ddThh:mm" followed by optional ":ss" or ":ss.SSS".
+    updateFormRef.current.flArrivalTime.value =
+      moment(arrivalTime).format("yyyy-MM-DDThh:mm");
+    updateFormRef.current.flDepartureTime.value =
+      moment(departureTime).format("yyyy-MM-DDThh:mm");
+    updateFormRef.current.flEconomySeatsNum.value = economySeatsNum;
+    updateFormRef.current.flBusinessSeatNum.value = businessSeatsNum;
+    updateFormRef.current.flFirstSeatNum.value = firstSeatsNum;
+    updateFormRef.current.flDepartureAirport.value = departureAirport;
+    updateFormRef.current.flArrivalAirport.value = arrivalAirport;
 
-  FlightService.updateFlight(data)
-    .then((res) => {
-      console.log("OK ===> ", res);
-    })
-    .catch((err) => {
-      console.log("errr <===", err);
-      console.log("data", err);
-    });
-  // BadgeService.editBadge({ id, name, desc, points, type, disabled })
-  //   .then((res) => {
-  //     console.log("success ==> ", res.data);
-  //     // alert("done");
-  //     popUpAlert("Done");
-  //   })
-  //   .catch((err) => {
-  //     console.log(err);
-  //     popUpAlert("Something Went Wrong");
-  //   });
-};
+    updateFormRef.current.flPriceFirst.value = firstClassPrice;
+    updateFormRef.current.flPriceBusiness.value = businessClassPrice;
+    updateFormRef.current.flPriceEconomy.value = economyClassPrice;
+  };
 
-const updateFormValues = (data) => {
-  const {
-    arrivalTime,
-    departureTime,
-    economySeatsNum,
-    businessSeatsNum,
-    firstSeatsNum,
-    departureAirport,
-    arrivalAirport,
-    firstClassPrice,
-    businessClassPrice,
-    economyClassPrice,
-  } = data;
-  // The specified value "2021-10-12T19:54:00.000Z" does not conform to the required format.  The format is "yyyy-MM-ddThh:mm" followed by optional ":ss" or ":ss.SSS".
-  updateFormRef.current.flArrivalTime.value =
-    moment(arrivalTime).format("yyyy-MM-DDThh:mm");
-  updateFormRef.current.flDepartureTime.value =
-    moment(departureTime).format("yyyy-MM-DDThh:mm");
-  updateFormRef.current.flEconomySeatsNum.value = economySeatsNum;
-  updateFormRef.current.flBusinessSeatNum.value = businessSeatsNum;
-  updateFormRef.current.flFirstSeatNum.value = firstSeatsNum;
-  updateFormRef.current.flDepartureAirport.value = departureAirport;
-  updateFormRef.current.flArrivalAirport.value = arrivalAirport;
+  const handleFindBtn = () => {
+    const flightNumber = updateFormRef.current.flNumber.value;
+    FlightService.GetFlightInfo({ flightNumber: flightNumber })
+      .then(({ data }) => {
+        console.log("recived", data);
+        findFlightNumber = data.flightNumber;
+        updateFormValues(data);
+      })
+      .catch((error) => {
+        // console.log(error.response);
+        const errorMessage = error.response.data;
+        // alert(errorMessage);
+        showAlert(errorMessage);
+      });
+  };
 
-  updateFormRef.current.flPriceFirst.value = firstClassPrice;
-  updateFormRef.current.flPriceBusiness.value = businessClassPrice;
-  updateFormRef.current.flPriceEconomy.value = economyClassPrice;
-};
+  const showAlert = (message) => {
+    setalertMessage(message);
+    setalertOpen(true);
 
-const handleFindBtn = () => {
-  const flightNumber = updateFormRef.current.flNumber.value;
-  FlightService.GetFlightInfo({ flightNumber: flightNumber })
-    .then(({ data }) => {
-      console.log("recived", data);
-      findFlightNumber = data.flightNumber;
-      updateFormValues(data);
-    })
-    .catch((err) => console.log(err));
-};
+    setTimeout(() => {
+      setalertOpen(false);
+    }, 3000);
+  };
 
-const UpdateForm = () => {
   return (
     <>
       <br></br>
       <br></br>
       <br></br>
+
+      <Alert
+        open={alertOpen}
+        setOpen={setalertOpen}
+        title={alertMessage}
+        desc=""
+      />
 
       <Form ref={updateFormRef} onSubmit={handleSubmit}>
         <Form.Group>
@@ -112,6 +127,7 @@ const UpdateForm = () => {
               name="flNumber"
               type="string"
               placeholder="Enter Flight Number"
+              required
             />
             <div class="input-group-append">
               <Button variant="primary" onClick={handleFindBtn}>
@@ -126,6 +142,7 @@ const UpdateForm = () => {
                 name="flArrivalTime"
                 type="datetime-local"
                 placeholder="Enter Arrival Number"
+                required
               />
             </Col>
             <Col>
@@ -134,6 +151,7 @@ const UpdateForm = () => {
                 name="flDepartureTime"
                 type="datetime-local"
                 placeholder="Enter Departure Time"
+                required
               />
             </Col>
           </Row>
@@ -144,6 +162,7 @@ const UpdateForm = () => {
                 name="flFirstSeatNum"
                 type="number"
                 placeholder="Enter Economy Seats Number"
+                required
               />
             </Col>
             <Col>
@@ -152,6 +171,7 @@ const UpdateForm = () => {
                 name="flPriceFirst"
                 type="number"
                 placeholder="Please Enter the price"
+                required
               />
             </Col>
           </Row>
@@ -162,6 +182,7 @@ const UpdateForm = () => {
                 name="flBusinessSeatNum"
                 type="number"
                 placeholder="Enter Business Seat Numbers "
+                required
               />
             </Col>
             <Col>
@@ -170,6 +191,7 @@ const UpdateForm = () => {
                 name="flPriceBusiness"
                 type="number"
                 placeholder="Please Enter the price"
+                required
               />
             </Col>
           </Row>
@@ -180,6 +202,7 @@ const UpdateForm = () => {
                 name="flEconomySeatsNum"
                 type="number"
                 placeholder="Enter Economy Seats Number"
+                required
               />
             </Col>
             <Col>
@@ -188,6 +211,7 @@ const UpdateForm = () => {
                 name="flPriceEconomy"
                 type="number"
                 placeholder="Please Enter the price"
+                required
               />
             </Col>
           </Row>
@@ -198,6 +222,7 @@ const UpdateForm = () => {
                 name="flDepartureAirport"
                 type="string"
                 placeholder="Please Enter the Departure Airport"
+                required
               />
             </Col>
             <Col>
@@ -206,11 +231,22 @@ const UpdateForm = () => {
                 name="flArrivalAirport"
                 type="string"
                 placeholder="Please Enter the Arival Airport"
+                required
               />
             </Col>
           </Row>
 
-          <Button variant="primary" type="submit">
+          <Button
+            variant="primary"
+            type="submit"
+            className="mt-2"
+            style={{
+              display: "block",
+              marginLeft: "auto",
+              marginRight: "0px",
+              // width: "10%",
+            }}
+          >
             Update Flight
           </Button>
         </Form.Group>

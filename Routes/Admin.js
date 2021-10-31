@@ -3,17 +3,6 @@ const app = express();
 const db = require("../Service/DBService.js");
 const { flight } = require("../Models/export");
 
-var cors = require("cors");
-require("dotenv").config();
-
-app.use(
-  cors({
-    origin: "http://localhost:3000",
-    credentials: true,
-    optionSuccessStatus: 200,
-  })
-);
-
 app.get("/", (req, res) => {
   res.json({ message: "welcome admin" });
 });
@@ -35,7 +24,7 @@ app.get("/a", async (req, res) => {
 
 app.post("/GetFlightInfo", async (req, res) => {
   const { flightNumber } = req.body;
-  console.log(flightNumber);
+  console.log("GetFlightInfo flightnumber =", flightNumber);
 
   const result = await flight.findOne({ flightNumber: flightNumber });
   console.log("result from GetFlightInfo", result);
@@ -43,7 +32,6 @@ app.post("/GetFlightInfo", async (req, res) => {
     res.status(404).send("No flight with this Number");
     return;
   }
-
   res.send(result);
 });
 
