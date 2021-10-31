@@ -8,8 +8,16 @@ import {
 
 import home from "./home.js";
 import UpdateForm from "../Components/UpdateForm.js";
-import deletePopup from "../Components/deletePopup.js";
+import deletePopup from "../Components/DeletePopup.js";
+
 import create from "./createFlight.js";
+import FlightsList from "../Components/FlightsList.js";
+import deletePopup from "./deletePopup";
+
+import CreateFlight from "../Components/CreateFlight.js";
+
+
+import TestPage from "./TestPage.js";
 
 const Main = () => {
   return (
