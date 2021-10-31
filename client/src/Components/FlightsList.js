@@ -201,7 +201,7 @@ const FlightsList = () => {
 
   return (
     <>
-      <div className="mt-5">
+      <div className="mt-5 w-100">
         <DataGrid
           components={{ Toolbar: QuickSearchToolbar }}
           rows={rows}

@@ -7,7 +7,7 @@ import Col from "react-bootstrap/Col";
 
 import TextField from "@mui/material/TextField";
 
-const createFlight = () => {
+const CreateFlight = () => {
   return (
     <div class="align-items-center justify-content-center">
       <br></br>
@@ -143,4 +143,4 @@ const createFlight = () => {
   );
 };
 
-export default createFlight;
+export default CreateFlight;
