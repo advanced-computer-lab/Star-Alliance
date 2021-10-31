@@ -26,14 +26,7 @@ const home = () => {
       btnText: "More",
       children: <h1>missing component</h1>,
     },
-    {
-      title: "Show All Flights",
-      text: "showing all existing flights",
-      imgsrc:
-        "https://images.unsplash.com/photo-1586769852836-bc069f19e1b6?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8c2VhcmNofGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
-      btnText: "More",
-      children: <FlightsList />,
-    },
+   
     {
       title: "Update",
       text: "updating existing flights",
@@ -56,8 +49,8 @@ const home = () => {
               alt="First slide"
             />
             <Carousel.Caption>
-              <h3>First slide label</h3>
-              <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+              <h3></h3>
+              <p></p>
             </Carousel.Caption>
           </Carousel.Item>
           <Carousel.Item>
@@ -69,8 +62,8 @@ const home = () => {
             />
 
             <Carousel.Caption>
-              <h3>Second slide label</h3>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+              <h3></h3>
+              <p></p>
             </Carousel.Caption>
           </Carousel.Item>
           <Carousel.Item>
@@ -82,9 +75,9 @@ const home = () => {
             />
 
             <Carousel.Caption>
-              <h3>Third slide label</h3>
+              <h3></h3>
               <p>
-                Praesent commodo cursus magna, vel scelerisque nisl consectetur.
+                
               </p>
             </Carousel.Caption>
           </Carousel.Item>
@@ -94,9 +87,24 @@ const home = () => {
       <br></br>
       <br></br>
       <div className="border d-flex align-items-center justify-content-center">
-        {homeCardsInfo.map((info) => (
+        {homeCardsInfo.map((info)  => (
           <ImgCard {...info} />
         ))}
+
+<Card style={{ width: "18rem", marginLeft: "1cm", marginRight: "1cm" }}>
+        <Card.Img variant="top" style={{ height: "5cm" }} src="https://images.unsplash.com/photo-1586769852836-bc069f19e1b6?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8c2VhcmNofGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" />
+        <Card.Body>
+          <Card.Title>Show All Flights</Card.Title>
+          <Card.Text>showing all existing flights</Card.Text>
+          <Button
+            style={{ width: "7cm" }}
+            variant="outline-primary"
+            href="/FlightsList"
+          >
+            More
+          </Button>
+        </Card.Body>
+      </Card>
 
         <br></br>
         <br></br>
@@ -106,3 +114,12 @@ const home = () => {
 };
 
 export default home;
+
+// {
+//   title: "",
+//   text: "",
+//   imgsrc:
+//     "https://images.unsplash.com/photo-1586769852836-bc069f19e1b6?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8c2VhcmNofGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+//   btnText: "More",
+//   children: <FlightsList />,
+// },
