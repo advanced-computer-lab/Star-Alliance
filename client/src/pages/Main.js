@@ -8,6 +8,7 @@ import {
 
 import home from "./home.js";
 import UpdateForm from "../Components/UpdateForm.js";
+import FlightsList from "../Components/FlightsList.js";
 import deletePopup from "./deletePopup";
 import create from "./createFlight.js";
 import TestPage from "./TestPage.js";
@@ -20,6 +21,7 @@ const Main = () => {
         <Route exact path="/" component={home} />
         <Route exact path="/test" component={TestPage} />
         <Route exact path="/UpdateForm" component={UpdateForm} />
+        <Route exact path="/FlightsList" component={FlightsList} />
         <Route exact path="/deleteFlight" component={deletePopup}></Route>
         <Route exact path="/createFlight" component={create}></Route>
       </Switch>

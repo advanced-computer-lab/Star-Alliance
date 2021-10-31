@@ -6,20 +6,13 @@ const { flight } = require("../Models/export");
 app.get("/", (req, res) => {
   res.json({ message: "welcome admin" });
 });
-app.get("/a", async (req, res) => {
-  // This is Just for Testing, And Will be removed
-  new flight({
-    flightNumber: 123,
-    arrivalTime: "2016-05-18T16:00:00Z",
-    departureTime: "2016-05-18T16:00:00Z",
-    economySeatsNum: 3,
-    businessSeatsNum: 2,
-    firstSeatsNum: 1,
-    departureAirport: "cairo",
-    arrivalAirport: "jedda",
-    price: 532,
-  }).save();
-  res.send("ok");
+
+app.get("/GetAllFlights", async (req, res) => {
+  console.log("/GetAllFlights sending");
+
+  const result = await flight.find({});
+
+  res.send(result);
 });
 
 app.post("/GetFlightInfo", async (req, res) => {
