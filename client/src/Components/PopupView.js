@@ -17,9 +17,9 @@ const PopupView = (props) => {
       <Dialog open={props.showDialog} onClose={handleClose} fullWidth>
         <DialogTitle>{props.title}</DialogTitle>
         <DialogContent>
-          {props.subtext && (
+          {/* {props.subtext && (
             <DialogContentText>{props.subtext}</DialogContentText>
-          )}
+          )} */}
           {/* <TextField
             autoFocus
             margin="dense"

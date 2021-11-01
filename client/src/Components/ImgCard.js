@@ -5,8 +5,8 @@ import Button from "react-bootstrap/Button";
 import PopupView from "./PopupView.js";
 
 const ImgCard = (props) => {
-  const { title, text, imgsrc, btnText } = props;
-  const [popupOpen, setPopupOpen] = useState(false);
+  const { title, text, imgsrc, btnText } = props;   // variables to be used in another components 
+  const [popupOpen, setPopupOpen] = useState(false);// the initial state of the dialog is set to false
   const handleBtnClick = () => {
     setPopupOpen(true);
   };
@@ -17,7 +17,7 @@ const ImgCard = (props) => {
         setshowDialog={setPopupOpen}
         title={title}
       >
-        {props.children}
+         {props.children} {/* // component to be send to the popup vieew */}
       </PopupView>
 
       <Card style={{ width: "18rem"}} className="mx-4">
