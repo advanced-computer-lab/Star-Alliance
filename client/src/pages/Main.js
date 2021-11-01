@@ -10,9 +10,7 @@ import home from "./home.js";
 import UpdateForm from "../Components/UpdateForm.js";
 import deletePopup from "../Components/DeletePopup.js";
 
-import create from "./createFlight.js";
 import FlightsList from "../Components/FlightsList.js";
-import deletePopup from "./deletePopup";
 
 import CreateFlight from "../Components/CreateFlight.js";
 
@@ -25,10 +23,11 @@ const Main = () => {
       <Switch>
         {/* The Switch decides which component to show based on the current URL.*/}
         <Route exact path="/" component={home} />
+        <Route exact path="/test" component={TestPage} />
         <Route exact path="/UpdateForm" component={UpdateForm} />
-
+        <Route exact path="/FlightsList" component={FlightsList} />
         <Route exact path="/deleteFlight" component={deletePopup}></Route>
-        <Route exact path="/createFlight" component={create}></Route>
+        <Route exact path="/createFlight" component={CreateFlight}></Route>
       </Switch>
     </>
   );

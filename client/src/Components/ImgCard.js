@@ -20,13 +20,13 @@ const ImgCard = (props) => {
         {props.children}
       </PopupView>
 
-      <Card style={{ width: "18rem", marginLeft: "1cm", marginRight: "1cm" }}>
+      <Card style={{ width: "18rem"}} className="mx-4">
         <Card.Img variant="top" style={{ height: "5cm" }} src={imgsrc} />
         <Card.Body>
           <Card.Title>{title}</Card.Title>
           <Card.Text>{text}</Card.Text>
           <Button
-            style={{ width: "7cm" }}
+            style={{ width: "16rem"}}
             onClick={handleBtnClick}
             variant="outline-primary"
           >

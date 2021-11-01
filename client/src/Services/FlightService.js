@@ -10,6 +10,9 @@ class FlightService {
   GetAllFlights(data) {
     return http.get("/Admin/GetAllFlights");
   }
+  DeleteFlight(data, resp) {
+    return http.post("/Admin/DeleteFlight", data, resp);
+  }
   //   empGetAll() {
   //     return http.get("/badge/EmployeeGainedBadges");
   //   }

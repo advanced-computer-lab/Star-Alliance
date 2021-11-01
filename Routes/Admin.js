@@ -28,6 +28,20 @@ app.post("/GetFlightInfo", async (req, res) => {
   res.send(result);
 });
 
+app.post("/DeleteFlight", async (req, res) => {
+  console.log(req.body.resp);
+  const flightNumber  = req.body.flightNumber;
+  console.log("Here is the flight number",flightNumber);
+  const result = await flight.deleteOne({flightNumber: flightNumber});
+  console.log("result from Delete Flight", result);
+  if (result == null) {
+    res.status(404).send("No flight with this Number");
+    return;
+  }
+  res.send(result);
+}
+);
+
 app.post("/UpdateFlight", async (req, res) => {
   const data = req.body;
   console.log(data);
