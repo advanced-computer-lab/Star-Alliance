@@ -12,12 +12,22 @@ import Alert from "./Alert.js";
 
 import FlightService from "../Services/FlightService";
 
-const UpdateForm = () => {
+const UpdateForm = (props) => {
   const [alertOpen, setalertOpen] = useState(false);
   const [alertMessage, setalertMessage] = useState("");
   const updateFormRef = createRef();
 
-  var findFlightNumber = 0;
+  const [findFlightNumber, setfindFlightNumber] = useState(0);
+  // var findFlightNumber = 0;
+
+  useEffect(() => {
+    const flightNumber = props.data?.flightNumber;
+    if (flightNumber !== undefined) {
+      // findFlightNumber = flightNumber;
+      updateFormRef.current.flNumber.value = flightNumber;
+      handleFindBtn();
+    }
+  }, [props.data]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -39,10 +49,10 @@ const UpdateForm = () => {
     };
 
     console.log("data", data);
-
     FlightService.updateFlight(data)
       .then((res) => {
         console.log("OK ===> ", res);
+        props.successCB?.call();
       })
       .catch((err) => {
         console.log("errr <===", err.response);
@@ -66,6 +76,8 @@ const UpdateForm = () => {
       economyClassPrice,
     } = data;
     // The specified value "2021-10-12T19:54:00.000Z" does not conform to the required format.  The format is "yyyy-MM-ddThh:mm" followed by optional ":ss" or ":ss.SSS".
+    console.log("chk pot 1");
+    console.log("updateformref time = ", updateFormRef);
     updateFormRef.current.flArrivalTime.value =
       moment(arrivalTime).format("yyyy-MM-DDThh:mm");
     updateFormRef.current.flDepartureTime.value =
@@ -86,11 +98,12 @@ const UpdateForm = () => {
     FlightService.GetFlightInfo({ flightNumber: flightNumber })
       .then(({ data }) => {
         console.log("recived", data);
-        findFlightNumber = data.flightNumber;
+        // findFlightNumber = data.flightNumber;
         updateFormValues(data);
+        setfindFlightNumber(data.flightNumber);
       })
       .catch((error) => {
-        // console.log(error.response);
+        console.log(error);
         const errorMessage = error.response.data;
         // alert(errorMessage);
         showAlert(errorMessage);
@@ -108,7 +121,6 @@ const UpdateForm = () => {
 
   return (
     <>
-      <br></br>
       <br></br>
       <br></br>
 

@@ -24,16 +24,18 @@ const home = () => {
       imgsrc:
         "https://media.istockphoto.com/photos/business-concept-male-finger-pointing-delete-key-picture-id464515667?b=1&k=20&m=464515667&s=170667a&w=0&h=ZOliRecXTJeqdKBngcEHcGxz7JIuZYiPnyUoq0ujh18=",
       btnText: "More",
-      children: <DeletePopup 
-      name="Delete" 
-      title="Delete Flight" 
-      description="Enter the flight number you want to delete"
-      btnText="Delete"   
-      label="Flight Number"
-      color="btn btn-outline-danger"
-      />,
+      children: (
+        <DeletePopup
+          name="Delete"
+          title="Delete Flight"
+          description="Enter the flight number you want to delete"
+          btnText="Delete"
+          label="Flight Number"
+          color="btn btn-outline-danger"
+        />
+      ),
     },
-   
+
     {
       title: "Update",
       text: "updating existing flights",
@@ -83,9 +85,7 @@ const home = () => {
 
             <Carousel.Caption>
               <h3></h3>
-              <p>
-                
-              </p>
+              <p></p>
             </Carousel.Caption>
           </Carousel.Item>
         </Carousel>
@@ -94,24 +94,28 @@ const home = () => {
       <br></br>
       <br></br>
       <div className="border d-flex align-items-center justify-content-center">
-        {homeCardsInfo.map((info)  => (
+        {homeCardsInfo.map((info) => (
           <ImgCard {...info} />
         ))}
 
-<Card style={{ width: "18rem", marginLeft: "1cm", marginRight: "1cm" }}>
-        <Card.Img variant="top" style={{ height: "5cm" }} src="https://images.unsplash.com/photo-1586769852836-bc069f19e1b6?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8c2VhcmNofGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" />
-        <Card.Body>
-          <Card.Title>Show All Flights</Card.Title>
-          <Card.Text>showing all existing flights</Card.Text>
-          <Button
-            style={{ width: "7cm" }}
-            variant="outline-primary"
-            href="/FlightsList"
-          >
-            More
-          </Button>
-        </Card.Body>
-      </Card>
+        <Card style={{ width: "18rem", marginLeft: "1cm", marginRight: "1cm" }}>
+          <Card.Img
+            variant="top"
+            style={{ height: "5cm" }}
+            src="https://images.unsplash.com/photo-1586769852836-bc069f19e1b6?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8c2VhcmNofGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
+          />
+          <Card.Body>
+            <Card.Title>Show All Flights</Card.Title>
+            <Card.Text>showing all existing flights</Card.Text>
+            <Button
+              style={{ width: "7cm" }}
+              variant="outline-primary"
+              href="/FlightsList"
+            >
+              More
+            </Button>
+          </Card.Body>
+        </Card>
 
         <br></br>
         <br></br>

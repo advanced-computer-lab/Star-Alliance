@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState, useRef } from "react";
 import * as React from "react";
 import PropTypes from "prop-types";
 import IconButton from "@mui/material/IconButton";
@@ -7,15 +7,21 @@ import {
   DataGrid,
   GridToolbarDensitySelector,
   GridToolbarFilterButton,
+  GridActionsCellItem,
 } from "@mui/x-data-grid";
-import { useDemoData } from "@mui/x-data-grid-generator";
+
 import ClearIcon from "@mui/icons-material/Clear";
 import SearchIcon from "@mui/icons-material/Search";
 import { createTheme } from "@mui/material/styles";
 import { createStyles, makeStyles } from "@mui/styles";
+import DeleteIcon from "@mui/icons-material/Delete";
+import EditIcon from "@mui/icons-material/Edit";
+import FileCopyIcon from "@mui/icons-material/FileCopy";
 
 import moment from "moment";
 import FlightService from "../Services/FlightService";
+import PopupView from "./PopupView.js";
+import UpdateForm from "./UpdateForm";
 
 function escapeRegExp(value) {
   return value.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
@@ -97,67 +103,147 @@ QuickSearchToolbar.propTypes = {
 
 const FlightsList = () => {
   const classes = useStyles();
+  const [popupOpen, setPopupOpen] = useState(false); // the initial state of the dialog is set to false
+  const [popupChild, setpopupChild] = useState(); // the initial state of the dialog is set to false
 
-  const columns = [
-    {
-      field: "flightNumber",
-      headerName: "Flight Number",
-      headerClassName: "super-app-theme--header",
-      headerAlign: "center",
-      flex: 1,
+  const [searchText, setSearchText] = React.useState("");
+  const [rows, setRows] = React.useState([]);
+  const [SOTrows, setSOTRows] = React.useState([]);
+
+  const deleteFlight = React.useCallback(
+    (id) => () => {
+      // setTimeout(() => {
+      //   setRows((prevRows) => prevRows.filter((row) => row.id !== id));
+      // });
+      const deletedRow = rows.filter((row) => row.id === id)[0];
+      const resp = window.confirm("Are you sure you want to delete", "");
+      if (resp) {
+        FlightService.DeleteFlight(deletedRow)
+          .then((res) => {
+            console.log("OK ===> ", res);
+            updateFlightList();
+          })
+          .catch((err) => {
+            console.log("errr <===", err.response);
+            const errorMessage = err.response.data;
+            // alert(errorMessage);
+            setPopupOpen(true);
+            setpopupChild(<h3>{errorMessage}</h3>);
+          });
+      }
     },
-    {
-      field: "arrivalAirport",
-      headerName: "Arrival Airport",
-      headerAlign: "right",
-      flex: 1,
+    [rows]
+  );
+
+  const duplicateUser = React.useCallback(
+    (id) => () => {
+      setRows((prevRows) => {
+        const rowToDuplicate = prevRows.find((row) => row.id === id);
+        return [...prevRows, { ...rowToDuplicate, id: Date.now() }];
+      });
     },
-    {
-      field: "departureAirport",
-      headerName: "Departure Airport",
-      flex: 1,
+    []
+  );
+
+  const updateFlight = React.useCallback(
+    (id) => () => {
+      const successCB = () => {
+        setPopupOpen(false);
+        updateFlightList();
+      };
+
+      // setRows((prevRows) => prevRows.filter((row) => row.id !== id));
+      const updatedRow = rows.filter((row) => row.id === id)[0];
+      console.log("updated row = ", updatedRow);
+      setPopupOpen(true);
+      setpopupChild(<UpdateForm data={updatedRow} successCB={successCB} />);
     },
-    {
-      field: "arrivalTime",
-      headerName: "Arrival Time",
-      flex: 1.25,
-    },
-    {
-      field: "departureTime",
-      headerName: "Departure Time",
-      flex: 1.25,
-    },
-    {
-      field: "firstSeatsNum",
-      headerName: "First Class Seats",
-      flex: 1,
-    },
-    {
-      field: "economySeatsNum",
-      headerName: "Economy Class Seats",
-      flex: 1,
-    },
-    {
-      field: "businessSeatsNum",
-      headerName: "Business Class Seats",
-      flex: 1,
-    },
-    {
-      field: "firstClassPrice",
-      headerName: "First Class Price",
-      flex: 1,
-    },
-    {
-      field: "businessClassPrice",
-      headerName: "Business Class Price",
-      flex: 1,
-    },
-    {
-      field: "economyClassPrice",
-      headerName: "Economy Class Price",
-      flex: 1,
-    },
-  ];
+    [rows]
+  );
+
+  const columns = React.useMemo(
+    () => [
+      {
+        field: "flightNumber",
+        headerName: "Flight Number",
+        headerClassName: "super-app-theme--header",
+        headerAlign: "center",
+        flex: 1,
+      },
+      {
+        field: "arrivalAirport",
+        headerName: "Arrival Airport",
+        headerAlign: "right",
+        flex: 1,
+      },
+      {
+        field: "departureAirport",
+        headerName: "Departure Airport",
+        flex: 1,
+      },
+      {
+        field: "arrivalTime",
+        headerName: "Arrival Time",
+        flex: 1.25,
+      },
+      {
+        field: "departureTime",
+        headerName: "Departure Time",
+        flex: 1.25,
+      },
+      {
+        field: "firstSeatsNum",
+        headerName: "First Class Seats",
+        flex: 1,
+      },
+      {
+        field: "economySeatsNum",
+        headerName: "Economy Class Seats",
+        flex: 1,
+      },
+      {
+        field: "businessSeatsNum",
+        headerName: "Business Class Seats",
+        flex: 1,
+      },
+      {
+        field: "firstClassPrice",
+        headerName: "First Class Price",
+        flex: 1,
+      },
+      {
+        field: "businessClassPrice",
+        headerName: "Business Class Price",
+        flex: 1,
+      },
+      {
+        field: "economyClassPrice",
+        headerName: "Economy Class Price",
+        flex: 1,
+      },
+      {
+        field: "actions",
+        type: "actions",
+        flex: 1,
+        getActions: (params) => [
+          <GridActionsCellItem
+            icon={<EditIcon />}
+            label="Update"
+            onClick={updateFlight(params.id)}
+            // showInMenu
+          />,
+          <GridActionsCellItem
+            icon={<DeleteIcon />}
+            label="Delete"
+            onClick={deleteFlight(params.id)}
+            // showInMenu
+          />,
+        ],
+      },
+    ],
+    [deleteFlight, updateFlight]
+  );
+
   // "_id": "617be2ec9fa58494388aca3c",
   // "__v": 0,
   // "flightNumber": "155646"
@@ -178,10 +264,6 @@ const FlightsList = () => {
   //   maxColumns: 6,
   // });
 
-  const [searchText, setSearchText] = React.useState("");
-  const [rows, setRows] = React.useState([]);
-  const [SOTrows, setSOTRows] = React.useState([]);
-
   const requestSearch = (searchValue) => {
     setSearchText(searchValue);
     const searchRegex = new RegExp(escapeRegExp(searchValue), "i");
@@ -194,7 +276,7 @@ const FlightsList = () => {
     setRows(filteredRows);
   };
 
-  useEffect(() => {
+  const updateFlightList = () => {
     FlightService.GetAllFlights()
       .then(({ data }) => {
         console.log("recived ===> ", data);
@@ -216,6 +298,9 @@ const FlightsList = () => {
         const errorMessage = err.response.data;
         alert(errorMessage);
       }, []);
+  };
+  useEffect(() => {
+    updateFlightList();
   }, []);
   useEffect(() => {
     setRows(SOTrows);
@@ -223,6 +308,13 @@ const FlightsList = () => {
 
   return (
     <>
+      <PopupView
+        showDialog={popupOpen}
+        setshowDialog={setPopupOpen}
+        title="updateForm"
+      >
+        {popupChild}
+      </PopupView>
       <div className="mt-5 w-100">
         <DataGrid
           className={classes.columns}
