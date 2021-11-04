@@ -8,6 +8,8 @@ import {
   GridToolbarDensitySelector,
   GridToolbarFilterButton,
   GridActionsCellItem,
+  GridToolbarColumnsButton,
+  GridToolbarExport,
 } from "@mui/x-data-grid";
 
 import ClearIcon from "@mui/icons-material/Clear";
@@ -67,6 +69,8 @@ function QuickSearchToolbar(props) {
   return (
     <div className={classes.root}>
       <div>
+        <GridToolbarExport />
+        <GridToolbarColumnsButton />
         <GridToolbarFilterButton />
         <GridToolbarDensitySelector />
       </div>
@@ -110,6 +114,8 @@ const FlightsList = () => {
   const [rows, setRows] = React.useState([]);
   const [SOTrows, setSOTRows] = React.useState([]);
 
+  const [isLoading, setisLoading] = useState(true);
+
   const deleteFlight = React.useCallback(
     (id) => () => {
       // setTimeout(() => {
@@ -133,16 +139,6 @@ const FlightsList = () => {
       }
     },
     [rows]
-  );
-
-  const duplicateUser = React.useCallback(
-    (id) => () => {
-      setRows((prevRows) => {
-        const rowToDuplicate = prevRows.find((row) => row.id === id);
-        return [...prevRows, { ...rowToDuplicate, id: Date.now() }];
-      });
-    },
-    []
   );
 
   const updateFlight = React.useCallback(
@@ -291,6 +287,7 @@ const FlightsList = () => {
         });
 
         console.log("data - => ", data);
+        setisLoading(false);
         setSOTRows(data);
       })
       .catch((err) => {
@@ -299,9 +296,14 @@ const FlightsList = () => {
         alert(errorMessage);
       }, []);
   };
+
   useEffect(() => {
+    // Initial load
+
+    setisLoading(true);
     updateFlightList();
   }, []);
+
   useEffect(() => {
     setRows(SOTrows);
   }, [SOTrows]);
@@ -322,6 +324,7 @@ const FlightsList = () => {
           columns={columns}
           autoHeight={true}
           autoWidth={true}
+          loading={isLoading}
           components={{ Toolbar: QuickSearchToolbar }}
           componentsProps={{
             toolbar: {
