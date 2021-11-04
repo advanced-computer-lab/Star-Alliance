@@ -14,6 +14,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import { createTheme } from "@mui/material/styles";
 import { createStyles, makeStyles } from "@mui/styles";
 
+import moment from "moment";
 import FlightService from "../Services/FlightService";
 
 function escapeRegExp(value) {
@@ -24,6 +25,13 @@ const defaultTheme = createTheme();
 const useStyles = makeStyles(
   (theme) =>
     createStyles({
+      columns: {
+        "& .MuiDataGrid-columnHeaderTitle": {
+          overflow: "visible",
+          lineHeight: "1.43rem",
+          whiteSpace: "normal",
+        },
+      },
       root: {
         padding: theme.spacing(0.5, 0.5, 0),
         justifyContent: "space-between",
@@ -88,60 +96,65 @@ QuickSearchToolbar.propTypes = {
 };
 
 const FlightsList = () => {
+  const classes = useStyles();
+
   const columns = [
     {
       field: "flightNumber",
-      headerName: "flightNumber",
+      headerName: "Flight Number",
+      headerClassName: "super-app-theme--header",
+      headerAlign: "center",
       flex: 1,
     },
     {
       field: "arrivalAirport",
-      headerName: "arrivalAirport",
+      headerName: "Arrival Airport",
+      headerAlign: "right",
       flex: 1,
     },
     {
       field: "departureAirport",
-      headerName: "departureAirport",
+      headerName: "Departure Airport",
       flex: 1,
     },
     {
       field: "arrivalTime",
-      headerName: "arrivalTime",
-      flex: 1,
+      headerName: "Arrival Time",
+      flex: 1.25,
     },
     {
       field: "departureTime",
-      headerName: "departureTime",
-      flex: 1,
+      headerName: "Departure Time",
+      flex: 1.25,
     },
     {
       field: "firstSeatsNum",
-      headerName: "firstSeatsNum",
+      headerName: "First Class Seats",
       flex: 1,
     },
     {
       field: "economySeatsNum",
-      headerName: "economySeatsNum",
+      headerName: "Economy Class Seats",
       flex: 1,
     },
     {
       field: "businessSeatsNum",
-      headerName: "businessSeatsNum",
+      headerName: "Business Class Seats",
       flex: 1,
     },
     {
       field: "firstClassPrice",
-      headerName: "firstClassPrice",
+      headerName: "First Class Price",
       flex: 1,
     },
     {
       field: "businessClassPrice",
-      headerName: "businessClassPrice",
+      headerName: "Business Class Price",
       flex: 1,
     },
     {
       field: "economyClassPrice",
-      headerName: "economyClassPrice",
+      headerName: "Economy Class Price",
       flex: 1,
     },
   ];
@@ -185,7 +198,16 @@ const FlightsList = () => {
     FlightService.GetAllFlights()
       .then(({ data }) => {
         console.log("recived ===> ", data);
-        data.forEach((flight) => (flight["id"] = flight["_id"]));
+        // Pre-Proccessing
+
+        data.forEach((flight) => {
+          flight["id"] = flight["_id"];
+          const formatDateTime = (input) =>
+            moment(input).format("yyyy-MM-DD hh:mmA");
+          flight["arrivalTime"] = formatDateTime(flight["arrivalTime"]);
+          flight["departureTime"] = formatDateTime(flight["departureTime"]);
+        });
+
         console.log("data - => ", data);
         setSOTRows(data);
       })
@@ -203,11 +225,12 @@ const FlightsList = () => {
     <>
       <div className="mt-5 w-100">
         <DataGrid
-          components={{ Toolbar: QuickSearchToolbar }}
+          className={classes.columns}
           rows={rows}
           columns={columns}
           autoHeight={true}
           autoWidth={true}
+          components={{ Toolbar: QuickSearchToolbar }}
           componentsProps={{
             toolbar: {
               value: searchText,
