@@ -63,18 +63,6 @@ const CreateFlight = () => {
               placeholder="Enter Economy Seat Numbers "
             />
           </Form.Group>
-          <Form.Group as={Col}  controlId="formGridBusiness">
-            <Form.Label>Business Seats Number</Form.Label>
-            <Form.Control
-              name="businessSeatsNum"
-              placeholder="Enter Business Seat Numbers "
-            />
-          </Form.Group>
-
-        </Row>
-
-       
-        <Row >
           <Form.Group as={Col}  controlId="formGridPriceEco">
             <Form.Label>Economy Class Price </Form.Label>
             <Form.Control
@@ -82,6 +70,20 @@ const CreateFlight = () => {
               placeholder="Please Enter the price"
             />
           </Form.Group>
+          
+
+        </Row>
+
+       
+        <Row >
+        <Form.Group as={Col} controlId="formGridFirst">
+            <Form.Label>First Seats Number</Form.Label>
+            <Form.Control
+              name="firstSeatsNum"
+              placeholder="Enter First Seat Numbers "
+            />
+          </Form.Group>
+          
 
           <Form.Group as={Col} controlId="formGridPriceFirst">
             <Form.Label>First Class Price</Form.Label>
@@ -92,6 +94,13 @@ const CreateFlight = () => {
           </Form.Group>
         </Row>
         <Row>
+        <Form.Group as={Col}  controlId="formGridBusiness">
+            <Form.Label>Business Seats Number</Form.Label>
+            <Form.Control
+              name="businessSeatsNum"
+              placeholder="Enter Business Seat Numbers "
+            />
+          </Form.Group>
         <Form.Group
               as={Col}
               controlId="formGridPriceBusiness"
@@ -103,13 +112,7 @@ const CreateFlight = () => {
               />
             </Form.Group>
           
-        <Form.Group as={Col} controlId="formGridFirst">
-            <Form.Label>First Seats Number</Form.Label>
-            <Form.Control
-              name="firstSeatsNum"
-              placeholder="Enter First Seat Numbers "
-            />
-          </Form.Group>
+        
             </Row>
             <Row >
 

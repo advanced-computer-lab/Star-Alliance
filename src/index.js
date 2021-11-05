@@ -102,7 +102,7 @@ app.post("/createFlight", async (req, res) => {
   //res.send();
 
   //setTimeout(function(){
-  //res.redirect("http://localhost:3000/createFlight")
+  res.redirect("http://localhost:3000/")
   //}, 5000);
 });
 // (async () => {

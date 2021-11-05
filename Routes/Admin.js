@@ -28,6 +28,19 @@ app.post("/GetFlightInfo", async (req, res) => {
   res.send(result);
 });
 
+app.post("/GetInfo", async (req, res) => {
+  const flightId  = req.body.flightId;
+  console.log("GetFlightInfo flightnumber =", req.body.flightId);
+
+  const result = await flight.findOne({ _id: flightId });
+  console.log("result from GetFlightInfo", result);
+  if (result == null) {
+    res.status(404).send("No flight with this Number");
+    return;
+  }
+  res.send(result);
+});
+
 app.post("/DeleteFlight", async (req, res) => {
   console.log(req.body.resp);
   const flightNumber  = req.body.flightNumber;
@@ -38,6 +51,10 @@ app.post("/DeleteFlight", async (req, res) => {
     res.status(404).send("No flight with this Number");
     return;
   }
+  /* console.log(req.body);
+  if(req.body.redirectTo === "FlightList"){
+    res.redirect("http://localhost:3000/FlightList");
+  } */
   res.send(result);
 }
 );

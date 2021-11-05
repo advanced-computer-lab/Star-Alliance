@@ -13,7 +13,7 @@ import ClearIcon from "@mui/icons-material/Clear";
 import SearchIcon from "@mui/icons-material/Search";
 import { createTheme } from "@mui/material/styles";
 import { createStyles, makeStyles } from "@mui/styles";
-
+import { Link } from "react-router-dom";
 import FlightService from "../Services/FlightService";
 
 function escapeRegExp(value) {
@@ -143,6 +143,25 @@ const FlightsList = () => {
       field: "economyClassPrice",
       headerName: "economyClassPrice",
       flex: 1,
+    },
+    {
+      field: "",
+      headerName: "More info",
+      sortable: false,
+      width: 100,
+      disableClickEventBubbling: true,
+    renderCell: (params) => {
+      return (
+        <Link
+          to={{
+            pathname: "/FlightView/" + params.row.id,
+            //allActivities: allActivities,
+          }}
+        >
+          More info
+        </Link>
+      );
+        }
     },
   ];
   // "_id": "617be2ec9fa58494388aca3c",

@@ -9,7 +9,7 @@ import {
 import home from "./home.js";
 import UpdateForm from "../Components/UpdateForm.js";
 import deletePopup from "../Components/DeletePopup.js";
-
+import FlightView from "./FlightView.js";
 import FlightsList from "../Components/FlightsList.js";
 
 import CreateFlight from "../Components/CreateFlight.js";
@@ -26,6 +26,7 @@ const Main = () => {
         <Route exact path="/test" component={TestPage} />
         <Route exact path="/UpdateForm" component={UpdateForm} />
         <Route exact path="/FlightsList" component={FlightsList} />
+        <Route exact path="/FlightView/:flightId" component={FlightView} />
         <Route exact path="/deleteFlight" component={deletePopup}></Route>
         <Route exact path="/createFlight" component={CreateFlight}></Route>
       </Switch>
