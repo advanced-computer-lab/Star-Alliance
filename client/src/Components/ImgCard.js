@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
@@ -10,6 +10,13 @@ const ImgCard = (props) => {
   const handleBtnClick = () => {
     setPopupOpen(true);
   };
+  // useEffect(() => {
+  //   const CBClose = () => {
+  //     setPopupOpen(false);
+  //   };
+  //   // props.children.props = { ...props.children.props, CBClose };
+    
+  // }, []);
   return (
     <>
       <PopupView

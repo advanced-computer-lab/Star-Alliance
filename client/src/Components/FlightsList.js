@@ -219,6 +219,16 @@ const FlightsList = () => {
         flex: 1,
       },
       {
+        field: "arrivalTerminal",
+        headerName: "Arrival Terminal",
+        flex: 1,
+      },
+      {
+        field: "departureTerminal",
+        headerName: "Departure Terminal",
+        flex: 1,
+      },
+      {
         field: "actions",
         type: "actions",
         flex: 1,

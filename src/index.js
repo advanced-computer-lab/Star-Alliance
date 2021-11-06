@@ -96,13 +96,15 @@ app.post("/createFlight", async (req, res) => {
   Flight.economyClassPrice = req.body.economyClassPrice;
   Flight.businessClassPrice = req.body.businessClassPrice;
   Flight.firstSeatsNum = req.body.firstSeatsNum;
+  Flight.arrivalTerminal = req.body.arrivalTerminal;
+  Flight.departureTerminal = req.body.departureTerminal;
   await Flight.save();
 
-  //res.write("<h1>Flight was added successfully ✅</h1>")
+  //res.write("<h1>Flight was added successfully</h1>")
   //res.send();
-
-  //setTimeout(function(){
-  res.redirect("http://localhost:3000/")
+  
+//  setTimeout(function(){
+  res.redirect("http://localhost:3000/");
   //}, 5000);
 });
 // (async () => {

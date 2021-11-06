@@ -133,6 +133,26 @@ const CreateFlight = () => {
               />
               </Form.Group>
             </Row>
+            <Row>
+            <Form.Group
+                as={Col}
+                controlId="formGridrArivalAirport"
+              >
+                <Form.Label>Arrival Terminal </Form.Label>
+                <Form.Control
+                  name="arrivalTerminal"
+                  placeholder="Enter Arrival Terminal"
+                />
+              </Form.Group>
+
+        <Form.Group as={Col} controlId="formGriddepartureAirport" >
+         <Form.Label>Departure Terminal </Form.Label>
+            <Form.Control
+              name="departureTerminal"
+              placeholder="Enter Departure Terminal"
+              />
+              </Form.Group>
+            </Row>
           <div>
             <Button  className="mt-2" style={{ display: "block",marginLeft: "auto",marginRight: "0px" }} variant="primary" type="submit">
               Create Flight
