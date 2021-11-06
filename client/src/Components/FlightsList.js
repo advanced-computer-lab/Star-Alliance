@@ -167,26 +167,27 @@ const FlightsList = () => {
         flex: 1,
       },
       {
+        field: "departureAirport",
+        headerName: "Departure Airport",
+        flex: 1,
+      },
+      {
         field: "arrivalAirport",
         headerName: "Arrival Airport",
         headerAlign: "right",
         flex: 1,
       },
       {
-        field: "departureAirport",
-        headerName: "Departure Airport",
-        flex: 1,
+        field: "departureTime",
+        headerName: "Departure Time",
+        flex: 1.35,
       },
       {
         field: "arrivalTime",
         headerName: "Arrival Time",
-        flex: 1.25,
+        flex: 1.35,
       },
-      {
-        field: "departureTime",
-        headerName: "Departure Time",
-        flex: 1.25,
-      },
+
       {
         field: "firstSeatsNum",
         headerName: "First Class Seats",
@@ -281,7 +282,8 @@ const FlightsList = () => {
         data.forEach((flight) => {
           flight["id"] = flight["_id"];
           const formatDateTime = (input) =>
-            moment(input).format("yyyy-MM-DD hh:mmA");
+            input ? moment(input).format("yyyy-MM-DD hh:mmA") : null;
+
           flight["arrivalTime"] = formatDateTime(flight["arrivalTime"]);
           flight["departureTime"] = formatDateTime(flight["departureTime"]);
         });
