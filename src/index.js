@@ -3,21 +3,28 @@ var path = require("path");
 var fs = require("fs"); //file system
 var cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
-const mongoose = require('mongoose'); 
+const mongoose = require("mongoose");
 var cors = require("cors");
 require("dotenv").config();
 
-const User = require('../Models/user.js');
-const Reservation = require('../Models/reservation.js');
-const Flight = require('../Models/flight.js');
-const CreditCard = require('../Models/creditcard.js');
-const Companion = require('../Models/companion.js');
-const creditcard = require("../Models/creditcard.js");
+// const user = require("../Models/user.js");
+// const reservation = require("../Models/reservation.js");
+// const flight = require("../Models/flight.js");
+// const creditCard = require("../Models/creditcard.js");
+// const companion = require("../Models/companion.js");
+const {
+  user,
+  reservation,
+  flight,
+  creditCard,
+  companion,
+} = require("../Models/export");
 
+// Express App Setup
 const app = express();
 app.use(
   cors({
-    origin: process.env.React_Server_Origin,
+    origin: "http://localhost:3000",
     credentials: true,
     optionSuccessStatus: 200,
   })
@@ -26,30 +33,21 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 
+app.use("/Admin", require("../Routes/Admin.js"));
 
-const dbUrl = process.env.DB_URI;
-mongoose.connect(dbUrl, { 
-    useNewUrlParser: true,
-    useUnifiedTopology: true 
-});
+const db = require("../Service/DBService.js");
 
-const db = mongoose.connection;
-db.on("error", console.error.bind(console, "connection error:"));
-db.once("open", () => {
-    console.log("Database connected");
-});
-
-const createAdmin = async(req,res) =>{
-    const newAd = new User();
-    newAd.firstName = "Adminstrator";
-    newAd.isAdmin = true;
-    await newAd.save();
-    //await User.deleteMany();
-  };
+const createAdmin = async (req, res) => {
+  const newAd = new user();
+  newAd.firstName = "Adminstrator";
+  newAd.isAdmin = true;
+  await newAd.save();
+  //await User.deleteMany();
+};
 //createAdmin();
 
-const createCompanion = async(req,res) =>{
-/*   const compan = new Companion();
+const createCompanion = async (req, res) => {
+  /*   const compan = new Companion();
   compan.firstName="Mohamed";
   compan.lastName="Ahmed";
   compan.passportNumber="123456789";
@@ -58,40 +56,61 @@ const createCompanion = async(req,res) =>{
   compan.birthDate=Date.now();
   const fl = new Flight();
   fl.flightNumber = "123456789";*/
-  const x = await User.find({firstName:"ahmed"});
-  const us = new User();
-  us.firstName="ahmed"; 
+  const x = await user.find({ firstName: "ahmed" });
+  const us = new user();
+  us.firstName = "ahmed";
   const cr = new creditcard();
-  cr.number="123456";
+  cr.number = "123456";
   cr.cvv = "123";
-  const t = await CreditCard.find({});
+  const t = await creditCard.find({});
   us.creditcards = t;
-  const ress = new Reservation();
-  ress.user=x[0];
+  const ress = new reservation();
+  ress.user = x[0];
   //ress.flight = fl;
   //ress.companions=compan;
   await ress.save();
-}
+};
 //createCompanion();
 
-const testdeleteReservation = async(req, res) =>{
-  await User.deleteMany({firstName:"ahmed"});
+const testdeleteReservation = async (req, res) => {
+  await user.deleteMany({ firstName: "ahmed" });
   //await User.findOneAndDelete({firstName:"ahmed"});
-}
-testdeleteReservation();
+};
+// testdeleteReservation();
 
 app.get("/", (req, res) => {
   // console.log(req.cookies);
   res.json({ message: "From the Node Server !" });
 });
 
-const handleDbError = (err) => {
-  console.log(err);
-};
+app.post("/createFlight", async (req, res) => {
+  const Flight = new flight();
+  Flight.flightNumber = req.body.flightNumber;
+  Flight.arrivalTime = req.body.arrivalTime;
+  Flight.departureTime = req.body.departureTime;
+  Flight.economySeatsNum = req.body.economySeatsNum;
+  Flight.businessSeatsNum = req.body.businessSeatsNum;
+  Flight.departureAirport = req.body.departureAirport;
+  Flight.arrivalAirport = req.body.arrivalAirport;
+  Flight.firstClassPrice = req.body.firstClassPrice;
+  Flight.economyClassPrice = req.body.economyClassPrice;
+  Flight.businessClassPrice = req.body.businessClassPrice;
+  Flight.firstSeatsNum = req.body.firstSeatsNum;
+  Flight.arrivalTerminal = req.body.arrivalTerminal;
+  Flight.departureTerminal = req.body.departureTerminal;
+  await Flight.save();
+
+  //res.write("<h1>Flight was added successfully</h1>")
+  //res.send();
+  
+//  setTimeout(function(){
+  res.redirect("http://localhost:3000/");
+  //}, 5000);
+});
+// (async () => {
+//   const res = await flight.deleteMany({ flightNumber: "" });
+//   console.log(res);
+// })();
 
 const port = process.env.PORT || 8080;
-db.on("error", handleDbError);
-
-app.listen(port, () =>
-  console.log(`server is listening at port:${port}`)
-);
+app.listen(port, () => console.log(`server at localhost:${port}`));
