@@ -16,6 +16,7 @@ import CreateFlight from "../Components/CreateFlight.js";
 
 
 import TestPage from "./TestPage.js";
+import userHomePage from "../Components/userHomePage.js";
 
 const Main = () => {
   return (
@@ -28,6 +29,7 @@ const Main = () => {
         <Route exact path="/FlightsList" component={FlightsList} />
         <Route exact path="/deleteFlight" component={deletePopup}></Route>
         <Route exact path="/createFlight" component={CreateFlight}></Route>
+        <Route exact path="/userHome" component={userHomePage}></Route>
       </Switch>
     </>
   );
