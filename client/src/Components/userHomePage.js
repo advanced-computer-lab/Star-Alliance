@@ -5,10 +5,40 @@ import FormControl from "react-bootstrap/FormControl";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import TextField from "@mui/material/TextField";
 import Carousel from "react-bootstrap/Carousel";
-import Box from '@mui/material/Box';
+import FlightService from "../Services/FlightService";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+ import { faSearch } from '@fortawesome/free-solid-svg-icons'
 
+var egy= "https://flagpedia.net/data/flags/w702/eg.png";
+var r=[];
+var s;
+
+// import { roundtrip } from "../../../src";
+const handleSubmit = (e) =>{
+  e.preventDefault();
+  const data = { 
+
+    //going
+    arrivalAirport: e.target.arrivalAirport.value,
+    departureAirport: e.target.departureAirport.value, 
+    departureTime: e.target.departureTime.value,
+    // returning
+    arrivalTime2: e.target.arrivalTime.value,
+    /// 
+    type:e.target.type.value,
+    children:e.target.children.value,
+    adult:e.target.adult.value
+
+  };
+ FlightService.GetRequestedFlights(data).then(({ data }) => {
+       // console.log("recived ===> ",data);
+        r=data.going;
+        s= data.returning;
+        //console.log(r.going);
+      })
+    }
+    
 const userHomePage = () => {
   return (
     <div  id="testing" style={{fontFamily:"cursive",marginTop:"1cm",color:"white"}}>
@@ -21,8 +51,8 @@ const userHomePage = () => {
               alt="First slide"
             />
             <Carousel.Caption>
-              <h3></h3>
-              <p></p>
+            <h3>Above All, We Care</h3>
+                          <p></p>
             </Carousel.Caption>
           </Carousel.Item>
           <Carousel.Item>
@@ -34,7 +64,7 @@ const userHomePage = () => {
             />
 
             <Carousel.Caption>
-              <h3></h3>
+              <h3>Above All, We Care</h3>
               <p></p>
             </Carousel.Caption>
           </Carousel.Item>
@@ -47,29 +77,29 @@ const userHomePage = () => {
             />
 
             <Carousel.Caption>
-              <h3></h3>
-              <p></p>
+            <h3>Above All, We Care</h3>      
+                    <p></p>
             </Carousel.Caption>
           </Carousel.Item>
         </Carousel>
-    <div   style={{borderRadius:"2rem",backgroundColor:"#112D4E",width:"22cm",marginLeft:"10cm",marginBottom:"3cm",height:"12cm",marginTop:"1cm" }}>
+    <div   style={{borderRadius:"2rem",backgroundColor:"#112D4E",width:"22cm",marginLeft:"10cm",marginBottom:"3cm",height:"10cm",marginTop:"1cm" }}>
   <div style={{width:"16cm",marginLeft:"3cm",marginRight:"2cm"}}>
 
-    <Form 
-      action="http://localhost:8080/GetRequestedFlights"
-      method="post"
+    <Form onSubmit={handleSubmit}
+     // action="http://localhost:8080/GetRequestedFlights"
+      //method="post"
     >
       <Row>
-      <h3 className="mt-3 mb-2">Book Your Flight! ✈</h3>
+      <h3 className="mt-3 mb-2">Book Your Flight! ✈ </h3>
 
       <Form.Group as={Col} controlId="formGridState">
       <Form.Label>From</Form.Label>
       
       <Form.Select  name="arrivalAirport" defaultValue="">
-        <option  value="LAX">LAX</option>
+        <option   value="LAX">LAX</option>
         <option  value="JFK">JFK</option>
         <option value="LHR">LHR</option>
-        <option value="CAI">CAI</option>
+        <option  value="CAI"> CAI </option>
         <option value="EXP">EXP</option>
         <option value="MUC">MUC</option>
         <option value="CDG">CDG</option>
@@ -82,10 +112,10 @@ const userHomePage = () => {
         <Form.Group as={Col} controlId="formGridState">
       <Form.Label>To</Form.Label>
       <Form.Select  name="departureAirport" defaultValue="">
-        <option  value="LAX">LAX</option>
+        <option value="LAX">LAX</option>
         <option  value="JFK">JFK</option>
         <option value="LHR">LHR</option>
-        <option value="CAI">CAI</option>
+        <option  value="CAI">CAI </option>
         <option value="EXP">EXP</option>
         <option value="MUC">MUC</option>
         <option value="CDG">CDG</option>
@@ -154,27 +184,10 @@ const userHomePage = () => {
       </Form.Select>
     </Form.Group>
       </Row>
-      <Row >
-        <Form.Group as={Col}  controlId="formGridPriceEco">
-          <Form.Label>Departure Airport</Form.Label>
-          <Form.Control
-            name="DepartureAirport"
-            placeholder="Please Enter the price"
-          />
-        </Form.Group>
-
-        <Form.Group as={Col} controlId="formGridPriceFirst">
-          <Form.Label>Arrival Airport</Form.Label>
-          <Form.Control
-            name="ArrivalAirport"
-            placeholder="Please Enter the price"
-          />
-        </Form.Group>
-      </Row>
       <Row> 
         <Col>
       <Form.Group controlId="cabinClass">
-      <Form.Label>Cabin class</Form.Label>
+      <Form.Label>Cabin Class</Form.Label>
       <Form.Select name= "type"defaultValue="Economy">
         <option value="Economy">Economy</option>
         <option value="Business">Business</option>
@@ -185,8 +198,7 @@ const userHomePage = () => {
     <Col>
 
           <Button  className="mt-4"  variant="primary" type="submit">
-            Search Flight ✈
-           
+            Search Flight  <FontAwesomeIcon icon={faSearch} />   
           </Button>
         </Col>
 
@@ -194,14 +206,20 @@ const userHomePage = () => {
 
     </Form>
     </div>
+    <p>
+     </p>
 
+      
   </div>
+  
+  {/* <img style={{marginLeft:"8cm"}} src="https://as2.ftcdn.net/v2/jpg/00/79/10/15/1000_F_79101584_S9c81T4XBEn6wOJCYRFwWkqUpgmi05vJ.jpg" /> */}
   </div>
 
 
 
     );
+
 };
-
-
 export default userHomePage;
+
+//export {r};

@@ -8,7 +8,7 @@ import Button from "react-bootstrap/Button";
 import Navbar from "react-bootstrap/Navbar";
 
 //const isAdmin = true;
-const logo= "	https://o.remove.bg/downloads/aa37b98f-7b15-46b6-a07b-18db8f755b13/8-removebg-preview.png"
+const logo= "	https://o.remove.bg/downloads/e14af0fc-8d3f-4a5a-8dc4-15aca52535d1/7-removebg-preview.png"
 const Naavbar = () => {
   return (
     <>
@@ -26,7 +26,7 @@ const Naavbar = () => {
       <Navbar fixed="top" style={{height:"5rem",fontFamily:"cursive", backgroundColor: "#112D4E" }} expand="lg">
         <Container>
           <Navbar.Brand href="/" style={{ color: "#DBE2EF" }}>
-          <img style={{height:"1cm" ,width:"2cm"}} src={logo} />
+           <img style={{height:"1cm" ,width:"2cm"}} src={logo} />
             Star-Alliance
           </Navbar.Brand>
 

@@ -58,7 +58,7 @@ const home = () => {
               alt="First slide"
             />
             <Carousel.Caption>
-              <h3></h3>
+            <h3>Above All, We Care</h3>
               <p></p>
             </Carousel.Caption>
           </Carousel.Item>
@@ -71,7 +71,7 @@ const home = () => {
             />
 
             <Carousel.Caption>
-              <h3></h3>
+            <h3>Above All, We Care</h3>
               <p></p>
             </Carousel.Caption>
           </Carousel.Item>
@@ -84,8 +84,8 @@ const home = () => {
             />
 
             <Carousel.Caption>
-              <h3></h3>
-              <p></p>
+            <h3>Above All, We Care</h3>
+                          <p></p>
             </Carousel.Caption>
           </Carousel.Item>
         </Carousel>
@@ -97,7 +97,6 @@ const home = () => {
         {homeCardsInfo.map((info) => (
           <ImgCard {...info} />
         ))}
-
         <Card style={{ width: "18rem", marginLeft: "1cm", marginRight: "1cm" }}>
           <Card.Img
             variant="top"
