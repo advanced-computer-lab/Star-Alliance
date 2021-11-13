@@ -25,7 +25,7 @@ const Naavbar = () => {
       {/* <h1>Hello</h1> */}
       <Navbar fixed="top" style={{height:"5rem",fontFamily:"cursive", backgroundColor: "#112D4E" }} expand="lg">
         <Container>
-          <Navbar.Brand href="/" style={{ color: "#DBE2EF" }}>
+          <Navbar.Brand href="/userHome" style={{ color: "#DBE2EF" }}>
            <img style={{height:"1cm" ,width:"2cm"}} src={logo} />
             Star-Alliance
           </Navbar.Brand>
