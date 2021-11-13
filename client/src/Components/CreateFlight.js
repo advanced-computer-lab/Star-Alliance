@@ -9,7 +9,7 @@ import TextField from "@mui/material/TextField";
 
 const CreateFlight = () => {
   return (
-    <div class="align-items-center justify-content-center">
+    <div class="align-items-center justify-content-center" style={{fontFamily:"cursive"}}>
       <br></br>
       <br></br>
       <br></br>

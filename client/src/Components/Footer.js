@@ -3,18 +3,19 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 import { faTwitter} from '@fortawesome/free-solid-svg-icons'
+import logo from  "../images/logo.png";
 
 const Footer = () => {
     return (
 
 
-<footer style={{backgroundColor:"#112D4E",color:"#DBE2EF"}} class="footer-07">
+<footer style={{backgroundColor:"#112D4E",color:"#DBE2EF",fontFamily:"cursive"}} class="footer-07">
 			<div class="container">
 				<div class="row justify-content-center">
 					<div class="col-md-12 text-center">
                     <br></br>
 
-						<h2  class="footer-heading">Star-Alliance<img style={{height:"5cm"}}src="https://o.remove.bg/downloads/e14af0fc-8d3f-4a5a-8dc4-15aca52535d1/7-removebg-preview.png" /></h2> 
+						<h2  class="footer-heading">Star-Alliance<img style={{height:"5cm"}}src={logo} /></h2> 
                         <br></br>
 						<p class="menu">
 							<a href="https://www.instagram.com/staralliance/?hl=en"><img style={{height:"1cm",width:"1cm" ,marginRight:"0.5cm"}} src= "https://cdn-icons-png.flaticon.com/512/174/174855.png"/> </a>

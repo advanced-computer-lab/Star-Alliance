@@ -17,23 +17,7 @@ const PopupView = (props) => {
       <Dialog open={props.showDialog} onClose={handleClose} fullWidth>
         <DialogTitle>{props.title}</DialogTitle>
         <DialogContent>
-          {/* {props.subtext && (
-            <DialogContentText>{props.subtext}</DialogContentText>
-          )} */}
-          {/* <TextField
-            autoFocus
-            margin="dense"
-            fullWidth
-            variant="standard"
-            required
-            name="test"
-            label="test"
-            type="test"
-            id="test"
-          /> */}
-          {/* <Typography variant="h6" gutterBottom>
-            RUhcfoirheioph irew ophreiwgph jiowehrp
-          </Typography> */}
+        
           {props.children}
         </DialogContent>
         <DialogActions>

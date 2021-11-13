@@ -6,9 +6,9 @@ import { Nav, NavDropdown, Link } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Navbar from "react-bootstrap/Navbar";
-
+import logo from  "../images/logo.png";
 //const isAdmin = true;
-const logo= "	https://o.remove.bg/downloads/e14af0fc-8d3f-4a5a-8dc4-15aca52535d1/7-removebg-preview.png"
+//const logo= "	https://o.remove.bg/downloads/e14af0fc-8d3f-4a5a-8dc4-15aca52535d1/7-removebg-preview.png"
 const Naavbar = () => {
   return (
     <>

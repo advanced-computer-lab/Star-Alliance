@@ -9,6 +9,14 @@ import Carousel from "react-bootstrap/Carousel";
 import FlightService from "../Services/FlightService";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
  import { faSearch } from '@fortawesome/free-solid-svg-icons'
+ import { faBaby} from '@fortawesome/free-solid-svg-icons'
+ import { faMale} from '@fortawesome/free-solid-svg-icons'
+ import { faPlaneDeparture} from '@fortawesome/free-solid-svg-icons'
+ import { faPlaneArrival} from '@fortawesome/free-solid-svg-icons'
+ import { faCalendarAlt} from '@fortawesome/free-solid-svg-icons'
+
+import MoreThanFlight from "./MoreThanFlight";
+import PopupView from "./PopupView";
 
 var egy= "https://flagpedia.net/data/flags/w702/eg.png";
 var r=[];
@@ -92,25 +100,10 @@ const userHomePage = () => {
       <Row>
       <h3 className="mt-3 mb-2">Book Your Flight! ✈ </h3>
 
-      <Form.Group as={Col} controlId="formGridState">
-      <Form.Label>From</Form.Label>
-      
-      <Form.Select  name="arrivalAirport" defaultValue="">
-        <option   value="LAX">LAX</option>
-        <option  value="JFK">JFK</option>
-        <option value="LHR">LHR</option>
-        <option  value="CAI"> CAI </option>
-        <option value="EXP">EXP</option>
-        <option value="MUC">MUC</option>
-        <option value="CDG">CDG</option>
-        <option value="RUH">RUH</option>
-        <option value="YYZ">YYZ</option>
-        <option value="FRA">FRA</option>
-      </Form.Select>
-    </Form.Group>
-        <Col >
+
+      <Col >
         <Form.Group as={Col} controlId="formGridState">
-      <Form.Label>To</Form.Label>
+      <Form.Label>From <FontAwesomeIcon icon={faPlaneDeparture} /></Form.Label>
       <Form.Select  name="departureAirport" defaultValue="">
         <option value="LAX">LAX</option>
         <option  value="JFK">JFK</option>
@@ -125,26 +118,45 @@ const userHomePage = () => {
       </Form.Select>
     </Form.Group>
         </Col>
+
+      <Form.Group as={Col} controlId="formGridState">
+      <Form.Label>To <FontAwesomeIcon icon={faPlaneArrival} /></Form.Label>
+      
+      <Form.Select  name="arrivalAirport" defaultValue="">
+        <option   value="LAX">LAX</option>
+        <option  value="JFK">JFK</option>
+        <option value="LHR">LHR</option>
+        <option  value="CAI"> CAI </option>
+        <option value="EXP">EXP</option>
+        <option value="MUC">MUC</option>
+        <option value="CDG">CDG</option>
+        <option value="RUH">RUH</option>
+        <option value="YYZ">YYZ</option>
+        <option value="FRA">FRA</option>
+      </Form.Select>
+    </Form.Group>
+       
       </Row>
       <Row>
       <Col>
-
-        <Form.Group  style={{width:"auto"}}  controlId="formGridArrivalTime">
-          <Form.Label>Arrival Date</Form.Label>
-          <Form.Control
-            type="datetime-local"
-            name="arrivalTime"
-            placeholder="Enter Arrival Time"
-          />
-        </Form.Group>
-        </Col>
-        <Col>
-          <Form.Group  style={{width:"auto"}}  controlId="formGridDepartureTime">
-          <Form.Label>Departure Date</Form.Label>
+      <Form.Group  style={{width:"auto"}}  controlId="formGridDepartureTime">
+          <Form.Label>Departure Date  <FontAwesomeIcon icon={faCalendarAlt} /></Form.Label>
           <Form.Control
             type="datetime-local"
             name="departureTime"
             placeholder="Enter Departure Time"
+          />
+        </Form.Group>
+        
+        </Col>
+        <Col>
+          
+        <Form.Group  style={{width:"auto"}}  controlId="formGridArrivalTime">
+          <Form.Label>Arrival Date <FontAwesomeIcon icon={faCalendarAlt} /></Form.Label>
+          <Form.Control
+            type="datetime-local"
+            name="arrivalTime"
+            placeholder="Enter Arrival Time"
           />
         </Form.Group>
         </Col>
@@ -154,7 +166,7 @@ const userHomePage = () => {
 
       <Row >
       <Form.Group as={Col} controlId="formGridState">
-      <Form.Label>Adult(s)</Form.Label>
+      <Form.Label>Adult(s)   <FontAwesomeIcon icon={faMale} /></Form.Label>
       
       <Form.Select  name="adult" defaultValue="1">
         <option  value="1">1</option>
@@ -170,7 +182,7 @@ const userHomePage = () => {
 
     <Form.Group as={Col} controlId="formGridState">
    
-      <Form.Label>Child(ren)</Form.Label>
+      <Form.Label>Child(ren)  <FontAwesomeIcon icon={faBaby} /></Form.Label>
       <Form.Select  name="children" defaultValue="0">
       <option  value="0">0</option>
         <option  value="1">1</option>
@@ -206,11 +218,9 @@ const userHomePage = () => {
 
     </Form>
     </div>
-    <p>
-     </p>
 
-      
   </div>
+      <MoreThanFlight />
   
   {/* <img style={{marginLeft:"8cm"}} src="https://as2.ftcdn.net/v2/jpg/00/79/10/15/1000_F_79101584_S9c81T4XBEn6wOJCYRFwWkqUpgmi05vJ.jpg" /> */}
   </div>
@@ -221,5 +231,3 @@ const userHomePage = () => {
 
 };
 export default userHomePage;
-
-//export {r};

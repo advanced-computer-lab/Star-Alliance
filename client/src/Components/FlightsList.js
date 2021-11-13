@@ -329,7 +329,7 @@ const FlightsList = () => {
       >
         {popupChild}
       </PopupView>
-      <div className="mt-5 w-100">
+      <div className="mt-5 w-100" >
         <DataGrid
           className={classes.columns}
           rows={rows}
