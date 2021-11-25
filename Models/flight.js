@@ -14,6 +14,8 @@ const flightSchema = new Schema({
   departureAirport: { type: String },
   arrivalAirport: { type: String },
   firstClassPrice: { type: Number },
+  arrivalTerminal: { type: String },
+  departureTerminal: { type: Number },
   economyClassPrice: { type: Number },
   businessClassPrice: { type: Number },
 
