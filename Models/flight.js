@@ -18,6 +18,7 @@ const flightSchema = new Schema({
   departureTerminal: { type: Number },
   economyClassPrice: { type: Number },
   businessClassPrice: { type: Number },
-
+  arrivalTerminal: { type: String },
+  departureTerminal: { type: String },
 });
 module.exports = mongoose.model("Flight", flightSchema);

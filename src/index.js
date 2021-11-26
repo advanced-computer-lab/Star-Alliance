@@ -7,6 +7,8 @@ const mongoose = require("mongoose");
 var cors = require("cors");
 require("dotenv").config();
 
+
+var roundtrid={};
 // const user = require("../Models/user.js");
 // const reservation = require("../Models/reservation.js");
 // const flight = require("../Models/flight.js");
@@ -96,19 +98,77 @@ app.post("/createFlight", async (req, res) => {
   Flight.economyClassPrice = req.body.economyClassPrice;
   Flight.businessClassPrice = req.body.businessClassPrice;
   Flight.firstSeatsNum = req.body.firstSeatsNum;
+  Flight.arrivalTerminal = req.body.arrivalTerminal;
+  Flight.departureTerminal = req.body.departureTerminal;
   await Flight.save();
 
-  //res.write("<h1>Flight was added successfully ✅</h1>")
+  //res.write("<h1>Flight was added successfully</h1>")
   //res.send();
-
-  //setTimeout(function(){
-  res.redirect("http://localhost:3000/")
+  
+//  setTimeout(function(){
+  res.redirect("http://localhost:3000/");
   //}, 5000);
 });
 // (async () => {
 //   const res = await flight.deleteMany({ flightNumber: "" });
 //   console.log(res);
 // })();
+// app.post("/GetRequestedFlights", async (req, res) => {
+//   console.log("/GetRequestedFlights sending");
+//   //
+//   const Flight = new flight();
+//  Flight.arrivalAirport=req.body.arrivalAirport;
+//  Flight.departureAirport=req.body.departureAirport;
+//  Flight.departureTime=req.body.departureTime;
+//  //
+//  const Flight2 = new flight();
+//  Flight2.arrivalAirport=req.body.departureAirport;
+//  Flight2.departureAirport=req.body.arrivalAirport;
+//  Flight2.departureTime=req.body.arrivalTime;
+// //
 
+
+//  const type=req.body.type;
+//  const total=Number(req.body.children)+Number(req.body.adult);
+//  var result=[];
+//  console.log(Flight);
+//  console.log(Flight.departureTime);
+//  console.log(total);
+ 
+//  var result2=[];
+
+
+//  // economySeatsNum:{ $gte: total}
+// if(type=="Economy"){
+  
+//   result = await flight.find({departureTime:Flight.departureTime,economySeatsNum:{$gte:total},
+//     arrivalAirport:Flight.arrivalAirport, departureAirport:Flight.departureAirport });
+
+//     result2 = await flight.find({departureTime:Flight2.departureTime,economySeatsNum:{$gte:total},
+//       arrivalAirport:Flight2.arrivalAirport, departureAirport:Flight2.departureAirport });
+// }
+// else 
+// if(type=="First Class"){
+//   result = await flight.find({departureTime:Flight.departureTime,firstSeatsNum:{$gte:total},
+//     arrivalAirport:Flight.arrivalAirport, departureAirport:Flight.departureAirport });
+
+//     result2 = await flight.find({departureTime:Flight2.departureTime,economySeatsNum:{$gte:total},
+//       arrivalAirport:Flight2.arrivalAirport, departureAirport:Flight2.departureAirport });
+// }
+// else
+// if (type=="Business"){
+//   result = await flight.find({departureTime:Flight.departureTime,businessSeatsNum:{$gte:total},
+//     arrivalAirport:Flight.arrivalAirport, departureAirport:Flight.departureAirport });
+
+//     result2 = await flight.find({departureTime:Flight2.departureTime,economySeatsNum:{$gte:total},
+//       arrivalAirport:Flight2.arrivalAirport, departureAirport:Flight2.departureAirport });
+// }
+//  roundtrid={going:result, returning:result2 };
+//  res.send(roundtrid);
+  
+//   console.log(roundtrid);
+// });
+
+//export {roundtrip};
 const port = process.env.PORT || 8080;
 app.listen(port, () => console.log(`server at localhost:${port}`));

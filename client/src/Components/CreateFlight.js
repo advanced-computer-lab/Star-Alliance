@@ -9,7 +9,7 @@ import TextField from "@mui/material/TextField";
 
 const CreateFlight = () => {
   return (
-    <div class="align-items-center justify-content-center">
+    <div class="align-items-center justify-content-center" style={{fontFamily:"cursive"}}>
       <br></br>
       <br></br>
       <br></br>
@@ -133,6 +133,26 @@ const CreateFlight = () => {
             <Form.Control
               name="departureAirport"
               placeholder="Enter Departure Airport"
+              />
+              </Form.Group>
+            </Row>
+            <Row>
+            <Form.Group
+                as={Col}
+                controlId="formGridrArivalAirport"
+              >
+                <Form.Label>Arrival Terminal </Form.Label>
+                <Form.Control
+                  name="arrivalTerminal"
+                  placeholder="Enter Arrival Terminal"
+                />
+              </Form.Group>
+
+        <Form.Group as={Col} controlId="formGriddepartureAirport" >
+         <Form.Label>Departure Terminal </Form.Label>
+            <Form.Control
+              name="departureTerminal"
+              placeholder="Enter Departure Terminal"
               />
               </Form.Group>
             </Row>

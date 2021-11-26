@@ -1,43 +1,45 @@
 import React from "react";
-import { MDBFooter, MDBContainer, MDBRow, MDBCol } from 'mdb-react-ui-kit';
-import ReactDOM from 'react-dom';
-import { SocialIcon } from 'react-social-icons';
+import "bootstrap/dist/css/bootstrap.min.css";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
-const Footer = () =>{
+import { faTwitter} from '@fortawesome/free-solid-svg-icons'
+import logo from  "../images/logo.png";
 
-    const foo = {
-        backgroundColor: "#96AAD7",
-        marginTop: "1rem",
-        padding: "1rem",
-        position: "fixed",
-        bottom: "0",
-        left: "0",
-        width: "100%"
-      };
+const Footer = () => {
+    return (
 
-      const icons = {
-        marginRight:"1rem"
-      };
 
-    return(
-    <>
-  <MDBFooter className='footer text-white text-center text-lg-left' style={foo}>
-     
-        <MDBRow>
-            <span>Get connected with us on social networks:</span>
-            <div className="text-cnter mt-3">
-            <SocialIcon style={icons} url="https://twitter.com/jaketrent" />
-            <SocialIcon style={icons} url="https://facebook.com/jaketrent" />
-            <SocialIcon style={icons} url="https://linkedin.com/jaketrent" />
-            </div>
-        </MDBRow>
+<footer style={{backgroundColor:"#112D4E",color:"#DBE2EF",fontFamily:"cursive"}} class="footer-07">
+			<div class="container">
+				<div class="row justify-content-center">
+					<div class="col-md-12 text-center">
+                    <br></br>
 
-      <div className='text-center p-3' style={{color:"#0000FF"}}>
-        &copy; {new Date().getFullYear()} 
-      </div>
-    </MDBFooter>
+						<h2  class="footer-heading">Star-Alliance<img style={{height:"5cm"}}src={logo} /></h2> 
+                        <br></br>
+						<p class="menu">
+							<a href="https://www.instagram.com/staralliance/?hl=en"><img style={{height:"1cm",width:"1cm" ,marginRight:"0.5cm"}} src= "https://cdn-icons-png.flaticon.com/512/174/174855.png"/> </a>
+							<a href="https://www.facebook.com/staralliance/"><img style={{height:"1cm",width:"1cm",marginRight:"0.5cm"}} src= "https://cdn-icons-png.flaticon.com/512/733/733547.png"/> </a>
+							<a href="https://twitter.com/staralliance?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor"><img style={{height:"1cm",width:"1cm",marginRight:"0.5cm"}} src= "https://cdn-icons-png.flaticon.com/512/733/733579.png"/></a>
+							<a href="https://www.youtube.com/user/staralliancenetwork"><img style={{height:"1cm",width:"1cm",marginRight:"0.5cm"}} src= "https://cdn-icons-png.flaticon.com/512/174/174883.png"/></a>
+						</p>
+						{/* <ul class="ftco-footer-social p-0">
+              <li class="ftco-animate"><a href="#" data-toggle="tooltip" data-placement="top" title="Twitter"><span class="ion-logo-twitter"></span></a></li>
+              <li class="ftco-animate"><a href="#" data-toggle="tooltip" data-placement="top" title="Facebook"><span class="ion-logo-facebook"></span></a></li>
+              <li class="ftco-animate"><a href="#" data-toggle="tooltip" data-placement="top" title="Instagram"><span class="ion-logo-instagram"></span></a></li>
+            </ul> */}
+					</div>
+				</div>
+				<div class="row mt-5">
+					<div class="col-md-12 text-center">
+						<p class="copyright">Copyright © {new Date().getFullYear()}    Star-Alliance All rights reserved</p>
+					</div>
+				</div>
+			</div>
+		</footer>
 
-    </>
-    );
-}
-export default Footer;
+        );
+    };
+    
+    export default Footer;
+    
