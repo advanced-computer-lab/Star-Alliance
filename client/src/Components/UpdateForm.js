@@ -46,12 +46,15 @@ const UpdateForm = (props) => {
       firstClassPrice: e.target.flPriceFirst.value,
       businessClassPrice: e.target.flPriceBusiness.value,
       economyClassPrice: e.target.flPriceEconomy.value,
+      arrivalTerminal: e.target.arrivalTerminal.value,
+      departureTerminal: e.target.departureTerminal.value,
     };
 
     console.log("data", data);
     FlightService.updateFlight(data)
       .then((res) => {
         console.log("OK ===> ", res);
+        showAlert("Updated");
         props.successCB?.call();
       })
       .catch((err) => {
@@ -74,6 +77,8 @@ const UpdateForm = (props) => {
       firstClassPrice,
       businessClassPrice,
       economyClassPrice,
+      arrivalTerminal,
+      departureTerminal
     } = data;
     // The specified value "2021-10-12T19:54:00.000Z" does not conform to the required format.  The format is "yyyy-MM-ddThh:mm" followed by optional ":ss" or ":ss.SSS".
     console.log("chk pot 1");
@@ -91,6 +96,9 @@ const UpdateForm = (props) => {
     updateFormRef.current.flPriceFirst.value = firstClassPrice;
     updateFormRef.current.flPriceBusiness.value = businessClassPrice;
     updateFormRef.current.flPriceEconomy.value = economyClassPrice;
+
+    updateFormRef.current.arrivalTerminal.value = arrivalTerminal;
+    updateFormRef.current.departureTerminal.value = departureTerminal;
   };
 
   const handleFindBtn = () => {
@@ -99,6 +107,7 @@ const UpdateForm = (props) => {
       .then(({ data }) => {
         console.log("recived", data);
         // findFlightNumber = data.flightNumber;
+        
         updateFormValues(data);
         setfindFlightNumber(data.flightNumber);
       })
@@ -247,6 +256,23 @@ const UpdateForm = (props) => {
               />
             </Col>
           </Row>
+          <Row >
+             <Col>
+                <Form.Label>Arrival Terminal</Form.Label>
+                <Form.Control
+                  name="arrivalTerminal"
+                  placeholder="Enter Arrival Terminal"
+                />
+              </Col>
+
+        <Col>
+         <Form.Label>Departure Terminal</Form.Label>
+            <Form.Control
+              name="departureTerminal"
+              placeholder="Enter Departure Terminal"
+              />
+              </Col>
+            </Row>
 
           <Button
             variant="primary"
