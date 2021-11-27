@@ -40,22 +40,17 @@ const createFlight = () => {
     </Form.Group>
 
 
-  <Form.Group as={Col} className="mb-3" controlId="formGridEconomy">
-    <Form.Label>Number of Economy seats</Form.Label>
-    <Form.Control  name="economySeatsNum" placeholder="Enter Number of Economy seats " />
-  </Form.Group>
+  
   </Row>
 
   <Row className="mb-3">
-
-  <Form.Group as={Col} className="mb-3" controlId="formGridBusiness">
-    <Form.Label>Number of Business Class seats</Form.Label>
-    <Form.Control  name="businessSeatsNum" placeholder="Enter Number of Business Class seats " />
-  </Form.Group>
-
   <Form.Group as={Col} className="mb-3" controlId="formGridFirst">
     <Form.Label>Number of First class seats</Form.Label>
     <Form.Control  name="firstSeatsNum" placeholder="Enter Number of First Class seats " />
+  </Form.Group>
+  <Form.Group as={Col} className="mb-3" controlId="formGridPriceFirst">
+    <Form.Label>Price for First Class </Form.Label>
+    <Form.Control  name="firstClassPrice" placeholder="Enter Price for First Class" />
   </Form.Group>
   </Row>
 
@@ -72,19 +67,23 @@ const createFlight = () => {
   </Form.Group>
   </Row>
   <Row className="mb-3">
+  <Form.Group as={Col} className="mb-3" controlId="formGridEconomy">
+    <Form.Label>Number of Economy seats</Form.Label>
+    <Form.Control  name="economySeatsNum" placeholder="Enter Number of Economy seats " />
+  </Form.Group>
   <Form.Group as={Col} className="mb-3" controlId="formGridPriceEco">
     <Form.Label>Price for Economy Class </Form.Label>
     <Form.Control  name="economyClassPrice" placeholder="Enter Price for Economy Class" />
   </Form.Group>
 
-  <Form.Group as={Col} className="mb-3" controlId="formGridPriceFirst">
-    <Form.Label>Price for First Class </Form.Label>
-    <Form.Control  name="firstClassPrice" placeholder="Enter Price for First Class" />
-  </Form.Group>
+  
 
   </Row>
   <Row className="mb-3">
-
+  <Form.Group as={Col} className="mb-3" controlId="formGridBusiness">
+    <Form.Label>Number of Business Class seats</Form.Label>
+    <Form.Control  name="businessSeatsNum" placeholder="Enter Number of Business Class seats " />
+  </Form.Group>
 
    <div style={{height:"3cm",width:"19.6cm"}} >
   <Form.Group   as={Col} className="mb-3" controlId="formGridPriceBusiness">

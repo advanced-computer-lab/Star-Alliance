@@ -7,6 +7,9 @@ class FlightService {
   GetFlightInfo(data) {
     return http.post("/Admin/GetFlightInfo", data);
   }
+  GetInfo(data) {
+    return http.post("/Admin/GetInfo", data); 
+  } 
   GetAllFlights(data) {
     return http.get("/Admin/GetAllFlights"); 
   }

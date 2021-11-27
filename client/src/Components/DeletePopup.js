@@ -39,6 +39,7 @@ const DeletePopup = () => {
     // datetime example "2016-05-18T16:00:00Z"
     const data = {
       flightNumber: e.target.flNumber.value,
+      redirectTo: ""
     };
     confirmation(data);
 

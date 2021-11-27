@@ -1,4 +1,5 @@
 import React from "react";
+import { useContext, useRef } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Button from "react-bootstrap/Button";
 import FormControl from "react-bootstrap/FormControl";
@@ -14,41 +15,56 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
  import { faPlaneDeparture} from '@fortawesome/free-solid-svg-icons'
  import { faPlaneArrival} from '@fortawesome/free-solid-svg-icons'
  import { faCalendarAlt} from '@fortawesome/free-solid-svg-icons'
+import Panel from "./Panel";
+import { Link } from "react-router-dom";
+import { UserHomeCtx } from "../Context/UserHomeContext";
 
 import MoreThanFlight from "./MoreThanFlight";
 import PopupView from "./PopupView";
 
-var egy= "https://flagpedia.net/data/flags/w702/eg.png";
-var r=[];
-var s;
 
-// import { roundtrip } from "../../../src";
-const handleSubmit = (e) =>{
-  e.preventDefault();
-  const data = { 
 
-    //going
-    arrivalAirport: e.target.arrivalAirport.value,
-    departureAirport: e.target.departureAirport.value, 
-    departureTime: e.target.departureTime.value,
-    // returning
-    arrivalTime2: e.target.arrivalTime.value,
-    /// 
-    type:e.target.type.value,
-    children:e.target.children.value,
-    adult:e.target.adult.value
+const UserHomePage = () => {
+  const [searchFlights, setSearchFlights] = useContext(UserHomeCtx);
+  const formRef = useRef(null);
+  const goingData=[];
+  //const ref = useRef(null);
+ // searchFlights.data="13";
 
-  };
- FlightService.GetRequestedFlights(data).then(({ data }) => {
-       // console.log("recived ===> ",data);
-        r=data.going;
-        s= data.returning;
-        //console.log(r.going);
-      })
-    }
+  var egy= "https://flagpedia.net/data/flags/w702/eg.png";
+  var r=[];
+  var s;
+  
+  // import { roundtrip } from "../../../src";
+  const handleSubmit = () =>{
+    var e =formRef.current;
+    console.log("enter",formRef.current.departureAirport.value);
+   // e.preventDefault();
+    const data = { 
+  
+      //Going
+      arrivalAirport: e.arrivalAirport.value,
+      departureAirport: e.departureAirport.value, 
+      departureTime: e.departureTime.value,
+      // returning
+      arrivalTime2: e.arrivalTime.value,
+      /// 
+      type:e.type.value,
+      children:e.children.value,
+      adult:e.adult.value
+  
+    };
+    console.log(data);
     
-const userHomePage = () => {
-  return (
+   FlightService.GetRequestedFlights(data).then(({ data }) => {
+         // console.log("recived ===> ",data);
+          //r=[data]
+          //s= data.returning;
+          console.log(data.going)
+          searchFlights.data=data;
+        })
+      }
+  return ( 
     <div  id="testing" style={{fontFamily:"cursive",marginTop:"1cm",color:"white"}}>
       <Carousel>
           <Carousel.Item>
@@ -60,7 +76,7 @@ const userHomePage = () => {
             />
             <Carousel.Caption>
             <h3>Above All, We Care</h3>
-                          <p></p>
+              <p></p>
             </Carousel.Caption>
           </Carousel.Item>
           <Carousel.Item>
@@ -93,7 +109,7 @@ const userHomePage = () => {
     <div   style={{borderRadius:"2rem",backgroundColor:"#112D4E",width:"22cm",marginLeft:"10cm",marginBottom:"3cm",height:"10cm",marginTop:"1cm" }}>
   <div style={{width:"16cm",marginLeft:"3cm",marginRight:"2cm"}}>
 
-    <Form onSubmit={handleSubmit}
+    <Form ref={formRef}
      // action="http://localhost:8080/GetRequestedFlights"
       //method="post"
     >
@@ -209,17 +225,29 @@ const userHomePage = () => {
     </Col>
     <Col>
 
-          <Button  className="mt-4"  variant="primary" type="submit">
-            Search Flight  <FontAwesomeIcon icon={faSearch} />   
+    
+ <Button  className="mt-4"  variant="primary" onClick={handleSubmit} >
+            Confirm
           </Button>
+        </Col>
+        <Col>
+
+        
+        <Link to= "/SelectFlight"><Button  className="mt-4"  variant="primary" type="button">Search Flight  <FontAwesomeIcon icon={faSearch} />   </Button> </Link>
+
         </Col>
 
         </Row>
 
+
     </Form>
+
     </div>
 
+
   </div>
+
+<Panel />
       <MoreThanFlight />
   
   {/* <img style={{marginLeft:"8cm"}} src="https://as2.ftcdn.net/v2/jpg/00/79/10/15/1000_F_79101584_S9c81T4XBEn6wOJCYRFwWkqUpgmi05vJ.jpg" /> */}
@@ -227,7 +255,7 @@ const userHomePage = () => {
 
 
 
-    );
+    ); 
 
 };
-export default userHomePage;
+export default UserHomePage;
