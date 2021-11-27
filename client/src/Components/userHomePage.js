@@ -30,11 +30,10 @@ const UserHomePage = () => {
   const goingData=[];
   //const ref = useRef(null);
  // searchFlights.data="13";
-
+var f =true;
+ var s="#";
   var egy= "https://flagpedia.net/data/flags/w702/eg.png";
-  var r=[];
-  var s;
-  
+  var r=[];  
   // import { roundtrip } from "../../../src";
   const handleSubmit = () =>{
     var e =formRef.current;
@@ -62,6 +61,8 @@ const UserHomePage = () => {
           //s= data.returning;
           console.log(data.going)
           searchFlights.data=data;
+          f=false;
+          s="/SelectFlight"
         })
       }
   return ( 
@@ -233,7 +234,7 @@ const UserHomePage = () => {
         <Col>
 
         
-        <Link to= "/SelectFlight"><Button  className="mt-4"  variant="primary" type="button">Search Flight  <FontAwesomeIcon icon={faSearch} />   </Button> </Link>
+        <Link to="/SelectFlight"><Button  className="mt-4"  variant="primary" type="button">Search Flight  <FontAwesomeIcon icon={faSearch} />   </Button> </Link>
 
         </Col>
 
@@ -247,7 +248,6 @@ const UserHomePage = () => {
 
   </div>
 
-<Panel />
       <MoreThanFlight />
   
   {/* <img style={{marginLeft:"8cm"}} src="https://as2.ftcdn.net/v2/jpg/00/79/10/15/1000_F_79101584_S9c81T4XBEn6wOJCYRFwWkqUpgmi05vJ.jpg" /> */}
