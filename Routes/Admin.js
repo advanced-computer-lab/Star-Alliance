@@ -2,7 +2,7 @@ const express = require("express");
 const app = express();
 const db = require("../Service/DBService.js");
 const { flight,reservation } = require("../Models/export");
-
+var nodemailer = require('nodemailer');
 app.get("/", (req, res) => {
   res.json({ message: "welcome admin" });
 });
@@ -64,11 +64,38 @@ app.post("/DeleteFlight", async (req, res) => {
   res.send(result);
 }
 );
+const sendEmail = (req,res) => {
+  const email=process.env.email;
+const pass=process.env.pass;
+var transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: email,
+    pass: pass
+  }
+});
+
+var mailOptions = {
+  from: email,
+  to: 'yousefelbon@gmail.com',
+  subject: 'RESERVATION CANCEL ',
+  text: 'Your Reservation is canceled'
+};
+
+transporter.sendMail(mailOptions, function(error, info){
+  if (error) {
+    console.log(error);
+  } else {
+    console.log('Email sent: ' + info.response);
+  }
+});
+}
 app.post("/CancelReservation", async (req, res) => {
   console.log(req.body.resp);
   const flightNumber  = req.body.flightNumber;
   console.log("Here is the flight number",flightNumber);
   const result = await reservation.deleteOne({flightNumber: flightNumber});
+  sendEmail();
   console.log("result from Delete reservation", result);
   if (result == null) {
     res.status(404).send("No Reservation with this Number");
