@@ -17,12 +17,19 @@ const SelectFlight = () => {
          var hours1= new Date(date1).getHours();
          var minutes2= new Date(date2).getMinutes();
          var minutes1= new Date(date1).getMinutes();
+         var hours=0;
          var minutes=(minutes2+(60-minutes1));
+         if(hours2>hours1){
+            hours=hours2-hours1;
+         }
+         else{
+             hours=(24-hours1)+hours2;
+         }
          while(minutes>60){
             hours2=hours2+1;
             minutes=minutes-60;
          }
-         var duration = Math.abs((hours2-hours1))+":"+minutes;
+         var duration = hours+":"+minutes;
          return duration; 
          }
 

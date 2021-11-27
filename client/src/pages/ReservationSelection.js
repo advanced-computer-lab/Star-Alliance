@@ -34,7 +34,9 @@ const ReservationSelection = () => {
       </span>
       <button
         onClick={() => {
-          reservation.data = ref.current.value;
+          //   reservation.data = ref.current.value; do not do this
+          const newReservation = { ...reservation, data: ref.current.value };
+          setReservation(newReservation);
         }}
       >
         Update

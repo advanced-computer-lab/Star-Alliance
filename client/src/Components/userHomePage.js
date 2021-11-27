@@ -119,72 +119,28 @@ const UserHomePage = () => {
      // action="http://localhost:8080/GetRequestedFlights"
       //method="post"
     >
-      <Row>
-      <h3 className="mt-3 mb-2">Book Your Flight! ✈ </h3>
-
-
-      <Col >
-        <Form.Group as={Col} controlId="formGridState">
-      <Form.Label>From <FontAwesomeIcon icon={faPlaneDeparture} /></Form.Label>
-      <Form.Select  name="departureAirport" defaultValue="">
-        <option value="LAX">LAX</option>
-        <option  value="JFK">JFK</option>
-        <option value="LHR">LHR</option>
-        <option  value="CAI">CAI </option>
-        <option value="EXP">EXP</option>
-        <option value="MUC">MUC</option>
-        <option value="CDG">CDG</option>
-        <option value="RUH">RUH</option>
-        <option value="YYZ">YYZ</option>
-        <option value="FRA">FRA</option>
-      </Form.Select>
-    </Form.Group>
-        </Col>
-
-      <Form.Group as={Col} controlId="formGridState">
-      <Form.Label>To <FontAwesomeIcon icon={faPlaneArrival} /></Form.Label>
-      
-      <Form.Select  name="arrivalAirport" defaultValue="">
-        <option   value="LAX">LAX</option>
-        <option  value="JFK">JFK</option>
-        <option value="LHR">LHR</option>
-        <option  value="CAI"> CAI </option>
-        <option value="EXP">EXP</option>
-        <option value="MUC">MUC</option>
-        <option value="CDG">CDG</option>
-        <option value="RUH">RUH</option>
-        <option value="YYZ">YYZ</option>
-        <option value="FRA">FRA</option>
-      </Form.Select>
-    </Form.Group>
-       
-      </Row>
-      <Row>
-      <Col>
-      <Form.Group  style={{width:"auto"}}  controlId="formGridDepartureTime">
-          <Form.Label>Departure Date  <FontAwesomeIcon icon={faCalendarAlt} /></Form.Label>
-          <Form.Control
-            type="datetime-local"
-            name="departureTime"
-            placeholder="Enter Departure Time"
+      <Carousel />
+        <Carousel.Item>
+          <img
+            className="d-block w-100"
+            style={{ height: "10cm" }}
+            src="https://media.istockphoto.com/photos/passenger-airplane-flying-above-clouds-during-sunset-picture-id155439315?b=1&k=20&m=155439315&s=170667a&w=0&h=N2BzlH2GYabhWN0LXZTqTkVODuTb8qDAESQYCPzIig8="
+            alt="First slide"
           />
-        </Form.Group>
-        
-        </Col>
-        <Col>
-          
-        <Form.Group  style={{width:"auto"}}  controlId="formGridArrivalTime">
-          <Form.Label>Arrival Date <FontAwesomeIcon icon={faCalendarAlt} /></Form.Label>
-          <Form.Control
-            type="datetime-local"
-            name="arrivalTime"
-            placeholder="Enter Arrival Time"
+          <Carousel.Caption>
+            <h3>Above All, We Care</h3>
+            <p></p>
+          </Carousel.Caption>
+        </Carousel.Item>
+        <Carousel.Item>
+          <img
+            className="d-block w-100"
+            style={{ height: "10cm" }}
+            src="https://media.istockphoto.com/photos/corporate-jet-picture-id1305805559?b=1&k=20&m=1305805559&s=170667a&w=0&h=PgS30I7bdCmaWZXC7tHeRjhAUFoiv7LDgeqJBpfVorw="
+            alt="Second slide"
           />
-        </Form.Group>
-        </Col>
-       
 
-      </Row>
+      </Carousel.Item>
 
       <Row >
       <Form.Group as={Col} controlId="formGridState">
@@ -254,6 +210,8 @@ const UserHomePage = () => {
 
 
     ); 
+
+      {/* <img style={{marginLeft:"8cm"}} src="https://as2.ftcdn.net/v2/jpg/00/79/10/15/1000_F_79101584_S9c81T4XBEn6wOJCYRFwWkqUpgmi05vJ.jpg" /> */}
 
 };
 export default UserHomePage;
