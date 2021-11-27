@@ -10,6 +10,9 @@ function App() {
         {/*add margin top compansate for navbar*/}
         <Main />
       </div>
+           <br/>
+           <br/>
+           <br/>
 
       <Footer />
     </div>

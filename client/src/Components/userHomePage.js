@@ -58,16 +58,10 @@ const UserHomePage = () => {
     
    FlightService.GetRequestedFlights(data).then(({ data }) => {
          // console.log("recived ===> ",data);
-          r=data.going;
-          s= data.returning;
-          searchFlights=data.going;
-          /*goingData=data.going; 
-          this.props.history.push({
-            pathname: '/SelectFlight',
-              state: goingData // your data array of objects
-          })*/
-          //console.log(r.going);
-          //window.location.assign("http://localhost:3000/SelectFlight");
+          //r=[data]
+          //s= data.returning;
+          console.log(data.going)
+          searchFlights.data=data;
         })
       }
   return ( 
@@ -231,17 +225,25 @@ const UserHomePage = () => {
     </Col>
     <Col>
 
-    <Link to= "/SelectFlight"
-> <Button  className="mt-4"  variant="primary" onClick={handleSubmit} >
-            Search Flight  <FontAwesomeIcon icon={faSearch} />   
+    
+ <Button  className="mt-4"  variant="primary" onClick={handleSubmit} >
+            Confirm
           </Button>
-          </Link>
+        </Col>
+        <Col>
+
+        
+        <Link to= "/SelectFlight"><Button  className="mt-4"  variant="primary" type="button">Search Flight  <FontAwesomeIcon icon={faSearch} />   </Button> </Link>
+
         </Col>
 
         </Row>
 
+
     </Form>
+
     </div>
+
 
   </div>
 
