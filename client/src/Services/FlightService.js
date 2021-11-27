@@ -10,28 +10,19 @@ class FlightService {
   GetAllFlights(data) {
     return http.get("/Admin/GetAllFlights"); 
   }
+  GetAllReservedFlights(data) {
+    return http.get("/Admin/GetAllReservedFlights"); 
+  }
   DeleteFlight(data, resp) {
     return http.post("/Admin/DeleteFlight", data, resp);
   }
-
+  CancelReservation(data, resp) {
+    return http.post("/Admin/CancelReservation", data, resp);
+  }
   GetRequestedFlights(data) {
     return http.post("/Admin/GetRequestedFlights",data); 
   }
-  //   empGetAll() {
-  //     return http.get("/badge/EmployeeGainedBadges");
-  //   }
 
-  //   adminGetBadges() {
-  //     return http.get("/badge/adminGetBadges");
-  //   }
-
-  //   Create(data) {
-  //     return http.post("/badge/CreateBadge", data);
-  //   }
-
-  //   editBadge(data) {
-  //     return http.post("/badge/editBadge", data);
-  //   }
 }
 
 export default new FlightService();

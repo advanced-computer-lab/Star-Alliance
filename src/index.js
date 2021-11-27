@@ -109,6 +109,7 @@ app.post("/createFlight", async (req, res) => {
   res.redirect("http://localhost:3000/");
   //}, 5000);
 });
+
 // (async () => {
 //   const res = await flight.deleteMany({ flightNumber: "" });
 //   console.log(res);

@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
 const db = require("../Service/DBService.js");
-const { flight } = require("../Models/export");
+const { flight,reservation } = require("../Models/export");
 
 app.get("/", (req, res) => {
   res.json({ message: "welcome admin" });
@@ -12,6 +12,12 @@ app.get("/GetAllFlights", async (req, res) => {
 
   const result = await flight.find({});
 
+  res.send(result);
+});
+app.get("/GetAllReservedFlights", async (req, res) => {
+  console.log("/GetAllReservedFlights sending");
+  
+  const result = await reservation.find({ lastName: "Mohamed"} ).populate({path:'flight'}).populate({path:'user'});
   res.send(result);
 });
 
@@ -41,7 +47,19 @@ app.post("/DeleteFlight", async (req, res) => {
   res.send(result);
 }
 );
-
+app.post("/CancelReservation", async (req, res) => {
+  console.log(req.body.resp);
+  const flightNumber  = req.body.flightNumber;
+  console.log("Here is the flight number",flightNumber);
+  const result = await reservation.deleteOne({flightNumber: flightNumber});
+  console.log("result from Delete reservation", result);
+  if (result == null) {
+    res.status(404).send("No Reservation with this Number");
+    return;
+  }
+  res.send(result);
+}
+);
 app.post("/UpdateFlight", async (req, res) => {
   const data = req.body;
   console.log(data);

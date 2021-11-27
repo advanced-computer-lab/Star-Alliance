@@ -19,6 +19,7 @@ import TestPage from "./TestPage.js";
 import userHomePage from "../Components/userHomePage.js";
 import ChooseFlight from "../Components/ChooseFlight.js";
 import MoreThanFlight from "../Components/MoreThanFlight.js";
+import ReservationView from "../Components/ReservationView.js";
 
 const Main = () => {
   return (
@@ -33,6 +34,7 @@ const Main = () => {
         <Route exact path="/createFlight" component={CreateFlight}></Route>
         <Route exact path="/userHome" component={userHomePage}></Route>
         <Route exact path="/chooseFlight" component={ChooseFlight}></Route>
+        <Route exact path="/ReservationView" component={ReservationView}></Route>
         <Route exact path="/more" component={MoreThanFlight}></Route>
 
 
