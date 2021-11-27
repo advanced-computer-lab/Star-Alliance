@@ -23,6 +23,7 @@ import SelectFlight from "./SelectFlight";
 
 import ReservationSelection from "./ReservationSelection.js";
 import ContextRoute from "../Context/ContextRoute.js";
+import SeatReservation from "../pages/SeatReservation";
 
 const Main = () => {
   return (
@@ -64,6 +65,7 @@ const Main = () => {
         <Route exact path="/createFlight" component={CreateFlight}></Route>
         <Route exact path="/chooseFlight" component={ChooseFlight}></Route>
         <Route exact path="/more" component={MoreThanFlight}></Route>
+        <Route exact path="/SeatReservation" component={SeatReservation}></Route>
       </Switch>
     </>
   );
