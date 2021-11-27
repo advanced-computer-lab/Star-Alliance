@@ -39,6 +39,28 @@ app.use("/Admin", require("../Routes/Admin.js"));
 
 const db = require("../Service/DBService.js");
 
+const createUser = async (req,res) => {
+  const newUser = new user();
+  newUser.firstName=  "Youssef";
+  newUser.lastName = "Mohamed"; 
+  newUser.passportNumber = "3002345678";
+  newUser.isAdmin = false;
+  newUser.password = "user123";
+  await newUser.save();
+}
+//createUser();
+
+const createReservation = async (req,res) =>{
+  const reserv = new reservation();
+  
+  const nUser= await user.find({firstName:"Youssef"});
+  reserv.user = nUser[0];
+  reserv.flight = (await flight.find({firstSeatsNum:5}))[0];
+  console.log(nUser);
+  await reserv.save();
+}
+//createReservation();
+
 const createAdmin = async (req, res) => {
   const newAd = new user();
   newAd.firstName = "Adminstrator";

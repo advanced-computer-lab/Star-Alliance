@@ -6,6 +6,7 @@ const initialState = {
 
 export const ReservationCtx = React.createContext();
 
+
 const ReservationContext = ({ children }) => {
   const [reservation, setReservation] = useState(initialState);
 

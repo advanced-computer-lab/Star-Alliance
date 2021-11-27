@@ -12,12 +12,15 @@ import deletePopup from "../Components/DeletePopup.js";
 import FlightsList from "../Components/FlightsList.js";
 import CreateFlight from "../Components/CreateFlight.js";
 import TestPage from "./TestPage.js";
-import userHomePage from "../Components/userHomePage.js";
+import UserHomePage from "../Components/UserHomePage.js";
 import ChooseFlight from "../Components/ChooseFlight.js";
 import MoreThanFlight from "../Components/MoreThanFlight.js";
 import ReservationSummary from "./ReservationSummary.js";
-
+import FlightView from "./FlightView";
 import ReservationContext from "../Context/ReservationContext.js";
+import UserHomeContext from "../Context/UserHomeContext.js";
+import SelectFlight from "./SelectFlight";
+
 import ReservationSelection from "./ReservationSelection.js";
 import ContextRoute from "../Context/ContextRoute.js";
 
@@ -40,6 +43,18 @@ const Main = () => {
           Context={ReservationContext}
           CComponent={ReservationSelection}
         />
+         <ContextRoute
+          exact
+          path="/SelectFlight"
+          Context={UserHomeContext}
+          CComponent={SelectFlight}
+        />
+        <ContextRoute
+          exact
+          path="/UserHome"
+          Context={UserHomeContext}
+          CComponent={UserHomePage}
+        />
 
         <Route exact path="/test" component={TestPage} />
         <Route exact path="/UpdateForm" component={UpdateForm} />
@@ -47,7 +62,6 @@ const Main = () => {
         <Route exact path="/FlightView/:flightId" component={FlightView} />
         <Route exact path="/deleteFlight" component={deletePopup}></Route>
         <Route exact path="/createFlight" component={CreateFlight}></Route>
-        <Route exact path="/userHome" component={userHomePage}></Route>
         <Route exact path="/chooseFlight" component={ChooseFlight}></Route>
         <Route exact path="/more" component={MoreThanFlight}></Route>
       </Switch>

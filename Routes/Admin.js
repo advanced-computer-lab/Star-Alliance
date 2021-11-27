@@ -124,7 +124,7 @@ if (type=="Business"){
     result2 = await flight.find({departureTime:Flight2.departureTime,economySeatsNum:{$gte:total},
       arrivalAirport:Flight2.arrivalAirport, departureAirport:Flight2.departureAirport });
 }
- roundtrid={going:result, returning:result2 };
+ roundtrid={going:result, returning:result2, seatType:type };
  res.send(roundtrid);
  console.log(roundtrid);
 
