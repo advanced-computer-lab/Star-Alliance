@@ -17,6 +17,7 @@ import { faCalendarAlt } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import { UserHomeCtx } from "../Context/UserHomeContext";
 import MoreThanFlight from "../Components/MoreThanFlight";
+import moment from "moment";
 
 //var egy= "https://flagpedia.net/data/flags/w702/eg.png";
 
@@ -36,11 +37,12 @@ const UserHomePage = () => {
     console.log("enter", formRef.current.departureAirport.value);
     const data = {
       //Going
+      //  moment(arrivalTime).format("yyyy-MM-DDThh:mm");
       arrivalAirport: e.arrivalAirport.value,
       departureAirport: e.departureAirport.value,
-      departureTime: e.departureTime.value,
+      departureTime:moment(e.departureTime.value).format("yyyy-MM-DDThh:mm"),
       // returning
-      arrivalTime2: e.arrivalTime.value,
+      arrivalTime2: moment(e.arrivalTime.value).format("yyyy-MM-DDThh:mm"),
       ///
       type: e.type.value,
       children: e.children.value,

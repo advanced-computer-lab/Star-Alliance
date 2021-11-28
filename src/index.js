@@ -1,5 +1,5 @@
 const express = require("express");
-
+const moment= require("moment");
 var path = require("path");
 var fs = require("fs"); //file system
 var cookieParser = require("cookie-parser");
@@ -113,9 +113,11 @@ app.get("/", (req, res) => {
 });
 app.post("/createFlight", async (req, res) => {
   const Flight = new flight();
+        //  moment(arrivalTime).format("yyyy-MM-DDThh:mm");
+
   Flight.flightNumber = req.body.flightNumber;
-  Flight.arrivalTime = req.body.arrivalTime;
-  Flight.departureTime = req.body.departureTime;
+  Flight.arrivalTime = moment(req.body.arrivalTime).format("yyyy-MM-DDThh:mm");
+  Flight.departureTime =moment(req.body.departureTime).format("yyyy-MM-DDThh:mm");
   Flight.economySeatsNum = req.body.economySeatsNum;
   Flight.businessSeatsNum = req.body.businessSeatsNum;
   Flight.departureAirport = req.body.departureAirport;
