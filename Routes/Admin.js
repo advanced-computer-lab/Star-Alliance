@@ -147,7 +147,8 @@ app.post("/GetRequestedFlights", async (req, res) => {
  const total=Number(req.body.children)+Number(req.body.adult);
  var result=[]; 
  var result2=[];
-
+ let result3 = [];
+ let result4 = [];
  // economySeatsNum:{ $gte: total}
 if(type=="Economy"){
   
@@ -157,15 +158,25 @@ if(type=="Economy"){
     result2 = await flight.find({departureTime:Flight2.departureTime,economySeatsNum:{$gte:total},
       arrivalAirport:Flight2.arrivalAirport, departureAirport:Flight2.departureAirport });
 
-      result.forEach((flight) => {
-        //let finalPrice=0;
+      for(let i=0;i<result.length;i++){
+        result3.push({"flightDet":result[i],"finalPrice":result[i].economyClassPrice});
+        //result3[i].finalPrice=30;
+        console.log("Here in the for eachhhhhhhhh",result3[i]);
+      }
+      for(let i=0;i<result2.length;i++){
+        result4.push({"flightDet":result2[i],"finalPrice":result2[i].economyClassPrice});
+        //result3[i].finalPrice=30;
+        console.log("Here in the for eachhhhhhhhh",result4[i]);
+      }
+      
+      /* result.map((flight) => {
+        //let finalPrice=0; 
            flight.finalPrice=flight.economyClassPrice;
        });
-       result2.forEach((flight2) => {
+       result2.map((flight2) => {
         //let finalPrice=0;
            flight2.finalPrice=flight2.economyClassPrice;
-       });
-
+       }); */
     }
 else 
 if(type=="First Class"){
@@ -175,14 +186,27 @@ if(type=="First Class"){
     result2 = await flight.find({departureTime:Flight2.departureTime,economySeatsNum:{$gte:total},
       arrivalAirport:Flight2.arrivalAirport, departureAirport:Flight2.departureAirport });
 
-      result.forEach((flight) => {
+      for(let i=0;i<result.length;i++){
+        result3[i].flight=result[i];
+        result3[i].finalPrice=20;
+        console.log("Here in the for eachhhhhhhhh",result3[i]);
+      }
+
+      for(let i=0;i<result2.length;i++){
+        result4.push({"flightDet":result2[i],"finalPrice":result2[i].economyClassPrice});
+        //result3[i].finalPrice=30;
+        console.log("Here in the for eachhhhhhhhh",result4[i]);
+      }
+      /* result.map((flight) => {
         //let finalPrice=0;
+        
            flight.finalPrice=flight.firstClassPrice;
+           console.log("Here in the for eachhhhhhhhh",flight);
        });
-       result2.forEach((flight2) => {
+       result2.map((flight2) => {
         //let finalPrice=0;
            flight2.finalPrice=flight2.firstClassPrice;
-       });
+       }); */
 
 }
 else
@@ -193,16 +217,29 @@ if (type=="Business"){
     result2 = await flight.find({departureTime:Flight2.departureTime,economySeatsNum:{$gte:total},
       arrivalAirport:Flight2.arrivalAirport, departureAirport:Flight2.departureAirport });
 
-      result.forEach((flight) => {
+      for(let i=0;i<result.length;i++){
+        result3[i].flight=result[i];
+        result3[i].finalPrice=10;
+        console.log("Here in the for eachhhhhhhhh",result3[i]);
+      }
+
+      for(let i=0;i<result2.length;i++){
+        result4.push({"flightDet":result2[i],"finalPrice":result2[i].economyClassPrice});
+        //result3[i].finalPrice=30;
+        console.log("Here in the for eachhhhhhhhh",result4[i]);
+      }
+      /* result.map((flight) => {
         //let finalPrice=0;
            flight.finalPrice=flight.businessClassPrice;
+           console.log("Here in the for eachhhhhhhhh",flight);
        });
-       result2.forEach((flight2) => {
+       result2.map((flight2) => {
         //let finalPrice=0;
            flight2.finalPrice=flight2.businessClassPrice;
-       });
+       }); */
     }
- roundtrid={going:result, returning:result2, seatType:type };
+    //console.log(result3);
+ roundtrid={going:result3, returning:result4, seatType:type };
  res.send(roundtrid);
  console.log(roundtrid);
 

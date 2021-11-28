@@ -87,7 +87,7 @@ const SelectFlight = () => {
             <br/>
             <br/>
             
-          <h2> Reservation Summary {JSON.stringify(flights)}</h2>  
+          {/* <h2> Reservation Summary {JSON.stringify(flights)}</h2>   */}
           <h2  >Choose Going Flight ✈ </h2>
                  { flights.map((flight,index) => (
                      //outset
@@ -95,22 +95,22 @@ const SelectFlight = () => {
                         <br/>
 
             <div  className=" card-body">
-            <h4 class="card-title">Flight Number:{flight.flightNumber} </h4>
+            <h4 class="card-title">Flight Number:{flight.flightDet.flightNumber} </h4>
             <Row>
             <Col>
-         <h6>Departure Date: {GetDate(flight.departureTime)}</h6>
+         <h6>Departure Date: {GetDate(flight.flightDet.departureTime)}</h6>
          </Col>
          <Col>
-             <h6>Arrival Date:  {GetDate(flight.arrivalTime)} </h6> 
+             <h6>Arrival Date:  {GetDate(flight.flightDet.arrivalTime)} </h6> 
              </Col>
 
              </Row>
              <Row>
             <Col>
-            <h6>Departure Time:  {GetTime(flight.departureTime)}</h6>
+            <h6>Departure Time:  {GetTime(flight.flightDet.departureTime)}</h6>
             </Col>
          <Col>
-            <h6>Arrival Time:  {GetTime(flight.arrivalTime)}</h6>
+            <h6>Arrival Time:  {GetTime(flight.flightDet.arrivalTime)}</h6>
             </Col>
 
              </Row>
@@ -119,7 +119,7 @@ const SelectFlight = () => {
             <h6>Class:  {seatType}</h6>
             </Col>
          <Col>
-            <h6>Duration: {getTime(flight.departureTime,flight.arrivalTime)}</h6> 
+            <h6>Duration: {getTime(flight.flightDet.departureTime,flight.flightDet.arrivalTime)}</h6> 
             </Col>
 
              </Row>
@@ -128,8 +128,8 @@ const SelectFlight = () => {
             <h6>Baggage Allowance:  2 Bags</h6>
             </Col>
             <Col>
-            <h6 style={{fontWeight:"bold"}}>Price: {flight.finalPrice}</h6>
-            </Col>
+            <h6>Price: {flight.finalPrice} $</h6>
+            </Col>   
          
 
              </Row>
@@ -158,22 +158,22 @@ const SelectFlight = () => {
                         <br/>
 
             <div  className=" card-body">
-            <h4 class="card-title">Flight Number:  {flight.flightNumber}</h4>
+            <h4 class="card-title">Flight Number:  {flight.flightDet.flightNumber}</h4>
             <Row>
             <Col>
-         <h6>Departure Date:  {GetDate(flight.departureTime)}</h6>
+         <h6>Departure Date:  {GetDate(flight.flightDet.departureTime)}</h6>
          </Col>
          <Col>
-             <h6>Arrival Date:  {GetDate(flight.arrivalTime)} </h6> 
+             <h6>Arrival Date:  {GetDate(flight.flightDet.arrivalTime)} </h6> 
              </Col>
 
              </Row>
              <Row>
             <Col>
-            <h6>Departure Time:  {GetTime(flight.departureTime)}</h6>
+            <h6>Departure Time:  {GetTime(flight.flightDet.departureTime)}</h6>
             </Col>
          <Col>
-            <h6>Arrival Time:  {GetTime(flight.arrivalTime)}</h6>
+            <h6>Arrival Time:  {GetTime(flight.flightDet.arrivalTime)}</h6>
             </Col>
 
              </Row>
@@ -182,7 +182,7 @@ const SelectFlight = () => {
             <h6>Class:  {seatType}</h6>
             </Col>
          <Col>
-            <h6>Duration: {getTime(flight.departureTime,flight.arrivalTime)}</h6> 
+            <h6>Duration: {getTime(flight.flightDet.departureTime,flight.flightDet.arrivalTime)}</h6> 
             </Col>
 
              </Row>
@@ -190,6 +190,9 @@ const SelectFlight = () => {
             <Col>
             <h6>Baggage Allowance:  2 Bags</h6>
             </Col>
+            <Col>
+            <h6>Price: {flight.finalPrice} $</h6>
+            </Col> 
          <Col>
             <a href="/" class="btn btn-primary">Select Flight ✈</a>
             </Col>
