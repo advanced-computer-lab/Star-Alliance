@@ -11,7 +11,8 @@ import UserService, { UserCtx } from "../Services/UserService.js";
 import PopupView from "./PopupView";
 import TextField from "@mui/material/TextField";
 import { LinkContainer } from "react-router-bootstrap";
-
+import { faUser } from "@fortawesome/free-solid-svg-icons";
+import { FortAwesomeIcon } from "@fortawesome/react-fontawesome";
 //const logo= "	https://o.remove.bg/downloads/e14af0fc-8d3f-4a5a-8dc4-15aca52535d1/7-removebg-preview.png"
 const Naavbar = () => {
   const refUserName = useRef(null);
@@ -143,9 +144,11 @@ const Naavbar = () => {
             </Button>
             <Navbar.Text>
               {!UserService.isLoggedIn() ? (
+                <div>
                 <Button onClick={handleLoginBtn} style={{ color: "white" }}>
                   Sign In
                 </Button>
+                </div>
               ) : UserService.isAdmin() ? (
                 "Welcome Admin"
               ) : (

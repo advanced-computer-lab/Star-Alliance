@@ -11,8 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@fortawesome/fontawesome-svg-core": "^1.2.36",
-    "@fortawesome/free-solid-svg-icons": "^5.15.4",
+   
     "body-parser": "^1.19.0",
     "concurrently": "^6.3.0",
     "cookie-parser": "^1.4.5",

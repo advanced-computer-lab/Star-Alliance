@@ -23,6 +23,7 @@ import FlightView from "./FlightView";
 import ReservationContext from "../Context/ReservationContext.js";
 import UserHomeContext from "../Context/UserHomeContext.js";
 import SelectFlight from "./SelectFlight";
+import SelectReturnFlights from "./SelectReturnFlights";
 
 import ReservationSelection from "./ReservationSelection.js";
 import ContextRoute from "../Context/ContextRoute.js";
@@ -68,6 +69,7 @@ const Main = () => {
         <Route exact path="/deleteFlight" component={deletePopup}></Route>
         <Route exact path="/createFlight" component={CreateFlight}></Route>
         <Route exact path="/chooseFlight" component={ChooseFlight}></Route>
+        <Route exact path="/SelectReturnFlights" component={SelectReturnFlights}></Route>
         <Route
           exact
           path="/ReservationView"

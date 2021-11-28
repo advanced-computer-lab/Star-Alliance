@@ -1,6 +1,10 @@
 import "../Styles/Seats.scss"
 import Button from "react-bootstrap/Button";
-const SeatReservation = () => {
+const SeatReservation = (props) => {
+  //allData = {flights,flights2,seatType}
+  //flights={flightDet:{flight details}, finalPrice}
+  const allData = props.location.state;
+
 return (
 <div class="plane">
   <div class="cockpit">
