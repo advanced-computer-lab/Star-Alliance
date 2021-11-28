@@ -1,24 +1,36 @@
 // THIS is Just A Test Page, And Will be removed Later
-import { React, useState, useRef } from "react";
+import { React, useState, useRef, useContext } from "react";
 import Alert from "../Components/Alert.js";
 import PopupView from "../Components/PopupView.js";
 import Button from "react-bootstrap/Button";
 import UpdateForm from "../Components/UpdateForm.js";
 import ImgCard from "../Components/ImgCard.js";
+import { UserCtx } from "../Context/GlobalContext.js";
+import { Link } from "react-router-dom";
+import UserService from "../Services/UserService.js";
 
 const TestPage = () => {
   const [open, setOpen] = useState(false);
+  const [User, setUser] = useContext(UserCtx);
 
   const handleBtnClick = () => {
     setOpen(true);
   };
+  const handleChangeContexct = () => {
+    setUser("ceecec");
+  };
 
+  console.log(UserService.getTypeString());
   return (
     <>
       <h1>Test Page</h1>
       <h1>Test Page</h1>
       <h1>Test Page</h1>
       <h1>Test Page</h1>
+      <Button onClick={handleChangeContexct}>change init</Button>
+      {/* <h1>{JSON.stringify(User)}</h1> */}
+      <Link to="/">nav to home</Link>
+      <h1>{JSON.stringify(UserService.isGuest())}</h1>
       <ImgCard
         title="title"
         text="eiocjeiojceioc"

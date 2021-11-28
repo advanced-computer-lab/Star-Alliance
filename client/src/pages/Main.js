@@ -45,7 +45,7 @@ const Main = () => {
           Context={ReservationContext}
           CComponent={ReservationSelection}
         />
-         <ContextRoute
+        <ContextRoute
           exact
           path="/SelectFlight"
           Context={UserHomeContext}
@@ -65,9 +65,17 @@ const Main = () => {
         <Route exact path="/deleteFlight" component={deletePopup}></Route>
         <Route exact path="/createFlight" component={CreateFlight}></Route>
         <Route exact path="/chooseFlight" component={ChooseFlight}></Route>
-        <Route exact path="/ReservationView" component={ReservationView}></Route>
+        <Route
+          exact
+          path="/ReservationView"
+          component={ReservationView}
+        ></Route>
         <Route exact path="/more" component={MoreThanFlight}></Route>
-        <Route exact path="/SeatReservation" component={SeatReservation}></Route>
+        <Route
+          exact
+          path="/SeatReservation"
+          component={SeatReservation}
+        ></Route>
       </Switch>
     </>
   );

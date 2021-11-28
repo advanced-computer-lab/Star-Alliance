@@ -16,12 +16,13 @@ const PopupView = (props) => {
     <>
       <Dialog open={props.showDialog} onClose={handleClose} fullWidth>
         <DialogTitle>{props.title}</DialogTitle>
-        <DialogContent>
-        
-          {props.children}
-        </DialogContent>
+        <DialogContent>{props.children}</DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Close</Button>
+          {props.customActionButtons ? (
+            props.customActionButtons
+          ) : (
+            <Button onClick={handleClose}>Close</Button>
+          )}
         </DialogActions>
       </Dialog>
     </>
