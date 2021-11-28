@@ -148,7 +148,6 @@ app.post("/GetRequestedFlights", async (req, res) => {
  var result=[]; 
  var result2=[];
 
-
  // economySeatsNum:{ $gte: total}
 if(type=="Economy"){
   
@@ -157,7 +156,17 @@ if(type=="Economy"){
 
     result2 = await flight.find({departureTime:Flight2.departureTime,economySeatsNum:{$gte:total},
       arrivalAirport:Flight2.arrivalAirport, departureAirport:Flight2.departureAirport });
-}
+
+      result.forEach((flight) => {
+        //let finalPrice=0;
+           flight.finalPrice=flight.economyClassPrice;
+       });
+       result2.forEach((flight2) => {
+        //let finalPrice=0;
+           flight2.finalPrice=flight2.economyClassPrice;
+       });
+
+    }
 else 
 if(type=="First Class"){
   result = await flight.find({departureTime:Flight.departureTime,firstSeatsNum:{$gte:total},
@@ -165,6 +174,16 @@ if(type=="First Class"){
 
     result2 = await flight.find({departureTime:Flight2.departureTime,economySeatsNum:{$gte:total},
       arrivalAirport:Flight2.arrivalAirport, departureAirport:Flight2.departureAirport });
+
+      result.forEach((flight) => {
+        //let finalPrice=0;
+           flight.finalPrice=flight.firstClassPrice;
+       });
+       result2.forEach((flight2) => {
+        //let finalPrice=0;
+           flight2.finalPrice=flight2.firstClassPrice;
+       });
+
 }
 else
 if (type=="Business"){
@@ -173,7 +192,16 @@ if (type=="Business"){
 
     result2 = await flight.find({departureTime:Flight2.departureTime,economySeatsNum:{$gte:total},
       arrivalAirport:Flight2.arrivalAirport, departureAirport:Flight2.departureAirport });
-}
+
+      result.forEach((flight) => {
+        //let finalPrice=0;
+           flight.finalPrice=flight.businessClassPrice;
+       });
+       result2.forEach((flight2) => {
+        //let finalPrice=0;
+           flight2.finalPrice=flight2.businessClassPrice;
+       });
+    }
  roundtrid={going:result, returning:result2, seatType:type };
  res.send(roundtrid);
  console.log(roundtrid);
