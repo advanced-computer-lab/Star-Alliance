@@ -1,4 +1,5 @@
 import "../Styles/Seats.scss"
+import Button from "react-bootstrap/Button";
 const SeatReservation = () => {
 return (
 <div class="plane">
@@ -292,6 +293,11 @@ return (
   </ol>
   <div class="exit exit--back fuselage">
     
+  </div>
+  <div  style={{height:"3cm",width:"19cm",marginTop:"0.8cm"}}>
+  <Button   variant="primary" type="confirm">
+    Confirm Seats
+  </Button>
   </div>
 </div>
 );

@@ -25,6 +25,7 @@ import SelectFlight from "./SelectFlight";
 import ReservationSelection from "./ReservationSelection.js";
 import ContextRoute from "../Context/ContextRoute.js";
 import SeatReservation from "../pages/SeatReservation";
+import UpdateUserData from "../pages/UpdateUserData";
 
 const Main = () => {
   return (
@@ -68,6 +69,7 @@ const Main = () => {
         <Route exact path="/ReservationView" component={ReservationView}></Route>
         <Route exact path="/more" component={MoreThanFlight}></Route>
         <Route exact path="/SeatReservation" component={SeatReservation}></Route>
+        <Route exact path="/UpdateUserData" component={UpdateUserData}></Route>
       </Switch>
     </>
   );
