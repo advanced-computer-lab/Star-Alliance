@@ -95,8 +95,6 @@ const SelectFlight = () => {
           {/* <h2> Reservation Summary {JSON.stringify(flights)}</h2>   */}
           <h2 className="mx-3 mb-5">Choose Going Flight ✈ </h2>
           <h3 className="mx-3 mb-5">{flights[0].flightDet.departureAirport} ✈ {flights[0].flightDet.arrivalAirport}</h3>
-
-          <i class="icon-plane" aria-hidden="true"></i>
                  { flights.map((flight,index) => (
                      //outset
             <div style={{border:"outset"}} className="card col-md-8 offset-md-2 mb-5">
