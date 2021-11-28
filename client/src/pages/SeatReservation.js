@@ -1,13 +1,14 @@
 import {useEffect} from 'react';
 import "../Styles/Seats.scss"
 import Button from "react-bootstrap/Button";
-const SeatReservation = (props) => {
-  //allData = {flights,flights2,seatType}
-  //flights={flightDet:{flight details}, finalPrice}
-  const allData = props.location.state;
+
+ 
 
 var selectedSeats = []; // this array contains the ids of the selected seats forex ["1A", "2B", "3C"]
 const SeatReservation = ({flight}) => {
+   //allData = {flights,flights2,seatType}
+  //flights={flightDet:{flight details}, finalPrice}
+  const allData = props.location.state;
   useEffect(() => {
     // this code excutes when the page loads
     // update el inputs bel to be either checked or unavailble
