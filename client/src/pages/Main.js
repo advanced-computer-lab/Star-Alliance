@@ -15,6 +15,7 @@ import TestPage from "./TestPage.js";
 import UserHomePage from "../Components/UserHomePage.js";
 import ChooseFlight from "../Components/ChooseFlight.js";
 import MoreThanFlight from "../Components/MoreThanFlight.js";
+import ReservationView from "../Components/ReservationView.js";
 import ReservationSummary from "./ReservationSummary.js";
 import FlightView from "./FlightView";
 import ReservationContext from "../Context/ReservationContext.js";
@@ -23,6 +24,7 @@ import SelectFlight from "./SelectFlight";
 
 import ReservationSelection from "./ReservationSelection.js";
 import ContextRoute from "../Context/ContextRoute.js";
+import SeatReservation from "../pages/SeatReservation";
 
 const Main = () => {
   return (
@@ -63,7 +65,9 @@ const Main = () => {
         <Route exact path="/deleteFlight" component={deletePopup}></Route>
         <Route exact path="/createFlight" component={CreateFlight}></Route>
         <Route exact path="/chooseFlight" component={ChooseFlight}></Route>
+        <Route exact path="/ReservationView" component={ReservationView}></Route>
         <Route exact path="/more" component={MoreThanFlight}></Route>
+        <Route exact path="/SeatReservation" component={SeatReservation}></Route>
       </Switch>
     </>
   );
