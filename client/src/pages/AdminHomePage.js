@@ -7,6 +7,7 @@ import DeletePopup from "../Components/DeletePopup";
 import UpdateForm from "../Components/UpdateForm";
 import CreateFlight from "../Components/CreateFlight.js";
 import FlightsList from "../Components/FlightsList";
+import { Link } from "react-router-dom";
 
 const home = () => {
   const homeCardsInfo = [
@@ -42,7 +43,7 @@ const home = () => {
       imgsrc:
         "https://media.istockphoto.com/photos/button-on-computer-keyboard-picture-id1146311500?b=1&k=20&m=1146311500&s=170667a&w=0&h=lAmXM845JSpofUXfiwCBURBw74y4PkB4wfJGi9iiONY=",
       btnText: "More",
-      children: <UpdateForm test={"cece"}/>,
+      children: <UpdateForm test={"cece"} />,
     },
   ];
 
@@ -58,7 +59,7 @@ const home = () => {
               alt="First slide"
             />
             <Carousel.Caption>
-            <h3>Above All, We Care</h3>
+              <h3>Above All, We Care</h3>
               <p></p>
             </Carousel.Caption>
           </Carousel.Item>
@@ -71,7 +72,7 @@ const home = () => {
             />
 
             <Carousel.Caption>
-            <h3>Above All, We Care</h3>
+              <h3>Above All, We Care</h3>
               <p></p>
             </Carousel.Caption>
           </Carousel.Item>
@@ -84,8 +85,8 @@ const home = () => {
             />
 
             <Carousel.Caption>
-            <h3>Above All, We Care</h3>
-                          <p></p>
+              <h3>Above All, We Care</h3>
+              <p></p>
             </Carousel.Caption>
           </Carousel.Item>
         </Carousel>
@@ -97,7 +98,14 @@ const home = () => {
         {homeCardsInfo.map((info) => (
           <ImgCard {...info} />
         ))}
-        <Card style={{border:"outset", width: "18rem", marginLeft: "1cm", marginRight: "1cm" }}>
+        <Card
+          style={{
+            border: "outset",
+            width: "18rem",
+            marginLeft: "1cm",
+            marginRight: "1cm",
+          }}
+        >
           <Card.Img
             variant="top"
             style={{ height: "5cm" }}
@@ -106,13 +114,22 @@ const home = () => {
           <Card.Body>
             <Card.Title>Show All Flights</Card.Title>
             <Card.Text>showing all existing flights</Card.Text>
-            <Button
+            <Link to="/FlightsList">
+              <Button
+                style={{ width: "7cm" }}
+                variant="outline-primary"
+                href="/FlightsList"
+              >
+                More
+              </Button>
+            </Link>
+            {/* <Button
               style={{ width: "7cm" }}
               variant="outline-primary"
               href="/FlightsList"
             >
               More
-            </Button>
+            </Button> */}
           </Card.Body>
         </Card>
 
