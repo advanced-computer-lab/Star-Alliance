@@ -14,7 +14,7 @@ const SelectFlight = () => {
     let flights =searchFlights.data.going;
     let flights2=searchFlights.data.returning;
     let seatType = searchFlights.data.seatType;
-
+    
    const firstClick = (ids) => {
       console.log("Check",ids);
       //var property = document.getElementById(ids);
@@ -34,6 +34,7 @@ const SelectFlight = () => {
     }
     else{  
     
+    //console.log(flights[0].finalPrice);
     //console.log("testing",searchFlights.data.going);
       //}
    
@@ -86,7 +87,7 @@ const SelectFlight = () => {
             <br/>
             <br/>
             
-         {/* <h1> Reservation Summary {JSON.stringify(searchFlights.data.going)}</h1>  */}
+          <h2> Reservation Summary {JSON.stringify(flights)}</h2>  
           <h2  >Choose Going Flight ✈ </h2>
                  { flights.map((flight,index) => (
                      //outset
@@ -126,12 +127,23 @@ const SelectFlight = () => {
             <Col>
             <h6>Baggage Allowance:  2 Bags</h6>
             </Col>
-         <Col>
-               <input id={index} onChange={firstClick(index)} class="form-check-input" type="checkbox"  value="option1"></input>
-                   <label className="form-check-label mx-2" for={index}>Check to choose flight</label>
-            {/* <a id={index} onClick={firstClick(index)} href="#" class="btn btn-primary">Select Flight ✈</a> */}
+            <Col>
+            <h6 style={{fontWeight:"bold"}}>Price: {flight.finalPrice}</h6>
             </Col>
+         
 
+             </Row>
+             <Row>
+             <Col>
+             <Col>
+               {/* <input id={index} onChange={firstClick(index)} class="form-check-input" type="checkbox"  value="option1"></input>
+                   <label className="form-check-label mx-2" for={index}>Check to choose flight</label> */}
+                   <form>
+             <a id={index} onClick={firstClick(index)} href="#" class="btn btn-primary">Select Flight ✈</a>
+             </form>
+ 
+            </Col>
+             </Col>
              </Row>
             </div>
             </div>
