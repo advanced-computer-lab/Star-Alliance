@@ -152,7 +152,8 @@ if(type=="Economy"){
 
     result2 = await flight.find({departureTime:Flight2.departureTime,economySeatsNum:{$gte:total},
       arrivalAirport:Flight2.arrivalAirport, departureAirport:Flight2.departureAirport });
-}
+
+    }
 else 
 if(type=="First Class"){
   result = await flight.find({departureTime:Flight.departureTime,firstSeatsNum:{$gte:total},
@@ -173,9 +174,6 @@ if (type=="Business"){
  res.send(roundtrid);
  console.log(roundtrid);
 
-
- 
-  
 });
 
 module.exports = app;
