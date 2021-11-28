@@ -22,17 +22,8 @@ const SelectFlight = () => {
         // property.style.backgroundColor = "green";
         console.log("choosen flight",flights[ids]);
      }
-    //let f = 
-     if(searchFlights.data.going == undefined){
-       return(
-          <div>
-          <h1> No Flights </h1>
-          </div>
-      
+    
        
-       )
-    }
-    else{  
     
     //console.log(flights[0].finalPrice);
     //console.log("testing",searchFlights.data.going);
@@ -43,18 +34,34 @@ const SelectFlight = () => {
     }
     function GetDate(date1){
         var date= new Date(date1);
-        var z= date.getDate()+"/"+date.getMonth()+"/"+date.getFullYear();
+        var z= date.getDate()+"/"+(date.getMonth()+1)+"/"+date.getFullYear();
        return z; 
     }
      function getTime(date1,date2){
-        console.log("sayed");
          var hours2= new Date(date2).getHours();
+         console.log("hours2",hours2);
          var hours1= new Date(date1).getHours();
+         console.log("hours",hours1);
          var minutes2= new Date(date2).getMinutes();
+         console.log("minutes2",minutes2);
+
          var minutes1= new Date(date1).getMinutes();
+         console.log("minutes1",minutes1);
+
          console.log("Day:",new Date(date1).getDate());
          var hours=0;
-         var minutes=(minutes2+(60-minutes1));
+         var minutes=0
+         if(minutes2>0 || minutes>0){
+          minutes=(minutes2+(60-minutes1));
+         }
+         else{
+            if(minutes2==0){
+               minutes=minutes1;
+            }
+            else{
+               minutes=minutes2;
+            }
+         }
          if(hours2>hours1){
             hours=hours2-hours1;
          }
@@ -208,5 +215,5 @@ const SelectFlight = () => {
         );
       }
 
-   } 
+    
     export default SelectFlight;

@@ -1,44 +1,39 @@
-import React from "react";
+import React, { useState } from "react";
 import { useContext, useRef } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Button from "react-bootstrap/Button";
-import FormControl from "react-bootstrap/FormControl";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Carousel from "react-bootstrap/Carousel";
 import FlightService from "../Services/FlightService";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
- import { faSearch } from '@fortawesome/free-solid-svg-icons'
+ import { faCheckCircle, faSearch } from '@fortawesome/free-solid-svg-icons'
  import { faBaby} from '@fortawesome/free-solid-svg-icons'
  import { faMale} from '@fortawesome/free-solid-svg-icons'
  import { faPlaneDeparture} from '@fortawesome/free-solid-svg-icons'
  import { faPlaneArrival} from '@fortawesome/free-solid-svg-icons'
  import { faCalendarAlt} from '@fortawesome/free-solid-svg-icons'
-import Panel from "./Panel";
 import { Link } from "react-router-dom";
 import { UserHomeCtx } from "../Context/UserHomeContext";
-
 import MoreThanFlight from "./MoreThanFlight";
-import PopupView from "./PopupView";
 
-
+//var egy= "https://flagpedia.net/data/flags/w702/eg.png";
 
 const UserHomePage = () => {
   const [searchFlights, setSearchFlights] = useContext(UserHomeCtx);
   const formRef = useRef(null);
   const goingData=[];
-  //const ref = useRef(null);
- // searchFlights.data="13";
-var f =true;
- var s="#";
-  var egy= "https://flagpedia.net/data/flags/w702/eg.png";
-  var r=[];  
-  // import { roundtrip } from "../../../src";
+  //var clicked=true;
+  const[clicked,setClicked]=useState(false);
+
+  function show(){
+    setClicked(true);
+  }
+
   const handleSubmit = () =>{
     var e =formRef.current;
     console.log("enter",formRef.current.departureAirport.value);
-   // e.preventDefault();
     const data = { 
   
       //Going
@@ -56,13 +51,12 @@ var f =true;
     console.log(data);
     
    FlightService.GetRequestedFlights(data).then(({ data }) => {
-         // console.log("recived ===> ",data);
-          //r=[data]
-          //s= data.returning;
           console.log(data.going)
           searchFlights.data=data;
-          f=false;
-          s="/SelectFlight"
+          console.log(clicked);
+          show();
+          console.log(clicked);
+
         })
       }
   return ( 
@@ -107,18 +101,13 @@ var f =true;
             </Carousel.Caption>
           </Carousel.Item>
         </Carousel>
-    <div   style={{borderRadius:"2rem",backgroundColor:"#112D4E",width:"22cm",marginLeft:"10cm",marginBottom:"3cm",height:"10cm",marginTop:"1cm" }}>
+    <div   style={{borderRadius:"2rem",backgroundColor:"#112D4E",width:"22cm",marginLeft:"10cm",marginBottom:"3cm",height:"11cm",marginTop:"1cm" }}>
   <div style={{width:"16cm",marginLeft:"3cm",marginRight:"2cm"}}>
 
-    <Form ref={formRef}
-     // action="http://localhost:8080/GetRequestedFlights"
-      //method="post"
-    >
+    <Form ref={formRef}>
       <Row>
       <h3 className="mt-3 mb-2">Book Your Flight! ✈ </h3>
-
-
-      <Col >
+      <Col>
         <Form.Group as={Col} controlId="formGridState">
       <Form.Label>From <FontAwesomeIcon icon={faPlaneDeparture} /></Form.Label>
       <Form.Select  name="departureAirport" defaultValue="">
@@ -157,7 +146,7 @@ var f =true;
       <Row>
       <Col>
       <Form.Group  style={{width:"auto"}}  controlId="formGridDepartureTime">
-          <Form.Label>Departure Date  <FontAwesomeIcon icon={faCalendarAlt} /></Form.Label>
+          <Form.Label>Going Date  <FontAwesomeIcon icon={faCalendarAlt} /></Form.Label>
           <Form.Control
             type="datetime-local"
             name="departureTime"
@@ -169,7 +158,7 @@ var f =true;
         <Col>
           
         <Form.Group  style={{width:"auto"}}  controlId="formGridArrivalTime">
-          <Form.Label>Arrival Date <FontAwesomeIcon icon={faCalendarAlt} /></Form.Label>
+          <Form.Label>Returning Date <FontAwesomeIcon icon={faCalendarAlt} /></Form.Label>
           <Form.Control
             type="datetime-local"
             name="arrivalTime"
@@ -224,18 +213,19 @@ var f =true;
       </Form.Select>
     </Form.Group>
     </Col>
+    
+    </Row>
+    
+    <Row>
     <Col>
-
     
  <Button  className="mt-4"  variant="primary" onClick={handleSubmit} >
-            Confirm
+            Confirm <FontAwesomeIcon icon={faCheckCircle} />
           </Button>
-        </Col>
-        <Col>
 
-        
-        <Link to="/SelectFlight"><Button  className="mt-4"  variant="primary" type="button">Search Flight  <FontAwesomeIcon icon={faSearch} />   </Button> </Link>
-
+           {clicked==true ? 
+          (<Link  to="/SelectFlight"><Button  style={{marginLeft:"0.5cm"}} className="mt-4"  variant="primary" type="button">Search Flight  <FontAwesomeIcon icon={faSearch} />   </Button> </Link>):null
+           }
         </Col>
 
         </Row>
@@ -248,9 +238,7 @@ var f =true;
 
   </div>
 
-      <MoreThanFlight />
-  
-  {/* <img style={{marginLeft:"8cm"}} src="https://as2.ftcdn.net/v2/jpg/00/79/10/15/1000_F_79101584_S9c81T4XBEn6wOJCYRFwWkqUpgmi05vJ.jpg" /> */}
+      <MoreThanFlight />  
   </div>
 
 

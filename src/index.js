@@ -1,4 +1,5 @@
 const express = require("express");
+
 var path = require("path");
 var fs = require("fs"); //file system
 var cookieParser = require("cookie-parser");
@@ -110,7 +111,6 @@ app.get("/", (req, res) => {
   // console.log(req.cookies);
   res.json({ message: "From the Node Server !" });
 });
-
 app.post("/createFlight", async (req, res) => {
   const Flight = new flight();
   Flight.flightNumber = req.body.flightNumber;

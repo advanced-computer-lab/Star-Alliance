@@ -140,6 +140,8 @@ app.post("/GetRequestedFlights", async (req, res) => {
  Flight2.arrivalAirport=req.body.departureAirport;
  Flight2.departureAirport=req.body.arrivalAirport;
  Flight2.departureTime=req.body.arrivalTime2;
+
+ console.log("testing",req.body.departureTime)
 //
 
 
@@ -182,6 +184,7 @@ else
 if(type=="First Class"){
   result = await flight.find({departureTime:Flight.departureTime,firstSeatsNum:{$gte:total},
     arrivalAirport:Flight.arrivalAirport, departureAirport:Flight.departureAirport });
+
 
     result2 = await flight.find({departureTime:Flight2.departureTime,economySeatsNum:{$gte:total},
       arrivalAirport:Flight2.arrivalAirport, departureAirport:Flight2.departureAirport });

@@ -41,17 +41,17 @@ const Naavbar = () => {
 
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
-            {/* <Nav className="me-auto">
-              <Nav.Link href="#home" style={{ color: "#DBE2EF" }}>
-                Home
+             <Nav className="me-auto">
+              <Nav.Link href="/ReservationView" style={{ color: "#DBE2EF" }}>
+                 My reservations
               </Nav.Link>
-              <Nav.Link href="#link" style={{ color: "#DBE2EF" }}>
+              {/* <Nav.Link href="#link" style={{ color: "#DBE2EF" }}>
                 Link
               </Nav.Link>
               <Nav.Link href="#link" style={{ color: "#DBE2EF" }}>
                 Login
-              </Nav.Link>
-            </Nav> */}
+              </Nav.Link> */}
+            </Nav> 
           </Navbar.Collapse>
         </Container>
       </Navbar>

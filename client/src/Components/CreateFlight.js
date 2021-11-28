@@ -31,6 +31,16 @@ const CreateFlight = () => {
         </Row>
         <Row>
         <Col>
+            <Form.Group  style={{width:"auto"}}  controlId="formGridDepartureTime">
+            <Form.Label>Departure Time</Form.Label>
+            <Form.Control
+              type="datetime-local"
+              name="departureTime"
+              placeholder="Enter Departure Time"
+            />
+          </Form.Group>
+          </Col>
+        <Col>
 
           <Form.Group  style={{width:"auto"}}  controlId="formGridArrivalTime">
             <Form.Label>Arrival Time</Form.Label>
@@ -41,16 +51,7 @@ const CreateFlight = () => {
             />
           </Form.Group>
           </Col>
-          <Col>
-            <Form.Group  style={{width:"auto"}}  controlId="formGridDepartureTime">
-            <Form.Label>Departure Time</Form.Label>
-            <Form.Control
-              type="datetime-local"
-              name="departureTime"
-              placeholder="Enter Departure Time"
-            />
-          </Form.Group>
-          </Col>
+          
          
 
         </Row>
@@ -117,6 +118,15 @@ const CreateFlight = () => {
             <Row >
 
 
+              
+              
+        <Form.Group as={Col} controlId="formGriddepartureAirport" >
+         <Form.Label>Departure Airport </Form.Label>
+            <Form.Control
+              name="departureAirport"
+              placeholder="Enter Departure Airport"
+              />
+              </Form.Group>
               <Form.Group
                 as={Col}
                 controlId="formGridrArivalAirport"
@@ -127,17 +137,18 @@ const CreateFlight = () => {
                   placeholder="Enter Arrival Airport"
                 />
               </Form.Group>
-              
-        <Form.Group as={Col} controlId="formGriddepartureAirport" >
-         <Form.Label>Departure Airport </Form.Label>
-            <Form.Control
-              name="departureAirport"
-              placeholder="Enter Departure Airport"
-              />
-              </Form.Group>
             </Row>
             <Row>
-            <Form.Group
+           
+
+        <Form.Group as={Col} controlId="formGriddepartureAirport" >
+         <Form.Label>Departure Terminal </Form.Label>
+            <Form.Control
+              name="departureTerminal"
+              placeholder="Enter Departure Terminal"
+              />
+              </Form.Group>
+              <Form.Group
                 as={Col}
                 controlId="formGridrArivalAirport"
               >
@@ -146,14 +157,6 @@ const CreateFlight = () => {
                   name="arrivalTerminal"
                   placeholder="Enter Arrival Terminal"
                 />
-              </Form.Group>
-
-        <Form.Group as={Col} controlId="formGriddepartureAirport" >
-         <Form.Label>Departure Terminal </Form.Label>
-            <Form.Control
-              name="departureTerminal"
-              placeholder="Enter Departure Terminal"
-              />
               </Form.Group>
             </Row>
           <div>
