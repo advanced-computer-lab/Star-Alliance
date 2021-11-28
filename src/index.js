@@ -1,4 +1,5 @@
 const express = require("express");
+
 var path = require("path");
 var fs = require("fs"); //file system
 var cookieParser = require("cookie-parser");
@@ -39,13 +40,15 @@ app.use("/Admin", require("../Routes/Admin.js"));
 
 const db = require("../Service/DBService.js");
 
+
 const createUser = async (req,res) => {
   const newUser = new user();
-  newUser.firstName=  "Youssef";
+  newUser.firstName=  "yehia";
   newUser.lastName = "Mohamed"; 
   newUser.passportNumber = "3002345678";
   newUser.isAdmin = false;
-  newUser.password = "user123";
+  newUser.password = "user1234";
+  newUser.email = "starallianceproject@gmail.com";
   await newUser.save();
 }
 //createUser();
@@ -53,13 +56,15 @@ const createUser = async (req,res) => {
 const createReservation = async (req,res) =>{
   const reserv = new reservation();
   
-  const nUser= await user.find({firstName:"Youssef"});
+  const nUser= await user.find({firstName:"yehia"});
   reserv.user = nUser[0];
   reserv.flight = (await flight.find({firstSeatsNum:5}))[0];
   console.log(nUser);
   await reserv.save();
 }
 //createReservation();
+
+
 
 const createAdmin = async (req, res) => {
   const newAd = new user();
@@ -106,7 +111,6 @@ app.get("/", (req, res) => {
   // console.log(req.cookies);
   res.json({ message: "From the Node Server !" });
 });
-
 app.post("/createFlight", async (req, res) => {
   const Flight = new flight();
   Flight.flightNumber = req.body.flightNumber;

@@ -97,7 +97,7 @@ const home = () => {
         {homeCardsInfo.map((info) => (
           <ImgCard {...info} />
         ))}
-        <Card style={{ width: "18rem", marginLeft: "1cm", marginRight: "1cm" }}>
+        <Card style={{border:"outset", width: "18rem", marginLeft: "1cm", marginRight: "1cm" }}>
           <Card.Img
             variant="top"
             style={{ height: "5cm" }}

@@ -36,6 +36,10 @@ const Naavbar = () => {
           fullWidth
           inputRef={refUserPass}
         />
+        <br />
+        <label>user:user</label>
+        <br />
+        <label>admin:admin</label>
       </>
     );
   };
@@ -52,7 +56,7 @@ const Naavbar = () => {
       } else alert("Wrong username or password");
     };
 
-    return <Button onClick={handleBtnClick}>login</Button>;
+    return <Button onClick={handleBtnClick}>Login In</Button>;
   };
   // const newUser = UserService.getUser();
 
@@ -96,23 +100,23 @@ const Naavbar = () => {
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
-            {/* <Nav className="me-auto">
-              <Nav.Link href="#home" style={{ color: "#DBE2EF" }}>
-                Home
+            <Nav className="me-auto">
+              <Nav.Link href="/ReservationView" style={{ color: "#DBE2EF" }}>
+                My reservations
               </Nav.Link>
-              <Nav.Link href="#link" style={{ color: "#DBE2EF" }}>
+              {/* <Nav.Link href="#link" style={{ color: "#DBE2EF" }}>
                 Link
               </Nav.Link>
               <Nav.Link href="#link" style={{ color: "#DBE2EF" }}>
                 Login
-              </Nav.Link>
-            </Nav> */}
+              </Nav.Link> */}
+            </Nav>
           </Navbar.Collapse>
           <Navbar.Collapse className="justify-content-end">
             <Navbar.Text>
               {!UserService.isLoggedIn() ? (
                 <Button onClick={handleLoginBtn} style={{ color: "white" }}>
-                  Login
+                  Sign In
                 </Button>
               ) : UserService.isAdmin() ? (
                 "Welcome Admin"
