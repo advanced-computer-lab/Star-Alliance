@@ -22,6 +22,7 @@
     "font-awesome": "^4.7.0",
     "moment": "^2.29.1",
     "mongoose": "^6.0.12",
+    "nodemailer": "^6.7.2",
     "nodemon": "^2.0.14",
     "react-bootstrap": "^2.0.1"
   }

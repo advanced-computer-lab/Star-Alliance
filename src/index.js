@@ -39,6 +39,7 @@ app.use("/Admin", require("../Routes/Admin.js"));
 
 const db = require("../Service/DBService.js");
 
+
 const createUser = async (req,res) => {
   const newUser = new user();
   newUser.firstName=  "Youssef";
@@ -131,6 +132,7 @@ app.post("/createFlight", async (req, res) => {
   res.redirect("http://localhost:3000/");
   //}, 5000);
 });
+
 // (async () => {
 //   const res = await flight.deleteMany({ flightNumber: "" });
 //   console.log(res);
