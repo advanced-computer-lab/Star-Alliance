@@ -64,7 +64,7 @@ app.post("/DeleteFlight", async (req, res) => {
   res.send(result);
 }
 );
-const sendEmail = (req,res) => {
+const sendEmail = (userEmail) => {
   const email=process.env.email;
 const pass=process.env.pass;
 var transporter = nodemailer.createTransport({
@@ -77,7 +77,7 @@ var transporter = nodemailer.createTransport({
 
 var mailOptions = {
   from: email,
-  to: 'yousefelbon@gmail.com',
+  to: userEmail,
   subject: 'RESERVATION CANCEL ',
   text: 'Your Reservation is canceled'
 };
@@ -94,8 +94,12 @@ app.post("/CancelReservation", async (req, res) => {
   console.log(req.body.resp);
   const flightNumber  = req.body.flightNumber;
   console.log("Here is the flight number",flightNumber);
-  const result = await reservation.deleteOne({flightNumber: flightNumber});
-  sendEmail();
+  const result1 = await reservation.findOne({flightNumber: flightNumber},{ firstName: "yehia" }).populate({path:'user'});
+  const result = await reservation.deleteOne({flightNumber: flightNumber}).populate({path:'user'});
+  console.log(result1);
+  console.log(result1.user.email);
+  //console.log(result1[0].email);
+  sendEmail(result1.user.email);
   console.log("result from Delete reservation", result);
   if (result == null) {
     res.status(404).send("No Reservation with this Number");
@@ -104,6 +108,7 @@ app.post("/CancelReservation", async (req, res) => {
   res.send(result);
 }
 );
+
 app.post("/UpdateFlight", async (req, res) => {
   const data = req.body;
   console.log(data);

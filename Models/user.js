@@ -22,6 +22,7 @@ const userSchema = new Schema({
     job: {type:String},
     isAdmin: {type:Boolean},
     phoneNumbers: [{type:String}],
+    email:{type:String},
     creditcards: [
         {
             type: Schema.Types.ObjectId,
