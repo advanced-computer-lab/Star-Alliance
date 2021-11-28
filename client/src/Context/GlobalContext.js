@@ -1,5 +1,12 @@
 import React, { useState } from "react";
 
+/** UserCtx Type
+  type {
+    0 = Guest
+    1 = User
+    2 = Admin
+  }
+*/
 const UserCtxInit = {
   type: 0,
 };

@@ -6,13 +6,15 @@ import {
   Route,
 } from "react-router-dom";
 
-import home from "./home.js";
+import home from "./AdminHomePage.js";
 import UpdateForm from "../Components/UpdateForm.js";
 import deletePopup from "../Components/DeletePopup.js";
 import FlightsList from "../Components/FlightsList.js";
 import CreateFlight from "../Components/CreateFlight.js";
 import TestPage from "./TestPage.js";
-import UserHomePage from "../Components/UserHomePage.js";
+import UserHomePage from "./UserHomePage.js";
+import AdminHomePage from "../pages/AdminHomePage.js";
+
 import ChooseFlight from "../Components/ChooseFlight.js";
 import MoreThanFlight from "../Components/MoreThanFlight.js";
 import ReservationView from "../Components/ReservationView.js";
@@ -25,13 +27,18 @@ import SelectFlight from "./SelectFlight";
 import ReservationSelection from "./ReservationSelection.js";
 import ContextRoute from "../Context/ContextRoute.js";
 import SeatReservation from "../pages/SeatReservation";
-
+import UserService from "../Services/UserService.js";
 const Main = () => {
+  const isAdmin = UserService.isAdmin();
   return (
     <>
       <Switch>
-        {/* The Switch decides which component to show based on the current URL.*/}
-        <Route exact path="/" component={home} />
+        <ContextRoute
+          exact
+          path="/"
+          Context={UserHomeContext}
+          CComponent={isAdmin ? AdminHomePage : UserHomePage}
+        />
 
         <ContextRoute
           exact
@@ -51,16 +58,10 @@ const Main = () => {
           Context={UserHomeContext}
           CComponent={SelectFlight}
         />
-        <ContextRoute
-          exact
-          path="/UserHome"
-          Context={UserHomeContext}
-          CComponent={UserHomePage}
-        />
 
+        <Route exact path="/FlightsList" component={FlightsList} />
         <Route exact path="/test" component={TestPage} />
         <Route exact path="/UpdateForm" component={UpdateForm} />
-        <Route exact path="/FlightsList" component={FlightsList} />
         <Route exact path="/FlightView/:flightId" component={FlightView} />
         <Route exact path="/deleteFlight" component={deletePopup}></Route>
         <Route exact path="/createFlight" component={CreateFlight}></Route>

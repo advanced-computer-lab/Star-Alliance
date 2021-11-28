@@ -16,7 +16,7 @@ import { faPlaneArrival } from "@fortawesome/free-solid-svg-icons";
 import { faCalendarAlt } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import { UserHomeCtx } from "../Context/UserHomeContext";
-import MoreThanFlight from "./MoreThanFlight";
+import MoreThanFlight from "../Components/MoreThanFlight";
 
 //var egy= "https://flagpedia.net/data/flags/w702/eg.png";
 

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext, useRef } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Container from "react-bootstrap/Container";
-import { Nav, NavDropdown, Link } from "react-bootstrap";
+import { Nav, NavDropdown } from "react-bootstrap";
 //import { NavLink, Link, Redirect, useHistory } from "react-router-dom";
 import Form from "react-bootstrap/Form";
 import Button from "@material-ui/core/Button";
@@ -10,14 +10,15 @@ import logo from "../images/logo.png";
 import UserService, { UserCtx } from "../Services/UserService.js";
 import PopupView from "./PopupView";
 import TextField from "@mui/material/TextField";
+import { LinkContainer } from "react-router-bootstrap";
 
 //const logo= "	https://o.remove.bg/downloads/e14af0fc-8d3f-4a5a-8dc4-15aca52535d1/7-removebg-preview.png"
 const Naavbar = () => {
   const refUserName = useRef(null);
   const refUserPass = useRef(null);
+  const [user, setUser] = useContext(UserCtx);
 
   const AuthForm = () => {
-    const [User, SetUser] = useContext(UserCtx);
     return (
       <>
         <TextField
@@ -61,7 +62,6 @@ const Naavbar = () => {
   // const newUser = UserService.getUser();
 
   // console.log(newUser);
-  const [user, setUser] = useContext(UserCtx);
 
   const [popLogin, setpopLogin] = useState(false);
 
@@ -94,16 +94,22 @@ const Naavbar = () => {
         variant="dark"
       >
         <Container>
-          <Navbar.Brand href="/userHome" style={{ color: "#DBE2EF" }}>
-            <img style={{ height: "1cm", width: "2cm" }} src={logo} />
-            Star-Alliance
-          </Navbar.Brand>
+          <LinkContainer to="/">
+            <Navbar.Brand style={{ color: "#DBE2EF" }}>
+              <img style={{ height: "1cm", width: "2cm" }} src={logo} />
+              Star-Alliance
+            </Navbar.Brand>
+          </LinkContainer>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
-              <Nav.Link href="/ReservationView" style={{ color: "#DBE2EF" }}>
-                My reservations
-              </Nav.Link>
+              {UserService.isUser() && (
+                <LinkContainer to="/ReservationView">
+                  <Nav.Link style={{ color: "#DBE2EF" }}>
+                    My reservations
+                  </Nav.Link>
+                </LinkContainer>
+              )}
               {/* <Nav.Link href="#link" style={{ color: "#DBE2EF" }}>
                 Link
               </Nav.Link>
@@ -113,6 +119,28 @@ const Naavbar = () => {
             </Nav>
           </Navbar.Collapse>
           <Navbar.Collapse className="justify-content-end">
+            {/* TODO: Remove Admin User Debug Buttons later */}
+            <Button
+              onClick={() => {
+                setUser({ ...user, type: 0 });
+              }}
+            >
+              Guest
+            </Button>
+            <Button
+              onClick={() => {
+                setUser({ ...user, type: 1 });
+              }}
+            >
+              User
+            </Button>
+            <Button
+              onClick={() => {
+                setUser({ ...user, type: 2 });
+              }}
+            >
+              Admin
+            </Button>
             <Navbar.Text>
               {!UserService.isLoggedIn() ? (
                 <Button onClick={handleLoginBtn} style={{ color: "white" }}>
