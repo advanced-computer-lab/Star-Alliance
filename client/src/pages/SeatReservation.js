@@ -29,15 +29,6 @@ const SeatReservation = ({flight}) => {
     console.log(selectedSeats);
   }
 
-
-
-
-
-
-
-
-
-
 return (
 <div class="plane">
   <div class="cockpit">
@@ -62,7 +53,7 @@ return (
           <label for="1C">1C</label>
         </li>
         <li class="seat">
-          <input type="checkbox" disabled id="1D" onClick = {seatClick}/>
+          <input type="checkbox" id="1D" onClick = {seatClick}/>
           <label for="1D">Occupied</label>
         </li>
         <li class="seat">
