@@ -11,6 +11,14 @@ import Col from "react-bootstrap/Col";
 const SelectFlight = () => {
   const [searchFlights, setSearchFlights] = useContext(UserHomeCtx);
   let flights = searchFlights.data.going;
+
+  if(flights[0]== undefined){
+    return (
+      <h1>No Available going flights with this date !</h1>
+    )
+  }
+  else{
+
   let flights2 = searchFlights.data.returning;
   let seatType = searchFlights.data.seatType;
   let allData = { flights, flights2, seatType };
@@ -186,5 +194,6 @@ const SelectFlight = () => {
     </div>
   );
 };
+}
 
 export default SelectFlight;

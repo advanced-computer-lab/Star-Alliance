@@ -12,6 +12,14 @@ const SelectReturnFlights = (props) => {
   console.log("search flight", searchFlights);
   const flight = searchFlights.data.going;
   const flights2 = searchFlights.data.returning;
+
+  if(flights2[0] == undefined){
+    return (
+      <h1>No Available returning flights with this date !</h1>
+    )
+  }
+  else{
+
   const seatType = searchFlights.data.seatType;
   let allData = { flight, flights2, seatType };
 
@@ -165,5 +173,5 @@ const SelectReturnFlights = (props) => {
       ;
     </div>
   );
-};
+};}
 export default SelectReturnFlights;

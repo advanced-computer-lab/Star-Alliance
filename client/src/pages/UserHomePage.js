@@ -169,7 +169,7 @@ const UserHomePage = () => {
                     Going Date <FontAwesomeIcon icon={faCalendarAlt} />
                   </Form.Label>
                   <Form.Control
-                    type="datetime-local"
+                    type="date"
                     name="departureTime"
                     placeholder="Enter Departure Time"
                    // value="2022-01-01T10:00"
@@ -185,7 +185,7 @@ const UserHomePage = () => {
                     Returning Date <FontAwesomeIcon icon={faCalendarAlt} />
                   </Form.Label>
                   <Form.Control
-                    type="datetime-local"
+                    type="date"
                     name="arrivalTime"
                     placeholder="Enter Arrival Time"
                   //  value="2022-01-22T10:00"
