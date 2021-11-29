@@ -434,7 +434,7 @@ if (type=="Business"){
     }
   }
 
- roundtrid={going:result3, returning:result4, seatType:type };
+ roundtrid={going:result3, returning:result4, seatType:type ,companionsCount:total};
  res.send(roundtrid);
  console.log(roundtrid);
 

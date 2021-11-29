@@ -92,7 +92,8 @@ const SelectFlight = () => {
     console.log("selected ", flight);
     const selected = {
       flight1: flight,
-      flight2: null, // to be changed in Select Return Flight
+      flight2: null,  // to be changed in Select Return Flight
+      num:searchFlights.data.companionsCount,
     };
 
     setSearchFlights({ ...searchFlights, selected });
