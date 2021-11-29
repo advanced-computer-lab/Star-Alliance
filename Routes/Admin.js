@@ -17,7 +17,7 @@ app.get("/GetAllFlights", async (req, res) => {
 app.get("/GetAllReservedFlights", async (req, res) => {
   console.log("/GetAllReservedFlights sending");
   
-  const result = await reservation.find({ lastName: "Mohamed"} ).populate({path:'flight'}).populate({path:'user'});
+  const result = await reservation.find({firstName:"yehia"}).populate({path:'flight1'}).populate({path:'user'}).populate({path:'flight2'});
   res.send(result);
 });
 

@@ -171,11 +171,18 @@ const ReservationView = () => {
             resv.flight["departureTime"] = formatDateTime(resv.flight["departureTime"]);*/
        // });
        const allfl=[];
-       for(let i=0;i<data.data.length;i++)  {
-           allfl[i]=data.data[i].flight;
+       let size= data.data.length;
+        size =size *2;
+        let j =0;
+       for(let i=0;i<data.data.length*2;i=i+2)  {
+           allfl[i]=data.data[j].flight1;
            allfl[i].id=i;
-           
-       }
+           allfl[i+1]=data.data[j].flight2;
+           allfl[i+1].id=i+1;
+           j++
+       }   
+       console.log("hena1",data.data.length)
+       console.log("hena",allfl)
        allfl.forEach((resv) =>{
         resv["id"] = resv["_id"];
         const formatDateTime = (input) =>

@@ -58,11 +58,12 @@ const createReservation = async (req,res) =>{
   
   const nUser= await user.find({firstName:"yehia"});
   reserv.user = nUser[0];
-  reserv.flight = (await flight.find({firstSeatsNum:5}))[0];
+  reserv.flight1 = (await flight.find({flightNumber:"4"}))[0];
+  reserv.flight2 = (await flight.find({flightNumber:"5"}))[0];
   console.log(nUser);
   await reserv.save();
 }
-//createReservation();
+createReservation();
 
 
 
