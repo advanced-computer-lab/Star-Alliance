@@ -12,8 +12,10 @@ function App() {
           {/*add margin top compansate for navbar*/}
           <Main />
         </div>
-
+        <div style={{marginTop:"2cm"}}>
         <Footer />
+        </div>
+
       </div>
     </GlobalContext>
   );

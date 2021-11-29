@@ -45,15 +45,16 @@ const Main = () => {
 
         <ContextRoute
           exact
-          path="/ReservationSummary"
-          Context={ReservationContext}
-          CComponent={ReservationSummary}
-        />
-        <ContextRoute
-          exact
           path="/ReservationSelection"
           Context={ReservationContext}
           CComponent={ReservationSelection}
+        />
+
+        <ContextRoute
+          exact
+          path="/ReservationSummary"
+          Context={UserHomeContext}
+          CComponent={ReservationSummary}
         />
         <ContextRoute
           exact
@@ -61,7 +62,18 @@ const Main = () => {
           Context={UserHomeContext}
           CComponent={SelectFlight}
         />
-
+        <ContextRoute
+          exact
+          path="/SeatReservation"
+          Context={UserHomeContext}
+          CComponent={SeatReservation}
+        />
+        <ContextRoute
+          exact
+          path="/SelectReturnFlights"
+          Context={UserHomeContext}
+          CComponent={SelectReturnFlights}
+        />
         <Route exact path="/FlightsList" component={FlightsList} />
         <Route exact path="/test" component={TestPage} />
         <Route exact path="/UpdateForm" component={UpdateForm} />
@@ -69,14 +81,14 @@ const Main = () => {
         <Route exact path="/deleteFlight" component={deletePopup}></Route>
         <Route exact path="/createFlight" component={CreateFlight}></Route>
         <Route exact path="/chooseFlight" component={ChooseFlight}></Route>
-        <Route exact path="/SelectReturnFlights" component={SelectReturnFlights}></Route>
+
         <Route
           exact
           path="/ReservationView"
           component={ReservationView}
         ></Route>
         <Route exact path="/more" component={MoreThanFlight}></Route>
-        <Route exact path="/SeatReservation" component={SeatReservation}></Route>
+
         <Route exact path="/UpdateUserData" component={UpdateUserData}></Route>
       </Switch>
     </>

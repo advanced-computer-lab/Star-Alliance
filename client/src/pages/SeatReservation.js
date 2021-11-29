@@ -1,39 +1,74 @@
-import {useEffect} from 'react';
-import "../Styles/Seats.scss"
+import { useEffect, useContext } from "react";
 import Button from "react-bootstrap/Button";
+import { UserHomeCtx } from "../Context/UserHomeContext";
+import PlaneSelection from "../Components/PlanSelection.js";
+import { useHistory } from "react-router-dom";
 
- 
+const assert = require("assert");
 
+<<<<<<< HEAD
 var selectedSeats = []; // this array contains the ids of the selected seats forex ["1A", "2B", "3C"]
 const SeatReservation = (props,{flight}) => {
    //allData = {flights,flights2,seatType}
+=======
+var selectedFlight1 = [];
+var selectedFlight2 = [];
+
+const SeatReservation = (props) => {
+  let history = useHistory();
+
+  //allData = {flights,flights2,seatType}
+>>>>>>> 1882d45b09c90fa694ec582f6a873ff65b7b4a73
   //flights={flightDet:{flight details}, finalPrice}
-  const allData = props.location.state;
+  // const { flights, flights2, seatType } = props.location.state;
+  const [searchFlights, setSearchFlights] = useContext(UserHomeCtx);
+  console.log("search flights in seating", searchFlights);
+  // const flights = searchFlights.data.going;
+  // const flights2 = searchFlights.data.returning;
+  // const seatType = searchFlights.data.seatType;
+  const flight1 = searchFlights.selected.flight1;
+  const flight2 = searchFlights.selected.flight2;
+
   useEffect(() => {
-    // this code excutes when the page loads
-    // update el inputs bel to be either checked or unavailble
-    const buttons = document.getElementsByTagName('input');
-    // loop through all the inputs, and check if the seat is available or not
-    for (let i = 0; i < buttons.length; i++) {
-      const button = buttons[i];
-      // if (!flight.seats[i].available) // FIX: based on whatever bon will make this object
-        button.disabled = true;
+    if (selectedFlight1) {
     }
-  }, [])
+  });
 
-  
-  function seatClick(e)  {
+  function seatClick1(e) {
     const isChecked = e.target.checked;
-    const seatID  = e.target.id;
+    const seatID = e.target.id.substring(0, e.target.id.length - 1); //remove planeId from the seat id
 
-    if(isChecked)
-      selectedSeats.push(seatID);
-    else
-      selectedSeats.splice(selectedSeats.indexOf(seatID), 1);
-
-    console.log(selectedSeats);
+    if (isChecked) {
+      if (selectedFlight1.length === 1) {
+        alert("You can only select one seat in each fligh");
+        e.target.checked = false;
+        return;
+      }
+      selectedFlight1.push(seatID);
+    } else {
+      selectedFlight1.splice(selectedFlight1.indexOf(seatID), 1);
+    }
+    console.log("selected seats 1", selectedFlight1);
   }
 
+  function seatClick2(e) {
+    const isChecked = e.target.checked;
+    const seatID = e.target.id.substring(0, e.target.id.length - 1); //remove planeId from the seat id
+
+    if (isChecked) {
+      if (selectedFlight2.length === 1) {
+        e.target.checked = false;
+        alert("You can only select one seat in each fligh");
+        return;
+      }
+      selectedFlight2.push(seatID);
+    } else {
+      selectedFlight2.splice(selectedFlight2.indexOf(seatID), 1);
+    }
+    console.log("selected seats 2", selectedFlight2);
+  }
+
+<<<<<<< HEAD
 return (
 <div class="plane">
   <div class="cockpit">
@@ -336,5 +371,86 @@ return (
 </div>
 );
 }
+=======
+  const handleConfirmBtn = () => {
+    if (selectedFlight1.length === 0 || selectedFlight1.length > 1) {
+      alert("Please select at least one seat in each fligh");
+      return;
+    }
+    setSearchFlights({
+      ...searchFlights,
+      selected: {
+        ...searchFlights.selected,
+        flight1seat: selectedFlight1,
+        flight2seat: selectedFlight2,
+      },
+    });
+    console.log("searchFlights", searchFlights);
+    history.push("/ReservationSummary");
+  };
+  //   arrivalAirport: "JFK"
+  // arrivalTerminal: "JFK"
+  // arrivalTime: "2022-01-01T10:00:00.000Z"
+  // businessClassPrice: 2222
+  // businessSeatsNum: 5
+  // departureAirport: "LAX"
+  // departureTerminal: "LAX"
+  // departureTime: "2022-01-01T08:00:00.000Z"
+  // economyClassPrice: 2222
+  // economySeatsNum: 6
+  // firstClassPrice: 3333
+  // firstSeatsNum: 6
+  // flightNumber: "456"
+  return (
+    <>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "space-evenly",
+        }}
+      >
+        <div>
+          <h3 className="mx-3 mb-4">
+            From {flight1.flightDet.departureAirport} to{" "}
+            {flight1.flightDet.arrivalAirport}
+          </h3>
+          <PlaneSelection
+            seatClick={seatClick1}
+            id={0}
+            avaiableSeats={flight1.flightDet.avaiableSeats}
+            selectedSeats={selectedFlight1}
+          />
+        </div>
+        <div>
+          <h3 className="mx-3 mb-4">
+            {" "}
+            From {flight2.flightDet.departureAirport} to{" "}
+            {flight2.flightDet.arrivalAirport}
+          </h3>
+          <PlaneSelection
+            seatClick={seatClick2}
+            id={1}
+            avaiableSeats={flight2.flightDet.avaiableSeats}
+            selectedSeats={selectedFlight2}
+          />
+        </div>
+      </div>
+      <div
+        className="mx-3 mb-4"
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItem: "center",
+        }}
+      >
+        <Button variant="primary" type="confirm" onClick={handleConfirmBtn}>
+          Confirm Seats
+        </Button>
+      </div>
+    </>
+  );
+};
+>>>>>>> 1882d45b09c90fa694ec582f6a873ff65b7b4a73
 
 export default SeatReservation;

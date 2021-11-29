@@ -7,8 +7,6 @@ const ContextRoute = ({ Context, CComponent, ...rest }) => {
   // 	<ReservationSummary />
   //   </ReservationContext>
   // </Route>
-  console.log("ContextRoute", Context);
-  console.log("Compt", CComponent);
   const res = (
     <Route {...rest}>
       <Context>

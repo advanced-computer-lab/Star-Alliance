@@ -17,6 +17,7 @@
   border-radius: 1px;
 
   margin-bottom: 30px;
+
 }
 .card > .cardContent {
   padding: 1rem;
@@ -35,6 +36,7 @@
   color: whitesmoke;
 }
 
-.btmButtons > button {
+.btmButtons > * {
   background-color: #003068 !important;
+  z-index: 1;
 }

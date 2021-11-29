@@ -9,6 +9,8 @@ import { UserCtx } from "../Context/GlobalContext.js";
 import { Link } from "react-router-dom";
 import UserService from "../Services/UserService.js";
 
+import PlaneSelection from "../Components/PlanSelection.js";
+
 const TestPage = () => {
   const [open, setOpen] = useState(false);
   const [User, setUser] = useContext(UserCtx);
@@ -31,6 +33,9 @@ const TestPage = () => {
       {/* <h1>{JSON.stringify(User)}</h1> */}
       <Link to="/">nav to home</Link>
       <h1>{JSON.stringify(UserService.isGuest())}</h1>
+      <Link to={{ pathname: "/SelectReturnFlights", state: { a: 1 } }}>
+        nav to select return flight
+      </Link>
       <ImgCard
         title="title"
         text="eiocjeiojceioc"
@@ -41,6 +46,8 @@ const TestPage = () => {
         <UpdateForm />
       </PopupView>
       <Button onClick={handleBtnClick}> Click me </Button>
+
+      <PlaneSelection />
     </>
   );
 };
