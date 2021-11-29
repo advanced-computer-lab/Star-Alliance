@@ -8,7 +8,7 @@ import { LinkContainer } from "react-router-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDollarSign } from "@fortawesome/free-solid-svg-icons";
 import { faClipboardList } from "@fortawesome/free-solid-svg-icons";
-
+import ReservationService from "../Services/ReservationService.js";
 import { UserHomeCtx } from "../Context/UserHomeContext";
 import { Link } from "react-router-dom";
 import styles from "../Styles/ReservationSummary.module.css";
@@ -103,14 +103,31 @@ const ReservationSummary = () => {
   const [searchFlights, setSearchFlights] = useContext(UserHomeCtx);
   const flight1 = searchFlights.selected.flight1;
   const flight2 = searchFlights.selected.flight2;
-  const fligh1seat = searchFlights.selected.flight1seat;
-  const fligh2seat = searchFlights.selected.flight2seat;
+  const flight1seat = searchFlights.selected.flight1seat;
+  const flight2seat = searchFlights.selected.flight2seat;
 
   // TODO: check if there is some passed values from the previous page [reservation]
   // TODO: else query reservstion data from params
   console.log("searchFlights in Resrvation summary", searchFlights);
   const handleSubmitReservation = () => {
-    alert("NOT IMPLEMENTED");
+    let data = {
+      userId: "61a35fcdfd33ed54997b5271", // TODO: new Reservation dynmaic user
+      flight1num: flight1.flightDet.flightNumber,
+      flight2num: flight2.flightDet.flightNumber,
+      seatType: searchFlights.data.seatType,
+      flight1seat: flight1seat,
+      flight2seat: flight2seat,
+    };
+    ReservationService.reserveNew(data)
+      .then((res) => {
+        alert("Done", res);
+        console.log("OK ===> ", res);
+      })
+      .catch((err) => {
+        alert("Error", err);
+        console.log("errr <===", err.response);
+        const errorMessage = err.response.data;
+      });
   };
   return (
     <>
@@ -153,7 +170,7 @@ const ReservationSummary = () => {
             {/* Flight 1 */}
             <FlightCard
               flight={flight1}
-              choosenSeat={fligh1seat}
+              choosenSeat={flight1seat}
               cabin={searchFlights.data.seatType}
               price={flight1.finalPrice}
             />
@@ -161,7 +178,7 @@ const ReservationSummary = () => {
             {/* Flight2 */}
             <FlightCard
               flight={flight2}
-              choosenSeat={fligh2seat}
+              choosenSeat={flight2seat}
               cabin={searchFlights.data.seatType}
               price={flight2.finalPrice}
             />

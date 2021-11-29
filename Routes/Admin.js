@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
 const db = require("../Service/DBService.js");
-const { flight, reservation } = require("../Models/export");
+const { flight, reservation, user } = require("../Models/export");
 var nodemailer = require("nodemailer");
 app.get("/", (req, res) => {
   res.json({ message: "welcome admin" });
@@ -279,5 +279,90 @@ app.post("/GetRequestedFlights", async (req, res) => {
   res.send(roundtrid);
   console.log(roundtrid);
 });
+
+const AddReservation = async (req, res) => {
+  const { userId, flight1num, flight2num, seatType, flight1seat, flight2seat } =
+    req.body;
+
+  // check that the user exists, and verifiy that the user can make a reservation
+  let resUser = null;
+  try {
+    resUser = await user.findOne({ _id: "61a35fcdfd33ed54997b5271" });
+  } catch (e) {
+    console.log("error getting the user");
+    res.status(404).send("User not found");
+    return;
+  }
+  console.log(resUser);
+  // check that the flight exists, and verify that the flight is available
+  let resFlight1 = null;
+  let resFlight2 = null;
+  try {
+    resFlight1 = await flight.findOne({ flightNumber: flight1num });
+    resFlight2 = await flight.findOne({ flightNumber: flight2num });
+  } catch (e) {
+    console.log("error getting the flight, flight might not exist");
+    res.status(404).send("Flight not found");
+    return;
+  }
+  if (
+    !flight1seat.every((seat) => resFlight1.avaiableSeats.includes(seat)) ||
+    flight1seat.length == 0
+  ) {
+    console.log("Seat Number error");
+    res.status(503).send("Seat number error");
+    return;
+  }
+  if (
+    !flight2seat.every((seat) => resFlight2.avaiableSeats.includes(seat)) ||
+    flight2seat.length == 0
+  ) {
+    console.log("Seat Number error");
+    res.status(503).send("Seat number error");
+    return;
+  }
+
+  //update flight seats
+  resFlight1.avaiableSeats = resFlight1.avaiableSeats.filter(
+    (seat) => !flight1seat.includes(seat)
+  );
+  resFlight1.save();
+  resFlight2.avaiableSeats = resFlight2.avaiableSeats.filter(
+    (seat) => !flight2seat.includes(seat)
+  );
+  resFlight2.save();
+
+  // "Business", "Economy", "First"
+
+  // TODO: Calculate the price?
+
+  const newReservation = new reservation({
+    user: resUser._id,
+    flight1: resFlight1._id,
+    flight2: resFlight2._id,
+    cabinClass: seatType,
+  });
+  try {
+    await newReservation.save();
+  } catch (e) {
+    console.log("error saving the reservation");
+    res.status(503).send("Error saving the reservation");
+    return;
+  }
+
+  //TODO: make sure not already reserved
+
+  res.send("OK");
+};
+app.post("/AddReservation", AddReservation);
+
+// AddReservation({
+//   userId: "61a35fcdfd33ed54997b5271",
+//   flight1num: 489,
+//   flight2num: 789,
+//   seatType: "Economy",
+//   fligh1seat: "1A",
+//   fligh2seat: "2B",
+// });
 
 module.exports = app;
