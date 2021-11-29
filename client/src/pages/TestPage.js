@@ -9,6 +9,8 @@ import { UserCtx } from "../Context/GlobalContext.js";
 import { Link } from "react-router-dom";
 import UserService from "../Services/UserService.js";
 
+import PlaneSelection from "../Components/PlanSelection.js";
+
 const TestPage = () => {
   const [open, setOpen] = useState(false);
   const [User, setUser] = useContext(UserCtx);
@@ -44,6 +46,8 @@ const TestPage = () => {
         <UpdateForm />
       </PopupView>
       <Button onClick={handleBtnClick}> Click me </Button>
+
+      <PlaneSelection />
     </>
   );
 };
