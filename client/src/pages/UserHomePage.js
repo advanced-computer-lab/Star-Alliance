@@ -40,7 +40,7 @@ const UserHomePage = () => {
       //  moment(arrivalTime).format("yyyy-MM-DDThh:mm");
       arrivalAirport: e.arrivalAirport.value,
       departureAirport: e.departureAirport.value,
-      departureTime:moment(e.departureTime.value).format("yyyy-MM-DDThh:mm"),
+      departureTime: moment(e.departureTime.value).format("yyyy-MM-DDThh:mm"),
       // returning
       arrivalTime2: moment(e.arrivalTime.value).format("yyyy-MM-DDThh:mm"),
       ///
@@ -145,7 +145,9 @@ const UserHomePage = () => {
 
                 <Form.Select name="arrivalAirport" defaultValue="">
                   <option value="LAX">LAX</option>
-                  <option value="JFK">JFK</option>
+                  <option value="JFK" selected>
+                    JFK
+                  </option>
                   <option value="LHR">LHR</option>
                   <option value="CAI"> CAI </option>
                   <option value="EXP">EXP</option>
@@ -170,6 +172,7 @@ const UserHomePage = () => {
                     type="datetime-local"
                     name="departureTime"
                     placeholder="Enter Departure Time"
+                    value="2022-01-01T10:00"
                   />
                 </Form.Group>
               </Col>
@@ -185,6 +188,7 @@ const UserHomePage = () => {
                     type="datetime-local"
                     name="arrivalTime"
                     placeholder="Enter Arrival Time"
+                    value="2022-01-22T10:00"
                   />
                 </Form.Group>
               </Col>

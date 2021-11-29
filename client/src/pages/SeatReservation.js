@@ -17,18 +17,6 @@ const SeatReservation = (props) => {
   const flight1 = searchFlights.selected.flight1;
   const flight2 = searchFlights.selected.flight2;
 
-  useEffect(() => {
-    // this code excutes when the page loads
-    // update el inputs bel to be either checked or unavailble
-    const buttons = document.getElementsByTagName("input");
-    // loop through all the inputs, and check if the seat is available or not
-    for (let i = 0; i < buttons.length; i++) {
-      const button = buttons[i];
-      // if (!flight.seats[i].available) // FIX: based on whatever bon will make this object
-      // button.disabled = true;
-    }
-  }, []);
-
   function seatClick1(e) {
     const isChecked = e.target.checked;
     console.log("isChecked seat 1", isChecked);
@@ -75,7 +63,11 @@ const SeatReservation = (props) => {
             From {flight1.flightDet.departureAirport} to{" "}
             {flight1.flightDet.arrivalAirport}
           </h3>
-          <PlaneSelection seatClick={seatClick1} id={0} />
+          <PlaneSelection
+            seatClick={seatClick1}
+            id={0}
+            avaiableSeats={flight1.flightDet.avaiableSeats}
+          />
         </div>
         <div>
           <h3 className="mx-3 mb-4">
@@ -83,7 +75,11 @@ const SeatReservation = (props) => {
             From {flight2.flightDet.departureAirport} to{" "}
             {flight2.flightDet.arrivalAirport}
           </h3>
-          <PlaneSelection seatClick={seatClick2} id={1} />
+          <PlaneSelection
+            seatClick={seatClick2}
+            id={1}
+            avaiableSeats={flight2.flightDet.avaiableSeats}
+          />
         </div>
       </div>
       <div

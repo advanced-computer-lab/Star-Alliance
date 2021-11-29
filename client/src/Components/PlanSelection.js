@@ -1,6 +1,25 @@
 import "../Styles/Seats.scss";
+import { useEffect, useContext } from "react";
 
-const PlaneSelection = ({ seatClick, id }) => {
+const PlaneSelection = ({ id, seatClick, avaiableSeats }) => {
+  useEffect(() => {
+    // this code excutes when the page loads
+    // update el inputs bel to be either checked or unavailble
+    // const buttons = document.getElementsByTagName("input");
+    const letters = ["A", "B", "C", "D", "E", "F"];
+    for (let i = 1; i <= 10; i++) {
+      for (let j = 0; j < 6; j++) {
+        const ltr = letters[j];
+        const button = document.getElementById(`${i}${ltr}${id}`);
+        if (avaiableSeats.includes(`${i}${ltr}`)) {
+          button.disabled = false;
+        } else {
+          button.disabled = true;
+        }
+      }
+    }
+  }, []);
+
   return (
     <>
       <div class="plane">
