@@ -1,7 +1,7 @@
 import "../Styles/Seats.scss";
 import { useEffect, useContext } from "react";
-
-const PlaneSelection = ({ id, seatClick, avaiableSeats }) => {
+// NOTICE: the ID can only be from 0-9, no more, otherwise conflict in SeatReservation.js
+const PlaneSelection = ({ id, seatClick, avaiableSeats, selectedSeats }) => {
   useEffect(() => {
     // this code excutes when the page loads
     // update el inputs bel to be either checked or unavailble
@@ -16,6 +16,14 @@ const PlaneSelection = ({ id, seatClick, avaiableSeats }) => {
         } else {
           button.disabled = true;
         }
+      }
+    }
+
+    // update the selected seats
+    if (selectedSeats) {
+      for (let i = 0; i < selectedSeats.length; i++) {
+        const button = document.getElementById(`${selectedSeats[i]}${id}`);
+        button.checked = true;
       }
     }
   }, []);

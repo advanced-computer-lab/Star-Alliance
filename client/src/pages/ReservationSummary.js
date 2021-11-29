@@ -9,27 +9,30 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDollarSign } from "@fortawesome/free-solid-svg-icons";
 import { faClipboardList } from "@fortawesome/free-solid-svg-icons";
 
-import { ReservationCtx } from "../Context/ReservationContext";
+import { UserHomeCtx } from "../Context/UserHomeContext";
 import { Link } from "react-router-dom";
 import styles from "../Styles/ReservationSummary.module.css";
 
-const FlightCard = (props) => {
+import moment from "moment";
+
+const FlightCard = ({ flight, choosenSeat, cabin, price }) => {
+  console.log("flight", flight);
   return (
     <>
       <Row>
         <Col>
-          <label>Flight 1</label>
+          <label>Flight {flight.flightDet.flightNumber}</label>
         </Col>
       </Row>
       <Row>
         <Col>
           <label>
-            From <b>DATA</b>
+            From <b>{flight.flightDet.departureAirport}</b>
           </label>
         </Col>
         <Col>
           <label>
-            To <b>DATA</b>
+            To <b>{flight.flightDet.arrivalAirport}</b>
           </label>
         </Col>
       </Row>
@@ -38,7 +41,11 @@ const FlightCard = (props) => {
           <label>Departure DateTime:</label>
         </Col>
         <Col>
-          <label>DATA</label>
+          <label>
+            {moment(flight.flightDet.departureTime).format(
+              "hh:mm A DD-MM-yyyy"
+            )}
+          </label>
         </Col>
       </Row>
       <Row>
@@ -46,7 +53,9 @@ const FlightCard = (props) => {
           <label>Arrival DateTime:</label>
         </Col>
         <Col>
-          <label>DATA</label>
+          <label>
+            {moment(flight.flightDet.arrivalTime).format("hh:mm A DD-MM-yyyy")}
+          </label>
         </Col>
       </Row>
       <Row>
@@ -54,7 +63,7 @@ const FlightCard = (props) => {
           <label>Choosen Seat:</label>
         </Col>
         <Col>
-          <label>DATA</label>
+          <label>{choosenSeat}</label>
         </Col>
       </Row>
       <Row>
@@ -62,7 +71,7 @@ const FlightCard = (props) => {
           <label>Cabin:</label>
         </Col>
         <Col>
-          <label>DATA</label>
+          <label>{cabin}</label>
         </Col>
       </Row>
       <Row>
@@ -70,7 +79,7 @@ const FlightCard = (props) => {
           <label>Price:</label>
         </Col>
         <Col>
-          <label>DATA</label>
+          <label>EGP {price}</label>
         </Col>
       </Row>
     </>
@@ -91,10 +100,18 @@ const Card = (props) => {
 };
 
 const ReservationSummary = () => {
-  const [reservation, setReservation] = useContext(ReservationCtx);
+  const [searchFlights, setSearchFlights] = useContext(UserHomeCtx);
+  const flight1 = searchFlights.selected.flight1;
+  const flight2 = searchFlights.selected.flight2;
+  const fligh1seat = searchFlights.selected.flight1seat;
+  const fligh2seat = searchFlights.selected.flight2seat;
+
   // TODO: check if there is some passed values from the previous page [reservation]
   // TODO: else query reservstion data from params
-
+  console.log("searchFlights in Resrvation summary", searchFlights);
+  const handleSubmitReservation = () => {
+    alert("NOT IMPLEMENTED");
+  };
   return (
     <>
       {/* <Link to="/ReservationSelection">{"<< Get Back"}</Link> */}
@@ -120,7 +137,7 @@ const ReservationSummary = () => {
                 <label>Total:</label>
               </Col>
               <Col>
-                <label>EGP 51,046</label>
+                <label>EGP {flight1.finalPrice + flight2.finalPrice}</label>
               </Col>
             </Row>
           </Card>
@@ -133,9 +150,21 @@ const ReservationSummary = () => {
             }
           >
             {/* dates-time, price, choosen seat */}
-            <FlightCard />
+            {/* Flight 1 */}
+            <FlightCard
+              flight={flight1}
+              choosenSeat={fligh1seat}
+              cabin={searchFlights.data.seatType}
+              price={flight1.finalPrice}
+            />
             <hr />
-            <FlightCard />
+            {/* Flight2 */}
+            <FlightCard
+              flight={flight2}
+              choosenSeat={fligh2seat}
+              cabin={searchFlights.data.seatType}
+              price={flight2.finalPrice}
+            />
           </Card>
 
           <Stack
@@ -145,10 +174,10 @@ const ReservationSummary = () => {
             spacing={2}
             className={styles.btmButtons}
           >
-            <LinkContainer to="/ReservationSelection">
+            <LinkContainer to="/SelectFlight">
               <Button>Edit</Button>
             </LinkContainer>
-            <Button>Confirm</Button>
+            <Button onClick={handleSubmitReservation}>Confirm</Button>
           </Stack>
         </div>
       </div>

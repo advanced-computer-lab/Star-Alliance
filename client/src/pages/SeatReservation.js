@@ -1,11 +1,17 @@
 import { useEffect, useContext } from "react";
 import Button from "react-bootstrap/Button";
 import { UserHomeCtx } from "../Context/UserHomeContext";
-// import "../Styles/Seats.scss";
 import PlaneSelection from "../Components/PlanSelection.js";
-var selectedSeats = []; // this array contains the ids of the selected seats forex ["1A", "2B", "3C"]
+import { useHistory } from "react-router-dom";
+
+const assert = require("assert");
+
+var selectedFlight1 = [];
+var selectedFlight2 = [];
 
 const SeatReservation = (props) => {
+  let history = useHistory();
+
   //allData = {flights,flights2,seatType}
   //flights={flightDet:{flight details}, finalPrice}
   // const { flights, flights2, seatType } = props.location.state;
@@ -17,25 +23,61 @@ const SeatReservation = (props) => {
   const flight1 = searchFlights.selected.flight1;
   const flight2 = searchFlights.selected.flight2;
 
+  useEffect(() => {
+    if (selectedFlight1) {
+    }
+  });
+
   function seatClick1(e) {
     const isChecked = e.target.checked;
-    console.log("isChecked seat 1", isChecked);
-    const seatID = e.target.id;
-    if (isChecked) selectedSeats.push(seatID);
-    else selectedSeats.splice(selectedSeats.indexOf(seatID), 1);
-    console.log(selectedSeats);
+    const seatID = e.target.id.substring(0, e.target.id.length - 1); //remove planeId from the seat id
+
+    if (isChecked) {
+      if (selectedFlight1.length === 1) {
+        alert("You can only select one seat in each fligh");
+        e.target.checked = false;
+        return;
+      }
+      selectedFlight1.push(seatID);
+    } else {
+      selectedFlight1.splice(selectedFlight1.indexOf(seatID), 1);
+    }
+    console.log("selected seats 1", selectedFlight1);
   }
 
   function seatClick2(e) {
     const isChecked = e.target.checked;
-    console.log("isChecked seat 2", isChecked);
-    const seatID = e.target.id;
-    if (isChecked) selectedSeats.push(seatID);
-    else selectedSeats.splice(selectedSeats.indexOf(seatID), 1);
-    console.log(selectedSeats);
+    const seatID = e.target.id.substring(0, e.target.id.length - 1); //remove planeId from the seat id
+
+    if (isChecked) {
+      if (selectedFlight2.length === 1) {
+        e.target.checked = false;
+        alert("You can only select one seat in each fligh");
+        return;
+      }
+      selectedFlight2.push(seatID);
+    } else {
+      selectedFlight2.splice(selectedFlight2.indexOf(seatID), 1);
+    }
+    console.log("selected seats 2", selectedFlight2);
   }
 
-  const handleConfirmBtn = () => {};
+  const handleConfirmBtn = () => {
+    if (selectedFlight1.length === 0 || selectedFlight1.length > 1) {
+      alert("Please select at least one seat in each fligh");
+      return;
+    }
+    setSearchFlights({
+      ...searchFlights,
+      selected: {
+        ...searchFlights.selected,
+        flight1seat: selectedFlight1,
+        flight2seat: selectedFlight2,
+      },
+    });
+    console.log("searchFlights", searchFlights);
+    history.push("/ReservationSummary");
+  };
   //   arrivalAirport: "JFK"
   // arrivalTerminal: "JFK"
   // arrivalTime: "2022-01-01T10:00:00.000Z"
@@ -67,6 +109,7 @@ const SeatReservation = (props) => {
             seatClick={seatClick1}
             id={0}
             avaiableSeats={flight1.flightDet.avaiableSeats}
+            selectedSeats={selectedFlight1}
           />
         </div>
         <div>
@@ -79,6 +122,7 @@ const SeatReservation = (props) => {
             seatClick={seatClick2}
             id={1}
             avaiableSeats={flight2.flightDet.avaiableSeats}
+            selectedSeats={selectedFlight2}
           />
         </div>
       </div>

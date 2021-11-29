@@ -45,15 +45,16 @@ const Main = () => {
 
         <ContextRoute
           exact
-          path="/ReservationSummary"
-          Context={ReservationContext}
-          CComponent={ReservationSummary}
-        />
-        <ContextRoute
-          exact
           path="/ReservationSelection"
           Context={ReservationContext}
           CComponent={ReservationSelection}
+        />
+
+        <ContextRoute
+          exact
+          path="/ReservationSummary"
+          Context={UserHomeContext}
+          CComponent={ReservationSummary}
         />
         <ContextRoute
           exact
