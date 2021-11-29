@@ -15,7 +15,8 @@ const SelectFlight = () => {
     let flights2=searchFlights.data.returning;
     let seatType = searchFlights.data.seatType;
     let allData = {flights,flights2,seatType};
-    
+    console.log("all Dataaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", allData);
+
    const firstClick = (ids) => {
       console.log("Check",ids);
       //var property = document.getElementById(ids);

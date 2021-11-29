@@ -5,7 +5,7 @@ import Button from "react-bootstrap/Button";
  
 
 var selectedSeats = []; // this array contains the ids of the selected seats forex ["1A", "2B", "3C"]
-const SeatReservation = ({flight},props) => {
+const SeatReservation = (props,{flight}) => {
    //allData = {flights,flights2,seatType}
   //flights={flightDet:{flight details}, finalPrice}
   const allData = props.location.state;
@@ -42,6 +42,7 @@ return (
   <div class="exit exit--front fuselage">
     
   </div>
+  <h1>{allData.flights[0].flightDet.arrivalAirport}</h1>
   <ol class="cabin fuselage">
     <li class="row row--1">
       <ol class="seats" type="A">

@@ -10,7 +10,7 @@ const SelectReturnFlights = (props) => {
     const flights2 = allData.flights2;
     const seatType = allData.seatType;
 
-    console.log("allData is hereeeeeeeeeeeeeeeeeee",allData);
+    console.log("allData is hereeeeeeeeeeeeeeeeeee",props);
 
     function GetTime(date1){
         return new Date(date1).getHours()+":"+new Date(date1).getMinutes();
