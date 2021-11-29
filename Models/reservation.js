@@ -9,6 +9,7 @@ const reservationSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "User",
   },
+
   flight: {
     type: Schema.Types.ObjectId,
     ref: "Flight",

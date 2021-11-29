@@ -12,7 +12,6 @@ function App() {
           {/*add margin top compansate for navbar*/}
           <Main />
         </div>
-
         <Footer />
       </div>
     </GlobalContext>

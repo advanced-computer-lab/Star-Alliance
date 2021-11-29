@@ -51,7 +51,7 @@ const UserHomePage = () => {
     console.log(data);
 
     FlightService.GetRequestedFlights(data).then(({ data }) => {
-      console.log(data.going);
+      console.log(data);
       searchFlights.data = data;
       console.log(clicked);
       show();

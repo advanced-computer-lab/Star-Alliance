@@ -31,6 +31,9 @@ const TestPage = () => {
       {/* <h1>{JSON.stringify(User)}</h1> */}
       <Link to="/">nav to home</Link>
       <h1>{JSON.stringify(UserService.isGuest())}</h1>
+      <Link to={{ pathname: "/SelectReturnFlights", state: { a: 1 } }}>
+        nav to select return flight
+      </Link>
       <ImgCard
         title="title"
         text="eiocjeiojceioc"

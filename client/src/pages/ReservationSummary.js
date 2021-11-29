@@ -4,7 +4,7 @@ import Button from "react-bootstrap/Button";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Stack from "@mui/material/Stack";
-
+import { LinkContainer } from "react-router-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDollarSign } from "@fortawesome/free-solid-svg-icons";
 import { faClipboardList } from "@fortawesome/free-solid-svg-icons";
@@ -101,7 +101,7 @@ const ReservationSummary = () => {
 
       <div
         style={{
-          height: "100vh",
+          height: "130vh",
           backgroundColor: "#f5f5f5",
         }}
       >
@@ -145,7 +145,9 @@ const ReservationSummary = () => {
             spacing={2}
             className={styles.btmButtons}
           >
-            <Button>Edit</Button>
+            <LinkContainer to="/ReservationSelection">
+              <Button>Edit</Button>
+            </LinkContainer>
             <Button>Confirm</Button>
           </Stack>
         </div>
