@@ -277,7 +277,7 @@ const UserHomePage = () => {
       <h2 as={Col}>Why to Visit Egypt? <FontAwesomeIcon icon={faAnkh} />  <img as={Col} style={{height:"1cm",width:"1cm"}} src="https://cdn-icons.flaticon.com/png/512/2276/premium/2276743.png?token=exp=1638210149~hmac=c72fe8a19aa0ead8a61de864a6b041a7"/>
 </h2>
       </Row>
-      <video loop autoPlay muted width="1000" height="600" controls>  
+      <video style={{borderRadius: "2rem"}} loop autoPlay muted width="1000" height="600" controls>  
 
   <source src={advert} type="video/mp4"/>
   Your browser does not support the video tag.
