@@ -284,7 +284,6 @@ const UserHomePage = () => {
    </video>
    </div>
    <br />
-
    </div>
       <MoreThanFlight />
     </div>
