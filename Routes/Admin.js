@@ -438,8 +438,8 @@ if (type=="Business"){
     country="1";
 
   }
-
- roundtrid={going:result3, returning:result4, seatType:type ,companionsCount:total,CheckCountry:country};
+ roundtrid={going:result3, returning:result4, seatType:type ,
+ companionsCount:total,CheckCountry:country};
  res.send(roundtrid);
  console.log(roundtrid);
 

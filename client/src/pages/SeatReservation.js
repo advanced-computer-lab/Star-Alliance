@@ -1,8 +1,12 @@
 import { useEffect, useContext } from "react";
 import Button from "react-bootstrap/Button";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import { Link } from "react-router-dom";
 import { UserHomeCtx } from "../Context/UserHomeContext";
 import PlaneSelection from "../Components/PlanSelection.js";
 import { useHistory } from "react-router-dom";
+import seat from "../images/seat.png";
 
 const assert = require("assert");
 
@@ -82,6 +86,7 @@ const SeatReservation = (props) => {
         ...searchFlights.selected,
         flight1seat: selectedFlight1,
         flight2seat: selectedFlight2,
+        companions:searchFlights.selected.companions
       },
     });
     console.log("searchFlights", searchFlights);
@@ -102,6 +107,14 @@ const SeatReservation = (props) => {
   // flightNumber: "456"
   return (
     <>
+    <Row>
+        <Col><h2 className="mx-5 mb-5 mt-3">Choose Your ✈ Seats <img style={{height:"1cm",width:"1cm"}} src={seat}/> </h2> 
+
+        </Col>
+        <Col><Link to="/SelectReturnFlights">
+        <button style={{float:"right", marginRight:"13rem"}} class="btn btn-primary mb-5 mt-3">Back To The Previous Page</button>
+        </Link></Col>
+      </Row>
       <div
         style={{
           display: "flex",

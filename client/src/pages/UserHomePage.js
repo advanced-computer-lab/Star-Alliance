@@ -20,6 +20,8 @@ import { UserHomeCtx } from "../Context/UserHomeContext";
 import MoreThanFlight from "../Components/MoreThanFlight";
 import moment from "moment";
 import YouTube from 'react-youtube';
+import tot from "../images/tot.png";
+
 
 const UserHomePage = () => {
   const [searchFlights, setSearchFlights] = useContext(UserHomeCtx);
@@ -52,9 +54,21 @@ const UserHomePage = () => {
     console.log(data);
 
     FlightService.GetRequestedFlights(data).then(({ data }) => {
-      console.log(data);
-      searchFlights.data = data;
-      console.log(clicked);
+      //console.log(data);
+      //searchFlights.data = data;
+      //console.log(clicked);
+      const selected ={
+        flight1:null,
+        flight2:null,
+        flight1seat:[],
+        flight2seat:[],
+        companions:{
+          adultCount:parseInt(e.adult.value),
+          childCount:parseInt(e.children.value)
+        }
+      }
+      setSearchFlights({data,selected});
+      console.log("gigi",searchFlights);
       show();
       console.log(clicked);
     });
@@ -113,7 +127,7 @@ const UserHomePage = () => {
           width: "115vh",
           marginLeft: "50vh",
           marginBottom: "15vh",
-          height: "60vh",
+          height: "65vh",
         }}
       >
         <div className="col-lg-10 offset-lg-1 col-md-8 offset-md-2" >
@@ -273,7 +287,7 @@ const UserHomePage = () => {
       <div className="mt-3 col-lg-10 offset-lg-1">
       <br />
       <Row>
-      <h2 as={Col}>Why to Visit Egypt? <FontAwesomeIcon icon={faAnkh} />  <img as={Col} style={{height:"5vh",width:"5vh"}} src="https://cdn-icons.flaticon.com/png/512/2276/premium/2276743.png?token=exp=1638210149~hmac=c72fe8a19aa0ead8a61de864a6b041a7"/>
+      <h2 as={Col}>Why to Visit Egypt? <FontAwesomeIcon icon={faAnkh} />  <img as={Col} style={{height:"5vh",width:"5vh"}} src={tot}/>
        </h2>
       </Row>
       <br/>

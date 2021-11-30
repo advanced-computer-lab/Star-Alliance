@@ -100,7 +100,6 @@ const home = () => {
         ))}
         <Card
           style={{
-            border: "outset",
             width: "18rem",
             marginLeft: "1cm",
             marginRight: "1cm",
