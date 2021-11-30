@@ -7,15 +7,22 @@ import { UserHomeCtx } from "../Context/UserHomeContext";
 import { json } from "body-parser";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faStickyNote} from "@fortawesome/free-solid-svg-icons";
 
 const SelectFlight = () => {
   const [searchFlights, setSearchFlights] = useContext(UserHomeCtx);
   let flights = searchFlights.data.going;
-
-  if(flights[0]== undefined){
+  if(searchFlights.data.CheckCountry=="1"){
+    return (
+      <h1><FontAwesomeIcon icon={faStickyNote} /> Note:You must choose a destination  different than departure !</h1>
+    )  
+  }
+  else if(flights[0]== undefined){
     return (
       <h1>No Available going flights with this date !</h1>
     )
+    
   }
   else{
 

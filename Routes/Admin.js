@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
 const db = require("../Service/DBService.js");
-const { flight,reservation } = require("../Models/export");
+const { flight,reservation ,user} = require("../Models/export");
 var nodemailer = require('nodemailer');
 app.get("/", (req, res) => {
   res.json({ message: "welcome admin" });
@@ -433,11 +433,37 @@ if (type=="Business"){
       }
     }
   }
+  var country="0";
+  if(Flight.arrivalAirport==Flight.departureAirport){
+    country="1";
 
- roundtrid={going:result3, returning:result4, seatType:type ,companionsCount:total};
+  }
+
+ roundtrid={going:result3, returning:result4, seatType:type ,companionsCount:total,CheckCountry:country};
  res.send(roundtrid);
  console.log(roundtrid);
 
+});
+app.post("/UpdateUser", async (req, res) => {
+  const data = req.body;
+  console.log(data);
+  const result = await user.updateOne(
+    { _id:data.findUser}, {firstName:data.firstName,lastName:data.lastName,
+    passportNumber:data.passportNumber,email:data.email});
+  res.send(result);
+});
+
+app.post("/GetUserInfo", async (req, res) => {
+  const UserId  = req.body.findUser;
+  console.log("GetUserInfo =", req.body.findUser);
+
+  const result = await user.findOne({ _id: UserId });
+  console.log("result from GetUserInfo", result);
+  if (result == null) {
+    res.status(404).send("No User with this Number");
+    return;
+  }
+  res.send(result);
 });
 
 module.exports = app;
