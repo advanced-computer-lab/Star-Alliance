@@ -22,7 +22,9 @@ const SeatReservation = (props) => {
   // const seatType = searchFlights.data.seatType;
   const flight1 = searchFlights.selected.flight1;
   const flight2 = searchFlights.selected.flight2;
+  const numSeatSelected = searchFlights.data.companionsCount;
 
+  console.log(numSeatSelected);
   useEffect(() => {
     if (selectedFlight1) {
     }
@@ -31,10 +33,12 @@ const SeatReservation = (props) => {
   function seatClick1(e) {
     const isChecked = e.target.checked;
     const seatID = e.target.id.substring(0, e.target.id.length - 1); //remove planeId from the seat id
+    
 
     if (isChecked) {
-      if (selectedFlight1.length === 1) {
-        alert("You can only select one seat in each fligh");
+      if (selectedFlight1.length === numSeatSelected) {
+        const msg = "You can only select " + numSeatSelected + " seats in each flight";
+        alert(msg);
         e.target.checked = false;
         return;
       }
@@ -50,9 +54,10 @@ const SeatReservation = (props) => {
     const seatID = e.target.id.substring(0, e.target.id.length - 1); //remove planeId from the seat id
 
     if (isChecked) {
-      if (selectedFlight2.length === 1) {
+      if (selectedFlight2.length === numSeatSelected) {
+        const msg = "You can only select " + numSeatSelected + " seats in each flight";
+        alert(msg);
         e.target.checked = false;
-        alert("You can only select one seat in each fligh");
         return;
       }
       selectedFlight2.push(seatID);
@@ -63,8 +68,12 @@ const SeatReservation = (props) => {
   }
 
   const handleConfirmBtn = () => {
-    if (selectedFlight1.length === 0 || selectedFlight1.length > 1) {
-      alert("Please select at least one seat in each fligh");
+    if (selectedFlight1.length === 0 || selectedFlight1.length < numSeatSelected) {
+      alert("Please select your specified number of seats which is :" + " " + numSeatSelected + "seats");
+      return;
+    }
+    if (selectedFlight2.length === 0 || selectedFlight2.length < numSeatSelected) {
+      alert("Please select your specified number of seats which is :" + " " + numSeatSelected + "seats");
       return;
     }
     setSearchFlights({
