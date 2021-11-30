@@ -112,6 +112,14 @@ const Naavbar = () => {
                     My reservations
                   </Nav.Link>
                 </LinkContainer>
+                
+              )}
+               {UserService.isUser() && (
+              <LinkContainer to="/UpdateUserData">
+                  <Nav.Link style={{ color: "#DBE2EF" }}>
+                    My Profile
+                  </Nav.Link>
+              </LinkContainer>
               )}
               {/* <Nav.Link href="#link" style={{ color: "#DBE2EF" }}>
                 Link

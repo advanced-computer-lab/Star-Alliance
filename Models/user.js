@@ -1,35 +1,35 @@
-const mongoose = require('mongoose');
-const Creditcard = require('./creditcard')
-const Flight = require('./flight')
-const reservation = require('./reservation');
+const mongoose = require("mongoose");
+const Creditcard = require("./creditcard");
+const Flight = require("./flight");
+const reservation = require("./reservation");
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
-    firstName: {type:String},
-    lastName: {type:String},
-    passportNumber: {type:String},
-    countryCode: {type:String},
-    address: {
-        country:String, 
-        city:String,
-        street:String,
-        buildingNumber:Number,
-        floorNumber:Number,
-        appartmentNumber:Number
-        },
-    password: {type:String},
-    birthDate: {type:String},
-    job: {type:String},
-    isAdmin: {type:Boolean},
-    phoneNumbers: [{type:String}],
-    email:{type:String},
-    creditcards: [
-        {
-            type: Schema.Types.ObjectId,
-            ref: 'Creditcard'
-        }
-    ],
-    /* flights: [
+  firstName: { type: String },
+  lastName: { type: String },
+  passportNumber: { type: String },
+  countryCode: { type: String },
+  address: {
+    country: String,
+    city: String,
+    street: String,
+    buildingNumber: Number,
+    floorNumber: Number,
+    appartmentNumber: Number,
+  },
+  password: { type: String },
+  birthDate: { type: String },
+  job: { type: String },
+  isAdmin: { type: Boolean },
+  phoneNumbers: [{ type: String }],
+  email: { type: String },
+  creditcards: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Creditcard",
+    },
+  ],
+  /* flights: [
         {
             type: Schema.Types.ObjectId,
             ref: 'Flight'
@@ -37,33 +37,29 @@ const userSchema = new Schema({
     ] */
 });
 
-
-userSchema.post('findOneAndDelete', async function (doc) {
-    console.log('findOneAndDelete Credit card', doc);    
-    if (doc) {
-        await Creditcard.deleteMany({
-            _id: {
-                $in: doc.creditcards
-            }
-        })
-
-    }
+userSchema.post("findOneAndDelete", async function (doc) {
+  console.log("findOneAndDelete Credit card", doc);
+  if (doc) {
+    await Creditcard.deleteMany({
+      _id: {
+        $in: doc.creditcards,
+      },
+    });
+  }
 });
 
+userSchema.post("deleteMany", async function (doc) {
+  console.log("doc.firstname = ?", doc);
+  console.log("doc is Row ?", doc);
 
-userSchema.post('deleteMany', async function (doc) {
-    console.log('doc.firstname = ?', doc);
-    console.log('doc is Row ?', doc);    
-    
-    if (doc) {
-        await reservation.deleteMany({
-            user_id: {
-                    $in: doc._id
-            }
-        })
-    }
+  if (doc) {
+    await reservation.deleteMany({
+      user_id: {
+        $in: doc._id,
+      },
+    });
+  }
 });
-
 
 /* UserSchema.pre('save', function(next) {
     var user = this;
@@ -85,4 +81,4 @@ userSchema.post('deleteMany', async function (doc) {
     });
 }); */
 
-module.exports = mongoose.model('User', userSchema);
+module.exports = mongoose.model("User", userSchema);

@@ -12,11 +12,11 @@ import ReservationService from "../Services/ReservationService.js";
 import { UserHomeCtx } from "../Context/UserHomeContext";
 import { Link } from "react-router-dom";
 import styles from "../Styles/ReservationSummary.module.css";
+import { useHistory } from "react-router-dom";
 
 import moment from "moment";
 
 const FlightCard = ({ flight, choosenSeat, cabin, price }) => {
-  console.log("flight", flight);
   return (
     <>
       <Row>
@@ -99,7 +99,10 @@ const Card = (props) => {
   );
 };
 
+// n
+
 const ReservationSummary = () => {
+  let history = useHistory();
   const [searchFlights, setSearchFlights] = useContext(UserHomeCtx);
   const flight1 = searchFlights.selected.flight1;
   const flight2 = searchFlights.selected.flight2;
@@ -117,16 +120,27 @@ const ReservationSummary = () => {
       seatType: searchFlights.data.seatType,
       flight1seat: flight1seat,
       flight2seat: flight2seat,
+      companions: searchFlights.selected.companions,
     };
     ReservationService.reserveNew(data)
       .then((res) => {
-        alert("Done", res);
+        console.log("res", res);
+        const bookingNumber = res.data.bookingNumber;
         console.log("OK ===> ", res);
+        history.push("/"); // navigate home
+        alert(
+          `Your Flights has been Reserved, Booking Number ${bookingNumber}`,
+          res
+        );
+        // clear every selection the user made
+        setSearchFlights({ ...searchFlights, selected: {} });
       })
       .catch((err) => {
-        alert("Error", err);
+        // alert("Error", err);
         console.log("errr <===", err.response);
         const errorMessage = err.response.data;
+        // console.log("errorMessage", errorMessage);
+        alert("Error: " + errorMessage);
       });
   };
   return (

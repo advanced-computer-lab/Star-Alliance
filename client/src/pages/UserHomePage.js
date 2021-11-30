@@ -21,7 +21,6 @@ import MoreThanFlight from "../Components/MoreThanFlight";
 import moment from "moment";
 import advert from "../Videos/advert2.mp4";
 
-
 //var egy= "https://flagpedia.net/data/flags/w702/eg.png";
 
 const UserHomePage = () => {
@@ -55,7 +54,21 @@ const UserHomePage = () => {
 
     FlightService.GetRequestedFlights(data).then(({ data }) => {
       console.log(data);
-      searchFlights.data = data;
+
+      setSearchFlights();
+
+      const selected = {
+        flight1: null, // to be change in Select Flight
+        flight2: null, // to be changed in Select Return Flight
+        flight1seat: [],
+        flight2seat: [],
+        companions: {
+          adultCount: parseInt(e.adult.value),
+          childCount: parseInt(e.children.value),
+        },
+      };
+      setSearchFlights({ data, selected });
+
       console.log(clicked);
       show();
       console.log(clicked);
@@ -63,14 +76,15 @@ const UserHomePage = () => {
   };
   return (
     <div
+      className="mt-1 "
       id="testing"
-      style={{ fontFamily: "cursive", marginTop: "1cm", color: "white" }}
+      style={{ fontFamily: "cursive", color: "white" }}
     >
       <Carousel>
         <Carousel.Item>
           <img
-            className="d-block w-100"
-            style={{ height: "10cm" }}
+            className="d-block w-100 "
+            style={{ height: "50vh" }}
             src="https://media.istockphoto.com/photos/passenger-airplane-flying-above-clouds-during-sunset-picture-id155439315?b=1&k=20&m=155439315&s=170667a&w=0&h=N2BzlH2GYabhWN0LXZTqTkVODuTb8qDAESQYCPzIig8="
             alt="First slide"
           />
@@ -82,7 +96,7 @@ const UserHomePage = () => {
         <Carousel.Item>
           <img
             className="d-block w-100"
-            style={{ height: "10cm" }}
+            style={{ height: "50vh" }}
             src="https://media.istockphoto.com/photos/corporate-jet-picture-id1305805559?b=1&k=20&m=1305805559&s=170667a&w=0&h=PgS30I7bdCmaWZXC7tHeRjhAUFoiv7LDgeqJBpfVorw="
             alt="Second slide"
           />
@@ -95,7 +109,7 @@ const UserHomePage = () => {
         <Carousel.Item>
           <img
             className="d-block w-100"
-            style={{ height: "10cm" }}
+            style={{ height: "50vh" }}
             src="https://t4.ftcdn.net/jpg/02/71/78/29/240_F_271782927_keMVFo9PnBwrMEmbiUGKRcDT2rzf85dj.jpg"
             alt="Third slide"
           />
@@ -107,17 +121,17 @@ const UserHomePage = () => {
         </Carousel.Item>
       </Carousel>
       <div
+        className="mt-5"
         style={{
           borderRadius: "2rem",
           backgroundColor: "#112D4E",
-          width: "22cm",
-          marginLeft: "10cm",
-          marginBottom: "3cm",
-          height: "11cm",
-          marginTop: "1cm",
+          width: "115vh",
+          marginLeft: "50vh",
+          marginBottom: "15vh",
+          height: "60vh",
         }}
       >
-        <div style={{ width: "16cm", marginLeft: "3cm", marginRight: "2cm" }}>
+        <div className="col-lg-10 offset-lg-1 col-md-8 offset-md-2">
           <Form ref={formRef}>
             <Row>
               <h3 className="mt-3 mb-2">Book Your Flight! ✈ </h3>
@@ -175,7 +189,7 @@ const UserHomePage = () => {
                     type="date"
                     name="departureTime"
                     placeholder="Enter Departure Time"
-                   // value="2022-01-01T10:00"
+                    value="2022-01-01"
                   />
                 </Form.Group>
               </Col>
@@ -191,7 +205,7 @@ const UserHomePage = () => {
                     type="date"
                     name="arrivalTime"
                     placeholder="Enter Arrival Time"
-                  //  value="2022-01-22T10:00"
+                    value="2022-01-22"
                   />
                 </Form.Group>
               </Col>
@@ -256,7 +270,7 @@ const UserHomePage = () => {
                 {clicked == true ? (
                   <Link to="/SelectFlight">
                     <Button
-                      style={{ marginLeft: "0.5cm" }}
+                      style={{ marginLeft: "4vh" }}
                       className="mt-4"
                       variant="primary"
                       type="button"
@@ -270,21 +284,37 @@ const UserHomePage = () => {
           </Form>
         </div>
       </div>
-      <div  style={{backgroundColor:"#112D4E",marginLeft:"4cm",marginRight:"4cm",borderRadius: "2.5rem"}}>
-      <div  style={{marginTop:"1cm",marginLeft:"3cm"}}>
-      <br />
-      <Row>
-      <h2 as={Col}>Why to Visit Egypt? <FontAwesomeIcon icon={faAnkh} />  <img as={Col} style={{height:"1cm",width:"1cm"}} src="https://cdn-icons.flaticon.com/png/512/2276/premium/2276743.png?token=exp=1638210149~hmac=c72fe8a19aa0ead8a61de864a6b041a7"/>
-       </h2>
-      </Row>
-      <video style={{borderRadius: "2rem"}} loop autoPlay muted width="1000" height="600" controls>  
-
-  <source src={advert} type="video/mp4"/>
-  Your browser does not support the video tag.
-   </video>
-   </div>
-   <br />
-   </div>
+      <div
+        className="col-lg-10 offset-lg-1"
+        style={{ backgroundColor: "#112D4E", borderRadius: "2.5rem" }}
+      >
+        <div className="mt-3 col-lg-10 offset-lg-1">
+          <br />
+          <Row>
+            <h2 as={Col}>
+              Why to Visit Egypt? <FontAwesomeIcon icon={faAnkh} />{" "}
+              <img
+                as={Col}
+                style={{ height: "5vh", width: "5vh" }}
+                src="https://cdn-icons.flaticon.com/png/512/2276/premium/2276743.png?token=exp=1638210149~hmac=c72fe8a19aa0ead8a61de864a6b041a7"
+              />
+            </h2>
+          </Row>
+          <video
+            style={{ borderRadius: "2rem" }}
+            loop
+            autoPlay
+            muted
+            width="1050"
+            height="600"
+            controls
+          >
+            <source src={advert} type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+        </div>
+        <br />
+      </div>
       <MoreThanFlight />
     </div>
   );
