@@ -143,6 +143,14 @@ const ReservationSummary = () => {
         alert("Error: " + errorMessage);
       });
   };
+
+  const handleEditClick = () => {
+    setSearchFlights({
+      ...searchFlights,
+      selected: { ...searchFlights.selected, flight1seat: [], flight2seat: [] },
+    });
+  };
+
   return (
     <>
       {/* <Link to="/ReservationSelection">{"<< Get Back"}</Link> */}
@@ -206,7 +214,7 @@ const ReservationSummary = () => {
             className={styles.btmButtons}
           >
             <LinkContainer to="/SelectFlight">
-              <Button>Edit</Button>
+              <Button onClick={handleEditClick}>Edit</Button>
             </LinkContainer>
             <Button onClick={handleSubmitReservation}>Confirm</Button>
           </Stack>

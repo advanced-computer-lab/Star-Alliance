@@ -46,59 +46,78 @@ const PlaneSelection = ({
         </ol>
       </li>
     );
-    const Seat = ({ id, type }) => (
+    const Seat = ({ id, type, disabled }) => (
       <li class={"seat-" + type}>
         <input
           type="checkbox"
           id={id + "" + globalid}
           onClick={seatClick}
-          disabled={userCabinClass !== type}
-          checked={checkedSeates.includes(id) ? true : null}
+          disabled={disabled}
+          // checked={checkedSeates.includes(id) ? true : null}
         />
         <label for={id + "" + globalid}>{id}</label>
       </li>
     );
 
-    var allSeats = [];
-    for (let i = 0; i < availableSeats.first.length; i++) {
-      const seatId = availableSeats.first[i];
-      // console.log("pushing", seatId);
-      allSeats.push(<Seat id={seatId} key={i} type="First" />);
-    }
-    for (let i = 0; i < availableSeats.business.length; i++) {
-      const seatId = availableSeats.business[i];
-      allSeats.push(<Seat id={seatId} key={i} type="Business" />);
-    }
-    for (let i = 0; i < availableSeats.economy.length; i++) {
-      const seatId = availableSeats.economy[i];
-      allSeats.push(<Seat id={seatId} key={i} type="Economy" />);
-    }
-    allSeats.reverse();
-    // console.log(allSeats);
-    let i = 0;
-    while (allSeats.length > 0) {
-      i++;
-      let seats = [];
-      for (let j = 0; j < 6; j++) {
-        seats.push(allSeats.pop());
-      }
-      // console.log(seats);
-      setrows((rows) => [...rows, <Row num={i}>{seats}</Row>]);
-    }
-    // const ltrs = ["A", "B", "C", "D", "E", "F"];
-    // for (let i = 1; i <= MAX_SEATS / 6; i++) {
-    //   //row
-    //   const seats = [];
-
-    //   for (let j = 1; j <= 6; j++) {
-    //     const ltr = ltrs[j - 1];
-    //     //column
-    //     const seatId = `${i}${ltr}`;
-    //     seats.push(<Seat id={seatId} />);
-    //   }
-    //   setrows((rows) => [...rows, <Row num={i}>{seats}</Row>]);
-    // rows.push(<Row num={i}>{seats}</Row>);
+    // var allSeats = [];
+    // for (let i = 0; i < availableSeats.first.length; i++) {
+    //   const seatId = availableSeats.first[i];
+    //   // console.log("pushing", seatId);
+    //   allSeats.push(<Seat id={seatId} key={i} type="First" />);
     // }
+    // for (let i = 0; i < availableSeats.business.length; i++) {
+    //   const seatId = availableSeats.business[i];
+    //   allSeats.push(<Seat id={seatId} key={i} type="Business" />);
+    // }
+    // for (let i = 0; i < availableSeats.economy.length; i++) {
+    //   const seatId = availableSeats.economy[i];
+    //   allSeats.push(<Seat id={seatId} key={i} type="Economy" />);
+    // }
+    // allSeats.reverse();
+    // // console.log(allSeats);
+    // let i = 0;
+    // while (allSeats.length > 0) {
+    //   i++;
+    //   let seats = [];
+    //   for (let j = 0; j < 6; j++) {
+    //     seats.push(allSeats.pop());
+    //   }
+    //   // console.log(seats);
+    //   setrows((rows) => [...rows, <Row num={i}>{seats}</Row>]);
+    // }
+    const ltrs = ["A", "B", "C", "D", "E", "F"];
+    for (let i = 1; i <= MAX_SEATS / 6; i++) {
+      //row
+      const seats = [];
+
+      for (let j = 1; j <= 6; j++) {
+        const ltr = ltrs[j - 1];
+        //column
+        const seatId = `${i}${ltr}`;
+        let disabled = false;
+        if (
+          userCabinClass === "First" &&
+          !availableSeats.first.includes(seatId)
+        )
+          disabled = true;
+        else if (
+          userCabinClass === "Business" &&
+          !availableSeats.business.includes(seatId)
+        )
+          disabled = true;
+        else if (
+          userCabinClass === "Economy" &&
+          !availableSeats.economy.includes(seatId)
+        )
+          disabled = true;
+
+        seats.push(
+          <Seat id={seatId} type={userCabinClass} disabled={disabled} />
+        );
+      }
+      setrows((rows) => [...rows, <Row num={i}>{seats}</Row>]);
+      // rows.push(<Row num={i}>{seats}</Row>);
+    }
     // setrows(rows);
     // setrows([
     //   <Row num={1}>{[<Seat id={"2A"} />, <Seat id={"3A"} />]}</Row>,

@@ -24,9 +24,32 @@ const SeatReservation = (props) => {
     searchFlights.selected.companions.adultCount +
     searchFlights.selected.companions.childCount;
 
+  // const updateChecked = (globalId) => {
+  //   const ltrs = ["A", "B", "C", "D", "E", "F"];
+  //   for (let i = 1; i <= 10; i++) {
+  //     for (let j = 0; j < 6; j++) {
+  //       const seatId = `${i}${ltrs[j]}${globalId}`;
+  //       const seats = globalId === 1 ? flight2seat : flight1seat;
+  //       const seatRaw = `${i}${ltrs[j]}`;
+  //       console.log("flight1seat", flight1seat);
+  //       console.log("raw id", seatRaw);
+  //       console.log("found in seats ?", seats.includes(seatRaw));
+  //       console.log("==========");
+  //       if (document.getElementById(seatId) == null) continue;
+  //       document.getElementById(seatId).checked = seats.includes(seatRaw)
+  //         ? true
+  //         : false;
+  //     }
+  //   }
+  // };
+  // useEffect(() => {
+  //   updateChecked(0);
+  // }, []);
+
   function seatClick1(e) {
     const isChecked = e.target.checked;
     const seatID = e.target.id.substring(0, e.target.id.length - 1); //remove planeId from the seat id
+    console.log("checked", isChecked, "seatId", seatID);
 
     if (isChecked) {
       if (flight1seat.length === numSeatSelected) {
@@ -36,12 +59,14 @@ const SeatReservation = (props) => {
         e.target.checked = false;
         return;
       }
+      e.target.checked = true;
       flight1seat.push(seatID);
     } else {
       flight1seat.splice(flight1seat.indexOf(seatID), 1); // remove the seat from the array first then uncheck, b/c the planeselection checked depends on the array
       e.target.checked = false;
     }
-
+    console.log("flight1seat", flight1seat);
+    // updateChecked(0);
     // console.log("selected seats 1", flight1seat);
   }
 
@@ -57,6 +82,7 @@ const SeatReservation = (props) => {
         e.target.checked = false;
         return;
       }
+      e.target.checked = true;
       flight2seat.push(seatID);
     } else {
       flight2seat.splice(flight2seat.indexOf(seatID), 1); // remove the seat from the array first then uncheck, b/c the planeselection checked depends on the array

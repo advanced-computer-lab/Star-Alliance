@@ -21,6 +21,9 @@ const reservationSchema = new Schema({
 
   companions: Schema.Types.Mixed,
 
+  fligh1seats: { type: [String] },
+  fligh2seats: { type: [String] },
+
   isPaied: {
     type: Boolean,
     default: false,

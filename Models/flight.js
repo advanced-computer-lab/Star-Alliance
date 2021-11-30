@@ -29,9 +29,9 @@ const flightSchema = new Schema({
     economy: { type: [String] },
     default: {},
   },
-  avaiableSeats: {
-    type: [String],
-  },
+  // avaiableSeats: {
+  //   type: [String],
+  // },
 });
 
 flightSchema.pre("save", function (next) {

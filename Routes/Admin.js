@@ -693,6 +693,8 @@ app.post("/AddReservation", async (req, res) => {
     flight2: resFlight2._id,
     cabinClass: seatType,
     companions: companions,
+    fligh1seats: flight1seat,
+    fligh2seats: flight2seat,
   });
   console.log("new Reservation", newReservation);
   let reservationId = null;
