@@ -15,26 +15,31 @@ import Alert from "../Components/Alert";
 
  
 const UpdateUserData = () => {
-  /* const [alertOpen, setalertOpen] = useState(false);
-  const [alertMessage, setalertMessage] = useState(""); */
-  let updateFormRef = createRef();
+  const [alertOpen, setalertOpen] = useState(false);
+  const [alertMessage, setalertMessage] = useState("");
+    let updateFormRef = createRef();
 
+  let firstTime=true;
+
+      if(firstTime){
     const findUser= "61a35fcdfd33ed54997b5271";
     FlightService.GetUserInfo({findUser: "61a35fcdfd33ed54997b5271"})
       .then(({ data }) => {
         console.log("recived", data); 
+        firstTime=false;
         updateFormValues(data);
-        //showAlert("Data Updated Successfuly");
-  });
+      
+  });}
+
  
-  /* const showAlert = (message) => {
+  const showAlert = (message) => {
     setalertMessage(message);
     setalertOpen(true);
 
     setTimeout(() => {
       setalertOpen(false);
     }, 3000);
-  }; */
+  };
 
 const handleSubmit = (e) => {
     e.preventDefault();
@@ -50,6 +55,7 @@ const handleSubmit = (e) => {
 
     console.log("data", data);
     FlightService.updateUser(data);
+    showAlert("Data Updated Successfuly");
 }
 
 
@@ -74,6 +80,12 @@ const handleSubmit = (e) => {
       <br></br>
       <br></br>
       <br></br>
+      <Alert
+        open={alertOpen}
+        setOpen={setalertOpen}
+        title={alertMessage}
+        desc=""
+      />
     <div  className="mt-5"  style={{
           borderRadius: "2rem",
           backgroundColor: "#112D4E",
@@ -127,7 +139,7 @@ const handleSubmit = (e) => {
   </Row>
         <div  style={{height:"3cm",width:"19cm",marginTop:"0.8cm"}}>
         <Button  type="submit" variant="primary">
-            Update Data <FontAwesomeIcon icon={faUserEdit}/>
+            Update Info. <FontAwesomeIcon icon={faUserEdit}/>
         </Button>
                 </div>
                     

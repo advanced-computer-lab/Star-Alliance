@@ -19,10 +19,7 @@ import { Link } from "react-router-dom";
 import { UserHomeCtx } from "../Context/UserHomeContext";
 import MoreThanFlight from "../Components/MoreThanFlight";
 import moment from "moment";
-import advert from "../Videos/advert2.mp4";
-
-
-//var egy= "https://flagpedia.net/data/flags/w702/eg.png";
+import YouTube from 'react-youtube';
 
 const UserHomePage = () => {
   const [searchFlights, setSearchFlights] = useContext(UserHomeCtx);
@@ -34,6 +31,7 @@ const UserHomePage = () => {
   function show() {
     setClicked(true);
   }
+
 
   const handleSubmit = () => {
     var e = formRef.current;
@@ -279,14 +277,14 @@ const UserHomePage = () => {
       <h2 as={Col}>Why to Visit Egypt? <FontAwesomeIcon icon={faAnkh} />  <img as={Col} style={{height:"5vh",width:"5vh"}} src="https://cdn-icons.flaticon.com/png/512/2276/premium/2276743.png?token=exp=1638210149~hmac=c72fe8a19aa0ead8a61de864a6b041a7"/>
        </h2>
       </Row>
-      <video style={{borderRadius: "2rem"}} loop autoPlay muted width="1050" height="600" controls>  
-
-  <source src={advert} type="video/mp4"/>
-  Your browser does not support the video tag.
-   </video>
+      <br/>
+<iframe  width="1050" height="600"
+src="https://www.youtube.com/embed/HwM86WQ-0vY?autoplay=1&mute=1&loop=1">
+</iframe>   
    </div>
    <br />
    </div>
+   
       <MoreThanFlight />
     </div>
   );

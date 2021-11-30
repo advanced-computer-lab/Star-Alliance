@@ -24,7 +24,7 @@ const DeletePopup = () => {
     FlightService.DeleteFlight(data)
       .then((res) => {
         console.log("OK ===> ", res);
-        const alertMess = showAlert("You have deleted the flight successfuly");
+        showAlert("You have deleted the flight successfuly");
         //console.log(alertMess);
       })
       .catch((err) => {
