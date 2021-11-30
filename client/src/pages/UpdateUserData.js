@@ -15,9 +15,9 @@ import Alert from "../Components/Alert";
 
  
 const UpdateUserData = () => {
-  const [alertOpen, setalertOpen] = useState(false);
-  const [alertMessage, setalertMessage] = useState("");
     let updateFormRef = createRef();
+    const [alertOpen, setalertOpen] = useState(false);
+  const [alertMessage, setalertMessage] = useState("");
 
   let firstTime=true;
 
@@ -30,16 +30,6 @@ const UpdateUserData = () => {
         updateFormValues(data);
       
   });}
-
- 
-  const showAlert = (message) => {
-    setalertMessage(message);
-    setalertOpen(true);
-
-    setTimeout(() => {
-      setalertOpen(false);
-    }, 3000);
-  };
 
 const handleSubmit = (e) => {
     e.preventDefault();
@@ -55,9 +45,17 @@ const handleSubmit = (e) => {
 
     console.log("data", data);
     FlightService.updateUser(data);
-    showAlert("Data Updated Successfuly");
+    showAlert("Flight Updated Successfuly");
 }
 
+const showAlert = (message) => {
+  setalertMessage(message);
+  setalertOpen(true);
+
+  setTimeout(() => {
+    setalertOpen(false);
+  }, 3000);
+};
 
   const updateFormValues = (data) => {
     const {
@@ -149,8 +147,6 @@ const handleSubmit = (e) => {
     </div>
       </div>
             </div>
-
-
 
 );
 }
