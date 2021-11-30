@@ -108,6 +108,7 @@ app.get("/", (req, res) => {
   res.json({ message: "From the Node Server !" });
 });
 app.post("/createFlight", async (req, res) => {
+  console.log("creating flight");
   const Flight = new flight();
   //  moment(arrivalTime).format("yyyy-MM-DDThh:mm");
 

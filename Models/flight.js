@@ -1,6 +1,8 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
+const MAX_SEATS = 60;
+
 const flightSchema = new Schema({
   flightNumber: { type: String, unique: true },
   arrivalTime: { type: Date },
@@ -21,70 +23,51 @@ const flightSchema = new Schema({
   arrivalTerminal: { type: String },
   departureTerminal: { type: String },
 
+  availableSeats: {
+    first: { type: [String] },
+    business: { type: [String] },
+    economy: { type: [String] },
+  },
   avaiableSeats: {
     type: [String],
-    default: [
-      "1A",
-      "1B",
-      "1C",
-      "1D",
-      "1E",
-      "1F",
-      "2A",
-      "2B",
-      "2C",
-      "2D",
-      "2E",
-      "2F",
-      "3A",
-      "3B",
-      "3C",
-      "3D",
-      "3E",
-      "3F",
-      "4A",
-      "4B",
-      "4C",
-      "4D",
-      "4E",
-      "4F",
-      "5A",
-      "5B",
-      "5C",
-      "5D",
-      "5E",
-      "5F",
-      "6A",
-      "6B",
-      "6C",
-      "6D",
-      "6E",
-      "6F",
-      "7A",
-      "7B",
-      "7C",
-      "7D",
-      "7E",
-      "7F",
-      "8A",
-      "8B",
-      "8C",
-      "8D",
-      "8E",
-      "8F",
-      "9A",
-      "9B",
-      "9C",
-      "9D",
-      "9E",
-      "9F",
-      "10A",
-      "10B",
-      "10C",
-      "10D",
-      "10E",
-      "10F",
-    ],
   },
 });
+
+flightSchema.pre("save", function (next) {
+  var flight = this;
+
+  var firstSeats = [];
+  var businessSeats = [];
+  var economySeats = [];
+
+  var allSeats = [];
+  var ltrs = ["A", "B", "C", "D", "E", "F"];
+  for (var i = 0; i < 6; i++) {
+    var lt = ltrs[i];
+    var rowsCount = MAX_SEATS / 6;
+    for (var j = 1; j <= rowsCount; j++) {
+      var seatStr = `${j}${lt}`;
+      allSeats.push(seatStr);
+    }
+  }
+
+  allSeats.reverse();
+
+  for (var i = 0; i < flight.firstSeatsNum; i++)
+    firstSeats.push(allSeats.pop());
+
+  for (var i = 0; i < flight.businessSeatsNum; i++)
+    businessSeats.push(allSeats.pop());
+
+  for (var i = 0; i < flight.economySeatsNum; i++)
+    economySeats.push(allSeats.pop());
+
+  flight.availableSeats = {
+    first: firstSeats,
+    business: businessSeats,
+    economy: economySeats,
+  };
+  next();
+});
+
 module.exports = mongoose.model("Flight", flightSchema);
