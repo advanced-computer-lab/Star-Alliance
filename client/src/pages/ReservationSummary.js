@@ -19,6 +19,14 @@ const FlightCard = ({ flight, choosenSeat, cabin, price }) => {
   console.log("flight", flight);
   return (
     <>
+    <br/>
+      <Row>
+        <Col><h2 className="mx-5 mb-5 mt-3">View Your Reservation Summary ✈  </h2></Col>
+        <Col ><Link to="/SeatReservation">
+        <button style={{float:"right", marginRight:"13rem"}} class="btn btn-primary mb-5 mt-3">Back To The Previous Page</button>
+        </Link></Col>
+      </Row>
+
       <Row>
         <Col>
           <label>Flight {flight.flightDet.flightNumber}</label>

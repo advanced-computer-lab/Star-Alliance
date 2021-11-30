@@ -106,6 +106,7 @@ const UserHomePage = () => {
           </Carousel.Caption>
         </Carousel.Item>
       </Carousel>
+      
       <div
         style={{
           borderRadius: "2rem",

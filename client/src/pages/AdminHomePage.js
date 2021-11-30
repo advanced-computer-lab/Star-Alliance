@@ -10,6 +10,7 @@ import FlightsList from "../Components/FlightsList";
 import { Link } from "react-router-dom";
 
 const home = () => {
+  let createdFlightSuc = true;
   const homeCardsInfo = [
     {
       title: "Create Flight",
@@ -94,6 +95,16 @@ const home = () => {
 
       <br></br>
       <br></br>
+      
+      {createdFlightSuc===true?
+      <div class="alert alert-success col-8 offset-2 my-2" role="alert">
+        This is a success alert—check it out!
+      </div>:<></>}
+
+     {/*  {createdFlightSuc===true?
+      <div class="alert alert-success col-8 offset-2 my-2" role="alert">
+        This is a success alert—check it out!
+      </div>:<></>} */}
       <div className="border d-flex align-items-center justify-content-center">
         {homeCardsInfo.map((info) => (
           <ImgCard {...info} />

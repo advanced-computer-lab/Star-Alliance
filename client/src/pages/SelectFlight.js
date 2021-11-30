@@ -104,10 +104,18 @@ const SelectFlight = () => {
       <br />
       <br />
       {/* <h2> Reservation Summary {JSON.stringify(flights)}</h2>   */}
-      <h2 className="mx-3 mb-5">Choose Going Flight ✈ </h2>
+      <Row>
+      <Col><h2 className="mx-3 mb-5">Choose Going Flight ✈ </h2></Col>
+      <Col ><Link to="/">
+      <button style={{float:"right", marginRight:"8rem"}} class="btn btn-primary">Back To The Previous Page</button>
+      </Link></Col>
+      </Row>
       <h3 className="mx-3 mb-5">
-        {flights[0].flightDet.departureAirport} ✈{" "}
+      <div class="alert alert-success col-md-8 offset-md-2 my-2" role="alert">
+        The Results Of Your Search From {flights[0].flightDet.departureAirport} ✈{" "}
         {flights[0].flightDet.arrivalAirport}
+      </div>
+       
       </h3>
       {flights.map((flight, index) => (
         //outset
