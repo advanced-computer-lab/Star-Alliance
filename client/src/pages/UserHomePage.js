@@ -19,7 +19,7 @@ import { Link } from "react-router-dom";
 import { UserHomeCtx } from "../Context/UserHomeContext";
 import MoreThanFlight from "../Components/MoreThanFlight";
 import moment from "moment";
-import YouTube from "react-youtube";
+import YouTube from 'react-youtube';
 
 const UserHomePage = () => {
   const [searchFlights, setSearchFlights] = useContext(UserHomeCtx);
@@ -31,6 +31,7 @@ const UserHomePage = () => {
   function show() {
     setClicked(true);
   }
+
 
   const handleSubmit = () => {
     var e = formRef.current;
@@ -51,33 +52,31 @@ const UserHomePage = () => {
     console.log(data);
 
     FlightService.GetRequestedFlights(data).then(({ data }) => {
-      console.log(data);
-
-      setSearchFlights();
-
-      const selected = {
-        flight1: null, // to be change in Select Flight
-        flight2: null, // to be changed in Select Return Flight
-        flight1seat: [],
-        flight2seat: [],
-        companions: {
-          adultCount: parseInt(e.adult.value),
-          childCount: parseInt(e.children.value),
-        },
-      };
-      setSearchFlights({ data, selected });
-
-      console.log(clicked);
+      //console.log(data);
+      //searchFlights.data = data;
+      //console.log(clicked);
+      const selected ={
+        flight1:null,
+        flight2:null,
+        flight1seat:[],
+        flight2seat:[],
+        companions:{
+          adultCount:parseInt(e.adult.value),
+          childCount:parseInt(e.children.value)
+        }
+      }
+      setSearchFlights({data,selected});
+      console.log("gigi",searchFlights);
       show();
       console.log(clicked);
     });
   };
   return (
     <div
-      className="mt-1 "
+    className="mt-1 "
       id="testing"
       style={{ fontFamily: "cursive", color: "white" }}
-    >
+     >
       <Carousel>
         <Carousel.Item>
           <img
@@ -118,9 +117,8 @@ const UserHomePage = () => {
           </Carousel.Caption>
         </Carousel.Item>
       </Carousel>
-      
       <div
-        className="mt-5"
+      className="mt-5"
         style={{
           borderRadius: "2rem",
           backgroundColor: "#112D4E",
@@ -130,7 +128,7 @@ const UserHomePage = () => {
           height: "60vh",
         }}
       >
-        <div className="col-lg-10 offset-lg-1 col-md-8 offset-md-2">
+        <div className="col-lg-10 offset-lg-1 col-md-8 offset-md-2" >
           <Form ref={formRef}>
             <Row>
               <h3 className="mt-3 mb-2">Book Your Flight! ✈ </h3>
@@ -188,7 +186,7 @@ const UserHomePage = () => {
                     type="date"
                     name="departureTime"
                     placeholder="Enter Departure Time"
-                    value="2022-01-01"
+                   // value="2022-01-01T10:00"
                   />
                 </Form.Group>
               </Col>
@@ -204,7 +202,7 @@ const UserHomePage = () => {
                     type="date"
                     name="arrivalTime"
                     placeholder="Enter Arrival Time"
-                    value="2022-01-22"
+                  //  value="2022-01-22T10:00"
                   />
                 </Form.Group>
               </Col>
@@ -283,35 +281,22 @@ const UserHomePage = () => {
           </Form>
         </div>
       </div>
-      <div
-        className="col-lg-10 offset-lg-1"
-        style={{ backgroundColor: "#112D4E", borderRadius: "2.5rem" }}
-      >
-        <div className="mt-3 col-lg-10 offset-lg-1">
-          <br />
-          <Row>
-            <h2 as={Col}>
-              Why to Visit Egypt? <FontAwesomeIcon icon={faAnkh} />{" "}
-              <img
-                as={Col}
-                style={{ height: "5vh", width: "5vh" }}
-                src="https://cdn-icons.flaticon.com/png/512/2276/premium/2276743.png?token=exp=1638210149~hmac=c72fe8a19aa0ead8a61de864a6b041a7"
-              />
-            </h2>
-          </Row>
-          <br />
-          <iframe
-            id="ytplayer"
-            width="1050"
-            height="600"
-            src="https://www.youtube.com/embed/HwM86WQ-0vY?autoplay=1&mute=1&playlist=HwM86WQ-0vY,msJ_JJB8q3s,k3KqP69xuPc&loop=1"
-          >
-            {/* src="https://www.youtube.com/embed/HwM86WQ-0vY?autoplay=1&mute=1&playlist=HwM86WQ-0vY&loop=1"> */}
-          </iframe>
-        </div>
-        <br />
-      </div>
-
+      <div className="col-lg-10 offset-lg-1"  style={{backgroundColor:"#112D4E",borderRadius: "2.5rem"}}>
+      <div className="mt-3 col-lg-10 offset-lg-1">
+      <br />
+      <Row>
+      <h2 as={Col}>Why to Visit Egypt? <FontAwesomeIcon icon={faAnkh} />  <img as={Col} style={{height:"5vh",width:"5vh"}} src="https://cdn-icons.flaticon.com/png/512/2276/premium/2276743.png?token=exp=1638210149~hmac=c72fe8a19aa0ead8a61de864a6b041a7"/>
+       </h2>
+      </Row>
+      <br/>
+<iframe id="ytplayer" width="1050" height="600"
+src="https://www.youtube.com/embed/HwM86WQ-0vY?autoplay=1&mute=1&playlist=HwM86WQ-0vY,msJ_JJB8q3s,k3KqP69xuPc&loop=1">
+{/* src="https://www.youtube.com/embed/HwM86WQ-0vY?autoplay=1&mute=1&playlist=HwM86WQ-0vY&loop=1"> */}
+</iframe>   
+   </div>
+   <br />
+   </div> 
+   
       <MoreThanFlight />
     </div>
   );

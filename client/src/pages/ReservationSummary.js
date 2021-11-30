@@ -20,12 +20,7 @@ const FlightCard = ({ flight, choosenSeat, cabin, price }) => {
   return (
     <>
     <br/>
-      <Row>
-        <Col><h2 className="mx-5 mb-5 mt-3">View Your Reservation Summary ✈  </h2></Col>
-        <Col ><Link to="/SeatReservation">
-        <button style={{float:"right", marginRight:"13rem"}} class="btn btn-primary mb-5 mt-3">Back To The Previous Page</button>
-        </Link></Col>
-      </Row>
+      
 
       <Row>
         <Col>
@@ -161,6 +156,12 @@ const ReservationSummary = () => {
           backgroundColor: "#f5f5f5",
         }}
       >
+      <Row>
+        <Col><h2 className="mx-5 mb-5 mt-3">View Your Reservation Summary ✈  </h2></Col>
+        <Col ><Link to="/SeatReservation">
+        <button style={{float:"right", marginRight:"13rem"}} class="btn btn-primary mb-5 mt-3">Back To The Previous Page</button>
+        </Link></Col>
+      </Row>
         <div className={styles.container}>
           <h1 style={{ padding: "1rem 0 1rem" }}>Summary</h1>
           <Card
