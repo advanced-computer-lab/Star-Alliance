@@ -15,15 +15,20 @@ import { faUser } from "@fortawesome/free-solid-svg-icons";
 
  
 const UpdateUserData = () => {
+    let updateFormRef = createRef();
 
-  let updateFormRef = createRef();
+  let firstTime=true;
 
+      if(firstTime){
     const findUser= "61a35fcdfd33ed54997b5271";
     FlightService.GetUserInfo({findUser: "61a35fcdfd33ed54997b5271"})
       .then(({ data }) => {
         console.log("recived", data); 
+        firstTime=false;
         updateFormValues(data);
-  });
+      
+  });}
+
  
 
 
@@ -118,7 +123,7 @@ const handleSubmit = (e) => {
   </Row>
         <div  style={{height:"3cm",width:"19cm",marginTop:"0.8cm"}}>
         <Button  type="submit" variant="primary">
-            Update Data <FontAwesomeIcon icon={faUserEdit}/>
+            Update Info. <FontAwesomeIcon icon={faUserEdit}/>
         </Button>
                 </div>
                     
