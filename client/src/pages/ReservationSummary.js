@@ -12,13 +12,16 @@ import ReservationService from "../Services/ReservationService.js";
 import { UserHomeCtx } from "../Context/UserHomeContext";
 import { Link } from "react-router-dom";
 import styles from "../Styles/ReservationSummary.module.css";
+import { useHistory } from "react-router-dom";
 
 import moment from "moment";
 
 const FlightCard = ({ flight, choosenSeat, cabin, price }) => {
-  console.log("flight", flight);
   return (
     <>
+    <br/>
+      
+
       <Row>
         <Col>
           <label>Flight {flight.flightDet.flightNumber}</label>
@@ -99,7 +102,10 @@ const Card = (props) => {
   );
 };
 
+// n
+
 const ReservationSummary = () => {
+  let history = useHistory();
   const [searchFlights, setSearchFlights] = useContext(UserHomeCtx);
   const flight1 = searchFlights.selected.flight1;
   const flight2 = searchFlights.selected.flight2;
@@ -124,16 +130,27 @@ const totalPrice2= (searchFlights.selected.companions.adultCount)*flight2.finalP
       seatType: searchFlights.data.seatType,
       flight1seat: flight1seat,
       flight2seat: flight2seat,
+      companions: searchFlights.selected.companions,
     };
     ReservationService.reserveNew(data)
       .then((res) => {
-        alert("Done", res);
+        console.log("res", res);
+        const bookingNumber = res.data.bookingNumber;
         console.log("OK ===> ", res);
+        history.push("/"); // navigate home
+        alert(
+          `Your Flights has been Reserved, Booking Number ${bookingNumber}`,
+          res
+        );
+        // clear every selection the user made
+        setSearchFlights({ ...searchFlights, selected: {} });
       })
       .catch((err) => {
-        alert("Error", err);
+        // alert("Error", err);
         console.log("errr <===", err.response);
         const errorMessage = err.response.data;
+        // console.log("errorMessage", errorMessage);
+        alert("Error: " + errorMessage);
       });
   };
   return (
@@ -146,6 +163,12 @@ const totalPrice2= (searchFlights.selected.companions.adultCount)*flight2.finalP
           backgroundColor: "#f5f5f5",
         }}
       >
+      <Row>
+        <Col><h2 className="mx-5 mb-5 mt-3">View Your Reservation Summary ✈  </h2></Col>
+        <Col ><Link to="/SeatReservation">
+        <button style={{float:"right", marginRight:"13rem"}} class="btn btn-primary mb-5 mt-3">Back To The Previous Page</button>
+        </Link></Col>
+      </Row>
         <div className={styles.container}>
           <h1 style={{ padding: "1rem 0 1rem" }}>Summary</h1>
           <Card

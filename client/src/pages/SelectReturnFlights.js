@@ -95,10 +95,18 @@ const SelectReturnFlights = (props) => {
       <br />
       <br />
       {/*  <h1>{allData.flights[0].flightDet.flightNumber}</h1> */}
-      <h2 className="mx-3 mb-4">Choose Returning Flight ✈ </h2>
+      <Row>
+      <Col><h2 className="mx-3 mb-5">Choose Going Flight ✈ </h2></Col>
+      <Col ><Link to="/SelectFlight">
+      <button style={{float:"right", marginRight:"8rem"}} class="btn btn-primary">Back To The Previous Page</button>
+      </Link></Col>
+      </Row>
       <h3 className="mx-3 mb-5">
+      <div class="alert alert-success col-md-8 offset-md-2 my-2" role="alert">
+        The Results Of Your Search From
         {flights2[0].flightDet.departureAirport} ✈{" "}
         {flights2[0].flightDet.arrivalAirport}
+        </div>
       </h3>
       {flights2.map((flight) => (
         //outset

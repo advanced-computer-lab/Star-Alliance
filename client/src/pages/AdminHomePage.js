@@ -94,6 +94,11 @@ const home = () => {
 
       <br></br>
       <br></br>
+      
+     {/*  {createdFlightSuc===true?
+      <div class="alert alert-success col-8 offset-2 my-2" role="alert">
+        This is a success alert—check it out!
+      </div>:<></>} */}
       <div className="border d-flex align-items-center justify-content-center">
         {homeCardsInfo.map((info) => (
           <ImgCard {...info} />
