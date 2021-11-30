@@ -19,9 +19,7 @@ import { Link } from "react-router-dom";
 import { UserHomeCtx } from "../Context/UserHomeContext";
 import MoreThanFlight from "../Components/MoreThanFlight";
 import moment from "moment";
-import advert from "../Videos/advert2.mp4";
-
-//var egy= "https://flagpedia.net/data/flags/w702/eg.png";
+import YouTube from "react-youtube";
 
 const UserHomePage = () => {
   const [searchFlights, setSearchFlights] = useContext(UserHomeCtx);
@@ -300,21 +298,19 @@ const UserHomePage = () => {
               />
             </h2>
           </Row>
-          <video
-            style={{ borderRadius: "2rem" }}
-            loop
-            autoPlay
-            muted
+          <br />
+          <iframe
+            id="ytplayer"
             width="1050"
             height="600"
-            controls
+            src="https://www.youtube.com/embed/HwM86WQ-0vY?autoplay=1&mute=1&playlist=HwM86WQ-0vY,msJ_JJB8q3s,k3KqP69xuPc&loop=1"
           >
-            <source src={advert} type="video/mp4" />
-            Your browser does not support the video tag.
-          </video>
+            {/* src="https://www.youtube.com/embed/HwM86WQ-0vY?autoplay=1&mute=1&playlist=HwM86WQ-0vY&loop=1"> */}
+          </iframe>
         </div>
         <br />
       </div>
+
       <MoreThanFlight />
     </div>
   );

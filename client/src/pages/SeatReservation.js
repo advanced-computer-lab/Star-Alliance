@@ -21,14 +21,19 @@ const SeatReservation = (props) => {
   const flight2 = searchFlights.selected.flight2;
   const flight1seat = searchFlights.selected.flight1seat;
   const flight2seat = searchFlights.selected.flight2seat;
+  const numSeatSelected =
+    searchFlights.selected.companions.adultCount +
+    searchFlights.selected.companions.childCount;
 
   function seatClick1(e) {
     const isChecked = e.target.checked;
     const seatID = e.target.id.substring(0, e.target.id.length - 1); //remove planeId from the seat id
 
     if (isChecked) {
-      if (flight1seat.length === 1) {
-        alert("You can only select one seat in each fligh");
+      if (flight1seat.length === numSeatSelected) {
+        alert(
+          "You can only select " + numSeatSelected + " seats in each flight"
+        );
         e.target.checked = false;
         return;
       }
@@ -44,8 +49,10 @@ const SeatReservation = (props) => {
     const seatID = e.target.id.substring(0, e.target.id.length - 1); //remove planeId from the seat id
 
     if (isChecked) {
-      if (flight2seat.length === 1) {
-        alert("You can only select one seat in each fligh");
+      if (flight2seat.length === numSeatSelected) {
+        alert(
+          "You can only select " + numSeatSelected + " seats in each flight"
+        );
         e.target.checked = false;
         return;
       }
@@ -57,10 +64,18 @@ const SeatReservation = (props) => {
   }
 
   const handleConfirmBtn = () => {
-    if (flight1seat.length === 0 || flight2seat.length === 0) {
-      alert("Please select at least one seat in each fligh");
+    if (
+      flight1seat.length < numSeatSelected ||
+      flight2seat.length < numSeatSelected
+    ) {
+      alert(
+        "Please select your specified number of seats which is : " +
+          numSeatSelected +
+          " seats"
+      );
       return;
     }
+
     // the seats are selected while clicking
 
     console.log("searchFlights", searchFlights);

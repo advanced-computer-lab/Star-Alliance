@@ -660,6 +660,33 @@ app.post("/UpdateUser", async (req, res) => {
   );
   res.send(result);
 });
+app.post("/UpdateUser", async (req, res) => {
+  const data = req.body;
+  console.log(data);
+  const result = await user.updateOne(
+    { _id: data.findUser },
+    {
+      firstName: data.firstName,
+      lastName: data.lastName,
+      passportNumber: data.passportNumber,
+      email: data.email,
+    }
+  );
+  res.send(result);
+});
+
+app.post("/GetUserInfo", async (req, res) => {
+  const UserId = req.body.findUser;
+  console.log("GetUserInfo =", req.body.findUser);
+
+  const result = await user.findOne({ _id: UserId });
+  console.log("result from GetUserInfo", result);
+  if (result == null) {
+    res.status(404).send("No User with this Number");
+    return;
+  }
+  res.send(result);
+});
 
 app.post("/GetUserInfo", async (req, res) => {
   const UserId = req.body.findUser;
