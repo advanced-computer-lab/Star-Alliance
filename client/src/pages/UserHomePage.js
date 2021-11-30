@@ -119,7 +119,7 @@ const UserHomePage = () => {
           height: "60vh",
         }}
       >
-        <div className="col-lg-10 offset-lg-1 col-md-8 offset-md-2" >
+        <div className="col-lg-10 offset-lg-1 col-md-8 offset-md-2" style={{height:"25vh"}}>
           <Form ref={formRef}>
             <Row>
               <h3 className="mt-3 mb-2">Book Your Flight! ✈ </h3>

@@ -11,11 +11,12 @@ import { faUserEdit } from "@fortawesome/free-solid-svg-icons";
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import { faPassport } from "@fortawesome/free-solid-svg-icons";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
-
+import Alert from "../Components/Alert";
 
  
 const UpdateUserData = () => {
-
+  /* const [alertOpen, setalertOpen] = useState(false);
+  const [alertMessage, setalertMessage] = useState(""); */
   let updateFormRef = createRef();
 
     const findUser= "61a35fcdfd33ed54997b5271";
@@ -23,9 +24,17 @@ const UpdateUserData = () => {
       .then(({ data }) => {
         console.log("recived", data); 
         updateFormValues(data);
+        //showAlert("Data Updated Successfuly");
   });
  
+  /* const showAlert = (message) => {
+    setalertMessage(message);
+    setalertOpen(true);
 
+    setTimeout(() => {
+      setalertOpen(false);
+    }, 3000);
+  }; */
 
 const handleSubmit = (e) => {
     e.preventDefault();
