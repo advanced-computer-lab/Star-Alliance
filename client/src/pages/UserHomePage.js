@@ -277,8 +277,9 @@ const UserHomePage = () => {
        </h2>
       </Row>
       <br/>
-<iframe  width="1050" height="600"
-src="https://www.youtube.com/embed/HwM86WQ-0vY?autoplay=1&mute=1&loop=1">
+<iframe id="ytplayer" width="1050" height="600"
+src="https://www.youtube.com/embed/HwM86WQ-0vY?autoplay=1&mute=1&playlist=HwM86WQ-0vY,msJ_JJB8q3s,k3KqP69xuPc&loop=1">
+{/* src="https://www.youtube.com/embed/HwM86WQ-0vY?autoplay=1&mute=1&playlist=HwM86WQ-0vY&loop=1"> */}
 </iframe>   
    </div>
    <br />
