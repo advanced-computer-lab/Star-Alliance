@@ -606,8 +606,53 @@ app.post("/AddReservation", async (req, res) => {
     res.status(404).send("Flight not found");
     return;
   }
+  let resFlight1EconomySeats = resFlight1.availableSeats.economy;
+  let resFlight1FirstSeats = resFlight1.availableSeats.first;
+  let resFlight1BusinessSeats = resFlight1.availableSeats.business;
+  let resFlight2EconomySeats = resFlight2.availableSeats.economy;
+  let resFlight2FirstSeats = resFlight2.availableSeats.first;
+  let resFlight2BusinessSeats = resFlight2.availableSeats.business;
+
+  let flight1AvailableSeatsForCabin = null;
+  let flight2AvailableSeatsForCabin = null;
+  if (seatType == "Economy") {
+    flight1AvailableSeatsForCabin = resFlight1EconomySeats;
+    flight2AvailableSeatsForCabin = resFlight2EconomySeats;
+    // update the flight's available seats for saving the reservation later
+    resFlight1EconomySeats = resFlight1EconomySeats.filter(
+      (seat) => !flight1seat.includes(seat)
+    );
+    resFlight2EconomySeats = resFlight2EconomySeats.filter(
+      (seat) => !flight2seat.includes(seat)
+    );
+  } else if (seatType == "First") {
+    flight1AvailableSeatsForCabin = resFlight1FirstSeats;
+    flight2AvailableSeatsForCabin = resFlight2FirstSeats;
+    resFlight1FirstSeats = resFlight1FirstSeats.filter(
+      (seat) => !flight1seat.includes(seat)
+    );
+    resFlight2FirstSeats = resFlight2FirstSeats.filter(
+      (seat) => !flight2seat.includes(seat)
+    );
+  } else if (seatType == "Business") {
+    flight1AvailableSeatsForCabin = resFlight1BusinessSeats;
+    flight2AvailableSeatsForCabin = resFlight2BusinessSeats;
+    resFlight1BusinessSeats = resFlight1BusinessSeats.filter(
+      (seat) => !flight1seat.includes(seat)
+    );
+    resFlight2BusinessSeats = resFlight2BusinessSeats.filter(
+      (seat) => !flight2seat.includes(seat)
+    );
+  } else {
+    console.log("Cabin Class error");
+    res.status(503).send("Cabin Class Error");
+    return;
+  }
+
   if (
-    !flight1seat.every((seat) => resFlight1.avaiableSeats.includes(seat)) ||
+    !flight1seat.every((seat) =>
+      flight1AvailableSeatsForCabin.includes(seat)
+    ) ||
     flight1seat.length == 0
   ) {
     console.log("Seat Number error");
@@ -615,7 +660,9 @@ app.post("/AddReservation", async (req, res) => {
     return;
   }
   if (
-    !flight2seat.every((seat) => resFlight2.avaiableSeats.includes(seat)) ||
+    !flight2seat.every((seat) =>
+      flight2AvailableSeatsForCabin.includes(seat)
+    ) ||
     flight2seat.length == 0
   ) {
     console.log("Seat Number error");
@@ -624,14 +671,29 @@ app.post("/AddReservation", async (req, res) => {
   }
 
   //update flight seats
-  resFlight1.avaiableSeats = resFlight1.avaiableSeats.filter(
-    (seat) => !flight1seat.includes(seat)
-  );
-  resFlight1.save();
-  resFlight2.avaiableSeats = resFlight2.avaiableSeats.filter(
-    (seat) => !flight2seat.includes(seat)
-  );
-  resFlight2.save();
+  // resFlight1.avaiableSeats = resFlight1.avaiableSeats.filter(
+  //   (seat) => !flight1seat.includes(seat)
+  // );
+
+  resFlight1.availableSeats = {
+    first: resFlight1FirstSeats,
+    business: resFlight1BusinessSeats,
+    economy: resFlight1EconomySeats,
+  };
+  resFlight2.availableSeats = {
+    first: resFlight2FirstSeats,
+    business: resFlight2BusinessSeats,
+    economy: resFlight2EconomySeats,
+  };
+
+  console.log("resFligh1", resFlight1.availableSeats);
+  console.log("resFligh2", resFlight2.availableSeats);
+
+  console.log("saving resFlight1", await resFlight1.save());
+  // resFlight2.avaiableSeats = resFlight2.avaiableSeats.filter(
+  // (seat) => !flight2seat.includes(seat)
+  // );
+  await resFlight2.save();
 
   // "Business", "Economy", "First"
 
@@ -644,6 +706,8 @@ app.post("/AddReservation", async (req, res) => {
     cabinClass: seatType,
     companions: companions,
     totalPrice:totalPrice,
+    fligh1seats: flight1seat,
+    fligh2seats: flight2seat,
   });
   console.log("new Reservation", newReservation);
   let reservationId = null;

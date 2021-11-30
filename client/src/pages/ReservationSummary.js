@@ -162,6 +162,14 @@ const totalPrice2= (searchFlights.selected.companions.adultCount)*flight2.finalP
         alert("Error: " + errorMessage);
       });
   };
+
+  const handleEditClick = () => {
+    setSearchFlights({
+      ...searchFlights,
+      selected: { ...searchFlights.selected, flight1seat: [], flight2seat: [] },
+    });
+  };
+
   return (
     <>
       {/* <Link to="/ReservationSelection">{"<< Get Back"}</Link> */}
@@ -233,7 +241,7 @@ const totalPrice2= (searchFlights.selected.companions.adultCount)*flight2.finalP
             className={styles.btmButtons}
           >
             <LinkContainer to="/SelectFlight">
-              <Button>Edit</Button>
+              <Button onClick={handleEditClick}>Edit</Button>
             </LinkContainer>
             <Button onClick={handleSubmitReservation}>Confirm</Button>
           </Stack>

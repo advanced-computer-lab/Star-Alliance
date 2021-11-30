@@ -34,7 +34,6 @@ const UserHomePage = () => {
     setClicked(true);
   }
 
-
   const handleSubmit = () => {
     var e = formRef.current;
     console.log("enter", formRef.current.departureAirport.value);
@@ -57,28 +56,28 @@ const UserHomePage = () => {
       //console.log(data);
       //searchFlights.data = data;
       //console.log(clicked);
-      const selected ={
-        flight1:null,
-        flight2:null,
-        flight1seat:[],
-        flight2seat:[],
-        companions:{
-          adultCount:parseInt(e.adult.value),
-          childCount:parseInt(e.children.value)
-        }
-      }
-      setSearchFlights({data,selected});
-      console.log("gigi",searchFlights);
+      const selected = {
+        flight1: null,
+        flight2: null,
+        flight1seat: [],
+        flight2seat: [],
+        companions: {
+          adultCount: parseInt(e.adult.value),
+          childCount: parseInt(e.children.value),
+        },
+      };
+      setSearchFlights({ data, selected });
+      console.log("gigi", searchFlights);
       show();
       console.log(clicked);
     });
   };
   return (
     <div
-    className="mt-1 "
+      className="mt-1 "
       id="testing"
       style={{ fontFamily: "cursive", color: "white" }}
-     >
+    >
       <Carousel>
         <Carousel.Item>
           <img
@@ -120,7 +119,7 @@ const UserHomePage = () => {
         </Carousel.Item>
       </Carousel>
       <div
-      className="mt-5"
+        className="mt-5"
         style={{
           borderRadius: "2rem",
           backgroundColor: "#112D4E",
@@ -130,7 +129,7 @@ const UserHomePage = () => {
           height: "65vh",
         }}
       >
-        <div className="col-lg-10 offset-lg-1 col-md-8 offset-md-2" >
+        <div className="col-lg-10 offset-lg-1 col-md-8 offset-md-2">
           <Form ref={formRef}>
             <Row>
               <h3 className="mt-3 mb-2">Book Your Flight! ✈ </h3>
@@ -188,7 +187,6 @@ const UserHomePage = () => {
                     type="date"
                     name="departureTime"
                     placeholder="Enter Departure Time"
-                   // value="2022-01-01T10:00"
                   />
                 </Form.Group>
               </Col>
@@ -204,7 +202,6 @@ const UserHomePage = () => {
                     type="date"
                     name="arrivalTime"
                     placeholder="Enter Arrival Time"
-                  //  value="2022-01-22T10:00"
                   />
                 </Form.Group>
               </Col>
@@ -293,7 +290,6 @@ const UserHomePage = () => {
       <br/>
 <iframe id="ytplayer" width="1050" height="600"
 src="https://www.youtube.com/embed/HwM86WQ-0vY?autoplay=1&mute=1&playlist=HwM86WQ-0vY,msJ_JJB8q3s,k3KqP69xuPc&loop=1">
-{/* src="https://www.youtube.com/embed/HwM86WQ-0vY?autoplay=1&mute=1&playlist=HwM86WQ-0vY&loop=1"> */}
 </iframe>   
    </div>
    <br />

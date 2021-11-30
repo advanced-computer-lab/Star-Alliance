@@ -14,9 +14,7 @@ const assert = require("assert");
 
 const SeatReservation = (props) => {
   let history = useHistory();
-  //allData = {flights,flights2,seatType}
-  //flights={flightDet:{flight details}, finalPrice}
-  // const { flights, flights2, seatType } = props.location.state;
+
   const [searchFlights, setSearchFlights] = useContext(UserHomeCtx);
   console.log("search flights in seating", searchFlights);
   // const flights = searchFlights.data.going;
@@ -27,13 +25,37 @@ const SeatReservation = (props) => {
   const flight2 = searchFlights.selected.flight2;
   const flight1seat = searchFlights.selected.flight1seat;
   const flight2seat = searchFlights.selected.flight2seat;
+  const userCabinClass = searchFlights.data.seatType;
   const numSeatSelected =
     searchFlights.selected.companions.adultCount +
     searchFlights.selected.companions.childCount;
 
+  // const updateChecked = (globalId) => {
+  //   const ltrs = ["A", "B", "C", "D", "E", "F"];
+  //   for (let i = 1; i <= 10; i++) {
+  //     for (let j = 0; j < 6; j++) {
+  //       const seatId = `${i}${ltrs[j]}${globalId}`;
+  //       const seats = globalId === 1 ? flight2seat : flight1seat;
+  //       const seatRaw = `${i}${ltrs[j]}`;
+  //       console.log("flight1seat", flight1seat);
+  //       console.log("raw id", seatRaw);
+  //       console.log("found in seats ?", seats.includes(seatRaw));
+  //       console.log("==========");
+  //       if (document.getElementById(seatId) == null) continue;
+  //       document.getElementById(seatId).checked = seats.includes(seatRaw)
+  //         ? true
+  //         : false;
+  //     }
+  //   }
+  // };
+  // useEffect(() => {
+  //   updateChecked(0);
+  // }, []);
+
   function seatClick1(e) {
     const isChecked = e.target.checked;
     const seatID = e.target.id.substring(0, e.target.id.length - 1); //remove planeId from the seat id
+    console.log("checked", isChecked, "seatId", seatID);
 
     if (isChecked) {
       if (flight1seat.length === numSeatSelected) {
@@ -43,10 +65,14 @@ const SeatReservation = (props) => {
         e.target.checked = false;
         return;
       }
+      e.target.checked = true;
       flight1seat.push(seatID);
     } else {
-      flight1seat.splice(flight1seat.indexOf(seatID), 1);
+      flight1seat.splice(flight1seat.indexOf(seatID), 1); // remove the seat from the array first then uncheck, b/c the planeselection checked depends on the array
+      e.target.checked = false;
     }
+    console.log("flight1seat", flight1seat);
+    // updateChecked(0);
     // console.log("selected seats 1", flight1seat);
   }
 
@@ -62,9 +88,11 @@ const SeatReservation = (props) => {
         e.target.checked = false;
         return;
       }
+      e.target.checked = true;
       flight2seat.push(seatID);
     } else {
-      flight2seat.splice(flight2seat.indexOf(seatID), 1);
+      flight2seat.splice(flight2seat.indexOf(seatID), 1); // remove the seat from the array first then uncheck, b/c the planeselection checked depends on the array
+      e.target.checked = false;
     }
     // console.log("selected seats 2", flight2seat);
   }
@@ -133,8 +161,9 @@ const SeatReservation = (props) => {
           <PlaneSelection
             seatClick={seatClick1}
             id={0}
-            avaiableSeats={flight1.flightDet.avaiableSeats}
-            selectedSeats={flight1seat}
+            availableSeats={flight1.flightDet.availableSeats}
+            userCabinClass={userCabinClass}
+            checkedSeates={flight1seat}
           />
         </div>
         <div>
@@ -146,8 +175,9 @@ const SeatReservation = (props) => {
           <PlaneSelection
             seatClick={seatClick2}
             id={1}
-            avaiableSeats={flight2.flightDet.avaiableSeats}
-            selectedSeats={flight2seat}
+            availableSeats={flight2.flightDet.availableSeats}
+            userCabinClass={userCabinClass}
+            checkedSeates={flight2seat}
           />
         </div>
       </div>
