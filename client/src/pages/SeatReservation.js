@@ -7,13 +7,8 @@ import { UserHomeCtx } from "../Context/UserHomeContext";
 import PlaneSelection from "../Components/PlanSelection.js";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useHistory } from "react-router-dom";
-<<<<<<< HEAD
 import seat from "../images/seat.png";
-=======
-import { Row } from "react-bootstrap";
-import { Col } from "react-bootstrap";
-import { Link } from "react-router-dom";
->>>>>>> 7e1cb81dc616dcbc1b0dcfc867593f96e3ef91fd
+
 
 const assert = require("assert");
 
@@ -65,7 +60,6 @@ const SeatReservation = (props) => {
           "You can only select " + numSeatSelected + " seats in each flight"
         );
         e.target.checked = false;
-        alert("You can only select one seat in each flight");
         return;
       }
       flight2seat.push(seatID);
@@ -87,25 +81,15 @@ const SeatReservation = (props) => {
       );
       return;
     }
-<<<<<<< HEAD
-    if (selectedFlight2.length === 0 || selectedFlight2.length < numSeatSelected) {
-      alert("Please select your specified number of seats which is :" + " " + numSeatSelected + "seats");
-      return;
-    }
     setSearchFlights({
       ...searchFlights,
       selected: {
         ...searchFlights.selected,
-        flight1seat: selectedFlight1,
-        flight2seat: selectedFlight2,
+        flight1seat: searchFlights.selected.flight1seat,
+        flight2seat: searchFlights.selected.flight2seat,
         companions:searchFlights.selected.companions
       },
     });
-=======
-
-    // the seats are selected while clicking
-
->>>>>>> 7e1cb81dc616dcbc1b0dcfc867593f96e3ef91fd
     console.log("searchFlights", searchFlights);
     history.push("/ReservationSummary");
   };
@@ -124,15 +108,9 @@ const SeatReservation = (props) => {
   // flightNumber: "456"
   return (
     <>
-<<<<<<< HEAD
     <Row>
         <Col><h2 className="mx-5 mb-5 mt-3">Choose Your ✈ Seats <img style={{height:"1cm",width:"1cm"}} src={seat}/> </h2> 
 
-=======
-     <Row>
-        <Col><h2 className="mx-5 mb-5 mt-3">Choose Your ✈ Seats <img style={{height:"1cm",width:"1cm"}} src="https://images-ext-2.discordapp.net/external/A42A2v3dW1SRgtRFrnBoA3oUJ0_L14kc99FacMmCCu8/%3Ftoken%3Dexp%3D1638227280~hmac%3D1c6a9c3d223ab6e29d22e8429ed9a642/https/cdn-icons.flaticon.com/png/512/4110/premium/4110361.png?width=270&height=270" /> </h2> 
-       
->>>>>>> 7e1cb81dc616dcbc1b0dcfc867593f96e3ef91fd
         </Col>
         <Col><Link to="/SelectReturnFlights">
         <button style={{float:"right", marginRight:"13rem"}} class="btn btn-primary mb-5 mt-3">Back To The Previous Page</button>
@@ -146,7 +124,7 @@ const SeatReservation = (props) => {
         }}
       >
 
-     
+
         <div>
           <h3 className="mx-3 mb-4">
             From {flight1.flightDet.departureAirport} to{" "}

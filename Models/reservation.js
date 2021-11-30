@@ -31,6 +31,10 @@ const reservationSchema = new Schema({
     weight: { type: Number, default: 23 },
     number: { type: Number, default: 2 },
   },
+  totalPrice:{
+    type: Number,
+    default:0,
+  }
 });
 
 // Reservation Price Calculation, based on number of passengers, cabin class

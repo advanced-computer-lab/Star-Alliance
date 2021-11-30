@@ -17,18 +17,6 @@ const SelectFlight = () => {
   let flights = searchFlights.data.going;
   if (searchFlights.data.CheckCountry == "1") {
     return (
-<<<<<<< HEAD
-      <h1><FontAwesomeIcon icon={faStickyNote} /> Note:You must choose a destination different than departure !</h1>
-    )  
-  }
-  else if(flights[0]== undefined){
-    return (
-      <h1>No Available going flights with this date !</h1>
-    )
-    
-  }
-  else{
-=======
       <h1>
         <FontAwesomeIcon icon={faStickyNote} /> Note:You must choose a
         destination different than departure !
@@ -40,7 +28,6 @@ const SelectFlight = () => {
     let flights2 = searchFlights.data.returning;
     let seatType = searchFlights.data.seatType;
     let allData = { flights, flights2, seatType };
->>>>>>> 7e1cb81dc616dcbc1b0dcfc867593f96e3ef91fd
 
     const firstClick = (ids) => {
       // console.log("Check", ids);
@@ -107,7 +94,6 @@ const SelectFlight = () => {
     /*const  state  = window.props;
     console.log("----------------------------------------",window.props);
 */
-<<<<<<< HEAD
 
   const handleSelectClick = (flight) => {
     console.log("selected ", flight);
@@ -119,17 +105,6 @@ const SelectFlight = () => {
         flight2seat:[],
         companions:searchFlights.selected.companions
     };
-=======
-    const handleSelectClick = (flight) => {
-      // console.log("selected ", flight);
-      // const selected = {
-      //   flight1: flight,
-      //   flight2: null, // to be changed in Select Return Flight
-      //   flight1seat: [],
-      //   flight2seat: [],
-      //   num: searchFlights.data.companionsCount,
-      // };
->>>>>>> 7e1cb81dc616dcbc1b0dcfc867593f96e3ef91fd
 
       setSearchFlights({
         ...searchFlights,

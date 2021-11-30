@@ -45,7 +45,7 @@ const handleSubmit = (e) => {
 
     console.log("data", data);
     FlightService.updateUser(data);
-    showAlert("Flight Updated Successfuly");
+    showAlert("User Info. Updated Successfuly");
 }
 
 const showAlert = (message) => {
