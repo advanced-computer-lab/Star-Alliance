@@ -11,6 +11,11 @@ import UserService from "../Services/UserService.js";
 
 import PlaneSelection from "../Components/PlanSelection.js";
 
+const avaiableSeats = {
+  first: ["1A", "1B", "1C"],
+  business: ["1D", "1E", "1F"],
+  economy: ["2A", "2B", "3C"],
+};
 const TestPage = () => {
   const [open, setOpen] = useState(false);
   const [User, setUser] = useContext(UserCtx);
@@ -22,6 +27,9 @@ const TestPage = () => {
     setUser("ceecec");
   };
 
+  const handleSeatClick = (seatId) => {
+    console.log(seatId);
+  };
   console.log(UserService.getTypeString());
   return (
     <>
@@ -47,7 +55,11 @@ const TestPage = () => {
       </PopupView>
       <Button onClick={handleBtnClick}> Click me </Button>
 
-      <PlaneSelection />
+      <PlaneSelection
+        id={0}
+        seatClick={handleSeatClick}
+        availableSeats={avaiableSeats}
+      />
     </>
   );
 };

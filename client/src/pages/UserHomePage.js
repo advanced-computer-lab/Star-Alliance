@@ -187,7 +187,7 @@ const UserHomePage = () => {
                     type="date"
                     name="departureTime"
                     placeholder="Enter Departure Time"
-                    value="2022-01-01"
+                    value="2222-01-01"
                   />
                 </Form.Group>
               </Col>
@@ -203,7 +203,7 @@ const UserHomePage = () => {
                     type="date"
                     name="arrivalTime"
                     placeholder="Enter Arrival Time"
-                    value="2022-01-22"
+                    value="2222-01-22"
                   />
                 </Form.Group>
               </Col>

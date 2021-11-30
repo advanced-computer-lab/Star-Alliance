@@ -1,34 +1,156 @@
 import "../Styles/Seats.scss";
-import { useEffect, useContext } from "react";
+import { useEffect, useContext, useState } from "react";
 // NOTICE: the ID can only be from 0-9, no more, otherwise conflict in SeatReservation.js
-const PlaneSelection = ({ id, seatClick, avaiableSeats, selectedSeats }) => {
-  useEffect(() => {
-    // this code excutes when the page loads
-    // update el inputs bel to be either checked or unavailble
-    // const buttons = document.getElementsByTagName("input");
-    const letters = ["A", "B", "C", "D", "E", "F"];
-    for (let i = 1; i <= 10; i++) {
-      for (let j = 0; j < 6; j++) {
-        const ltr = letters[j];
-        const button = document.getElementById(`${i}${ltr}${id}`);
-        if (avaiableSeats.includes(`${i}${ltr}`)) {
-          button.disabled = false;
-        } else {
-          button.disabled = true;
-        }
-      }
-    }
+const MAX_SEATS = 60;
 
-    // update the selected seats
-    if (selectedSeats) {
-      for (let i = 0; i < selectedSeats.length; i++) {
-        const button = document.getElementById(`${selectedSeats[i]}${id}`);
-        button.checked = true;
-      }
+const PlaneSelection = ({
+  id: globalid,
+  seatClick,
+  availableSeats,
+  userCabinClass,
+  checkedSeates,
+}) => {
+  useEffect(() => {
+    // disable the unavailable seats
+    // const letters = ["A", "B", "C", "D", "E", "F"];
+    // for (let i = 1; i <= 10; i++) {
+    //   for (let j = 0; j < 6; j++) {
+    //     const ltr = letters[j];
+    //     const button = document.getElementById(`${i}${ltr}${id}`);
+    //     if (avaiableSeats.includes(`${i}${ltr}`)) {
+    //       button.disabled = false;
+    //     } else {
+    //       button.disabled = true;
+    //     }
+    //   }
+    // }
+    // // update the selected seats
+    // if (selectedSeats) {
+    //   for (let i = 0; i < selectedSeats.length; i++) {
+    //     const button = document.getElementById(`${selectedSeats[i]}${id}`);
+    //     button.checked = true;
+    //   }
+    // }
+  }, []);
+
+  const [rows, setrows] = useState([]);
+  // let rows = [];
+
+  useEffect(() => {
+    setrows([]);
+    // console.log(userCabinClass);
+    const Row = ({ num, children }) => (
+      <li class={"row row--" + num}>
+        <ol class="seats" type="A">
+          {children}
+        </ol>
+      </li>
+    );
+    const Seat = ({ id, type }) => (
+      <li class={"seat-" + type}>
+        <input
+          type="checkbox"
+          id={id + "" + globalid}
+          onClick={seatClick}
+          disabled={userCabinClass !== type}
+          checked={checkedSeates.includes(id) ? true : null}
+        />
+        <label for={id + "" + globalid}>{id}</label>
+      </li>
+    );
+
+    var allSeats = [];
+    for (let i = 0; i < availableSeats.first.length; i++) {
+      const seatId = availableSeats.first[i];
+      // console.log("pushing", seatId);
+      allSeats.push(<Seat id={seatId} key={i} type="First" />);
     }
+    for (let i = 0; i < availableSeats.business.length; i++) {
+      const seatId = availableSeats.business[i];
+      allSeats.push(<Seat id={seatId} key={i} type="Business" />);
+    }
+    for (let i = 0; i < availableSeats.economy.length; i++) {
+      const seatId = availableSeats.economy[i];
+      allSeats.push(<Seat id={seatId} key={i} type="Economy" />);
+    }
+    allSeats.reverse();
+    // console.log(allSeats);
+    let i = 0;
+    while (allSeats.length > 0) {
+      i++;
+      let seats = [];
+      for (let j = 0; j < 6; j++) {
+        seats.push(allSeats.pop());
+      }
+      // console.log(seats);
+      setrows((rows) => [...rows, <Row num={i}>{seats}</Row>]);
+    }
+    // const ltrs = ["A", "B", "C", "D", "E", "F"];
+    // for (let i = 1; i <= MAX_SEATS / 6; i++) {
+    //   //row
+    //   const seats = [];
+
+    //   for (let j = 1; j <= 6; j++) {
+    //     const ltr = ltrs[j - 1];
+    //     //column
+    //     const seatId = `${i}${ltr}`;
+    //     seats.push(<Seat id={seatId} />);
+    //   }
+    //   setrows((rows) => [...rows, <Row num={i}>{seats}</Row>]);
+    // rows.push(<Row num={i}>{seats}</Row>);
+    // }
+    // setrows(rows);
+    // setrows([
+    //   <Row num={1}>{[<Seat id={"2A"} />, <Seat id={"3A"} />]}</Row>,
+    //   <Row num={2}>
+    //     <li class="seat">
+    //       <input type="checkbox" id={"2A"} onClick={seatClick} />
+    //       <label for={"2A"}>1A</label>
+    //     </li>
+    //   </Row>,
+    // ]);
   }, []);
 
   return (
+    <>
+      <div class="plane">
+        <div class="cockpit">
+          <h1>Please select a seat</h1>
+        </div>
+        <div class="exit exit--front fuselage"></div>
+        <ol class="cabin fuselage">
+          {rows}
+          {/* <li class="row row--1">
+            <ol class="seats" type="A">
+              <li class="seat">
+                <input type="checkbox" id={"1A" + id} onClick={seatClick} />
+                <label for={"1A" + id}>1A</label>
+              </li>
+              <li class="seat">
+                <input type="checkbox" id={"1B" + id} onClick={seatClick} />
+                <label for={"1B" + id}>1B</label>
+              </li> */}
+          {/* <li class="row row--2">
+            <ol class="seats" type="A">
+              <li class="seat">
+                <input type="checkbox" id={"2A" + id} onClick={seatClick} />
+                <label for={"2A" + id}>2A</label>
+              </li>
+              <li class="seat">
+                <input type="checkbox" id={"2B" + id} onClick={seatClick} />
+                <label for={"2B" + id}>2B</label>
+              </li> */}
+        </ol>
+        <div class="exit exit--back fuselage"></div>
+        <div style={{ height: "3cm", width: "19cm", marginTop: "0.8cm" }}></div>
+      </div>
+    </>
+  );
+};
+
+// old Return
+/*
+(
     <>
       <div class="plane">
         <div class="cockpit">
@@ -321,7 +443,7 @@ const PlaneSelection = ({ id, seatClick, avaiableSeats, selectedSeats }) => {
         <div style={{ height: "3cm", width: "19cm", marginTop: "0.8cm" }}></div>
       </div>
     </>
-  );
-};
+  )
+  */
 
 export default PlaneSelection;

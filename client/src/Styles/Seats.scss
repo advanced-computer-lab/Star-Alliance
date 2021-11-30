@@ -82,7 +82,7 @@ ol {
   justify-content: flex-start;
 }
 
-.seat {
+.seat-First {
   display: flex;
   flex: 0 0 14.28571428571429%;
   padding: 5px;
@@ -131,7 +131,7 @@ ol {
     font-weight: bold;
     line-height: 1.5rem;
     padding: 4px 0;
-    background: #f42536;
+    background: #98fa48;
     border-radius: 5px;
     animation-duration: 300ms;
     animation-fill-mode: both;
@@ -154,7 +154,7 @@ ol {
   }
 }
 
-.seat0 {
+.seat-Business {
   display: flex;
   flex: 0 0 14.28571428571429%;
   padding: 5px;
@@ -203,7 +203,7 @@ ol {
     font-weight: bold;
     line-height: 1.5rem;
     padding: 4px 0;
-    background: #f42536;
+    background: #d11524;
     border-radius: 5px;
     animation-duration: 300ms;
     animation-fill-mode: both;
@@ -226,7 +226,7 @@ ol {
   }
 }
 
-.seat1 {
+.seat-Economy {
   display: flex;
   flex: 0 0 14.28571428571429%;
   padding: 5px;
@@ -275,7 +275,7 @@ ol {
     font-weight: bold;
     line-height: 1.5rem;
     padding: 4px 0;
-    background: #f42536;
+    background: #bd5aff;
     border-radius: 5px;
     animation-duration: 300ms;
     animation-fill-mode: both;
