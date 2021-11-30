@@ -11,11 +11,13 @@ import { faUserEdit } from "@fortawesome/free-solid-svg-icons";
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import { faPassport } from "@fortawesome/free-solid-svg-icons";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
-
+import Alert from "../Components/Alert";
 
  
 const UpdateUserData = () => {
     let updateFormRef = createRef();
+    const [alertOpen, setalertOpen] = useState(false);
+  const [alertMessage, setalertMessage] = useState("");
 
   let firstTime=true;
 
@@ -28,9 +30,6 @@ const UpdateUserData = () => {
         updateFormValues(data);
       
   });}
-
- 
-
 
 const handleSubmit = (e) => {
     e.preventDefault();
@@ -46,8 +45,17 @@ const handleSubmit = (e) => {
 
     console.log("data", data);
     FlightService.updateUser(data);
+    showAlert("Flight Updated Successfuly");
 }
 
+const showAlert = (message) => {
+  setalertMessage(message);
+  setalertOpen(true);
+
+  setTimeout(() => {
+    setalertOpen(false);
+  }, 3000);
+};
 
   const updateFormValues = (data) => {
     const {
@@ -70,6 +78,12 @@ const handleSubmit = (e) => {
       <br></br>
       <br></br>
       <br></br>
+      <Alert
+        open={alertOpen}
+        setOpen={setalertOpen}
+        title={alertMessage}
+        desc=""
+      />
     <div  className="mt-5"  style={{
           borderRadius: "2rem",
           backgroundColor: "#112D4E",
@@ -133,8 +147,6 @@ const handleSubmit = (e) => {
     </div>
       </div>
             </div>
-
-
 
 );
 }

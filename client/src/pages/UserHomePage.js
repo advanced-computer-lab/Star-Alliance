@@ -51,13 +51,12 @@ const UserHomePage = () => {
     console.log(data);
 
     FlightService.GetRequestedFlights(data).then(({ data }) => {
-      console.log(data);
-
-      setSearchFlights();
-
+      //console.log(data);
+      //searchFlights.data = data;
+      //console.log(clicked);
       const selected = {
-        flight1: null, // to be change in Select Flight
-        flight2: null, // to be changed in Select Return Flight
+        flight1: null,
+        flight2: null,
         flight1seat: [],
         flight2seat: [],
         companions: {
@@ -66,8 +65,7 @@ const UserHomePage = () => {
         },
       };
       setSearchFlights({ data, selected });
-
-      console.log(clicked);
+      console.log("gigi", searchFlights);
       show();
       console.log(clicked);
     });
