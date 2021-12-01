@@ -21,8 +21,10 @@ const SeatReservation = (props) => {
 
   const flight1 = searchFlights.selected.flight1;
   const flight2 = searchFlights.selected.flight2;
-  const flight1seat = searchFlights.selected.flight1seat;
-  const flight2seat = searchFlights.selected.flight2seat;
+  // const flight1seat = searchFlights.selected.flight1seat;
+  // const flight2seat = searchFlights.selected.flight2seat;
+  const [flight1seatSt, setflight1seatSt] = useState([]);
+  const [flight2seatSt, setflight2seatSt] = useState([]);
   const userCabinClass = searchFlights.data.seatType;
   const numSeatSelected =
     searchFlights.selected.companions.adultCount +
@@ -56,7 +58,7 @@ const SeatReservation = (props) => {
     console.log("checked", isChecked, "seatId", seatID);
 
     if (isChecked) {
-      if (flight1seat.length === numSeatSelected) {
+      if (flight1seatSt.length === numSeatSelected) {
         alert(
           "You can only select " + numSeatSelected + " seats in each flight"
         );
@@ -64,12 +66,12 @@ const SeatReservation = (props) => {
         return;
       }
       e.target.checked = true;
-      flight1seat.push(seatID);
+      flight1seatSt.push(seatID);
     } else {
-      flight1seat.splice(flight1seat.indexOf(seatID), 1); // remove the seat from the array first then uncheck, b/c the planeselection checked depends on the array
+      flight1seatSt.splice(flight1seatSt.indexOf(seatID), 1); // remove the seat from the array first then uncheck, b/c the planeselection checked depends on the array
       e.target.checked = false;
     }
-    console.log("flight1seat", flight1seat);
+    console.log("flight1seatSt", flight1seatSt);
     // updateChecked(0);
     // console.log("selected seats 1", flight1seat);
   }
@@ -79,7 +81,7 @@ const SeatReservation = (props) => {
     const seatID = e.target.id.substring(0, e.target.id.length - 1); //remove planeId from the seat id
 
     if (isChecked) {
-      if (flight2seat.length === numSeatSelected) {
+      if (flight2seatSt.length === numSeatSelected) {
         alert(
           "You can only select " + numSeatSelected + " seats in each flight"
         );
@@ -88,18 +90,18 @@ const SeatReservation = (props) => {
         return;
       }
       e.target.checked = true;
-      flight2seat.push(seatID);
+      flight2seatSt.push(seatID);
     } else {
-      flight2seat.splice(flight2seat.indexOf(seatID), 1); // remove the seat from the array first then uncheck, b/c the planeselection checked depends on the array
+      flight2seatSt.splice(flight2seatSt.indexOf(seatID), 1); // remove the seat from the array first then uncheck, b/c the planeselection checked depends on the array
       e.target.checked = false;
     }
-    // console.log("selected seats 2", flight2seat);
+    // console.log("selected seats 2", flight2seatSt);
   }
 
   const handleConfirmBtn = () => {
     if (
-      flight1seat.length < numSeatSelected ||
-      flight2seat.length < numSeatSelected
+      flight1seatSt.length < numSeatSelected ||
+      flight2seatSt.length < numSeatSelected
     ) {
       alert(
         "Please select your specified number of seats which is : " +
@@ -110,6 +112,15 @@ const SeatReservation = (props) => {
     }
 
     // the seats are selected while clicking
+    // no, here
+    setSearchFlights({
+      ...searchFlights,
+      selected: {
+        ...searchFlights.selected,
+        flight1seat: flight1seatSt,
+        flight2seat: flight2seatSt,
+      },
+    });
 
     console.log("searchFlights", searchFlights);
     history.push("/ReservationSummary");
@@ -129,13 +140,26 @@ const SeatReservation = (props) => {
   // flightNumber: "456"
   return (
     <>
-     <Row>
-        <Col><h2 className="mx-5 mb-5 mt-3">Choose Your ✈ Seats <img style={{height:"1cm",width:"1cm"}} src="https://images-ext-2.discordapp.net/external/A42A2v3dW1SRgtRFrnBoA3oUJ0_L14kc99FacMmCCu8/%3Ftoken%3Dexp%3D1638227280~hmac%3D1c6a9c3d223ab6e29d22e8429ed9a642/https/cdn-icons.flaticon.com/png/512/4110/premium/4110361.png?width=270&height=270" /> </h2> 
-       
+      <Row>
+        <Col>
+          <h2 className="mx-5 mb-5 mt-3">
+            Choose Your ✈ Seats{" "}
+            <img
+              style={{ height: "1cm", width: "1cm" }}
+              src="https://images-ext-2.discordapp.net/external/A42A2v3dW1SRgtRFrnBoA3oUJ0_L14kc99FacMmCCu8/%3Ftoken%3Dexp%3D1638227280~hmac%3D1c6a9c3d223ab6e29d22e8429ed9a642/https/cdn-icons.flaticon.com/png/512/4110/premium/4110361.png?width=270&height=270"
+            />{" "}
+          </h2>
         </Col>
-        <Col><Link to="/SelectReturnFlights">
-        <button style={{float:"right", marginRight:"13rem"}} class="btn btn-primary mb-5 mt-3">Back To The Previous Page</button>
-        </Link></Col>
+        <Col>
+          <Link to="/SelectReturnFlights">
+            <button
+              style={{ float: "right", marginRight: "13rem" }}
+              class="btn btn-primary mb-5 mt-3"
+            >
+              Back To The Previous Page
+            </button>
+          </Link>
+        </Col>
       </Row>
       <div
         style={{
@@ -144,8 +168,6 @@ const SeatReservation = (props) => {
           justifyContent: "space-evenly",
         }}
       >
-
-     
         <div>
           <h3 className="mx-3 mb-4">
             From {flight1.flightDet.departureAirport} to{" "}
@@ -156,7 +178,7 @@ const SeatReservation = (props) => {
             id={0}
             availableSeats={flight1.flightDet.availableSeats}
             userCabinClass={userCabinClass}
-            checkedSeates={flight1seat}
+            checkedSeates={flight1seatSt}
           />
         </div>
         <div>
@@ -170,7 +192,7 @@ const SeatReservation = (props) => {
             id={1}
             availableSeats={flight2.flightDet.availableSeats}
             userCabinClass={userCabinClass}
-            checkedSeates={flight2seat}
+            checkedSeates={flight2seatSt}
           />
         </div>
       </div>
