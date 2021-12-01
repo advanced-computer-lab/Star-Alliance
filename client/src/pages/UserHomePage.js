@@ -19,9 +19,8 @@ import { Link } from "react-router-dom";
 import { UserHomeCtx } from "../Context/UserHomeContext";
 import MoreThanFlight from "../Components/MoreThanFlight";
 import moment from "moment";
-import YouTube from 'react-youtube';
+import YouTube from "react-youtube";
 import tot from "../images/tot.png";
-
 
 const UserHomePage = () => {
   const [searchFlights, setSearchFlights] = useContext(UserHomeCtx);
@@ -33,8 +32,6 @@ const UserHomePage = () => {
   function show() {
     setClicked(true);
   }
-
-  
 
   const handleSubmit = () => {
     var e = formRef.current;
@@ -249,7 +246,7 @@ const UserHomePage = () => {
                   <Form.Select name="type" defaultValue="Economy">
                     <option value="Economy">Economy</option>
                     <option value="Business">Business</option>
-                    <option value="First Class">First Class</option>
+                    <option value="First">First</option>
                   </Form.Select>
                 </Form.Group>
               </Col>
@@ -282,29 +279,45 @@ const UserHomePage = () => {
           </Form>
         </div>
       </div>
-      <div className="col-lg-10 offset-lg-1"  style={{backgroundColor:"#112D4E",borderRadius: "2.5rem"}}>
-      <div className="mt-3 col-lg-10 offset-lg-1">
-      <br />
-      <Row>
-      <h2 as={Col}>Why to Visit Egypt? <FontAwesomeIcon icon={faAnkh} />  <img as={Col} style={{height:"5vh",width:"5vh"}} src={tot}/>
-       </h2>
-      </Row>
-      <br/>
-<iframe id="ytplayer" width="1050" height="600"
-src="https://www.youtube.com/embed/HwM86WQ-0vY?autoplay=1&mute=1&playlist=HwM86WQ-0vY,msJ_JJB8q3s,k3KqP69xuPc&loop=1">
-</iframe>   
-   </div>
-   <br />
-   </div> 
-   {/* <Button style={{height:"1cm",width:"1cm"}} href="#top"><img style={{marginLeft:"0",height:"0.7cm",width:"0.7cm"}} src="https://cdn-icons.flaticon.com/png/512/4196/premium/4196777.png?token=exp=1638365014~hmac=d38a550c5c183f31c4ffdf6e65880d36" /></Button> */}
-   
+      <div
+        className="col-lg-10 offset-lg-1"
+        style={{ backgroundColor: "#112D4E", borderRadius: "2.5rem" }}
+      >
+        <div className="mt-3 col-lg-10 offset-lg-1">
+          <br />
+          <Row>
+            <h2 as={Col}>
+              Why to Visit Egypt? <FontAwesomeIcon icon={faAnkh} />{" "}
+              <img as={Col} style={{ height: "5vh", width: "5vh" }} src={tot} />
+            </h2>
+          </Row>
+          <br />
+          <iframe
+            id="ytplayer"
+            width="1050"
+            height="600"
+            src="https://www.youtube.com/embed/HwM86WQ-0vY?autoplay=1&mute=1&playlist=HwM86WQ-0vY,msJ_JJB8q3s,k3KqP69xuPc&loop=1"
+          ></iframe>
+        </div>
+        <br />
+      </div>
+      {/* <Button style={{height:"1cm",width:"1cm"}} href="#top"><img style={{marginLeft:"0",height:"0.7cm",width:"0.7cm"}} src="https://cdn-icons.flaticon.com/png/512/4196/premium/4196777.png?token=exp=1638365014~hmac=d38a550c5c183f31c4ffdf6e65880d36" /></Button> */}
+
       <MoreThanFlight />
-      <br/>
-      <a href="#top"><img style={{marginLeft:"0",height:"0.9cm",width:"0.9cm",float:"Right",Backgroundcolor:"white"}} src="https://cdn-icons.flaticon.com/png/512/4196/premium/4196777.png?token=exp=1638365014~hmac=d38a550c5c183f31c4ffdf6e65880d36" /></a> 
-
-
+      <br />
+      <a href="#top">
+        <img
+          style={{
+            marginLeft: "0",
+            height: "0.9cm",
+            width: "0.9cm",
+            float: "Right",
+            Backgroundcolor: "white",
+          }}
+          src="https://cdn-icons.flaticon.com/png/512/4196/premium/4196777.png?token=exp=1638365014~hmac=d38a550c5c183f31c4ffdf6e65880d36"
+        />
+      </a>
     </div>
-
   );
 };
 export default UserHomePage;

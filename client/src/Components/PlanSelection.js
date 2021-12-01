@@ -1,5 +1,6 @@
 import "../Styles/Seats.scss";
 import { useEffect, useContext, useState } from "react";
+
 // NOTICE: the ID can only be from 0-9, no more, otherwise conflict in SeatReservation.js
 const MAX_SEATS = 60;
 
@@ -110,6 +111,17 @@ const PlaneSelection = ({
           !availableSeats.economy.includes(seatId)
         )
           disabled = true;
+        // check that userCabinClass is Valid just in case
+        else if (
+          userCabinClass !== "First" &&
+          userCabinClass !== "Business" &&
+          userCabinClass !== "Economy"
+        ) {
+          disabled = true;
+          throw new Error(
+            `Invalid Cabin Class (seatType), in PlanSelection.js expected on of: First, Business, Economy; got '${userCabinClass}'`
+          );
+        }
 
         seats.push(
           <Seat id={seatId} type={userCabinClass} disabled={disabled} />
