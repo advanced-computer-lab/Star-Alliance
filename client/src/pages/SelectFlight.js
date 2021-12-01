@@ -9,6 +9,11 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStickyNote } from "@fortawesome/free-solid-svg-icons";
+import back from "../images/back.png";
+import top from "../images/top.png";
+import { faExclamationCircle } from "@fortawesome/free-solid-svg-icons";
+import { faCalendarAlt } from "@fortawesome/free-solid-svg-icons";
+import { faMapMarkerAlt } from "@fortawesome/free-solid-svg-icons";
 
 
 const SelectFlight = () => {
@@ -17,19 +22,41 @@ const SelectFlight = () => {
   let flights = searchFlights.data.going;
   if (searchFlights.data.CheckCountry == "1") {
     return (
-      <h1>
-        <FontAwesomeIcon icon={faStickyNote} /> Note:You must choose a
-        destination different than departure !
-      </h1>
+      <div>
+          <Row>
+
+<br/>
+<br/>
+
+<Link to="/">
+    <img style={{marginTop:"0.5cm",marginLeft:"0.4cm" ,float:"left",height:"50px",width:"50px"}} src={back} />
+</Link>
+</Row>
+      <br/>
+      <h1 style={{marginTop:"0.5cm",marginLeft:"0.5cm"}}>
+        <FontAwesomeIcon style={{color:"red"}} icon={faExclamationCircle} /> Note:You must choose a
+        destination different than departure <FontAwesomeIcon style={{color:"red"}} icon={faMapMarkerAlt}/>!  </h1>
+      </div>
+
     );
   } else if (flights==undefined||flights[0] == undefined) {
     return( 
       <div>
-      <h1>No Available Going flights with this date !</h1>
+      <Row>
+
+<br/>
+<br/>
+
+<Link to="/">
+    <img style={{marginTop:"0.5cm",marginLeft:"0.4cm" ,float:"left",height:"50px",width:"50px"}} src={back} />
+</Link>
+</Row>
+         <br/>
+
+      <h1 style={{marginLeft:"0.4cm"}}><FontAwesomeIcon style={{color:"red"}} icon={faExclamationCircle} /> 
+      No Available going flights with this date <FontAwesomeIcon icon={faCalendarAlt}/> ! </h1>
       <br/>
-      <Link to="/">
-      <button style={{float:"left", marginRight:"8rem"}} class="btn btn-primary">Back To Home Page</button>
-      </Link>    </div>    );
+     </div>  );
   } else {
     let flights2 = searchFlights.data.returning;
     let seatType = searchFlights.data.seatType;
@@ -70,18 +97,29 @@ const SelectFlight = () => {
       // console.log("Day:", new Date(date1).getDate());
       var hours = 0;
       var minutes = 0;
-      if (minutes2 > 0 || minutes > 0) {
-        minutes = minutes2 + (60 - minutes1);
-      } else {
+      if(minutes2!=minutes1){
+      if (minutes2 >minutes1) {
+        minutes = minutes2 - minutes1;
+      }
+      else if(minutes2 <minutes1){
+        minutes=minutes2 +(60-minutes1);
+        hours1=hours1+1;
+      } 
+      else {
         if (minutes2 == 0) {
           minutes = minutes1;
         } else {
           minutes = minutes2;
         }
       }
+    }
       if (hours2 > hours1) {
         hours = hours2 - hours1;
-      } else {
+      }
+      else if (hours2==hours1){
+        hours=0;
+      } 
+      else {
         hours = 24 - hours1 + hours2;
       }
       while (minutes > 60) {
@@ -127,7 +165,7 @@ const SelectFlight = () => {
 
       <br/>
       <Link to="/">
-             <img style={{marginLeft:"0.4cm" ,float:"left",height:"40px",width:"40px"}} src="https://cdn-icons.flaticon.com/png/128/3236/premium/3236910.png?token=exp=1638369412~hmac=356ff9332a1a76f20d437d6f259bca7b" />
+          <img style={{marginLeft:"0.4cm" ,float:"left",height:"50px",width:"50px"}} src={back} />
       </Link>
       </Row>
       <br/>
@@ -227,6 +265,14 @@ const SelectFlight = () => {
           </div>
         ))}
         ;
+        <br />
+      <br />
+      <Row>
+      <br/>
+      <a href="#top">
+          <img style={{marginRight:"0.4cm" ,float:"right",height:"50px",width:"50px"}} src={top} />
+      </a>
+      </Row>
       </div>
     );
   }

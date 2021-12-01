@@ -122,7 +122,7 @@ const showAlert = (message) => {
             <Form.Label>Passport Number <FontAwesomeIcon style={{color:"white"}} icon={faPassport}/></Form.Label>
             <Form.Control
               name="passportNumber"
-              placeholder="Enter your phone number"
+              placeholder="Enter your Passport Number"
             />
           </Form.Group>
           <Form.Group as={Col}  controlId="formGridEmail">

@@ -28,7 +28,7 @@ const MoreThanFlight = () => {
     <Card.Text>
       with booking.com
     </Card.Text>
-    <Button  href= "https://www.booking.com/" variant="primary">Go <FontAwesomeIcon icon={faBed} /> </Button>
+    <Button target="_blank" href= "https://www.booking.com/" variant="primary">Go <FontAwesomeIcon icon={faBed} /> </Button>
   </Card.Body>
 </Card>
         </Col>
@@ -41,20 +41,20 @@ const MoreThanFlight = () => {
     <Card.Text>
      with Hertz
     </Card.Text>
-    <Button href="https://www.hertz.com/rentacar/reservation/" variant="primary">Go <FontAwesomeIcon icon={faCar} /> </Button>
+    <Button target="_blank" href="https://www.hertz.com/rentacar/reservation/" variant="primary">Go <FontAwesomeIcon icon={faCar} /> </Button>
   </Card.Body>
 </Card>
         </Col>
         <Col>
 
-<Card className="shadow-lg" style={{ width: '17rem' }}>
+<Card  className="shadow-lg" style={{ width: '17rem' }}>
   <Card.Img  style={{height:"6cm"}} variant="top" src="https://images.unsplash.com/photo-1565639828644-ff8e088ebfa8?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=774&q=80" />
   <Card.Body>
     <Card.Title>Discover activities at your destination</Card.Title>
     <Card.Text>
       with Viator
     </Card.Text>
-    <Button href="https://www.viator.com/?pid=P00050640&mcid=42383&medium=link&campaign=olddays" variant="primary">Go <FontAwesomeIcon icon={faHiking} /></Button>
+    <Button href="https://www.viator.com/?pid=P00050640&mcid=42383&medium=link&campaign=olddays" target="_blank" variant="primary">Go <FontAwesomeIcon icon={faHiking} /></Button>
   </Card.Body>
 </Card>
         </Col>
@@ -67,7 +67,7 @@ const MoreThanFlight = () => {
     <Card.Text>
       with TaxiAndGuide
     </Card.Text>
-    <Button href="https://taxiandguide.com/request-taxi?gclid=Cj0KCQiA4b2MBhD2ARIsAIrcB-ShXnUCveHOQZuBDCniMjIep8spy1N9hCo8a07mQVBMrFTDkE306kEaAio3EALw_wcB&source=ChIJ1Wmehn_maC4R5qfZDi5PYNc&destination=ChIJQU-oLggXWBQRhhPiUSGvZeA" 
+    <Button target="_blank" href="https://taxiandguide.com/request-taxi?gclid=Cj0KCQiA4b2MBhD2ARIsAIrcB-ShXnUCveHOQZuBDCniMjIep8spy1N9hCo8a07mQVBMrFTDkE306kEaAio3EALw_wcB&source=ChIJ1Wmehn_maC4R5qfZDi5PYNc&destination=ChIJQU-oLggXWBQRhhPiUSGvZeA" 
     variant="primary">Go <FontAwesomeIcon icon={faTaxi} /></Button>
   </Card.Body>
 </Card>
@@ -81,7 +81,7 @@ const MoreThanFlight = () => {
     <Card.Text>
       with MyDutyFree
     </Card.Text>
-    <Button href="https://mydutyfree.net/" 
+    <Button target="_blank" href="https://mydutyfree.net/" 
     variant="primary">Go <FontAwesomeIcon icon={faShoppingCart} /></Button>
   </Card.Body>
 </Card>

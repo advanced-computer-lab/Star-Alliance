@@ -13,9 +13,15 @@ import { UserHomeCtx } from "../Context/UserHomeContext";
 import { Link } from "react-router-dom";
 import styles from "../Styles/ReservationSummary.module.css";
 import { useHistory } from "react-router-dom";
+import back from "../images/back.png";
+import top from "../images/top.png";
+import summary from "../images/summary.png";
 
+import { faExclamationCircle } from "@fortawesome/free-solid-svg-icons";
 import moment from "moment";
 import { unstable_composeClasses } from "@mui/core";
+import { faCheckCircle, faSearch } from "@fortawesome/free-solid-svg-icons";
+import { faEdit } from "@fortawesome/free-solid-svg-icons";
 
 const FlightCard = ({title, flight, choosenSeat, cabin, price }) => {
   return (
@@ -87,7 +93,7 @@ const FlightCard = ({title, flight, choosenSeat, cabin, price }) => {
           <label>Price:</label>
         </Col>
         <Col>
-          <label> {price} $</label>
+          <label> {price}  <FontAwesomeIcon icon={faDollarSign} /></label>
         </Col>
       </Row>
     </>
@@ -116,11 +122,19 @@ const ReservationSummary = () => {
   if(searchFlights.data=="inital not set data"){
     return(
     <div>
-    <h1>No Summary !</h1>
+         <Row>
+
+
+
+<Link to="/SeatReservation">
+    <img style={{marginTop:"1cm",marginLeft:"0.4cm" ,float:"left",height:"50px",width:"50px"}} src={back} />
+</Link>
+</Row>
+<br/>
+    <h1 style={{marginLeft:"0.4cm"}}> <FontAwesomeIcon style={{color:"red"}} icon={faExclamationCircle} /> No Summary {" "}
+      <img style={{height:"50px",width:"50px"}} src={summary} />!</h1>
     <br/>
-    <Link to="/">
-    <button style={{float:"left", marginRight:"8rem"}} class="btn btn-primary">Back To Home Page</button>
-    </Link>    </div>
+    </div>
     );
   }
 else{
@@ -185,6 +199,8 @@ const totalPrice2= (searchFlights.selected.companions.adultCount)*flight2.finalP
 
   return (
     <>
+
+
       {/* <Link to="/ReservationSelection">{"<< Get Back"}</Link> */}
 
       <div
@@ -194,11 +210,14 @@ const totalPrice2= (searchFlights.selected.companions.adultCount)*flight2.finalP
         }}
       >
       <Row>
-        <Col><h2 className="mx-5 mb-5 mt-3">View Your Reservation Summary ✈  </h2></Col>
-        <Col ><Link to="/SeatReservation">
-        <button style={{float:"right", marginRight:"13rem"}} class="btn btn-primary mb-5 mt-3">Back To The Previous Page</button>
-        </Link></Col>
-      </Row>
+
+
+
+<Link to="/SeatReservation">
+    <img style={{marginTop:"1cm",marginLeft:"0.4cm" ,float:"left",height:"50px",width:"50px"}} src={back} />
+</Link>
+</Row>
+<br/>
         <div className={styles.container}>
           <h1 style={{ padding: "1rem 0 1rem" }}>Summary</h1>
           <Card
@@ -214,7 +233,7 @@ const totalPrice2= (searchFlights.selected.companions.adultCount)*flight2.finalP
                 <label>Total:</label>
               </Col>
               <Col>
-                <label> {totalPrice} $</label>
+                <label> {totalPrice}  <FontAwesomeIcon icon={faDollarSign} /></label>
               </Col>
             </Row>
           </Card>
@@ -254,12 +273,21 @@ const totalPrice2= (searchFlights.selected.companions.adultCount)*flight2.finalP
             className={styles.btmButtons}
           >
             <LinkContainer to="/SelectFlight">
-              <Button onClick={handleEditClick}>Edit</Button>
+              <Button onClick={handleEditClick}>Edit <FontAwesomeIcon icon={faEdit} /></Button>
             </LinkContainer>
-            <Button onClick={handleSubmitReservation}>Confirm</Button>
+            <Button onClick={handleSubmitReservation}>Confirm <FontAwesomeIcon icon={faCheckCircle} /></Button>
           </Stack>
         </div>
+      
+      <Row>
+      <br/>
+      <a href="#top">
+          <img style={{marginRight:"0.4cm" ,float:"right",height:"50px",width:"50px"}} src={top} />
+      </a>
+      </Row>
       </div>
+      <br/>
+      <br/>
     </>
   );
 };}
