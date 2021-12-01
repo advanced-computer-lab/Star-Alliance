@@ -119,14 +119,67 @@ app.post("/CancelReservation", async (req, res) => {
   const result1 = await reservation
     .findOne({ flightNumber: flightNumber }, { firstName: "yehia" })
     .populate({ path: "user" });
-    console.log("7aram ya salwa",result1);
+    const result8 = await reservation
+    .findById({ _id:result1._id  })
+    const flightNumber1=result8.flight1;
+    const flightNumber2=result8.flight2;
+    console.log("result8",result8);
+    const cabinType=result8.cabinClass.toLowerCase();
+    console.log("flightNumber1id",flightNumber1);
+    console.log("flightNumber2id",flightNumber2);
+    console.log("cabinType",cabinType);
+    const flightNumberseat1=result8.fligh1seats;
+    const flightNumberseat2=result8.fligh2seats;
+    const getSeats1= await flight.findByIdAndUpdate({_id: flightNumber1});
+    const getSeats2= await flight.findByIdAndUpdate({_id: flightNumber2});
+    const seats1=getSeats1.availableSeats;
+    const seats2=getSeats2.availableSeats;
+    if(cabinType==="economy"){
+    const seats1=getSeats1.availableSeats;
+    const seats2=getSeats2.availableSeats;
+    flightNumberseat1.forEach((seat) => {
+      seats1.economy.push(seat);
+    });
+    flightNumberseat2.forEach((seat) => {
+      seats2.economy.push(seat);
+    });
+  }
+  else if(cabinType==="business"){
+    const seats1=getSeats1.availableSeats;
+    const seats2=getSeats2.availableSeats;
+    flightNumberseat1.forEach((seat) => {
+      seats1.business.push(seat);
+    });
+    flightNumberseat2.forEach((seat) => {
+      seats2.business.push(seat);
+    });
+  }
+  else if(cabinType==="first"){
+    const seats1=getSeats1.availableSeats;
+    const seats2=getSeats2.availableSeats;
+    flightNumberseat1.forEach((seat) => {
+      seats1.first.push(seat);
+    });
+    flightNumberseat2.forEach((seat) => {
+      seats2.first.push(seat);
+    });
+  }
+    console.log("seats1",seats1);
+    console.log("seats2",seats2);
+    const updateSeats1= await flight.findByIdAndUpdate({_id: flightNumber1},{availableSeats:seats1});
+    const updateSeats2= await flight.findByIdAndUpdate({_id: flightNumber2},{availableSeats:seats2});
+    console.log("updateSeats1",updateSeats1);
+    console.log("updateSeats2",updateSeats2); 
+    console.log()
+    
+    console.log("test1",result1);
     const result3 = await reservation
     .findOne({ _id:result1._id });
   const result = await reservation
     .deleteOne({ flightNumber: flightNumber })
     .populate({ path: "user" });
   console.log(result1);
-  console.log("yarab",result3.finalPrice)
+  console.log("test12",result3.finalPrice)
 
   //console.log(result1[0].email);
   sendEmail(result1.user.email,result1,result3.totalPrice);
