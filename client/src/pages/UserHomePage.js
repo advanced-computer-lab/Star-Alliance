@@ -34,6 +34,8 @@ const UserHomePage = () => {
     setClicked(true);
   }
 
+  
+
   const handleSubmit = () => {
     var e = formRef.current;
     console.log("enter", formRef.current.departureAirport.value);
@@ -126,7 +128,7 @@ const UserHomePage = () => {
           width: "115vh",
           marginLeft: "50vh",
           marginBottom: "15vh",
-          height: "65vh",
+          height: "60vh",
         }}
       >
         <div className="col-lg-10 offset-lg-1 col-md-8 offset-md-2">
@@ -294,6 +296,7 @@ src="https://www.youtube.com/embed/HwM86WQ-0vY?autoplay=1&mute=1&playlist=HwM86W
    </div>
    <br />
    </div> 
+   <a href="#top">Back to top of page</a> 
    
       <MoreThanFlight />
     </div>

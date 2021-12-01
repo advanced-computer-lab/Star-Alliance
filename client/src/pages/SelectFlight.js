@@ -10,9 +10,9 @@ import Col from "react-bootstrap/Col";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStickyNote } from "@fortawesome/free-solid-svg-icons";
 
+
 const SelectFlight = () => {
   const [searchFlights, setSearchFlights] = useContext(UserHomeCtx);
-      console.log("testst",searchFlights.selected);
 
   let flights = searchFlights.data.going;
   if (searchFlights.data.CheckCountry == "1") {
@@ -22,8 +22,14 @@ const SelectFlight = () => {
         destination different than departure !
       </h1>
     );
-  } else if (flights[0] == undefined) {
-    return <h1>No Available going flights with this date !</h1>;
+  } else if (flights==undefined||flights[0] == undefined) {
+    return( 
+      <div>
+      <h1>No Available Going flights with this date !</h1>
+      <br/>
+      <Link to="/">
+      <button style={{float:"left", marginRight:"8rem"}} class="btn btn-primary">Back To Home Page</button>
+      </Link>    </div>    );
   } else {
     let flights2 = searchFlights.data.returning;
     let seatType = searchFlights.data.seatType;
@@ -218,6 +224,7 @@ const SelectFlight = () => {
       </div>
     );
   }
+
 };
 
 export default SelectFlight;

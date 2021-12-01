@@ -1,9 +1,11 @@
 const express = require("express");
 const app = express();
 const db = require("../Service/DBService.js");
+const moment= require("moment");
 const { flight, reservation, user } = require("../Models/export");
-
+const img="https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg";
 var nodemailer = require("nodemailer");
+const style="height:'2cm',width:'2cm'";
 
 app.get("/", (req, res) => {
   res.json({ message: "welcome admin" });
@@ -57,17 +59,23 @@ app.post("/DeleteFlight", async (req, res) => {
   console.log(req.body.resp);
   const flightNumber = req.body.flightNumber;
   console.log("Here is the flight number", flightNumber);
+  const result2 = await flight.find({
+    flightNumber: req.body.flightNumber
+  }).count();
+
   const result = await flight.deleteOne({ flightNumber: flightNumber });
-  console.log("result from Delete Flight", result);
-  if (result == null) {
+
+  //
+  
+  //
+  if(result2==0){
     res.status(404).send("No flight with this Number");
     return;
   }
-  /* console.log(req.body);
-  if(req.body.redirectTo === "FlightList"){
-    res.redirect("http://localhost:3000/FlightList");
-  } */
+ 
+  console.log("result from Delete Flight", result);
   res.send(result);
+
 });
 const sendEmail = (userEmail,result1,Price) => {
   const email = process.env.email;
@@ -85,6 +93,8 @@ const sendEmail = (userEmail,result1,Price) => {
     from: email,
     to: userEmail,
     subject: "RESERVATION CANCEL ",
+    //html: '<img src="https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg"/>',
+
     text:"Dear "+result1.user.firstName+" "+result1.user.lastName+",\n"+
     "Your Reservation: "+result1._id+" is canceled and the total amount refunded is "+Price+" EGP."
     +"\n"+
@@ -780,13 +790,50 @@ app.post("/GetUserInfo", async (req, res) => {
   res.send(result);
 });
 
-// AddReservation({
-//   userId: "61a35fcdfd33ed54997b5271",
-//   flight1num: 489,
-//   flight2num: 789,
-//   seatType: "Economy",
-//   fligh1seat: "1A",
-//   fligh2seat: "2B",
-// });
+app.post("/createFlight", async (req, res) => {
+
+
+  console.log("creating flight");
+  //
+  const result = await flight.find({
+    flightNumber: req.body.flightNumber
+  }).count();
+
+  //
+
+  if(result==0){
+  const Flight = new flight();
+  //  moment(arrivalTime).format("yyyy-MM-DDThh:mm");
+
+  Flight.flightNumber = req.body.flightNumber;
+  Flight.arrivalTime = moment(req.body.arrivalTime).format("yyyy-MM-DDThh:mm");
+  Flight.departureTime = moment(req.body.departureTime).format("yyyy-MM-DDThh:mm");
+  Flight.economySeatsNum = req.body.economySeatsNum;
+  Flight.businessSeatsNum = req.body.businessSeatsNum;
+  Flight.departureAirport = req.body.departureAirport;
+  Flight.arrivalAirport = req.body.arrivalAirport;
+  Flight.firstClassPrice = req.body.firstClassPrice;
+  Flight.economyClassPrice = req.body.economyClassPrice;
+  Flight.businessClassPrice = req.body.businessClassPrice;
+  Flight.firstSeatsNum = req.body.firstSeatsNum;
+  Flight.arrivalTerminal = req.body.arrivalTerminal;
+  Flight.departureTerminal = req.body.departureTerminal;
+  await Flight.save();
+
+  //res.write("<h1>Flight was added successfully</h1>")
+  //res.send();
+  }
+  else{
+    const message="already exist a flight with flight Number  "+req.body.flightNumber;
+      res.status(404).send(message);
+      return;
+    }
+
+  //  setTimeout(function(){
+    res.send("http://localhost:3000/");
+ 
+  //}, 5000);
+});
+
 
 module.exports = app;

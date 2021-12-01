@@ -13,9 +13,14 @@ const SelectReturnFlights = (props) => {
   const flight = searchFlights.data.going;
   const flights2 = searchFlights.data.returning;
 
-  if(flights2[0] == undefined){
+  if(flights2==undefined||flights2[0] == undefined){
     return (
+      <div>
       <h1>No Available returning flights with this date !</h1>
+      <br/>
+      <Link to="/">
+      <button style={{float:"left", marginRight:"8rem"}} class="btn btn-primary">Back To Home Page</button>
+      </Link>    </div>
     )
   }
   else{

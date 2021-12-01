@@ -15,17 +15,25 @@ const SeatReservation = (props) => {
   let history = useHistory();
 
   const [searchFlights, setSearchFlights] = useContext(UserHomeCtx);
-  console.log("search flights in seating", searchFlights);
-  // const flights = searchFlights.data.going;
-  // const flights2 = searchFlights.data.returning;
-  // const seatType = searchFlights.data.seatType;
+  const [flight1seatSt, setflight1seatSt] = useState([]);
+  const [flight2seatSt, setflight2seatSt] = useState([]);
 
+  if(searchFlights.data=="inital not set data"){
+    return(
+    <div>
+    <h1>No Available Seats !</h1>
+    <br/>
+    <Link to="/">
+    <button style={{float:"left", marginRight:"8rem"}} class="btn btn-primary">Back To Home Page</button>
+    </Link>    </div>
+    );
+  }
+else{
   const flight1 = searchFlights.selected.flight1;
   const flight2 = searchFlights.selected.flight2;
   // const flight1seat = searchFlights.selected.flight1seat;
   // const flight2seat = searchFlights.selected.flight2seat;
-  const [flight1seatSt, setflight1seatSt] = useState([]);
-  const [flight2seatSt, setflight2seatSt] = useState([]);
+  
   const userCabinClass = searchFlights.data.seatType;
   const numSeatSelected =
     searchFlights.selected.companions.adultCount +
@@ -61,7 +69,7 @@ const SeatReservation = (props) => {
     if (isChecked) {
       if (flight1seatSt.length === numSeatSelected) {
         alert(
-          "You can only select " + numSeatSelected + " seats in each flight"
+          "You can only select " + numSeatSelected + " seat(s) in each flight"
         );
         e.target.checked = false;
         return;
@@ -84,7 +92,7 @@ const SeatReservation = (props) => {
     if (isChecked) {
       if (flight2seatSt.length === numSeatSelected) {
         alert(
-          "You can only select " + numSeatSelected + " seats in each flight"
+          "You can only select " + numSeatSelected + " seat(s) in each flight"
         );
         e.target.checked = false;
         return;
@@ -104,9 +112,9 @@ const SeatReservation = (props) => {
       flight2seatSt.length < numSeatSelected
     ) {
       alert(
-        "Please select your specified number of seats which is : " +
+        "Please select your specified number of seat(s) which is : " +
           numSeatSelected +
-          " seats"
+          " seat(s)"
       );
       return;
     }
@@ -140,6 +148,8 @@ const SeatReservation = (props) => {
   // flightNumber: "456"
   return (
     <>
+    <br />
+      <br />
       <Row>
         <Col>
           <h2 className="mx-5 mb-5 mt-3">
@@ -147,6 +157,9 @@ const SeatReservation = (props) => {
             <img style={{ height: "1cm", width: "1cm" }} src={seat} />{" "}
           </h2>
         </Col>
+        <Col ><Link to="/SelectReturnFlights">
+      <button style={{float:"right", marginRight:"8rem"}} class="btn btn-primary">Back To The Previous Page</button>
+      </Link></Col>
       </Row>
       <div
         style={{
@@ -198,5 +211,6 @@ const SeatReservation = (props) => {
     </>
   );
 };
+}
 
 export default SeatReservation;

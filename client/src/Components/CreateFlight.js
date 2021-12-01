@@ -1,23 +1,70 @@
+import { React, useState, useEffect, createRef } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Button from "react-bootstrap/Button";
 import FormControl from "react-bootstrap/FormControl";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-
+import moment from "moment";
+import FlightService from "../Services/FlightService";
 import TextField from "@mui/material/TextField";
+import Alert from "./Alert.js";
 
 const CreateFlight = () => {
+  const [alertOpen, setalertOpen] = useState(false);
+  const [alertMessage, setalertMessage] = useState("");
+  const showAlert = (message) => {
+    setalertMessage(message);
+    setalertOpen(true);
+
+    setTimeout(() => {
+      setalertOpen(false);
+    }, 3000);
+  };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("teste",e);
+      const data = {
+        flightNumber: e.target.flightNumber.value,
+        arrivalTime:  moment(e.target.arrivalTime.value).format("yyyy-MM-DDThh:mm"),
+        departureTime: moment(e.target.departureTime.value).format("yyyy-MM-DDThh:mm"),
+        economySeatsNum: e.target.economySeatsNum.value,
+        businessSeatsNum: e.target.businessSeatsNum.value,
+        firstSeatsNum: e.target.firstSeatsNum.value,
+        departureAirport: e.target.departureAirport.value,
+        arrivalAirport: e.target.arrivalAirport.value,
+        firstClassPrice: e.target.firstClassPrice.value,
+        businessClassPrice: e.target.businessClassPrice.value,
+        economyClassPrice: e.target.economyClassPrice.value,
+        arrivalTerminal: e.target.arrivalTerminal.value,
+        departureTerminal: e.target.departureTerminal.value,
+
+    };
+    FlightService.createFlight(data)
+    .then((res) => {
+      showAlert("Flight Created Successfuly");
+    }) .catch((err) => {
+      console.log("errr <===", err.response);
+      const errorMessage = err.response.data;
+      // alert(errorMessage);
+      showAlert(errorMessage);
+    });
+  }
+
+
   return (
     <div class="align-items-center justify-content-center" style={{fontFamily:"cursive"}}>
    
       <br></br>
       <br></br>
       <br></br>
-
-      <Form
-        action="http://localhost:8080/createFlight"
-        method="post"
+      <Alert
+        open={alertOpen}
+        setOpen={setalertOpen}
+        title={alertMessage}
+        desc=""
+      />
+      <Form onSubmit={handleSubmit}
       >
         {/* <h3 classname="mb-1" >Create Flight</h3> */}
 
@@ -161,7 +208,7 @@ const CreateFlight = () => {
               </Form.Group>
             </Row>
           <div>
-            <Button  className="mt-2" style={{ display: "block",marginLeft: "auto",marginRight: "0px" }} variant="primary" type="submit">
+            <Button  className="mt-2" style={{ display: "block",marginLeft: "auto",marginRight: "0px" }} variant="primary"  type="submit">
               Create Flight
             </Button>
           </div>
@@ -170,5 +217,6 @@ const CreateFlight = () => {
     </div>
   );
 };
-
 export default CreateFlight;
+
+

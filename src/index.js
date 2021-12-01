@@ -107,35 +107,6 @@ app.get("/", (req, res) => {
   // console.log(req.cookies);
   res.json({ message: "From the Node Server !" });
 });
-app.post("/createFlight", async (req, res) => {
-  console.log("creating flight");
-  const Flight = new flight();
-  //  moment(arrivalTime).format("yyyy-MM-DDThh:mm");
-
-  Flight.flightNumber = req.body.flightNumber;
-  Flight.arrivalTime = moment(req.body.arrivalTime).format("yyyy-MM-DDThh:mm");
-  Flight.departureTime = moment(req.body.departureTime).format(
-    "yyyy-MM-DDThh:mm"
-  );
-  Flight.economySeatsNum = req.body.economySeatsNum;
-  Flight.businessSeatsNum = req.body.businessSeatsNum;
-  Flight.departureAirport = req.body.departureAirport;
-  Flight.arrivalAirport = req.body.arrivalAirport;
-  Flight.firstClassPrice = req.body.firstClassPrice;
-  Flight.economyClassPrice = req.body.economyClassPrice;
-  Flight.businessClassPrice = req.body.businessClassPrice;
-  Flight.firstSeatsNum = req.body.firstSeatsNum;
-  Flight.arrivalTerminal = req.body.arrivalTerminal;
-  Flight.departureTerminal = req.body.departureTerminal;
-  await Flight.save();
-
-  //res.write("<h1>Flight was added successfully</h1>")
-  //res.send();
-
-  //  setTimeout(function(){
-  res.redirect("http://localhost:3000/");
-  //}, 5000);
-});
 
 // (async () => {
 //   const res = await flight.deleteMany({ flightNumber: "" });

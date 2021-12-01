@@ -112,6 +112,19 @@ const Card = (props) => {
 const ReservationSummary = () => {
   let history = useHistory();
   const [searchFlights, setSearchFlights] = useContext(UserHomeCtx);
+
+  if(searchFlights.data=="inital not set data"){
+    return(
+    <div>
+    <h1>No Summary !</h1>
+    <br/>
+    <Link to="/">
+    <button style={{float:"left", marginRight:"8rem"}} class="btn btn-primary">Back To Home Page</button>
+    </Link>    </div>
+    );
+  }
+else{
+
   const flight1 = searchFlights.selected.flight1;
   const flight2 = searchFlights.selected.flight2;
   console.log("a5ls",searchFlights);
@@ -249,6 +262,6 @@ const totalPrice2= (searchFlights.selected.companions.adultCount)*flight2.finalP
       </div>
     </>
   );
-};
+};}
 
 export default ReservationSummary;

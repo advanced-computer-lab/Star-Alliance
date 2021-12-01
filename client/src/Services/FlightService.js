@@ -4,6 +4,9 @@ class FlightService {
   updateFlight(data) {
     return http.post("/Admin/UpdateFlight", data);
   }
+  createFlight(data) {
+    return http.post("/Admin/createFlight", data);
+  }
   updateUser(data) {
     return http.post("/Admin/UpdateUser", data);
   }
