@@ -37,7 +37,7 @@ const MoreThanFlight = () => {
 <Card className="shadow-lg" style={{ width: '17rem' }}>
   <Card.Img style={{height:"6cm"}} variant="top" src="https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1170&q=80" />
   <Card.Body>
-    <Card.Title>Rent a car at discound rates</Card.Title>
+    <Card.Title>Rent a car at discounted rates</Card.Title>
     <Card.Text>
      with Hertz
     </Card.Text>
@@ -50,7 +50,7 @@ const MoreThanFlight = () => {
 <Card className="shadow-lg" style={{ width: '17rem' }}>
   <Card.Img  style={{height:"6cm"}} variant="top" src="https://images.unsplash.com/photo-1565639828644-ff8e088ebfa8?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=774&q=80" />
   <Card.Body>
-    <Card.Title>Discover activities at your detination</Card.Title>
+    <Card.Title>Discover activities at your destination</Card.Title>
     <Card.Text>
       with Viator
     </Card.Text>

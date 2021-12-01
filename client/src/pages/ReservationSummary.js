@@ -15,13 +15,18 @@ import styles from "../Styles/ReservationSummary.module.css";
 import { useHistory } from "react-router-dom";
 
 import moment from "moment";
+import { unstable_composeClasses } from "@mui/core";
 
-const FlightCard = ({ flight, choosenSeat, cabin, price }) => {
+const FlightCard = ({title, flight, choosenSeat, cabin, price }) => {
   return (
     <>
     <br/>
       
-
+    <Row>
+        <Col>
+          <h3>{title}</h3>
+        </Col>
+      </Row>
       <Row>
         <Col>
           <label>Flight {flight.flightDet.flightNumber}</label>
@@ -109,8 +114,18 @@ const ReservationSummary = () => {
   const [searchFlights, setSearchFlights] = useContext(UserHomeCtx);
   const flight1 = searchFlights.selected.flight1;
   const flight2 = searchFlights.selected.flight2;
+  console.log("a5ls",searchFlights);
+  const flight3seat = searchFlights.selected.flight1seat.join(",") ;
+  const flight4seat = searchFlights.selected.flight2seat.join(",") ;
   const flight1seat = searchFlights.selected.flight1seat;
   const flight2seat = searchFlights.selected.flight2seat;
+console.log("testing",searchFlights)
+  const totalPrice1= (searchFlights.selected.companions.adultCount)*flight1.finalPrice+
+   (searchFlights.selected.companions.childCount)*(0.5*flight1.finalPrice);
+const totalPrice2= (searchFlights.selected.companions.adultCount)*flight2.finalPrice+
+   (searchFlights.selected.companions.childCount)*(0.5*flight2.finalPrice);
+   const totalPrice=totalPrice1+totalPrice2;
+  
 
   // TODO: check if there is some passed values from the previous page [reservation]
   // TODO: else query reservstion data from params
@@ -124,6 +139,7 @@ const ReservationSummary = () => {
       flight1seat: flight1seat,
       flight2seat: flight2seat,
       companions: searchFlights.selected.companions,
+      totalPrice:totalPrice,
     };
     ReservationService.reserveNew(data)
       .then((res) => {
@@ -185,7 +201,7 @@ const ReservationSummary = () => {
                 <label>Total:</label>
               </Col>
               <Col>
-                <label>EGP {flight1.finalPrice + flight2.finalPrice}</label>
+                <label>EGP {totalPrice}</label>
               </Col>
             </Row>
           </Card>
@@ -200,16 +216,18 @@ const ReservationSummary = () => {
             {/* dates-time, price, choosen seat */}
             {/* Flight 1 */}
             <FlightCard
+              title="Going Flight ✈"
               flight={flight1}
-              choosenSeat={flight1seat}
+              choosenSeat={flight3seat}
               cabin={searchFlights.data.seatType}
               price={flight1.finalPrice}
             />
             <hr />
             {/* Flight2 */}
             <FlightCard
+              title="Returning Flight ✈"
               flight={flight2}
-              choosenSeat={flight2seat}
+              choosenSeat={flight4seat}
               cabin={searchFlights.data.seatType}
               price={flight2.finalPrice}
             />

@@ -12,6 +12,8 @@ import { faStickyNote } from "@fortawesome/free-solid-svg-icons";
 
 const SelectFlight = () => {
   const [searchFlights, setSearchFlights] = useContext(UserHomeCtx);
+      console.log("testst",searchFlights.selected);
+
   let flights = searchFlights.data.going;
   if (searchFlights.data.CheckCountry == "1") {
     return (
@@ -92,15 +94,17 @@ const SelectFlight = () => {
     /*const  state  = window.props;
     console.log("----------------------------------------",window.props);
 */
-    const handleSelectClick = (flight) => {
-      // console.log("selected ", flight);
-      // const selected = {
-      //   flight1: flight,
-      //   flight2: null, // to be changed in Select Return Flight
-      //   flight1seat: [],
-      //   flight2seat: [],
-      //   num: searchFlights.data.companionsCount,
-      // };
+
+  const handleSelectClick = (flight) => {
+    console.log("selected ", flight);
+    const selected = {
+      flight1: flight,
+      flight2: null,  // to be changed in Select Return Flight
+      num:searchFlights.data.companionsCount,
+      flight1seat:[],
+        flight2seat:[],
+        companions:searchFlights.selected.companions
+    };
 
       setSearchFlights({
         ...searchFlights,

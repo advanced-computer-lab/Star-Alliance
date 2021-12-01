@@ -1,12 +1,13 @@
 import { useEffect, useContext, useState } from "react";
 import Button from "react-bootstrap/Button";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import { Link } from "react-router-dom";
 import { UserHomeCtx } from "../Context/UserHomeContext";
 import PlaneSelection from "../Components/PlanSelection.js";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useHistory } from "react-router-dom";
-import { Row } from "react-bootstrap";
-import { Col } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import seat from "../images/seat.png";
 
 const assert = require("assert");
 
@@ -86,7 +87,6 @@ const SeatReservation = (props) => {
           "You can only select " + numSeatSelected + " seats in each flight"
         );
         e.target.checked = false;
-        alert("You can only select one seat in each flight");
         return;
       }
       e.target.checked = true;
@@ -144,21 +144,8 @@ const SeatReservation = (props) => {
         <Col>
           <h2 className="mx-5 mb-5 mt-3">
             Choose Your ✈ Seats{" "}
-            <img
-              style={{ height: "1cm", width: "1cm" }}
-              src="https://images-ext-2.discordapp.net/external/A42A2v3dW1SRgtRFrnBoA3oUJ0_L14kc99FacMmCCu8/%3Ftoken%3Dexp%3D1638227280~hmac%3D1c6a9c3d223ab6e29d22e8429ed9a642/https/cdn-icons.flaticon.com/png/512/4110/premium/4110361.png?width=270&height=270"
-            />{" "}
+            <img style={{ height: "1cm", width: "1cm" }} src={seat} />{" "}
           </h2>
-        </Col>
-        <Col>
-          <Link to="/SelectReturnFlights">
-            <button
-              style={{ float: "right", marginRight: "13rem" }}
-              class="btn btn-primary mb-5 mt-3"
-            >
-              Back To The Previous Page
-            </button>
-          </Link>
         </Col>
       </Row>
       <div

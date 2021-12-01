@@ -69,7 +69,7 @@ app.post("/DeleteFlight", async (req, res) => {
   } */
   res.send(result);
 });
-const sendEmail = (userEmail) => {
+const sendEmail = (userEmail,result1,Price) => {
   const email = process.env.email;
   const pass = process.env.pass;
   var transporter = nodemailer.createTransport({
@@ -79,12 +79,18 @@ const sendEmail = (userEmail) => {
       pass: pass,
     },
   });
+  console.log("price:",result1);
 
   var mailOptions = {
     from: email,
     to: userEmail,
     subject: "RESERVATION CANCEL ",
-    text: "Your Reservation is canceled",
+    text:"Dear "+result1.user.firstName+" "+result1.user.lastName+",\n"+
+    "Your Reservation: "+result1._id+" is canceled and the total amount refunded is "+Price+" EGP."
+    +"\n"+
+    "Thank you for Choosing Star-Alliance Airline \n"+
+    "Best Regards, \n"
+    +"Star-Alliance Team",
   };
 
   transporter.sendMail(mailOptions, function (error, info) {
@@ -99,16 +105,21 @@ app.post("/CancelReservation", async (req, res) => {
   console.log(req.body.resp);
   const flightNumber = req.body.flightNumber;
   console.log("Here is the flight number", flightNumber);
+  
   const result1 = await reservation
     .findOne({ flightNumber: flightNumber }, { firstName: "yehia" })
     .populate({ path: "user" });
+    console.log("7aram ya salwa",result1);
+    const result3 = await reservation
+    .findOne({ _id:result1._id });
   const result = await reservation
     .deleteOne({ flightNumber: flightNumber })
     .populate({ path: "user" });
   console.log(result1);
-  console.log(result1.user.email);
+  console.log("yarab",result3.finalPrice)
+
   //console.log(result1[0].email);
-  sendEmail(result1.user.email);
+  sendEmail(result1.user.email,result1,result3.totalPrice);
   console.log("result from Delete reservation", result);
   if (result == null) {
     res.status(404).send("No Reservation with this Number");
@@ -572,6 +583,7 @@ app.post("/AddReservation", async (req, res) => {
     flight1seat,
     flight2seat,
     companions,
+    totalPrice,
   } = req.body;
 
   // check that the user exists, and verifiy that the user can make a reservation
@@ -693,6 +705,7 @@ app.post("/AddReservation", async (req, res) => {
     flight2: resFlight2._id,
     cabinClass: seatType,
     companions: companions,
+    totalPrice:totalPrice,
     fligh1seats: flight1seat,
     fligh2seats: flight2seat,
   });
@@ -705,8 +718,10 @@ app.post("/AddReservation", async (req, res) => {
     res.status(503).send("Error saving the reservation");
     return;
   }
-
-  //TODO: make sure not already reserved
+//  roundtrid={going:result3, returning:result4, seatType:type ,
+//  companionsCount:total,CheckCountry:country};
+//  res.send(roundtrid);
+//  console.log(roundtrid);
 
   res.send({ bookingNumber: reservationId });
 });
