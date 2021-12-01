@@ -172,6 +172,12 @@ app.post("/GetRequestedFlights", async (req, res) => {
   Flight2.departureAirport = req.body.arrivalAirport;
   Flight2.departureTime = req.body.arrivalTime2;
   console.log("flight2", Flight2);
+let testdte=false;
+if(Flight.departureTime != undefined && Flight2.departureTime != undefined){
+  
+}
+console.log("testdate  :",testdte);
+
 
   if (Flight.departureTime != undefined) {
     console.log("test");
@@ -216,6 +222,8 @@ app.post("/GetRequestedFlights", async (req, res) => {
 
     //
   }
+
+
   const type = req.body.type;
   const total = Number(req.body.children) + Number(req.body.adult);
   var result = [];
@@ -229,30 +237,27 @@ app.post("/GetRequestedFlights", async (req, res) => {
 
   if (Flight.departureTime == undefined && Flight2.departureTime != undefined) {
     if (type == "Economy") {
-      // const checkAvailable= result = await flight.find({
-      //   economySeatsNum: { $gte: total },
-      //   arrivalAirport: Flight.arrivalAirport,
-      //   departureAirport: Flight.departureAirport,
-      // });
-      //   let result=[]; 
-      // for(let i=0;i<checkAvailable.length;i++){
-      //   if(checkAvailable[i].availableSeats.economy>=total){
-      //     result=result[i]+result;
-      //   }
-      // }
-
-      result = await flight.find({
-        economySeatsNum: { $gte: total },
-        arrivalAirport: Flight.arrivalAirport,
-        departureAirport: Flight.departureAirport,
-      });
-
-      result2 = await flight.find({
+       const checkAvailable= result = await flight.find({
+         economySeatsNum: { $gte: total },
+         arrivalAirport: Flight.arrivalAirport,
+         departureAirport: Flight.departureAirport,
+       });
+       for(let i=0;i<checkAvailable.length;i++){
+         if(checkAvailable[i].availableSeats.economy.length>=total){
+          result.push(checkAvailable[i]);
+         }
+       }
+       const checkAvailable2 = await flight.find({
         departureTime: { $gte: date3, $lt: date4 },
         economySeatsNum: { $gte: total },
         arrivalAirport: Flight2.arrivalAirport,
         departureAirport: Flight2.departureAirport,
       });
+      for(let i=0;i<checkAvailable2.length;i++){
+        if(checkAvailable2[i].availableSeats.economy.length>=total){
+          result2.push(checkAvailable2[i]);
+        }
+      }
 
       for (let i = 0; i < result.length; i++) {
         result3.push({
@@ -267,18 +272,28 @@ app.post("/GetRequestedFlights", async (req, res) => {
         });
       }
     } else if (type == "First Class") {
-      result = await flight.find({
+      const checkAvailable = await flight.find({
         firstSeatsNum: { $gte: total },
         arrivalAirport: Flight.arrivalAirport,
         departureAirport: Flight.departureAirport,
       });
 
-      result2 = await flight.find({
+      const checkAvailable2 = await flight.find({
         departureTime: { $gte: date3, $lt: date4 },
         economySeatsNum: { $gte: total },
         arrivalAirport: Flight2.arrivalAirport,
         departureAirport: Flight2.departureAirport,
       });
+      for(let i=0;i<checkAvailable.length;i++){
+        if(checkAvailable[i].availableSeats.first.length>=total){
+          result.push(checkAvailable[i]);
+        }
+      }
+      for(let i=0;i<checkAvailable2.length;i++){
+        if(checkAvailable2[i].availableSeats.first.length>=total){
+          result2.push(checkAvailable2[i]);
+        }
+      }
 
       for (let i = 0; i < result.length; i++) {
         result3.push({
@@ -293,18 +308,29 @@ app.post("/GetRequestedFlights", async (req, res) => {
         });
       }
     } else if (type == "Business") {
-      result = await flight.find({
+      const checkAvailable = await flight.find({
         businessSeatsNum: { $gte: total },
         arrivalAirport: Flight.arrivalAirport,
         departureAirport: Flight.departureAirport,
       });
 
-      result2 = await flight.find({
+      const checkAvailable2 = await flight.find({
         departureTime: { $gte: date3, $lt: date4 },
         economySeatsNum: { $gte: total },
         arrivalAirport: Flight2.arrivalAirport,
         departureAirport: Flight2.departureAirport,
       });
+
+      for(let i=0;i<checkAvailable.length;i++){
+        if(checkAvailable[i].availableSeats.business.length>=total){
+          result.push(checkAvailable[i]);
+        }
+      }
+      for(let i=0;i<checkAvailable2.length;i++){
+        if(checkAvailable2[i].availableSeats.business.length>=total){
+          result2.push(checkAvailable2[i]);
+        }
+      }
 
       for (let i = 0; i < result.length; i++) {
         result3.push({
@@ -324,18 +350,29 @@ app.post("/GetRequestedFlights", async (req, res) => {
     Flight2.departureTime == undefined
   ) {
     if (type == "Economy") {
-      result = await flight.find({
+      const checkAvailable = await flight.find({
         departureTime: { $gte: date1, $lt: date2 },
         economySeatsNum: { $gte: total },
         arrivalAirport: Flight.arrivalAirport,
         departureAirport: Flight.departureAirport,
       });
 
-      result2 = await flight.find({
+      const checkAvailable2 = await flight.find({
         economySeatsNum: { $gte: total },
         arrivalAirport: Flight2.arrivalAirport,
         departureAirport: Flight2.departureAirport,
       });
+
+      for(let i=0;i<checkAvailable.length;i++){
+        if(checkAvailable[i].availableSeats.economy.length>=total){
+          result.push(checkAvailable[i]);
+        }
+      }
+      for(let i=0;i<checkAvailable2.length;i++){
+        if(checkAvailable2[i].availableSeats.economy.length>=total){
+          result2.push(checkAvailable2[i]);
+        }
+      }
 
       for (let i = 0; i < result.length; i++) {
         result3.push({
@@ -350,18 +387,29 @@ app.post("/GetRequestedFlights", async (req, res) => {
         });
       }
     } else if (type == "First Class") {
-      result = await flight.find({
+      const checkAvailable = await flight.find({
         departureTime: { $gte: date1, $lt: date2 },
         firstSeatsNum: { $gte: total },
         arrivalAirport: Flight.arrivalAirport,
         departureAirport: Flight.departureAirport,
       });
 
-      result2 = await flight.find({
+      const checkAvailable2 = await flight.find({
         economySeatsNum: { $gte: total },
         arrivalAirport: Flight2.arrivalAirport,
         departureAirport: Flight2.departureAirport,
       });
+
+      for(let i=0;i<checkAvailable.length;i++){
+        if(checkAvailable[i].availableSeats.first.length>=total){
+          result.push(checkAvailable[i]);
+        }
+      }
+      for(let i=0;i<checkAvailable2.length;i++){
+        if(checkAvailable2[i].availableSeats.first.length>=total){
+          result2.push(checkAvailable2[i]);
+        }
+      }
 
       for (let i = 0; i < result.length; i++) {
         result3.push({
@@ -377,18 +425,28 @@ app.post("/GetRequestedFlights", async (req, res) => {
       }
       }
     else if (type == "Business") {
-      result = await flight.find({
+      const checkAvailable = await flight.find({
         departureTime: { $gte: date1, $lt: date2 },
         businessSeatsNum: { $gte: total },
         arrivalAirport: Flight.arrivalAirport,
         departureAirport: Flight.departureAirport,
       });
 
-      result2 = await flight.find({
+      const checkAvailable2 = await flight.find({
         economySeatsNum: { $gte: total },
         arrivalAirport: Flight2.arrivalAirport,
         departureAirport: Flight2.departureAirport,
       });
+      for(let i=0;i<checkAvailable.length;i++){
+        if(checkAvailable[i].availableSeats.business.length>=total){
+          result2.push(checkAvailable2[i]);
+        }
+      }
+      for(let i=0;i<checkAvailable2.length;i++){
+        if(checkAvailable2[i].availableSeats.business.length>=total){
+          result2.push(checkAvailable2[i]);
+        }
+      }
 
       for (let i = 0; i < result.length; i++) {
         result3.push({
@@ -408,17 +466,30 @@ app.post("/GetRequestedFlights", async (req, res) => {
      console.log("type testing",type);
 
     if (type == "Economy") {
-      result = await flight.find({
+      const checkAvailable = await flight.find({
         economySeatsNum: { $gte: total },
         arrivalAirport: Flight.arrivalAirport,
         departureAirport: Flight.departureAirport,
       });
+      //console.log("checkAvailable",checkAvailable)
 
-      result2 = await flight.find({
+      const checkAvailable2 = await flight.find({
         economySeatsNum: { $gte: total },
         arrivalAirport: Flight2.arrivalAirport,
         departureAirport: Flight2.departureAirport,
       });
+      
+      for(let i=0;i<checkAvailable.length;i++){
+        if(checkAvailable[i].availableSeats.economy.length>=total){
+          result.push(checkAvailable[i]);
+        }
+        console.log("resultAfterUpdate:",result);
+      }
+      for(let i=0;i<checkAvailable2.length;i++){
+        if(checkAvailable2[i].availableSeats.economy.length>=total){
+          result2.push(checkAvailable2[i]);
+        }
+      }
 
       for (let i = 0; i < result.length; i++) {
         result3.push({
@@ -433,17 +504,28 @@ app.post("/GetRequestedFlights", async (req, res) => {
         });
       }
     } else if (type == "First Class") {
-      result = await flight.find({
+      const checkAvailable = await flight.find({
         firstSeatsNum: { $gte: total },
         arrivalAirport: Flight.arrivalAirport,
         departureAirport: Flight.departureAirport,
       });
 
-      result2 = await flight.find({
+      const checkAvailable2 = await flight.find({
         economySeatsNum: { $gte: total },
         arrivalAirport: Flight2.arrivalAirport,
         departureAirport: Flight2.departureAirport,
       });
+
+      for(let i=0;i<checkAvailable.length;i++){
+        if(checkAvailable[i].availableSeats.first.length>=total){
+          result.push(checkAvailable[i]);
+        }
+      }
+      for(let i=0;i<checkAvailable2.length;i++){
+        if(checkAvailable2[i].availableSeats.first.length>=total){
+          result2.push(checkAvailable2[i]);
+        }
+      }
            
       for (let i = 0; i < result.length; i++) {
         result3.push({
@@ -458,17 +540,28 @@ app.post("/GetRequestedFlights", async (req, res) => {
         });
       }
     } else if (type == "Business") {
-      result = await flight.find({
+      const checkAvailable = await flight.find({
         businessSeatsNum: { $gte: total },
         arrivalAirport: Flight.arrivalAirport,
         departureAirport: Flight.departureAirport,
       });
 
-      result2 = await flight.find({
+      const checkAvailable2 = await flight.find({
         economySeatsNum: { $gte: total },
         arrivalAirport: Flight2.arrivalAirport,
         departureAirport: Flight2.departureAirport,
       });
+
+      for(let i=0;i<checkAvailable.length;i++){
+        if(checkAvailable[i].availableSeats.business.length>=total){
+          result.push(checkAvailable[i]);
+        }
+      }
+      for(let i=0;i<checkAvailable2.length;i++){
+        if(checkAvailable2[i].availableSeats.business.length>=total){
+          result2.push(checkAvailable2[i]);
+        }
+      }
           console.log("testing busniness", result);
       for (let i = 0; i < result.length; i++) {
         result3.push({
@@ -487,20 +580,32 @@ app.post("/GetRequestedFlights", async (req, res) => {
     Flight.departureTime != undefined &&
     Flight2.departureTime != undefined
   ) {
+    if(new Date(req.body.departureTime)<=new Date(Flight2.departureTime)){
+      
     if (type == "Economy") {
-      result = await flight.find({
+      checkAvailable = await flight.find({
         departureTime: { $gte: date1, $lt: date2 },
         economySeatsNum: { $gte: total },
         arrivalAirport: Flight.arrivalAirport,
         departureAirport: Flight.departureAirport,
       });
 
-      result2 = await flight.find({
+      const checkAvailable2 = await flight.find({
         departureTime: { $gte: date3, $lt: date4 },
         economySeatsNum: { $gte: total },
         arrivalAirport: Flight2.arrivalAirport,
         departureAirport: Flight2.departureAirport,
       });
+      for(let i=0;i<checkAvailable.length;i++){
+        if(checkAvailable[i].availableSeats.economy.length>=total){
+          result.push(checkAvailable[i]);
+        }
+      }
+      for(let i=0;i<checkAvailable2.length;i++){
+        if(checkAvailable2[i].availableSeats.economy.length>=total){
+          result2.push(checkAvailable2[i]);
+        }
+      }
 
       for (let i = 0; i < result.length; i++) {
         result3.push({
@@ -515,19 +620,29 @@ app.post("/GetRequestedFlights", async (req, res) => {
         });
       }
     } else if (type == "First Class") {
-      result = await flight.find({
+      const checkAvailable = await flight.find({
         departureTime: { $gte: date1, $lt: date2 },
         firstSeatsNum: { $gte: total },
         arrivalAirport: Flight.arrivalAirport,
         departureAirport: Flight.departureAirport,
       });
 
-      result2 = await flight.find({
+      const checkAvailable2 = await flight.find({
         departureTime: { $gte: date3, $lt: date4 },
         economySeatsNum: { $gte: total },
         arrivalAirport: Flight2.arrivalAirport,
         departureAirport: Flight2.departureAirport,
       });
+      for(let i=0;i<checkAvailable.length;i++){
+        if(checkAvailable[i].availableSeats.first.length>=total){
+          result.push(checkAvailable[i]);
+        }
+      }
+      for(let i=0;i<checkAvailable2.length;i++){
+        if(checkAvailable2[i].availableSeats.first.length>=total){
+          result2.push(checkAvailable2[i]);
+        }
+      }
 
       for (let i = 0; i < result.length; i++) {
         result3.push({
@@ -542,19 +657,29 @@ app.post("/GetRequestedFlights", async (req, res) => {
         });
       }
     } else if (type == "Business") {
-      result = await flight.find({
+      const checkAvailable = await flight.find({
         departureTime: { $gte: date1, $lt: date2 },
         businessSeatsNum: { $gte: total },
         arrivalAirport: Flight.arrivalAirport,
         departureAirport: Flight.departureAirport,
       });
 
-      result2 = await flight.find({
+      const checkAvailable2 = await flight.find({
         departureTime: { $gte: date3, $lt: date4 },
         economySeatsNum: { $gte: total },
         arrivalAirport: Flight2.arrivalAirport,
         departureAirport: Flight2.departureAirport,
       });
+      for(let i=0;i<checkAvailable.length;i++){
+        if(checkAvailable[i].availableSeats.business.length>=total){
+          result.push(checkAvailable[i]);
+        }
+      }
+      for(let i=0;i<checkAvailable2.length;i++){
+        if(checkAvailable2[i].availableSeats.business.length>=total){
+          result2.push(checkAvailable2[i]);
+        }
+      }
 
       for (let i = 0; i < result.length; i++) {
         result3.push({
@@ -569,6 +694,7 @@ app.post("/GetRequestedFlights", async (req, res) => {
         });
       }
     }
+  }
   }
   var country = "0";
   if (Flight.arrivalAirport == Flight.departureAirport) {
