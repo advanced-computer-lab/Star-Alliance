@@ -96,7 +96,7 @@ const sendEmail = (userEmail,result1,Price) => {
     //html: '<img src="https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg"/>',
 
     text:"Dear "+result1.user.firstName+" "+result1.user.lastName+",\n"+
-    "Your Reservation: "+result1._id+" is canceled and the total amount refunded is "+Price+" EGP."
+    "Your Reservation: "+result1._id+" is canceled and the total amount refunded is "+Price+" $."
     +"\n"+
     "Thank you for Choosing Star-Alliance Airline \n"+
     "Best Regards, \n"
@@ -224,11 +224,23 @@ app.post("/GetRequestedFlights", async (req, res) => {
   let result4 = [];
   console.log("testttttt", Flight2.departureTime);
 
-  console.log("testttttt", date3);
-  console.log("testttt", date4);
+  console.log("testttttt", Flight.departureTime);
+  console.log("testttt", Flight2.departureTime);
 
   if (Flight.departureTime == undefined && Flight2.departureTime != undefined) {
     if (type == "Economy") {
+      // const checkAvailable= result = await flight.find({
+      //   economySeatsNum: { $gte: total },
+      //   arrivalAirport: Flight.arrivalAirport,
+      //   departureAirport: Flight.departureAirport,
+      // });
+      //   let result=[]; 
+      // for(let i=0;i<checkAvailable.length;i++){
+      //   if(checkAvailable[i].availableSeats.economy>=total){
+      //     result=result[i]+result;
+      //   }
+      // }
+
       result = await flight.find({
         economySeatsNum: { $gte: total },
         arrivalAirport: Flight.arrivalAirport,
@@ -269,14 +281,15 @@ app.post("/GetRequestedFlights", async (req, res) => {
       });
 
       for (let i = 0; i < result.length; i++) {
-        result3[i].flight = result[i];
-        result3[i].finalPrice = 20;
+        result3.push({
+          flightDet: result[i],
+          finalPrice: result[i].firstClassPrice,
+        });
       }
-
       for (let i = 0; i < result2.length; i++) {
         result4.push({
           flightDet: result2[i],
-          finalPrice: result2[i].economyClassPrice,
+          finalPrice: result2[i].firstClassPrice,
         });
       }
     } else if (type == "Business") {
@@ -294,14 +307,15 @@ app.post("/GetRequestedFlights", async (req, res) => {
       });
 
       for (let i = 0; i < result.length; i++) {
-        result3[i].flight = result[i];
-        result3[i].finalPrice = 10;
+        result3.push({
+          flightDet: result[i],
+          finalPrice: result[i].businessClassPrice,
+        });
       }
-
       for (let i = 0; i < result2.length; i++) {
         result4.push({
           flightDet: result2[i],
-          finalPrice: result2[i].economyClassPrice,
+          finalPrice: result2[i].businessClassPrice,
         });
       }
     }
@@ -350,17 +364,19 @@ app.post("/GetRequestedFlights", async (req, res) => {
       });
 
       for (let i = 0; i < result.length; i++) {
-        result3[i].flight = result[i];
-        result3[i].finalPrice = 20;
+        result3.push({
+          flightDet: result[i],
+          finalPrice: result[i].firstClassPrice,
+        });
       }
-
       for (let i = 0; i < result2.length; i++) {
         result4.push({
           flightDet: result2[i],
-          finalPrice: result2[i].economyClassPrice,
+          finalPrice: result2[i].firstClassPrice,
         });
       }
-    } else if (type == "Business") {
+      }
+    else if (type == "Business") {
       result = await flight.find({
         departureTime: { $gte: date1, $lt: date2 },
         businessSeatsNum: { $gte: total },
@@ -375,21 +391,22 @@ app.post("/GetRequestedFlights", async (req, res) => {
       });
 
       for (let i = 0; i < result.length; i++) {
-        result3[i].flight = result[i];
-        result3[i].finalPrice = 10;
+        result3.push({
+          flightDet: result[i],
+          finalPrice: result[i].businessClassPrice,
+        });
       }
-
       for (let i = 0; i < result2.length; i++) {
         result4.push({
           flightDet: result2[i],
-          finalPrice: result2[i].economyClassPrice,
+          finalPrice: result2[i].businessClassPrice,
         });
       }
     }
-  } else if (
-    Flight.departureTime == undefined &&
-    Flight2.departureTime == undefined
-  ) {
+  }
+   else if (Flight.departureTime == undefined && Flight2.departureTime == undefined) {
+     console.log("type testing",type);
+
     if (type == "Economy") {
       result = await flight.find({
         economySeatsNum: { $gte: total },
@@ -427,16 +444,17 @@ app.post("/GetRequestedFlights", async (req, res) => {
         arrivalAirport: Flight2.arrivalAirport,
         departureAirport: Flight2.departureAirport,
       });
-
+           
       for (let i = 0; i < result.length; i++) {
-        result3[i].flight = result[i];
-        result3[i].finalPrice = 20;
+        result3.push({
+          flightDet: result[i],
+          finalPrice: result[i].firstClassPrice,
+        });
       }
-
       for (let i = 0; i < result2.length; i++) {
         result4.push({
           flightDet: result2[i],
-          finalPrice: result2[i].economyClassPrice,
+          finalPrice: result2[i].firstClassPrice,
         });
       }
     } else if (type == "Business") {
@@ -451,16 +469,17 @@ app.post("/GetRequestedFlights", async (req, res) => {
         arrivalAirport: Flight2.arrivalAirport,
         departureAirport: Flight2.departureAirport,
       });
-
+          console.log("testing busniness", result);
       for (let i = 0; i < result.length; i++) {
-        result3[i].flight = result[i];
-        result3[i].finalPrice = 10;
+        result3.push({
+          flightDet: result[i],
+          finalPrice: result[i].businessClassPrice,
+        });
       }
-
       for (let i = 0; i < result2.length; i++) {
         result4.push({
           flightDet: result2[i],
-          finalPrice: result2[i].economyClassPrice,
+          finalPrice: result2[i].businessClassPrice,
         });
       }
     }
@@ -488,26 +507,13 @@ app.post("/GetRequestedFlights", async (req, res) => {
           flightDet: result[i],
           finalPrice: result[i].economyClassPrice,
         });
-        //result3[i].finalPrice=30;
-        console.log("Here in the for eachhhhhhhhh", result3[i]);
       }
       for (let i = 0; i < result2.length; i++) {
         result4.push({
           flightDet: result2[i],
           finalPrice: result2[i].economyClassPrice,
         });
-        //result3[i].finalPrice=30;
-        console.log("Here in the for eachhhhhhhhh", result4[i]);
       }
-
-      /* result.map((flight) => {
-        //let finalPrice=0; 
-           flight.finalPrice=flight.economyClassPrice;
-       });
-       result2.map((flight2) => {
-        //let finalPrice=0;
-           flight2.finalPrice=flight2.economyClassPrice;
-       }); */
     } else if (type == "First Class") {
       result = await flight.find({
         departureTime: { $gte: date1, $lt: date2 },
@@ -524,18 +530,16 @@ app.post("/GetRequestedFlights", async (req, res) => {
       });
 
       for (let i = 0; i < result.length; i++) {
-        result3[i].flight = result[i];
-        result3[i].finalPrice = 20;
-        console.log("Here in the for eachhhhhhhhh", result3[i]);
+        result3.push({
+          flightDet: result[i],
+          finalPrice: result[i].firstClassPrice,
+        });
       }
-
       for (let i = 0; i < result2.length; i++) {
         result4.push({
           flightDet: result2[i],
-          finalPrice: result2[i].economyClassPrice,
+          finalPrice: result2[i].firstClassPrice,
         });
-        //result3[i].finalPrice=30;
-        console.log("Here in the for eachhhhhhhhh", result4[i]);
       }
     } else if (type == "Business") {
       result = await flight.find({
@@ -553,18 +557,16 @@ app.post("/GetRequestedFlights", async (req, res) => {
       });
 
       for (let i = 0; i < result.length; i++) {
-        result3[i].flight = result[i];
-        result3[i].finalPrice = 10;
-        console.log("Here in the for eachhhhhhhhh", result3[i]);
+        result3.push({
+          flightDet: result[i],
+          finalPrice: result[i].businessClassPrice,
+        });
       }
-
       for (let i = 0; i < result2.length; i++) {
         result4.push({
           flightDet: result2[i],
-          finalPrice: result2[i].economyClassPrice,
+          finalPrice: result2[i].businessClassPrice,
         });
-        //result3[i].finalPrice=30;
-        console.log("Here in the for eachhhhhhhhh", result4[i]);
       }
     }
   }

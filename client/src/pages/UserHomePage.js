@@ -296,10 +296,15 @@ src="https://www.youtube.com/embed/HwM86WQ-0vY?autoplay=1&mute=1&playlist=HwM86W
    </div>
    <br />
    </div> 
-   <a href="#top">Back to top of page</a> 
+   {/* <Button style={{height:"1cm",width:"1cm"}} href="#top"><img style={{marginLeft:"0",height:"0.7cm",width:"0.7cm"}} src="https://cdn-icons.flaticon.com/png/512/4196/premium/4196777.png?token=exp=1638365014~hmac=d38a550c5c183f31c4ffdf6e65880d36" /></Button> */}
    
       <MoreThanFlight />
+      <br/>
+      <a href="#top"><img style={{marginLeft:"0",height:"0.9cm",width:"0.9cm",float:"Right",Backgroundcolor:"white"}} src="https://cdn-icons.flaticon.com/png/512/4196/premium/4196777.png?token=exp=1638365014~hmac=d38a550c5c183f31c4ffdf6e65880d36" /></a> 
+
+
     </div>
+
   );
 };
 export default UserHomePage;

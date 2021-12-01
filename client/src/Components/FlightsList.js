@@ -4,19 +4,19 @@ import PropTypes from "prop-types";
 import IconButton from "@mui/material/IconButton";
 import TextField from "@mui/material/TextField";
 import {
-  DataGrid,
+  DataGridPro,
   GridToolbarDensitySelector,
   GridToolbarFilterButton,
   GridActionsCellItem,
   GridToolbarColumnsButton,
   GridToolbarExport,
-} from "@mui/x-data-grid";
+} from "@mui/x-data-grid-pro";
+
 
 import ClearIcon from "@mui/icons-material/Clear";
 import SearchIcon from "@mui/icons-material/Search";
 import { createTheme } from "@mui/material/styles";
 import { createStyles, makeStyles } from "@mui/styles";
-import { Link } from "react-router-dom";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import FileCopyIcon from "@mui/icons-material/FileCopy";
@@ -25,6 +25,7 @@ import moment from "moment";
 import FlightService from "../Services/FlightService";
 import PopupView from "./PopupView.js";
 import UpdateForm from "./UpdateForm";
+
 
 function escapeRegExp(value) {
   return value.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
@@ -116,6 +117,11 @@ const FlightsList = () => {
   const [SOTrows, setSOTRows] = React.useState([]);
 
   const [isLoading, setisLoading] = useState(true);
+  const [filterModel, setFilterModel] = React.useState({
+    items: [
+     
+    ],
+  });
 
   const deleteFlight = React.useCallback(
     (id) => () => {
@@ -234,6 +240,7 @@ const FlightsList = () => {
         type: "actions",
         flex: 1,
         getActions: (params) => [
+          
           <GridActionsCellItem
             icon={<EditIcon />}
             label="Update"
@@ -323,6 +330,11 @@ const FlightsList = () => {
 
   return (
     <>
+    <br></br>
+    <br></br>
+    <br></br>
+    
+    
       <PopupView
         showDialog={popupOpen}
         setshowDialog={setPopupOpen}
@@ -330,11 +342,11 @@ const FlightsList = () => {
       >
         {popupChild}
       </PopupView>
-      <div className="mt-5 w-100" >
-        <DataGrid
+      <div className="mt-5 w-100">
+        <DataGridPro
           className={classes.columns}
           rows={rows}
-          columns={columns}
+          columns={columns}        
           autoHeight={true}
           autoWidth={true}
           loading={isLoading}
@@ -353,3 +365,6 @@ const FlightsList = () => {
 };
 
 export default FlightsList;
+
+
+

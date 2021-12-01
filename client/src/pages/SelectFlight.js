@@ -124,10 +124,16 @@ const SelectFlight = () => {
       <br />
       {/* <h2> Reservation Summary {JSON.stringify(flights)}</h2>   */}
       <Row>
+
+      <br/>
+      <Link to="/">
+             <img style={{marginLeft:"0.4cm" ,float:"left",height:"40px",width:"40px"}} src="https://cdn-icons.flaticon.com/png/128/3236/premium/3236910.png?token=exp=1638369412~hmac=356ff9332a1a76f20d437d6f259bca7b" />
+      </Link>
+      </Row>
+      <br/>
+
+      <Row>
       <Col><h2 className="mx-3 mb-5">Choose Going Flight ✈ </h2></Col>
-      <Col ><Link to="/">
-      <button style={{float:"right", marginRight:"8rem"}} class="btn btn-primary">Back To The Previous Page</button>
-      </Link></Col>
       </Row>
       <h3 className="mx-3 mb-5">
       <div class="alert alert-success col-md-8 offset-md-2 my-2" role="alert">

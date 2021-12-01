@@ -87,7 +87,7 @@ const FlightCard = ({title, flight, choosenSeat, cabin, price }) => {
           <label>Price:</label>
         </Col>
         <Col>
-          <label>EGP {price}</label>
+          <label> {price} $</label>
         </Col>
       </Row>
     </>
@@ -214,7 +214,7 @@ const totalPrice2= (searchFlights.selected.companions.adultCount)*flight2.finalP
                 <label>Total:</label>
               </Col>
               <Col>
-                <label>EGP {totalPrice}</label>
+                <label> {totalPrice} $</label>
               </Col>
             </Row>
           </Card>
