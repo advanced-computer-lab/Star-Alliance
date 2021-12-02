@@ -26,21 +26,48 @@ const SeatReservation = (props) => {
   console.log("search flight in seat reservation", searchFlights);
 
   if (searchFlights.data == "inital not set data") {
+    setTimeout(() => {
+      history.push("/");
+    }, 2000);
     return (
       <div>
-      <Row>
-
-<br/>
-<br/>
-
-<Link to="/SelectReturnFlights">
-    <img style={{marginTop:"0.5cm",marginLeft:"0.4cm" ,float:"left",height:"50px",width:"50px"}} src={back} />
-</Link>
-</Row>
-         <br/>
-      <h1 style={{marginLeft:"0.4cm"}}> <FontAwesomeIcon style={{color:"red"}} icon={faExclamationCircle} />No Available seats <img style={{height:"50px",width:"50px"}} src={seat}/>!</h1>
-      <br/>
-     </div>
+        <Row>
+          <Link to="/">
+            <img
+              style={{
+                marginTop: "0.5cm",
+                marginLeft: "0.4cm",
+                float: "left",
+                height: "50px",
+                width: "50px",
+              }}
+              src={back}
+            />
+          </Link>
+        </Row>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <h1 style={{ marginLeft: "0.4cm" }}>
+            {"  "}
+            <FontAwesomeIcon
+              style={{ color: "red" }}
+              icon={faExclamationCircle}
+            />
+            No Available seats{" "}
+            <img style={{ height: "50px", width: "50px" }} src={seat} />
+          </h1>
+          <label>
+            <i>Redirecting to Home in 2 seconds</i>
+          </label>
+        </div>
+        <br />
+      </div>
     );
   } else {
     const flight1 = searchFlights.selected.flight1;
@@ -165,17 +192,24 @@ const SeatReservation = (props) => {
         <br />
         <br />
         <Row>
-
-      <br/>
-      <Link to="/SelectReturnFlights">
-          <img style={{marginLeft:"0.4cm" ,float:"left",height:"50px",width:"50px"}} src={back} />
-      </Link>
-      </Row>
-      <br/>
+          <br />
+          <Link to="/SelectReturnFlights">
+            <img
+              style={{
+                marginLeft: "0.4cm",
+                float: "left",
+                height: "50px",
+                width: "50px",
+              }}
+              src={back}
+            />
+          </Link>
+        </Row>
+        <br />
         <Row>
           <Col>
             <h2 className="mx-5 mb-5 mt-3">
-              Choose Your  Seats{" "}
+              Choose Your Seats{" "}
               <img style={{ height: "1cm", width: "1cm" }} src={seat} />{" "}
             </h2>
           </Col>
@@ -224,17 +258,25 @@ const SeatReservation = (props) => {
           }}
         >
           <Button variant="primary" type="confirm" onClick={handleConfirmBtn}>
-            Confirm Seat(s) <FontAwesomeIcon  icon={ faCheckCircle} />
+            Confirm Seat(s) <FontAwesomeIcon icon={faCheckCircle} />
           </Button>
         </div>
         <br />
-      <br />
-      <Row>
-      <br/>
-      <a href="#top">
-          <img style={{marginRight:"0.4cm" ,float:"right",height:"50px",width:"50px"}} src={top} />
-      </a>
-      </Row>
+        <br />
+        <Row>
+          <br />
+          <a href="#top">
+            <img
+              style={{
+                marginRight: "0.4cm",
+                float: "right",
+                height: "50px",
+                width: "50px",
+              }}
+              src={top}
+            />
+          </a>
+        </Row>
       </>
     );
   }

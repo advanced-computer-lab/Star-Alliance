@@ -2,7 +2,7 @@ import React from "react";
 import { useContext } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Button from "react-bootstrap/Button";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { UserHomeCtx } from "../Context/UserHomeContext";
 import { json } from "body-parser";
 import Row from "react-bootstrap/Row";
@@ -15,48 +15,104 @@ import { faExclamationCircle } from "@fortawesome/free-solid-svg-icons";
 import { faCalendarAlt } from "@fortawesome/free-solid-svg-icons";
 import { faMapMarkerAlt } from "@fortawesome/free-solid-svg-icons";
 
-
 const SelectFlight = () => {
   const [searchFlights, setSearchFlights] = useContext(UserHomeCtx);
+  let history = useHistory();
 
   let flights = searchFlights.data.going;
   if (searchFlights.data.CheckCountry == "1") {
+    setTimeout(() => {
+      history.push("/");
+    }, 2000);
     return (
       <div>
-          <Row>
+        <Row>
+          <br />
+          <br />
 
-<br/>
-<br/>
-
-<Link to="/">
-    <img style={{marginTop:"0.5cm",marginLeft:"0.4cm" ,float:"left",height:"50px",width:"50px"}} src={back} />
-</Link>
-</Row>
-      <br/>
-      <h1 style={{marginTop:"0.5cm",marginLeft:"0.5cm"}}>
-        <FontAwesomeIcon style={{color:"red"}} icon={faExclamationCircle} /> Note:You must choose a
-        destination different than departure <FontAwesomeIcon style={{color:"red"}} icon={faMapMarkerAlt}/>!  </h1>
+          <Link to="/">
+            <img
+              style={{
+                marginTop: "0.5cm",
+                marginLeft: "0.4cm",
+                float: "left",
+                height: "50px",
+                width: "50px",
+              }}
+              src={back}
+            />
+          </Link>
+        </Row>
+        <br />
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <h1 style={{ marginTop: "0.5cm", marginLeft: "0.5cm" }}>
+            <FontAwesomeIcon
+              style={{ color: "red" }}
+              icon={faExclamationCircle}
+            />{" "}
+            Note:You must choose a destination different than departure{" "}
+            <FontAwesomeIcon style={{ color: "red" }} icon={faMapMarkerAlt} />{" "}
+          </h1>
+          <label>
+            <i>Redirecting to Home in 2 seconds</i>
+          </label>
+        </div>
       </div>
-
     );
-  } else if (flights==undefined||flights[0] == undefined) {
-    return( 
+  } else if (flights == undefined || flights[0] == undefined) {
+    setTimeout(() => {
+      history.push("/");
+    }, 2000);
+    return (
       <div>
-      <Row>
+        <Row>
+          <br />
+          <br />
 
-<br/>
-<br/>
-
-<Link to="/">
-    <img style={{marginTop:"0.5cm",marginLeft:"0.4cm" ,float:"left",height:"50px",width:"50px"}} src={back} />
-</Link>
-</Row>
-         <br/>
-
-      <h1 style={{marginLeft:"0.4cm"}}><FontAwesomeIcon style={{color:"red"}} icon={faExclamationCircle} /> 
-      No Available going flights with this date <FontAwesomeIcon icon={faCalendarAlt}/> ! </h1>
-      <br/>
-     </div>  );
+          <Link to="/">
+            <img
+              style={{
+                marginTop: "0.5cm",
+                marginLeft: "0.4cm",
+                float: "left",
+                height: "50px",
+                width: "50px",
+              }}
+              src={back}
+            />
+          </Link>
+        </Row>
+        <br />
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <h1 style={{ marginLeft: "0.4cm" }}>
+            <FontAwesomeIcon
+              style={{ color: "red" }}
+              icon={faExclamationCircle}
+            />
+            No Available going flights with this date{" "}
+            <FontAwesomeIcon icon={faCalendarAlt} />{" "}
+          </h1>
+          <label>
+            <i>Redirecting to Home in 2 seconds</i>
+          </label>
+        </div>
+        <br />
+      </div>
+    );
   } else {
     let flights2 = searchFlights.data.returning;
     let seatType = searchFlights.data.seatType;
@@ -97,29 +153,25 @@ const SelectFlight = () => {
       // console.log("Day:", new Date(date1).getDate());
       var hours = 0;
       var minutes = 0;
-      if(minutes2!=minutes1){
-      if (minutes2 >minutes1) {
-        minutes = minutes2 - minutes1;
-      }
-      else if(minutes2 <minutes1){
-        minutes=minutes2 +(60-minutes1);
-        hours1=hours1+1;
-      } 
-      else {
-        if (minutes2 == 0) {
-          minutes = minutes1;
+      if (minutes2 != minutes1) {
+        if (minutes2 > minutes1) {
+          minutes = minutes2 - minutes1;
+        } else if (minutes2 < minutes1) {
+          minutes = minutes2 + (60 - minutes1);
+          hours1 = hours1 + 1;
         } else {
-          minutes = minutes2;
+          if (minutes2 == 0) {
+            minutes = minutes1;
+          } else {
+            minutes = minutes2;
+          }
         }
       }
-    }
       if (hours2 > hours1) {
         hours = hours2 - hours1;
-      }
-      else if (hours2==hours1){
-        hours=0;
-      } 
-      else {
+      } else if (hours2 == hours1) {
+        hours = 0;
+      } else {
         hours = 24 - hours1 + hours2;
       }
       while (minutes > 60) {
@@ -139,16 +191,16 @@ const SelectFlight = () => {
     console.log("----------------------------------------",window.props);
 */
 
-  const handleSelectClick = (flight) => {
-    console.log("selected ", flight);
-    const selected = {
-      flight1: flight,
-      flight2: null,  // to be changed in Select Return Flight
-      num:searchFlights.data.companionsCount,
-      flight1seat:[],
-        flight2seat:[],
-        companions:searchFlights.selected.companions
-    };
+    const handleSelectClick = (flight) => {
+      console.log("selected ", flight);
+      const selected = {
+        flight1: flight,
+        flight2: null, // to be changed in Select Return Flight
+        num: searchFlights.data.companionsCount,
+        flight1seat: [],
+        flight2seat: [],
+        companions: searchFlights.selected.companions,
+      };
 
       setSearchFlights({
         ...searchFlights,
@@ -156,37 +208,48 @@ const SelectFlight = () => {
       });
     };
 
-  return (
-    <div>
-      <br />
-      <br />
-      {/* <h2> Reservation Summary {JSON.stringify(flights)}</h2>   */}
-      <Row>
-
-      <br/>
-      <Link to="/">
-          <img style={{marginLeft:"0.4cm" ,float:"left",height:"50px",width:"50px"}} src={back} />
-      </Link>
-      </Row>
-      <br/>
-
-      <Row>
-      <Col><h2 className="mx-3 mb-5">Choose Going Flight ✈ </h2></Col>
-      </Row>
-      <h3 className="mx-3 mb-5">
-      <div class="alert alert-success col-md-8 offset-md-2 my-2" role="alert">
-        The Results Of Your Search From {flights[0].flightDet.departureAirport} ✈{" "}
-        {flights[0].flightDet.arrivalAirport}
-      </div>
-       
-      </h3>
-      {flights.map((flight, index) => (
-        //outset
-        <div
-          style={{ border: "outset" }}
-          className="card col-md-8 offset-md-2 mb-5"
-        >
+    return (
+      <div>
+        <br />
+        <br />
+        {/* <h2> Reservation Summary {JSON.stringify(flights)}</h2>   */}
+        <Row>
           <br />
+          <Link to="/">
+            <img
+              style={{
+                marginLeft: "0.4cm",
+                float: "left",
+                height: "50px",
+                width: "50px",
+              }}
+              src={back}
+            />
+          </Link>
+        </Row>
+        <br />
+        <Row>
+          <Col>
+            <h2 className="mx-3 mb-5">Choose Going Flight ✈ </h2>
+          </Col>
+        </Row>
+        <h3 className="mx-3 mb-5">
+          <div
+            class="alert alert-success col-md-8 offset-md-2 my-2"
+            role="alert"
+          >
+            The Results Of Your Search From{" "}
+            {flights[0].flightDet.departureAirport} ✈{" "}
+            {flights[0].flightDet.arrivalAirport}
+          </div>
+        </h3>
+        {flights.map((flight, index) => (
+          //outset
+          <div
+            style={{ border: "outset" }}
+            className="card col-md-8 offset-md-2 mb-5"
+          >
+            <br />
 
             <div className=" card-body">
               <h4 class="card-title">
@@ -266,17 +329,24 @@ const SelectFlight = () => {
         ))}
         ;
         <br />
-      <br />
-      <Row>
-      <br/>
-      <a href="#top">
-          <img style={{marginRight:"0.4cm" ,float:"right",height:"50px",width:"50px"}} src={top} />
-      </a>
-      </Row>
+        <br />
+        <Row>
+          <br />
+          <a href="#top">
+            <img
+              style={{
+                marginRight: "0.4cm",
+                float: "right",
+                height: "50px",
+                width: "50px",
+              }}
+              src={top}
+            />
+          </a>
+        </Row>
       </div>
     );
   }
-
 };
 
 export default SelectFlight;

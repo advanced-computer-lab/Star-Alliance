@@ -150,10 +150,13 @@ const ReservationSummary = () => {
   const [searchFlights, setSearchFlights] = useContext(UserHomeCtx);
 
   if (searchFlights.data == "inital not set data") {
+    setTimeout(() => {
+      history.push("/");
+    }, 2000);
     return (
       <div>
         <Row>
-          <Link to="/SeatReservation">
+          <Link to="/">
             <img
               style={{
                 marginTop: "1cm",
@@ -167,16 +170,28 @@ const ReservationSummary = () => {
           </Link>
         </Row>
         <br />
-        <h1 style={{ marginLeft: "0.4cm" }}>
-          {" "}
-          <FontAwesomeIcon
-            style={{ color: "red" }}
-            icon={faExclamationCircle}
-          />{" "}
-          No Summary{" "}
-          <img style={{ height: "50px", width: "50px" }} src={summary} />!
-        </h1>
-        <br />
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <h1 style={{ marginLeft: "0.4cm" }}>
+            <FontAwesomeIcon
+              style={{ color: "red" }}
+              icon={faExclamationCircle}
+            />
+            {"       "}
+            No Summary{" "}
+            <img style={{ height: "50px", width: "50px" }} src={summary} />
+          </h1>
+          <br />
+          <label>
+            <i>Redirecting to Home in 2 seconds</i>
+          </label>
+        </div>
       </div>
     );
   } else {
