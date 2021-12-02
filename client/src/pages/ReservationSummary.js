@@ -1,8 +1,9 @@
-import { Children, useContext } from "react";
+import { Children, useState, useContext } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Button from "react-bootstrap/Button";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import Spinner from "react-bootstrap/Spinner";
 import Stack from "@mui/material/Stack";
 import { LinkContainer } from "react-router-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -146,7 +147,7 @@ const Card = (props) => {
 const ReservationSummary = () => {
   let history = useHistory();
   const [searchFlights, setSearchFlights] = useContext(UserHomeCtx);
-
+  const [loadingConfirm, setloadingConfirm] = useState(false);
   if (searchFlights.data == "inital not set data") {
     setTimeout(() => {
       history.push("/");
@@ -213,6 +214,7 @@ const ReservationSummary = () => {
     // TODO: else query reservstion data from params
     console.log("searchFlights in Resrvation summary", searchFlights);
     const handleSubmitReservation = () => {
+      setloadingConfirm(true);
       let data = {
         userId: "61a35fcdfd33ed54997b5271", // TODO: new Reservation dynmaic user
         flight1num: flight1.flightDet.flightNumber,
@@ -339,12 +341,26 @@ const ReservationSummary = () => {
               className={styles.btmButtons}
             >
               <LinkContainer to="/SelectFlight">
-                <Button onClick={handleEditClick}>
+                <Button onClick={handleEditClick} disabled={loadingConfirm}>
                   Edit <FontAwesomeIcon icon={faEdit} />
                 </Button>
               </LinkContainer>
-              <Button onClick={handleSubmitReservation}>
-                Confirm <FontAwesomeIcon icon={faCheckCircle} />
+              <Button
+                onClick={handleSubmitReservation}
+                disabled={loadingConfirm}
+              >
+                Confirm {"  "}
+                {loadingConfirm ? (
+                  <Spinner
+                    as="span"
+                    animation="border"
+                    size="sm"
+                    role="status"
+                    aria-hidden="true"
+                  />
+                ) : (
+                  <FontAwesomeIcon icon={faCheckCircle} />
+                )}
               </Button>
             </Stack>
           </div>

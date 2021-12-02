@@ -3,6 +3,7 @@ import { useContext, useRef } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
+import Spinner from "react-bootstrap/Spinner";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Carousel from "react-bootstrap/Carousel";
@@ -25,6 +26,7 @@ import top from "../images/top.png";
 
 const UserHomePage = () => {
   const [searchFlights, setSearchFlights] = useContext(UserHomeCtx);
+  const [loadingSearch, setloadingSearch] = useState(false);
   const history = useHistory();
   const formRef = useRef(null);
   const goingData = [];
@@ -36,6 +38,7 @@ const UserHomePage = () => {
   }
 
   const handleSubmit = () => {
+    setloadingSearch(true);
     var e = formRef.current;
     console.log("enter", formRef.current.departureAirport.value);
     const data = {
@@ -272,8 +275,20 @@ const UserHomePage = () => {
                   variant="primary"
                   type="button"
                   onClick={handleSubmit}
+                  disabled={loadingSearch}
                 >
-                  Search Flight <FontAwesomeIcon icon={faSearch} />{" "}
+                  Search Flight {"   "}
+                  {loadingSearch ? (
+                    <Spinner
+                      as="span"
+                      animation="border"
+                      size="sm"
+                      role="status"
+                      aria-hidden="true"
+                    />
+                  ) : (
+                    <FontAwesomeIcon icon={faSearch} />
+                  )}
                 </Button>
                 {/* </Link> */}
                 {/* ) : null} */}
