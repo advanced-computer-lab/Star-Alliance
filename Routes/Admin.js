@@ -845,8 +845,11 @@ app.post("/AddReservation", async (req, res) => {
       (seat) => !flight2seat.includes(seat)
     );
   } else {
-    console.log("Cabin Class error");
-    res.status(503).send("Cabin Class Error");
+    const errorMsg =
+      "SeatType is not valid, expecting: Economy, First, Business; got " +
+      seatType;
+    console.log(errorMsg);
+    res.status(503).send(errorMsg);
     return;
   }
 
