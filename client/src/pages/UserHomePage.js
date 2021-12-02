@@ -15,7 +15,7 @@ import { faAnkh } from "@fortawesome/free-solid-svg-icons";
 import { faPlaneDeparture } from "@fortawesome/free-solid-svg-icons";
 import { faPlaneArrival } from "@fortawesome/free-solid-svg-icons";
 import { faCalendarAlt } from "@fortawesome/free-solid-svg-icons";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { UserHomeCtx } from "../Context/UserHomeContext";
 import MoreThanFlight from "../Components/MoreThanFlight";
 import moment from "moment";
@@ -23,9 +23,9 @@ import YouTube from "react-youtube";
 import tot from "../images/tot.png";
 import top from "../images/top.png";
 
-
 const UserHomePage = () => {
   const [searchFlights, setSearchFlights] = useContext(UserHomeCtx);
+  const history = useHistory();
   const formRef = useRef(null);
   const goingData = [];
   //var clicked=true;
@@ -71,6 +71,7 @@ const UserHomePage = () => {
       console.log("gigi", searchFlights);
       show();
       console.log(clicked);
+      history.push("/SelectFlight");
     });
   };
   return (
@@ -256,26 +257,26 @@ const UserHomePage = () => {
 
             <Row>
               <Col>
-                <Button
+                {/* <Button
                   className="mt-4"
                   variant="primary"
                   onClick={handleSubmit}
                 >
                   Confirm <FontAwesomeIcon icon={faCheckCircle} />
+                </Button> */}
+                {/* {clicked == true ? ( */}
+                {/* <Link to="/SelectFlight"> */}
+                <Button
+                  // style={{ marginLeft: "4vh" }}
+                  className="mt-4"
+                  variant="primary"
+                  type="button"
+                  onClick={handleSubmit}
+                >
+                  Search Flight <FontAwesomeIcon icon={faSearch} />{" "}
                 </Button>
-
-                {clicked == true ? (
-                  <Link to="/SelectFlight">
-                    <Button
-                      style={{ marginLeft: "4vh" }}
-                      className="mt-4"
-                      variant="primary"
-                      type="button"
-                    >
-                      Search Flight <FontAwesomeIcon icon={faSearch} />{" "}
-                    </Button>{" "}
-                  </Link>
-                ) : null}
+                {/* </Link> */}
+                {/* ) : null} */}
               </Col>
             </Row>
           </Form>
@@ -309,10 +310,18 @@ const UserHomePage = () => {
       <br />
       <br />
       <Row>
-      <br/>
-      <a href="#top">
-          <img style={{marginRight:"0.4cm" ,float:"right",height:"50px",width:"50px"}} src={top} />
-      </a>
+        <br />
+        <a href="#top">
+          <img
+            style={{
+              marginRight: "0.4cm",
+              float: "right",
+              height: "50px",
+              width: "50px",
+            }}
+            src={top}
+          />
+        </a>
       </Row>
     </div>
   );

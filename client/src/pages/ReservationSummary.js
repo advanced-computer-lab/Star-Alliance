@@ -143,8 +143,6 @@ const Card = (props) => {
   );
 };
 
-// n
-
 const ReservationSummary = () => {
   let history = useHistory();
   const [searchFlights, setSearchFlights] = useContext(UserHomeCtx);
@@ -223,7 +221,6 @@ const ReservationSummary = () => {
         flight1seat: flight1seat,
         flight2seat: flight2seat,
         companions: searchFlights.selected.companions,
-        totalPrice: totalPrice,
       };
       ReservationService.reserveNew(data)
         .then((res) => {

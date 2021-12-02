@@ -783,7 +783,6 @@ app.post("/AddReservation", async (req, res) => {
     flight1seat,
     flight2seat,
     companions,
-    totalPrice,
   } = req.body;
 
   // check that the user exists, and verifiy that the user can make a reservation
@@ -873,6 +872,24 @@ app.post("/AddReservation", async (req, res) => {
     return;
   }
 
+  // Make sure flight1 seating count is equal to flight2 seating count
+  if (flight1seat.length != flight2seat.length) {
+    const errMsg = `Seat Number error, flight1seats != flight2seats, f1s=${flight1seat} f2s=${flight2seat}`;
+    console.log(errMsg);
+    res.status(503).send(errMsg);
+    return;
+  }
+
+  // Make sure companios count matches seating count
+  if (companions.adultCount + companions.childCount != flight1seat.length) {
+    const errMsg = `Seat Number error, companions != flight1seats, companions=${JSON.stringify(
+      companions
+    )} flight1seats=${flight1seat}`;
+    console.log(errMsg);
+    res.status(503).send(errMsg);
+    return;
+  }
+
   //update flight seats
   // resFlight1.avaiableSeats = resFlight1.avaiableSeats.filter(
   //   (seat) => !flight1seat.includes(seat)
@@ -892,15 +909,32 @@ app.post("/AddReservation", async (req, res) => {
   console.log("resFligh1", resFlight1.availableSeats);
   console.log("resFligh2", resFlight2.availableSeats);
 
-  console.log("saving resFlight1", await resFlight1.save());
+  await resFlight1.save();
   // resFlight2.avaiableSeats = resFlight2.avaiableSeats.filter(
   // (seat) => !flight2seat.includes(seat)
   // );
   await resFlight2.save();
 
-  // "Business", "Economy", "First"
-
-  // TODO: Calculate the price?
+  // Calculate total price
+  // firstClassPrice, economyClassPrice, businessClassPrice
+  const classPrice = seatType.toLowerCase() + "ClassPrice";
+  const classPriceFlight1 = resFlight1[classPrice];
+  const classPriceFlight2 = resFlight2[classPrice];
+  if (classPriceFlight1 == null || classPriceFlight2 == null) {
+    const errorMsg =
+      "Invalid class price, expecting: First, Business, Economy; got " +
+      classPrice;
+    console.log(errorMsg);
+    res.status(503).send(errorMsg);
+    return;
+  }
+  const flight1totalPrice =
+    companions.adultCount * classPriceFlight1 +
+    companions.childCount * (0.5 * classPriceFlight1);
+  const flight2totalPrice =
+    companions.adultCount * classPriceFlight2 +
+    companions.childCount * (0.5 * classPriceFlight2);
+  const totalPrice = flight1totalPrice + flight2totalPrice;
 
   const newReservation = new reservation({
     user: resUser._id,

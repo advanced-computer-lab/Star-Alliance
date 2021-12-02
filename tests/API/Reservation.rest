@@ -1,0 +1,12 @@
+POST http://localhost:8080/Admin/AddReservation
+content-type: application/json
+
+{
+    "userId": "1",
+    "flight1num": "222",
+    "flight2num": "333",
+    "seatType": "Economy",
+    "flight1seat": ["6B", "6C"],
+    "flight2seat": ["6B", "6C"],
+	"companions": {"adultCount": 1, "childCount": 1}
+}
