@@ -4,6 +4,7 @@ import {
   Redirect,
   Switch,
   Route,
+  useHistory,
 } from "react-router-dom";
 
 import home from "./AdminHomePage.js";
@@ -14,7 +15,6 @@ import CreateFlight from "../Components/CreateFlight.js";
 import TestPage from "./TestPage.js";
 import UserHomePage from "./UserHomePage.js";
 import AdminHomePage from "../pages/AdminHomePage.js";
-
 import ChooseFlight from "../Components/ChooseFlight.js";
 import MoreThanFlight from "../Components/MoreThanFlight.js";
 import ReservationView from "../Components/ReservationView.js";
@@ -24,17 +24,31 @@ import ReservationContext from "../Context/ReservationContext.js";
 import UserHomeContext from "../Context/UserHomeContext.js";
 import SelectFlight from "./SelectFlight";
 import SelectReturnFlights from "./SelectReturnFlights";
-
 import ReservationSelection from "./ReservationSelection.js";
 import ContextRoute from "../Context/ContextRoute.js";
 import SeatReservation from "../pages/SeatReservation";
 import UpdateUserData from "../pages/UpdateUserData";
-
 import UserService from "../Services/UserService.js";
+import { useEffect } from "react";
+
+function ScrollToTop() {
+  const history = useHistory();
+  useEffect(() => {
+    const unlisten = history.listen((location, action) => {
+      if (action !== "POP") {
+        window.scrollTo(0, 0);
+      }
+    });
+    return () => unlisten();
+  }, []);
+  return null;
+}
+
 const Main = () => {
   const isAdmin = UserService.isAdmin();
   return (
     <>
+      <ScrollToTop />
       <Switch>
         <ContextRoute
           exact
