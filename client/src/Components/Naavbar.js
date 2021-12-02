@@ -14,7 +14,6 @@ import { LinkContainer } from "react-router-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 
-
 //const logo= "	https://o.remove.bg/downloads/e14af0fc-8d3f-4a5a-8dc4-15aca52535d1/7-removebg-preview.png"
 const Naavbar = () => {
   const refUserName = useRef(null);
@@ -112,14 +111,11 @@ const Naavbar = () => {
                     My reservations
                   </Nav.Link>
                 </LinkContainer>
-                
               )}
-               {UserService.isUser() && (
-              <LinkContainer to="/UpdateUserData">
-                  <Nav.Link style={{ color: "#DBE2EF" }}>
-                    My Profile
-                  </Nav.Link>
-              </LinkContainer>
+              {UserService.isUser() && (
+                <LinkContainer to="/UpdateUserData">
+                  <Nav.Link style={{ color: "#DBE2EF" }}>My Profile</Nav.Link>
+                </LinkContainer>
               )}
               {/* <Nav.Link href="#link" style={{ color: "#DBE2EF" }}>
                 Link
@@ -132,6 +128,7 @@ const Naavbar = () => {
           <Navbar.Collapse className="justify-content-end">
             {/* TODO: Remove Admin User Debug Buttons later */}
             <Button
+              style={{ color: "white" }}
               onClick={() => {
                 setUser({ ...user, type: 0 });
               }}
@@ -139,6 +136,7 @@ const Naavbar = () => {
               Guest
             </Button>
             <Button
+              style={{ color: "white" }}
               onClick={() => {
                 setUser({ ...user, type: 1 });
               }}
@@ -146,6 +144,7 @@ const Naavbar = () => {
               User
             </Button>
             <Button
+              style={{ color: "white" }}
               onClick={() => {
                 setUser({ ...user, type: 2 });
               }}
@@ -155,9 +154,13 @@ const Naavbar = () => {
             <Navbar.Text>
               {!UserService.isLoggedIn() ? (
                 <div>
-                <Button onClick={handleLoginBtn} style={{ color: "white" }}>
-                  Sign In  <FontAwesomeIcon style={{marginLeft:"0.2cm"}} icon={faUser}/>
-                </Button>
+                  <Button onClick={handleLoginBtn} style={{ color: "white" }}>
+                    Sign In{" "}
+                    <FontAwesomeIcon
+                      style={{ marginLeft: "0.2cm" }}
+                      icon={faUser}
+                    />
+                  </Button>
                 </div>
               ) : UserService.isAdmin() ? (
                 "Welcome Admin"

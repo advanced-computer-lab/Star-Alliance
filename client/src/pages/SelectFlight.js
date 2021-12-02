@@ -246,7 +246,7 @@ const SelectFlight = () => {
         {flights.map((flight, index) => (
           //outset
           <div
-            style={{ border: "outset" }}
+            style={{ border: "outset", transition: " 0.2s" }}
             className="card col-md-8 offset-md-2 mb-5"
           >
             <br />
