@@ -21,6 +21,8 @@ import MoreThanFlight from "../Components/MoreThanFlight";
 import moment from "moment";
 import YouTube from "react-youtube";
 import tot from "../images/tot.png";
+import top from "../images/top.png";
+
 
 const UserHomePage = () => {
   const [searchFlights, setSearchFlights] = useContext(UserHomeCtx);
@@ -305,18 +307,13 @@ const UserHomePage = () => {
 
       <MoreThanFlight />
       <br />
+      <br />
+      <Row>
+      <br/>
       <a href="#top">
-        <img
-          style={{
-            marginLeft: "0",
-            height: "0.9cm",
-            width: "0.9cm",
-            float: "Right",
-            Backgroundcolor: "white",
-          }}
-          src="https://cdn-icons.flaticon.com/png/512/4196/premium/4196777.png?token=exp=1638365014~hmac=d38a550c5c183f31c4ffdf6e65880d36"
-        />
+          <img style={{marginRight:"0.4cm" ,float:"right",height:"50px",width:"50px"}} src={top} />
       </a>
+      </Row>
     </div>
   );
 };

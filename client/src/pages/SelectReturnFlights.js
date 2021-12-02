@@ -4,6 +4,11 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { Link } from "react-router-dom";
 import { UserHomeCtx } from "../Context/UserHomeContext";
+import back from "../images/back.png";
+import top from "../images/top.png";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faExclamationCircle } from "@fortawesome/free-solid-svg-icons";
+import { faCalendarAlt } from "@fortawesome/free-solid-svg-icons";
 
 const SelectReturnFlights = (props) => {
   const [searchFlights, setSearchFlights] = useContext(UserHomeCtx);
@@ -16,11 +21,21 @@ const SelectReturnFlights = (props) => {
   if(flights2==undefined||flights2[0] == undefined){
     return (
       <div>
-      <h1>No Available returning flights with this date !</h1>
+      <Row>
+
+<br/>
+<br/>
+
+<Link to="/SelectFlight">
+    <img style={{marginTop:"0.5cm",marginLeft:"0.4cm" ,float:"left",height:"50px",width:"50px"}} src={back} />
+</Link>
+</Row>
+         <br/>
+
+      <h1 style={{marginLeft:"0.4cm"}}> <FontAwesomeIcon style={{color:"red"}} 
+      icon={faExclamationCircle} /> No Available returning flights with this date<FontAwesomeIcon icon={faCalendarAlt}/> !</h1>
       <br/>
-      <Link to="/">
-      <button style={{float:"left", marginRight:"8rem"}} class="btn btn-primary">Back To Home Page</button>
-      </Link>    </div>
+     </div>
     )
   }
   else{
@@ -45,30 +60,41 @@ const SelectReturnFlights = (props) => {
   }
   function getTime(date1, date2) {
     var hours2 = new Date(date2).getHours();
-    console.log("hours2", hours2);
+    // console.log("hours2", hours2);
     var hours1 = new Date(date1).getHours();
-    console.log("hours", hours1);
+    // console.log("hours", hours1);
     var minutes2 = new Date(date2).getMinutes();
-    console.log("minutes2", minutes2);
+    // console.log("minutes2", minutes2);
 
     var minutes1 = new Date(date1).getMinutes();
-    console.log("minutes1", minutes1);
+    // console.log("minutes1", minutes1);
 
-    console.log("Day:", new Date(date1).getDate());
+    // console.log("Day:", new Date(date1).getDate());
     var hours = 0;
     var minutes = 0;
-    if (minutes2 > 0 || minutes > 0) {
-      minutes = minutes2 + (60 - minutes1);
-    } else {
+    if(minutes2!=minutes1){
+    if (minutes2 >minutes1) {
+      minutes = minutes2 - minutes1;
+    }
+    else if(minutes2 <minutes1){
+      minutes=minutes2 +(60-minutes1);
+      hours1=hours1+1;
+    } 
+    else {
       if (minutes2 == 0) {
         minutes = minutes1;
       } else {
         minutes = minutes2;
       }
     }
+  }
     if (hours2 > hours1) {
       hours = hours2 - hours1;
-    } else {
+    }
+    else if (hours2==hours1){
+      hours=0;
+    } 
+    else {
       hours = 24 - hours1 + hours2;
     }
     while (minutes > 60) {
@@ -99,16 +125,21 @@ const SelectReturnFlights = (props) => {
     <div>
       <br />
       <br />
+      <Row>
+
+      <br/>
+      <Link to="/SelectFlight">
+          <img style={{marginLeft:"0.4cm" ,float:"left",height:"50px",width:"50px"}} src={back} />
+      </Link>
+      </Row>
+      <br/>
       {/*  <h1>{allData.flights[0].flightDet.flightNumber}</h1> */}
       <Row>
-      <Col><h2 className="mx-3 mb-5">Choose Going Flight ✈ </h2></Col>
-      <Col ><Link to="/SelectFlight">
-      <button style={{float:"right", marginRight:"8rem"}} class="btn btn-primary">Back To The Previous Page</button>
-      </Link></Col>
+      <Col><h2 className="mx-3 mb-5">Choose Returning Flight ✈ </h2></Col>
       </Row>
       <h3 className="mx-3 mb-5">
       <div class="alert alert-success col-md-8 offset-md-2 my-2" role="alert">
-        The Results Of Your Search From
+        The Results Of Your Search From{" "}
         {flights2[0].flightDet.departureAirport} ✈{" "}
         {flights2[0].flightDet.arrivalAirport}
         </div>
@@ -187,6 +218,14 @@ const SelectReturnFlights = (props) => {
         </div>
       ))}
       ;
+      <br />
+      <br />
+      <Row>
+      <br/>
+      <a href="#top">
+          <img style={{marginRight:"0.4cm" ,float:"right",height:"50px",width:"50px"}} src={top} />
+      </a>
+      </Row>
     </div>
   );
 };}

@@ -13,9 +13,15 @@ import { UserHomeCtx } from "../Context/UserHomeContext";
 import { Link } from "react-router-dom";
 import styles from "../Styles/ReservationSummary.module.css";
 import { useHistory } from "react-router-dom";
+import back from "../images/back.png";
+import top from "../images/top.png";
+import summary from "../images/summary.png";
 
+import { faExclamationCircle } from "@fortawesome/free-solid-svg-icons";
 import moment from "moment";
 import { unstable_composeClasses } from "@mui/core";
+import { faCheckCircle, faSearch } from "@fortawesome/free-solid-svg-icons";
+import { faEdit } from "@fortawesome/free-solid-svg-icons";
 
 const FlightCard = ({
   title,
@@ -94,7 +100,9 @@ const FlightCard = ({
           <label>Adult Price:</label>
         </Col>
         <Col>
-          <label> {adultPrice} $</label>
+          <label>
+            {adultPrice} <FontAwesomeIcon icon={faDollarSign} />
+          </label>
         </Col>
       </Row>
       <Row>
@@ -102,7 +110,10 @@ const FlightCard = ({
           <label>Child(ren) Price:</label>
         </Col>
         <Col>
-          <label> {adultPrice / 2} $</label>
+          <label>
+            {" "}
+            {adultPrice / 2} <FontAwesomeIcon icon={faDollarSign} />{" "}
+          </label>
         </Col>
       </Row>
       <Row>
@@ -110,7 +121,9 @@ const FlightCard = ({
           <label>Price:</label>
         </Col>
         <Col>
-          <label> {totalPrice} $</label>
+          <label>
+            {totalPrice} <FontAwesomeIcon icon={faDollarSign} />
+          </label>
         </Col>
       </Row>
     </>
@@ -139,16 +152,31 @@ const ReservationSummary = () => {
   if (searchFlights.data == "inital not set data") {
     return (
       <div>
-        <h1>No Summary !</h1>
+        <Row>
+          <Link to="/SeatReservation">
+            <img
+              style={{
+                marginTop: "1cm",
+                marginLeft: "0.4cm",
+                float: "left",
+                height: "50px",
+                width: "50px",
+              }}
+              src={back}
+            />
+          </Link>
+        </Row>
         <br />
-        <Link to="/">
-          <button
-            style={{ float: "left", marginRight: "8rem" }}
-            class="btn btn-primary"
-          >
-            Back To Home Page
-          </button>
-        </Link>{" "}
+        <h1 style={{ marginLeft: "0.4cm" }}>
+          {" "}
+          <FontAwesomeIcon
+            style={{ color: "red" }}
+            icon={faExclamationCircle}
+          />{" "}
+          No Summary{" "}
+          <img style={{ height: "50px", width: "50px" }} src={summary} />!
+        </h1>
+        <br />
       </div>
     );
   } else {
@@ -221,27 +249,25 @@ const ReservationSummary = () => {
 
         <div
           style={{
-            height: "130vh",
+            height: "150vh",
             backgroundColor: "#f5f5f5",
           }}
         >
           <Row>
-            <Col>
-              <h2 className="mx-5 mb-5 mt-3">
-                View Your Reservation Summary ✈{" "}
-              </h2>
-            </Col>
-            <Col>
-              <Link to="/SeatReservation">
-                <button
-                  style={{ float: "right", marginRight: "13rem" }}
-                  class="btn btn-primary mb-5 mt-3"
-                >
-                  Back To The Previous Page
-                </button>
-              </Link>
-            </Col>
+            <Link to="/SeatReservation">
+              <img
+                style={{
+                  marginTop: "1cm",
+                  marginLeft: "0.4cm",
+                  float: "left",
+                  height: "50px",
+                  width: "50px",
+                }}
+                src={back}
+              />
+            </Link>
           </Row>
+          <br />
           <div className={styles.container}>
             <h1 style={{ padding: "1rem 0 1rem" }}>Summary</h1>
             <Card
@@ -254,10 +280,12 @@ const ReservationSummary = () => {
             >
               <Row>
                 <Col>
-                  <label>Total (Round Trip):</label>
+                  <label>Total (Round trip):</label>
                 </Col>
                 <Col>
-                  <label> {totalPrice} $</label>
+                  <label>
+                    {totalPrice} <FontAwesomeIcon icon={faDollarSign} />
+                  </label>
                 </Col>
               </Row>
             </Card>
@@ -299,12 +327,33 @@ const ReservationSummary = () => {
               className={styles.btmButtons}
             >
               <LinkContainer to="/SelectFlight">
-                <Button onClick={handleEditClick}>Edit</Button>
+                <Button onClick={handleEditClick}>
+                  Edit <FontAwesomeIcon icon={faEdit} />
+                </Button>
               </LinkContainer>
-              <Button onClick={handleSubmitReservation}>Confirm</Button>
+              <Button onClick={handleSubmitReservation}>
+                Confirm <FontAwesomeIcon icon={faCheckCircle} />
+              </Button>
             </Stack>
           </div>
+
+          <Row>
+            <br />
+            <a href="#top">
+              <img
+                style={{
+                  marginRight: "0.4cm",
+                  float: "right",
+                  height: "50px",
+                  width: "50px",
+                }}
+                src={top}
+              />
+            </a>
+          </Row>
         </div>
+        <br />
+        <br />
       </>
     );
   }

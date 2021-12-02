@@ -3,8 +3,7 @@ const app = express();
 const db = require("../Service/DBService.js");
 const moment = require("moment");
 const { flight, reservation, user } = require("../Models/export");
-const img =
-  "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg";
+
 var nodemailer = require("nodemailer");
 const style = "height:'2cm',width:'2cm'";
 

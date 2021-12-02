@@ -6,8 +6,13 @@ import { Link } from "react-router-dom";
 import { UserHomeCtx } from "../Context/UserHomeContext";
 import PlaneSelection from "../Components/PlanSelection.js";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faExclamationCircle } from "@fortawesome/free-solid-svg-icons";
+import { faCheckCircle, faSearch } from "@fortawesome/free-solid-svg-icons";
+
 import { useHistory } from "react-router-dom";
 import seat from "../images/seat.png";
+import back from "../images/back.png";
+import top from "../images/top.png";
 
 const assert = require("assert");
 
@@ -23,17 +28,19 @@ const SeatReservation = (props) => {
   if (searchFlights.data == "inital not set data") {
     return (
       <div>
-        <h1>No Available Seats !</h1>
-        <br />
-        <Link to="/">
-          <button
-            style={{ float: "left", marginRight: "8rem" }}
-            class="btn btn-primary"
-          >
-            Back To Home Page
-          </button>
-        </Link>{" "}
-      </div>
+      <Row>
+
+<br/>
+<br/>
+
+<Link to="/SelectReturnFlights">
+    <img style={{marginTop:"0.5cm",marginLeft:"0.4cm" ,float:"left",height:"50px",width:"50px"}} src={back} />
+</Link>
+</Row>
+         <br/>
+      <h1 style={{marginLeft:"0.4cm"}}> <FontAwesomeIcon style={{color:"red"}} icon={faExclamationCircle} />No Available seats <img style={{height:"50px",width:"50px"}} src={seat}/>!</h1>
+      <br/>
+     </div>
     );
   } else {
     const flight1 = searchFlights.selected.flight1;
@@ -158,21 +165,19 @@ const SeatReservation = (props) => {
         <br />
         <br />
         <Row>
+
+      <br/>
+      <Link to="/SelectReturnFlights">
+          <img style={{marginLeft:"0.4cm" ,float:"left",height:"50px",width:"50px"}} src={back} />
+      </Link>
+      </Row>
+      <br/>
+        <Row>
           <Col>
             <h2 className="mx-5 mb-5 mt-3">
-              Choose Your ✈ Seats{" "}
+              Choose Your  Seats{" "}
               <img style={{ height: "1cm", width: "1cm" }} src={seat} />{" "}
             </h2>
-          </Col>
-          <Col>
-            <Link to="/SelectReturnFlights">
-              <button
-                style={{ float: "right", marginRight: "8rem" }}
-                class="btn btn-primary"
-              >
-                Back To The Previous Page
-              </button>
-            </Link>
           </Col>
         </Row>
         <div
@@ -184,7 +189,7 @@ const SeatReservation = (props) => {
         >
           <div>
             <h3 className="mx-3 mb-4">
-              From {flight1.flightDet.departureAirport} to{" "}
+              From {flight1.flightDet.departureAirport} ✈{" "}
               {flight1.flightDet.arrivalAirport}
             </h3>
             <PlaneSelection
@@ -198,7 +203,7 @@ const SeatReservation = (props) => {
           <div>
             <h3 className="mx-3 mb-4">
               {" "}
-              From {flight2.flightDet.departureAirport} to{" "}
+              From {flight2.flightDet.departureAirport} ✈{" "}
               {flight2.flightDet.arrivalAirport}
             </h3>
             <PlaneSelection
@@ -219,9 +224,17 @@ const SeatReservation = (props) => {
           }}
         >
           <Button variant="primary" type="confirm" onClick={handleConfirmBtn}>
-            Confirm Seats
+            Confirm Seat(s) <FontAwesomeIcon  icon={ faCheckCircle} />
           </Button>
         </div>
+        <br />
+      <br />
+      <Row>
+      <br/>
+      <a href="#top">
+          <img style={{marginRight:"0.4cm" ,float:"right",height:"50px",width:"50px"}} src={top} />
+      </a>
+      </Row>
       </>
     );
   }
