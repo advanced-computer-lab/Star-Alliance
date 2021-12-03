@@ -8,8 +8,10 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 
 const PopupView = (props) => {
+  let { cancelCB } = props;
   const handleClose = () => {
     props.setshowDialog(false);
+    if (cancelCB) cancelCB();
   };
 
   return (

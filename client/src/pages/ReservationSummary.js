@@ -1,4 +1,4 @@
-import { Children, useState, useContext } from "react";
+import { Children, useState, useContext, useRef } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Button from "react-bootstrap/Button";
 import Row from "react-bootstrap/Row";
@@ -17,7 +17,7 @@ import { useHistory } from "react-router-dom";
 import back from "../images/back.png";
 import top from "../images/top.png";
 import summary from "../images/summary.png";
-
+import PopupView from "../Components/PopupView";
 import { faExclamationCircle } from "@fortawesome/free-solid-svg-icons";
 import moment from "moment";
 import { unstable_composeClasses } from "@mui/core";
@@ -148,6 +148,11 @@ const ReservationSummary = () => {
   let history = useHistory();
   const [searchFlights, setSearchFlights] = useContext(UserHomeCtx);
   const [loadingConfirm, setloadingConfirm] = useState(false);
+
+  const [popupOpen, setpopupOpen] = useState(false);
+  const [popupChild, setpopupChild] = useState(null);
+  const popupCloseCBref = useRef(null);
+
   if (searchFlights.data == "inital not set data") {
     setTimeout(() => {
       history.push("/");
@@ -229,13 +234,26 @@ const ReservationSummary = () => {
           console.log("res", res);
           const bookingNumber = res.data.bookingNumber;
           console.log("OK ===> ", res);
-          history.push("/"); // navigate home
-          alert(
-            `Your Flights has been Reserved, Booking Number ${bookingNumber}`,
-            res
+
+          setloadingConfirm(false);
+          popupCloseCBref.current = () => {
+            history.push("/"); // navigate home
+            // clear every selection the user made
+            setSearchFlights({ ...searchFlights, selected: {} });
+          };
+          setpopupChild(
+            <>
+              <h2>Your Flights has been Reserved</h2>
+              <h2> Booking Number:</h2>
+              <h2>{bookingNumber}</h2>
+            </>
           );
-          // clear every selection the user made
-          setSearchFlights({ ...searchFlights, selected: {} });
+          setpopupOpen(true);
+
+          // alert(
+          //   `Your Flights has been Reserved, Booking Number ${bookingNumber}`,
+          //   res
+          // );
         })
         .catch((err) => {
           // alert("Error", err);
@@ -282,7 +300,7 @@ const ReservationSummary = () => {
             </Link>
           </Row>
           <br />
-          <div className={styles.container}>
+          <div className="col-md-6 offset-md-3">
             <h1 style={{ padding: "1rem 0 1rem" }}>Summary</h1>
             <Card
               title={
@@ -382,6 +400,13 @@ const ReservationSummary = () => {
         </div>
         <br />
         <br />
+        <PopupView
+          showDialog={popupOpen}
+          setshowDialog={setpopupOpen}
+          cancelCB={popupCloseCBref.current}
+        >
+          {popupChild}
+        </PopupView>
       </>
     );
   }
