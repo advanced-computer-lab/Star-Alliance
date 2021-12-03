@@ -16,13 +16,16 @@ const DeletePopup = () => {
   const [alertOpen, setalertOpen] = useState(false);
   const [alertMessage, setalertMessage] = useState("");
 
+
   const confirmation = (data) => {
     console.log("data", data);
     const resp = window.confirm("Are you sure you want to delete", "");
     if(resp){
     FlightService.DeleteFlight(data)
       .then((res) => {
-        console.log("OK ===> ", res); 
+        console.log("OK ===> ", res);
+        showAlert("You have deleted the flight successfuly");
+        //console.log(alertMess);
       })
       .catch((err) => {
         console.log("errr <===", err.response);
@@ -39,6 +42,7 @@ const DeletePopup = () => {
     // datetime example "2016-05-18T16:00:00Z"
     const data = {
       flightNumber: e.target.flNumber.value,
+      redirectTo: ""
     };
     confirmation(data);
 
@@ -67,6 +71,7 @@ const DeletePopup = () => {
         desc=""
       />
 
+      
 
       <Form onSubmit={handleSubmit}>
         <Form.Group>

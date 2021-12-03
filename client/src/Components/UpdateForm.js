@@ -54,7 +54,7 @@ const UpdateForm = (props) => {
     FlightService.updateFlight(data)
       .then((res) => {
         console.log("OK ===> ", res);
-        showAlert("Updated");
+        showAlert("Flight Updated Successfuly");
         props.successCB?.call();
       })
       .catch((err) => {

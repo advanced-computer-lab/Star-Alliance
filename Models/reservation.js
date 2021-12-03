@@ -9,23 +9,45 @@ const reservationSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "User",
   },
-  flight: {
+
+  flight1: {
+    type: Schema.Types.ObjectId,
+    ref: "Flight",
+  },
+  flight2: {
     type: Schema.Types.ObjectId,
     ref: "Flight",
   },
 
-  companions: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: "companion",
-    },
-  ],
+  companions: Schema.Types.Mixed,
+
+  fligh1seats: { type: [String] },
+  fligh2seats: { type: [String] },
+
+  isPaied: {
+    type: Boolean,
+    default: false,
+  },
+
   cabinClass: { type: String, enum: ["Business", "Economy", "First"] },
   baggageAllowance: {
     weight: { type: Number, default: 23 },
     number: { type: Number, default: 2 },
   },
+  totalPrice:{
+    type: Number,
+    default:0,
+  }
 });
+
+// Reservation Price Calculation, based on number of passengers, cabin class
+// Companios for simplicity now, is just the numbers of adults and children
+// companions: [
+//   {
+//     type: Schema.Types.ObjectId,
+//     ref: "companion",
+//   },
+// ],
 
 /* 
 reservationSchema.post('findOneAndDelete', async function (doc) {

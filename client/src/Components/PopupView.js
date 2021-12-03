@@ -8,36 +8,23 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 
 const PopupView = (props) => {
+  let { cancelCB } = props;
   const handleClose = () => {
     props.setshowDialog(false);
+    if (cancelCB) cancelCB();
   };
 
   return (
     <>
       <Dialog open={props.showDialog} onClose={handleClose} fullWidth>
         <DialogTitle>{props.title}</DialogTitle>
-        <DialogContent>
-          {/* {props.subtext && (
-            <DialogContentText>{props.subtext}</DialogContentText>
-          )} */}
-          {/* <TextField
-            autoFocus
-            margin="dense"
-            fullWidth
-            variant="standard"
-            required
-            name="test"
-            label="test"
-            type="test"
-            id="test"
-          /> */}
-          {/* <Typography variant="h6" gutterBottom>
-            RUhcfoirheioph irew ophreiwgph jiowehrp
-          </Typography> */}
-          {props.children}
-        </DialogContent>
+        <DialogContent>{props.children}</DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Close</Button>
+          {props.customActionButtons ? (
+            props.customActionButtons
+          ) : (
+            <Button onClick={handleClose}>Close</Button>
+          )}
         </DialogActions>
       </Dialog>
     </>
