@@ -28,7 +28,7 @@ const SeatReservation = (props) => {
   if (searchFlights.data == "inital not set data") {
     setTimeout(() => {
       history.push("/");
-    }, 2000);
+    }, 5000);
     return (
       <div>
         <Row>
@@ -63,7 +63,7 @@ const SeatReservation = (props) => {
             <img style={{ height: "50px", width: "50px" }} src={seat} />
           </h1>
           <label>
-            <i>Redirecting to Home in 2 seconds</i>
+            <i>Redirecting to Home in 5 seconds</i>
           </label>
         </div>
         <br />

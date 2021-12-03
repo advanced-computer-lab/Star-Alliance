@@ -23,7 +23,7 @@ const SelectFlight = () => {
   if (searchFlights.data.CheckCountry == "1") {
     setTimeout(() => {
       history.push("/");
-    }, 2000);
+    }, 5000);
     return (
       <div>
         <Row>
@@ -61,7 +61,7 @@ const SelectFlight = () => {
             <FontAwesomeIcon style={{ color: "red" }} icon={faMapMarkerAlt} />{" "}
           </h1>
           <label>
-            <i>Redirecting to Home in 2 seconds</i>
+            <i>Redirecting to Home in 5 seconds</i>
           </label>
         </div>
       </div>

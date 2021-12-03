@@ -25,6 +25,7 @@ import tot from "../images/tot.png";
 import top from "../images/top.png";
 
 const UserHomePage = () => {
+     
   const [searchFlights, setSearchFlights] = useContext(UserHomeCtx);
   const [loadingSearch, setloadingSearch] = useState(false);
   const history = useHistory();
@@ -78,8 +79,8 @@ const UserHomePage = () => {
     });
   };
   return (
-    <div
-      className="mt-1 "
+    <div 
+      className="mt-1  "
       id="testing"
       style={{ fontFamily: "cursive", color: "white" }}
     >
@@ -123,23 +124,24 @@ const UserHomePage = () => {
           </Carousel.Caption>
         </Carousel.Item>
       </Carousel>
-      <div
-        className="mt-5"
+      <div 
+        className=" mt-5 col-sm-8 offset-sm-2 col-md-8 offset-md-2 col-lg-8 offset-lg-2 " //
         style={{
           borderRadius: "2rem",
           backgroundColor: "#112D4E",
-          width: "115vh",
-          marginLeft: "50vh",
-          marginBottom: "15vh",
-          height: "60vh",
+          //width: "115vh",
+          //marginLeft: "50vh",
+          //marginBottom: "15vh",
+          height: "auto",
         }}
       >
-        <div className="col-lg-10 offset-lg-1 col-md-8 offset-md-2">
+      
+        <div  style={{height: "auto"}} className=" col-sm-8 offset-sm-2 col-md-8 offset-md-2 col-lg-10 offset-lg-1 ">
           <Form ref={formRef}>
-            <Row>
+            <Row >
               <h3 className="mt-3 mb-2">Book Your Flight! ✈ </h3>
               <Col>
-                <Form.Group as={Col} controlId="formGridState">
+                <Form.Group as={Col} style={{ width: "auto" }} controlId="formGridState">
                   <Form.Label>
                     From <FontAwesomeIcon icon={faPlaneDeparture} />
                   </Form.Label>
@@ -158,7 +160,7 @@ const UserHomePage = () => {
                 </Form.Group>
               </Col>
 
-              <Form.Group as={Col} controlId="formGridState">
+              <Form.Group style={{ width: "auto" }} as={Col} controlId="formGridState">
                 <Form.Label>
                   To <FontAwesomeIcon icon={faPlaneArrival} />
                 </Form.Label>
@@ -295,13 +297,17 @@ const UserHomePage = () => {
               </Col>
             </Row>
           </Form>
+          <br/>
         </div>
       </div>
+      <br/>
+      <br/>
+
       <div
-        className="col-lg-10 offset-lg-1"
+        className="col-lg-10 offset-lg-1 col-md-10 offset-md-1 col-sm-10 offset-sm-1  "
         style={{ backgroundColor: "#112D4E", borderRadius: "2.5rem" }}
       >
-        <div className="mt-3 col-lg-10 offset-lg-1">
+        <div className="mt-3 col-lg-10 offset-lg-1 col-md-10 offset-md-1 col-sm-10 offset-sm-1 ">
           <br />
           <Row>
             <h2 as={Col}>
@@ -310,18 +316,20 @@ const UserHomePage = () => {
             </h2>
           </Row>
           <br />
-          <iframe
+          <iframe  className="col-lg-12 col-md-12 col-sm-12  "
             id="ytplayer"
-            width="1050"
-            height="600"
+            // width="1050"
+             height="600"
             src="https://www.youtube.com/embed/HwM86WQ-0vY?autoplay=1&mute=1&playlist=HwM86WQ-0vY,msJ_JJB8q3s,k3KqP69xuPc&loop=1"
           ></iframe>
+
         </div>
         <br />
       </div>
       {/* <Button style={{height:"1cm",width:"1cm"}} href="#top"><img style={{marginLeft:"0",height:"0.7cm",width:"0.7cm"}} src="https://cdn-icons.flaticon.com/png/512/4196/premium/4196777.png?token=exp=1638365014~hmac=d38a550c5c183f31c4ffdf6e65880d36" /></Button> */}
+         
+      <MoreThanFlight  />
 
-      <MoreThanFlight />
       <br />
       <br />
       <Row>
@@ -338,6 +346,10 @@ const UserHomePage = () => {
           />
         </a>
       </Row>
+      <div style={{height:"40cm"}} className="footerInc">
+      
+      </div>
+     
     </div>
   );
 };
