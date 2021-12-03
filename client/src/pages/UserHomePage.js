@@ -305,7 +305,7 @@ const UserHomePage = () => {
           <br />
           <Row>
             <h2 as={Col}>
-              Why to Visit Egypt? <FontAwesomeIcon icon={faAnkh} />{" "}
+            Discover Egypt with a stopover <FontAwesomeIcon icon={faAnkh} />{" "}
               <img as={Col} style={{ height: "5vh", width: "5vh" }} src={tot} />
             </h2>
           </Row>
