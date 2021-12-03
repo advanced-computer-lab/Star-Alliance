@@ -219,6 +219,8 @@ const ReservationSummary = () => {
     // TODO: else query reservstion data from params
     console.log("searchFlights in Resrvation summary", searchFlights);
     const handleSubmitReservation = () => {
+	  const resp = window.confirm("Are you sure you want to Reserve?", "");
+	  if(!resp) return;
       setloadingConfirm(true);
       let data = {
         userId: "61a35fcdfd33ed54997b5271", // TODO: new Reservation dynmaic user
