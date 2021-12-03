@@ -12,7 +12,7 @@ import { faHiking } from "@fortawesome/free-solid-svg-icons";
 import { faTaxi } from "@fortawesome/free-solid-svg-icons";
 const MoreThanFlight = () => {
   return (
-    <div style={{ height: "13cm", backgroundColor: "#F2F4F5" }}>
+    <div style={{ height: "auto", backgroundColor: "#F2F4F5" }}>
       <div
         style={{
           marginTop: "2cm",
@@ -26,10 +26,10 @@ const MoreThanFlight = () => {
         <h4>LOOKING FOR MORE THAN A FLIGHT?</h4>
         <br />
 
-        <Row>
+        <Row className="col-lg-12 offset-lg-0 col-sm-8 offset-sm-2" >
           <Col>
             <Card
-              className="shadow-lg"
+              className="shadow-lg "
               style={{ width: "17rem", transition: " 0.2s" }}
             >
               <Card.Img
@@ -144,6 +144,7 @@ const MoreThanFlight = () => {
           </Col>
         </Row>
       </div>
+      <br/>
     </div>
   );
 };

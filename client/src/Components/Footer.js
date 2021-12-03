@@ -1,19 +1,19 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
 import { faTwitter } from "@fortawesome/free-solid-svg-icons";
 import logo from "../images/logo.png";
 
 const Footer = () => {
+
   return (
+
     <footer
-      style={{
+      style={{        
         backgroundColor: "#112D4E",
         color: "#DBE2EF",
         fontFamily: "cursive",
       }}
-      class="footer-07"
     >
       <div class="container">
         <div class="row justify-content-center">
@@ -51,11 +51,6 @@ const Footer = () => {
                 />
               </a>
             </p>
-            {/* <ul class="ftco-footer-social p-0">
-              <li class="ftco-animate"><a href="#" data-toggle="tooltip" data-placement="top" title="Twitter"><span class="ion-logo-twitter"></span></a></li>
-              <li class="ftco-animate"><a href="#" data-toggle="tooltip" data-placement="top" title="Facebook"><span class="ion-logo-facebook"></span></a></li>
-              <li class="ftco-animate"><a href="#" data-toggle="tooltip" data-placement="top" title="Instagram"><span class="ion-logo-instagram"></span></a></li>
-            </ul> */}
           </div>
         </div>
         <div class="row mt-5">
@@ -68,6 +63,7 @@ const Footer = () => {
         </div>
       </div>
     </footer>
+
   );
 };
 

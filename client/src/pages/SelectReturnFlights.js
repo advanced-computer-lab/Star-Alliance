@@ -9,9 +9,11 @@ import top from "../images/top.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faExclamationCircle } from "@fortawesome/free-solid-svg-icons";
 import { faCalendarAlt } from "@fortawesome/free-solid-svg-icons";
+import { useHistory } from "react-router-dom";
 
 const SelectReturnFlights = (props) => {
   const [searchFlights, setSearchFlights] = useContext(UserHomeCtx);
+  let history = useHistory();
 
   //   const allData = props.location.state;
   console.log("search flight", searchFlights);
@@ -19,8 +21,11 @@ const SelectReturnFlights = (props) => {
   const flights2 = searchFlights.data.returning;
 
   if (flights2 == undefined || flights2[0] == undefined) {
+    setTimeout(() => {
+      history.push("/");
+    }, 5000);
     return (
-      <div>
+      <div >
         <Row>
           <br />
           <br />
@@ -39,17 +44,26 @@ const SelectReturnFlights = (props) => {
           </Link>
         </Row>
         <br />
-
+       <div style={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+          }}>
         <h1 style={{ marginLeft: "0.4cm" }}>
           {" "}
           <FontAwesomeIcon
             style={{ color: "red" }}
             icon={faExclamationCircle}
           />{" "}
-          No Available returning flights with this date
-          <FontAwesomeIcon icon={faCalendarAlt} /> !
+          No Available returning flights with this date {" "}
+          <FontAwesomeIcon icon={faCalendarAlt} /> 
         </h1>
+        <label>
+            <i>Redirecting to Home in 5 seconds</i>
+          </label>
         <br />
+        </div>
       </div>
     );
   } else {
