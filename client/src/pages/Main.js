@@ -30,6 +30,7 @@ import SeatReservation from "../pages/SeatReservation";
 import UpdateUserData from "../pages/UpdateUserData";
 import UserService from "../Services/UserService.js";
 import { useEffect } from "react";
+import SignUp from "../pages/SignUp.js";
 
 function ScrollToTop() {
   const history = useHistory();
@@ -95,6 +96,7 @@ const Main = () => {
         <Route exact path="/deleteFlight" component={deletePopup}></Route>
         <Route exact path="/createFlight" component={CreateFlight}></Route>
         <Route exact path="/chooseFlight" component={ChooseFlight}></Route>
+        <Route exact path="/SignUp" component={SignUp}></Route>
 
         <Route
           exact
