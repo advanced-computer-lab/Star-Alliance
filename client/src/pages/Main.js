@@ -31,6 +31,10 @@ import UpdateUserData from "../pages/UpdateUserData";
 import UserService from "../Services/UserService.js";
 import { useEffect } from "react";
 import SignUp from "../pages/SignUp.js";
+import EditFlight from "../pages/EditFlight.js";
+import SelectEditFlight from "../pages/SelectEditFlight.js";
+import SelectEditFlightSeat from "../pages/SelectEditFlightSeat.js";
+import ReservationEditSummary from "../pages/ReservationEditSummary.js";
 
 function ScrollToTop() {
   const history = useHistory();
@@ -89,6 +93,30 @@ const Main = () => {
           Context={UserHomeContext}
           CComponent={SelectReturnFlights}
         />
+        <ContextRoute
+          exact
+          path="/EditFlight"
+          Context={UserHomeContext}
+          CComponent={EditFlight}
+        />
+        <ContextRoute
+          exact
+          path="/SelectEditFlight"
+          Context={UserHomeContext}
+          CComponent={SelectEditFlight}
+        />
+         <ContextRoute
+          exact
+          path="/SelectEditFlightSeat"
+          Context={UserHomeContext}
+          CComponent={SelectEditFlightSeat}
+        />
+        <ContextRoute
+          exact
+          path="/ReservationEditSummary"
+          Context={UserHomeContext}
+          CComponent={ReservationEditSummary}
+        />
         <Route exact path="/FlightsList" component={FlightsList} />
         <Route exact path="/test" component={TestPage} />
         <Route exact path="/UpdateForm" component={UpdateForm} />
@@ -97,6 +125,7 @@ const Main = () => {
         <Route exact path="/createFlight" component={CreateFlight}></Route>
         <Route exact path="/chooseFlight" component={ChooseFlight}></Route>
         <Route exact path="/SignUp" component={SignUp}></Route>
+
 
         <Route
           exact
