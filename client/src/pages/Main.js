@@ -117,6 +117,12 @@ const Main = () => {
           Context={UserHomeContext}
           CComponent={ReservationEditSummary}
         />
+        <ContextRoute
+          exact
+          path="/ReservationView"
+          Context={UserHomeContext}
+          CComponent={ReservationView}
+        />
         <Route exact path="/FlightsList" component={FlightsList} />
         <Route exact path="/test" component={TestPage} />
         <Route exact path="/UpdateForm" component={UpdateForm} />

@@ -1,5 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 import * as React from "react";
+import { useContext } from 'react';
 import PropTypes from "prop-types";
 import IconButton from "@mui/material/IconButton";
 import TextField from "@mui/material/TextField";
@@ -15,13 +16,20 @@ import { createTheme } from "@mui/material/styles";
 import { createStyles, makeStyles } from "@mui/styles";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
+import EventSeatIcon from '@mui/icons-material/EventSeat';
 import FileCopyIcon from "@mui/icons-material/FileCopy";
 import CancelIcon from '@mui/icons-material/Cancel';
+import EmailIcon from '@mui/icons-material/Email';
 import moment from "moment";
 import FlightService from "../Services/FlightService";
 import PopupView from "./PopupView.js";
 import UpdateForm from "./UpdateForm";
-import { pink,red } from '@mui/material/colors';
+import { pink,red,blue,black } from '@mui/material/colors';
+import { ReservationCtx } from "../Context/ReservationContext";
+import { UserHomeCtx } from "../Context/UserHomeContext";
+import { useHistory } from "react-router-dom";
+
+
 function escapeRegExp(value) {
   return value.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
 }
@@ -62,9 +70,9 @@ const useStyles = makeStyles(
 
 
 
-
-
 const ReservationView = () => {
+  let history = useHistory();
+  const [searchFlights, setSearchFlights] = useContext(UserHomeCtx);
   const classes = useStyles();
   const [popupOpen, setPopupOpen] = useState(false); // the initial state of the dialog is set to false
   const [popupChild, setpopupChild] = useState(); // the initial state of the dialog is set to false
@@ -145,12 +153,29 @@ const ReservationView = () => {
         flex: 1,
         getActions: (params) => [
           <GridActionsCellItem
-            icon={<CancelIcon sx={{ color: red[500] }} />}
-            label="cancel"
-            onClick={CancelReservation(params.id)}
-            // showInMenu
-          />,
-         
+          icon={<EditIcon />}
+          label="Edit"
+          onClick={CancelReservation(params.id)}
+          // showInMenu
+        />,
+          <GridActionsCellItem
+          icon={<EmailIcon sx={{ color: blue[600] }} />}
+          label="Email"
+          onClick={CancelReservation(params.id)}
+          // showInMenu
+        />,
+        <GridActionsCellItem
+        icon={<EventSeatIcon  />}
+        label="cancel"
+        onClick={CancelReservation(params.id)}
+        // showInMenu
+      />,
+         <GridActionsCellItem
+         icon={<CancelIcon sx={{ color: red[500] }} />}
+         label="cancel"
+         onClick={CancelReservation(params.id)}
+         // showInMenu
+       />,
         ]
       },
     ],
