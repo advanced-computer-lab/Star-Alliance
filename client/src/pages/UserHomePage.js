@@ -18,21 +18,25 @@ import { faPlaneArrival } from "@fortawesome/free-solid-svg-icons";
 import { faCalendarAlt } from "@fortawesome/free-solid-svg-icons";
 import { Link, useHistory } from "react-router-dom";
 import { UserHomeCtx } from "../Context/UserHomeContext";
+import { EditReservationCtx } from "../Context/EditReservationContext";
 import MoreThanFlight from "../Components/MoreThanFlight";
 import moment from "moment";
 import YouTube from "react-youtube";
 import tot from "../images/tot.png";
 import top from "../images/top.png";
 
-const UserHomePage = () => {
+const UserHomePage = () => { 
      
   const [searchFlights, setSearchFlights] = useContext(UserHomeCtx);
+  //const [Editreservation, setEditReservation] = useContext(EditReservationCtx);
   const [loadingSearch, setloadingSearch] = useState(false);
   const history = useHistory();
   const formRef = useRef(null);
   const goingData = [];
   //var clicked=true;
   const [clicked, setClicked] = useState(false);
+
+  console.log(searchFlights);
 
   function show() {
     setClicked(true);

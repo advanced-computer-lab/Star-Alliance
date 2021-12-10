@@ -27,6 +27,7 @@ import UpdateForm from "./UpdateForm";
 import { pink,red,blue,black } from '@mui/material/colors';
 import { ReservationCtx } from "../Context/ReservationContext";
 import { UserHomeCtx } from "../Context/UserHomeContext";
+import { EditReservationCtx } from "../Context/EditReservationContext";
 import { useHistory } from "react-router-dom";
 
 
@@ -71,8 +72,11 @@ const useStyles = makeStyles(
 
 
 const ReservationView = () => {
-  let history = useHistory();
+  //const [Editreservation, setEditReservation] = useContext(EditReservationCtx);
   const [searchFlights, setSearchFlights] = useContext(UserHomeCtx);
+  let history = useHistory();
+  let allReservationData;
+
   const classes = useStyles();
   const [popupOpen, setPopupOpen] = useState(false); // the initial state of the dialog is set to false
   const [popupChild, setpopupChild] = useState(); // the initial state of the dialog is set to false
@@ -106,7 +110,18 @@ const ReservationView = () => {
     [rows]
   );
 
-  
+  const EditReservation = React.useCallback(
+    (id) => () => {
+      
+      const EditedRow = rows.filter((row) => row.id === id)[0];
+      console.log("Edittttttt", EditedRow);
+      // contains the details of the edited flight
+      const oldReservation = EditedRow;
+      setSearchFlights({
+        ...searchFlights,oldReservation});
+      history.push('/');
+    });
+
 
   const columns = React.useMemo(
     () => [
@@ -155,7 +170,7 @@ const ReservationView = () => {
           <GridActionsCellItem
           icon={<EditIcon />}
           label="Edit"
-          onClick={CancelReservation(params.id)}
+          onClick={EditReservation(params.id)}
           // showInMenu
         />,
           <GridActionsCellItem
@@ -166,20 +181,20 @@ const ReservationView = () => {
         />,
         <GridActionsCellItem
         icon={<EventSeatIcon  />}
-        label="cancel"
+        label="Seats"
         onClick={CancelReservation(params.id)}
         // showInMenu
       />,
          <GridActionsCellItem
          icon={<CancelIcon sx={{ color: red[500] }} />}
-         label="cancel"
+         label="Cancel"
          onClick={CancelReservation(params.id)}
          // showInMenu
        />,
         ]
       },
     ],
-    [CancelReservation]
+    [CancelReservation, EditReservation]
   );
   const updateReservationList = () => {
     FlightService.GetAllReservedFlights()
