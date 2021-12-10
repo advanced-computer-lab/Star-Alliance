@@ -10,6 +10,12 @@ class FlightService {
   updateUser(data) {
     return http.post("/Admin/UpdateUser", data);
   }
+  passcheck(data,resp){
+    return http.post("/Admin/passcheck", data, resp);
+  }
+  updatepass(data){
+    return http.post("/Admin/updatepass", data);
+  }
   GetFlightInfo(data) {
     return http.post("/Admin/GetFlightInfo", data);
   }
