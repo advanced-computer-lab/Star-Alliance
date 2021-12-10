@@ -1,0 +1,31 @@
+POST http://localhost:2000/login
+content-type: application/json
+
+{
+    "username": "yehia",
+    "password": "user1234"
+}
+
+###
+GET http://localhost:8080/protected
+content-type: application/json
+
+{
+    
+}
+
+###
+POST http://localhost:2000/getaToken
+content-type: application/json
+
+{
+     "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MWEzNWZjZGZkMzNlZDU0OTk3YjUyNzEiLCJpYXQiOjE2MzkxNDYzMTh9.cxyEyrf73rMCsbuJDOaa4yZatpZC3bM-G4YpJEiv0UE"
+}
+
+###
+DELETE http://localhost:2000/logout
+content-type: application/json
+
+{
+    "rtoken": ""
+}

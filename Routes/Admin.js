@@ -3,6 +3,7 @@ const app = express();
 const db = require("../Service/DBService.js");
 const moment = require("moment");
 const { flight, reservation, user } = require("../Models/export");
+const jwt = require("jsonwebtoken");
 
 var nodemailer = require("nodemailer");
 const style = "height:'2cm',width:'2cm'";
@@ -485,7 +486,8 @@ app.post("/GetRequestedFlights", async (req, res) => {
           finalPrice: result2[i].firstClassPrice,
         });
       }
-    } const checkAvailable = await flight.find({
+    }
+    const checkAvailable = await flight.find({
       departureTime: { $gte: date1, $lt: date2 },
       businessSeatsNum: { $gte: total },
       arrivalAirport: Flight.arrivalAirport,
@@ -521,7 +523,6 @@ app.post("/GetRequestedFlights", async (req, res) => {
         finalPrice: result2[i].businessClassPrice,
       });
     }
-  
   } else if (
     Flight.departureTime == undefined &&
     Flight2.departureTime == undefined
@@ -1094,10 +1095,10 @@ app.post("/AddEditReservation", async (req, res) => {
     flight2seat,
     companions,
     resId,
-    which
+    which,
   } = req.body;
-  console.log("printing request.body",req.body)
- // resFlight2 = await flight.findOne({ _id: flight2Id });
+  console.log("printing request.body", req.body);
+  // resFlight2 = await flight.findOne({ _id: flight2Id });
   // check that the user exists, and verifiy that the user can make a reservation
   let resUser = null;
   try {
@@ -1118,7 +1119,7 @@ app.post("/AddEditReservation", async (req, res) => {
     res.status(404).send("Flight not found");
     return;
   }
-  cancel(resId,which);
+  cancel(resId, which);
 
   let resFlight1EconomySeats = resFlight1.availableSeats.economy;
   let resFlight1FirstSeats = resFlight1.availableSeats.first;
@@ -1242,23 +1243,22 @@ app.post("/AddEditReservation", async (req, res) => {
     fligh1seats: flight1seat,
     fligh2seats: flight2seat,
   });
-  console.log("newwwwwwcheck,",newReservation);
+  console.log("newwwwwwcheck,", newReservation);
   //resId
-  if(which=="flight1"){
-  await reservation.updateOne(
-    { _id:resId },
-    {
-      flight1: resFlight1._id,
-      cabinClass: seatType,
-      totalPrice: totalPrice,
-      fligh1seats: flight1seat,
-    }
-  );
-  //
-  }
-  else{
+  if (which == "flight1") {
     await reservation.updateOne(
-      { _id:resId },
+      { _id: resId },
+      {
+        flight1: resFlight1._id,
+        cabinClass: seatType,
+        totalPrice: totalPrice,
+        fligh1seats: flight1seat,
+      }
+    );
+    //
+  } else {
+    await reservation.updateOne(
+      { _id: resId },
       {
         flight2: resFlight1._id,
         cabinClass: seatType,
@@ -1271,7 +1271,6 @@ app.post("/AddEditReservation", async (req, res) => {
   let reservationId = null;
   try {
     //reservationId = (await newReservation.save()).id;
-    
   } catch (e) {
     console.log("error saving the reservation");
     res.status(503).send("Error saving the reservation");
@@ -1285,28 +1284,24 @@ app.post("/AddEditReservation", async (req, res) => {
   res.send({ bookingNumber: resId });
 });
 
- async function cancel (resId,which) {
-  
-  const result8 = await reservation.findById({ _id: resId});
-  let flightNumber1=0;
-  let flightNumberseat1=0
-  if(which=="flight1"){
-     flightNumber1 = result8.flight1;
-     flightNumberseat1 = result8.fligh1seats;
-
-  }
-  else{
+async function cancel(resId, which) {
+  const result8 = await reservation.findById({ _id: resId });
+  let flightNumber1 = 0;
+  let flightNumberseat1 = 0;
+  if (which == "flight1") {
+    flightNumber1 = result8.flight1;
+    flightNumberseat1 = result8.fligh1seats;
+  } else {
     flightNumber1 = result8.flight2;
-     flightNumberseat1 = result8.fligh2seats;
+    flightNumberseat1 = result8.fligh2seats;
   }
 
-  
   //const flightNumberseat2 = result8.fligh2seats;
   const cabinType = result8.cabinClass.toLowerCase();
 
   console.log("flightNumber1id", flightNumber1);
   console.log("cabinType", cabinType);
- 
+
   const getSeats1 = await flight.findByIdAndUpdate({ _id: flightNumber1 });
   const seats1 = getSeats1.availableSeats;
   if (cabinType === "economy") {
@@ -1332,7 +1327,6 @@ app.post("/AddEditReservation", async (req, res) => {
   );
 
   console.log("updateSeats1", updateSeats1);
-
-};
+}
 
 module.exports = app;

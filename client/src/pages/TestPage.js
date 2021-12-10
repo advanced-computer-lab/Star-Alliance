@@ -8,28 +8,124 @@ import ImgCard from "../Components/ImgCard.js";
 import { UserCtx } from "../Context/GlobalContext.js";
 import { Link } from "react-router-dom";
 import UserService from "../Services/UserService.js";
-
 import PlaneSelection from "../Components/PlanSelection.js";
+import Cookies from "js-cookies";
 
-const avaiableSeats = {
-  first: ["1A", "1B", "1C"],
-  business: ["1D", "1E", "1F"],
-  economy: ["2A", "2B", "3C"],
-};
+import axios from "axios";
+import http from "../Services/http-common.js";
+
+function isTokenExpired(token) {
+  const expiry = JSON.parse(atob(token.split(".")[1])).exp;
+  return Math.floor(new Date().getTime() / 1000) >= expiry;
+}
+// normal resource
+const axiosInst = axios.create({
+  headers: {
+    "Content-type": "application/json",
+  },
+  withCredentials: true,
+});
+// authServer axios
+const axiosInst2 = axios.create({
+  headers: {
+    "Content-type": "application/json",
+  },
+  withCredentials: true,
+});
+
+axiosInst.interceptors.request.use(
+  async (config) => {
+    console.log("request interceptor");
+    console.log(config);
+    if (isTokenExpired(Cookies.getItem("accessToken"))) {
+      console.log("token expired trying to refresh");
+      await axiosInst2
+        .post("http://localhost:2000/getaToken/", {})
+        .then((res) => {
+          console.log(res);
+          console.log(res.data);
+          // console.log("config", config);
+          // Cookies.setItem("accessToken", res.data.token);
+        })
+        .catch((err) => {
+          window.location.href = "/login";
+        });
+    }
+    return config;
+  },
+  (error) => {
+    Promise.reject(error);
+  }
+);
+
 const TestPage = () => {
-  const [open, setOpen] = useState(false);
   const [User, setUser] = useContext(UserCtx);
 
-  const handleBtnClick = () => {
-    setOpen(true);
-  };
+  console.log("Access Token : ");
+  console.log(Cookies.getItem("accessToken"));
+  console.log("Refresh Token : ");
+  console.log(Cookies.getItem("refreshToken"));
+  console.log("expired : ");
+  console.log(isTokenExpired(Cookies.getItem("accessToken")));
+
   const handleChangeContexct = () => {
     setUser("ceecec");
   };
 
-  const handleSeatClick = (seatId) => {
-    console.log(seatId);
+  const handleBtnClick = () => {
+    // login
+    axiosInst2
+      .post("http://localhost:2000/login/", {
+        username: "yehia",
+        password: "user12345",
+      })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
+  const handleBtnClick3 = () => {
+    // login
+    axiosInst2
+      .post("http://localhost:2000/login/", {
+        username: "admin",
+        password: "admin",
+      })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  const handleBtnClick1 = () => {
+    // get a resource
+    axiosInst
+      .get("http://localhost:8080/protected")
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const handleBtnClick2 = () => {
+    // get a resource
+    http
+      .get("http://localhost:8080/protected")
+      .then((res) => {
+        console.log("protected reqest res =", res);
+      })
+      .catch((err) => {
+        console.log("protected reqest err =", err);
+
+        // console.log(err);
+      });
+  };
+
   console.log(UserService.getTypeString());
   return (
     <>
@@ -37,29 +133,21 @@ const TestPage = () => {
       <h1>Test Page</h1>
       <h1>Test Page</h1>
       <h1>Test Page</h1>
-      <Button onClick={handleChangeContexct}>change init</Button>
-      {/* <h1>{JSON.stringify(User)}</h1> */}
-      <Link to="/">nav to home</Link>
-      <h1>{JSON.stringify(UserService.isGuest())}</h1>
-      <Link to={{ pathname: "/SelectReturnFlights", state: { a: 1 } }}>
-        nav to select return flight
-      </Link>
-      <ImgCard
-        title="title"
-        text="eiocjeiojceioc"
-        btnText="clickme"
-        imgsrc="https://images.unsplash.com/photo-1523837157348-ffbdaccfc7de?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NDN8fGNyZWF0ZXxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60"
-      />
-      <PopupView showDialog={open} setshowDialog={setOpen} title="Update Form">
-        <UpdateForm />
-      </PopupView>
-      <Button onClick={handleBtnClick}> Click me </Button>
+      <Button onClick={handleBtnClick}> login </Button>
+      <Button onClick={handleBtnClick3}> loginAdmin </Button>
+      <Button onClick={handleBtnClick1}> normal request </Button>
+      <Button onClick={handleBtnClick2}> protected request </Button>
+      <label>
+        Token Exired :{" "}
+        {JSON.stringify(isTokenExpired(Cookies.getItem("accessToken")))}
+      </label>
+      <label>{Cookies.getItem("accessToken")}</label>
+      <label>{Cookies.getItem("refreshToken")}</label>
 
-      <PlaneSelection
-        id={0}
-        seatClick={handleSeatClick}
-        availableSeats={avaiableSeats}
-      />
+      <Button onClick={handleChangeContexct}>change init</Button>
+
+      <Link to="/">nav to home</Link>
+      <h1>{"user = " + JSON.stringify(UserService.isGuest())}</h1>
     </>
   );
 };
