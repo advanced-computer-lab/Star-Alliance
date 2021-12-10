@@ -75,7 +75,6 @@ const ReservationView = () => {
   //const [Editreservation, setEditReservation] = useContext(EditReservationCtx);
   const [searchFlights, setSearchFlights] = useContext(UserHomeCtx);
   let history = useHistory();
-  let allReservationData;
 
   const classes = useStyles();
   const [popupOpen, setPopupOpen] = useState(false); // the initial state of the dialog is set to false
@@ -110,6 +109,59 @@ const ReservationView = () => {
     [rows]
   );
 
+  const updateReservationList = () => {
+    FlightService.GetAllReservedFlights()
+      .then((data ) => {
+        console.log("recived ===> ", data);
+        
+
+        // Pre-Proccessing          
+       
+     //   data.forEach((resv) => {
+        // resv.flight["id"] = resv.flight["_id"];
+        /* const formatDateTime = (input) =>
+            input ? moment(input).format("yyyy-MM-DD hh:mmA") : null;
+
+            resv.flight["arrivalTime"] = formatDateTime(resv.flight["arrivalTime"]);
+            resv.flight["departureTime"] = formatDateTime(resv.flight["departureTime"]);*/
+       // });
+       const allfl=[];
+        let j =0;
+       for(let i=0;i<data.data.length*2;i=i+2)  {
+           const reservDet1 = {companions:data.data[j].companions, flightSeats:data.data[j].fligh1seats};
+           allfl[i]=data.data[j].flight1;
+           allfl[i].id=i;
+           allfl[i].reservDet=reservDet1;
+           const reservDet2 = {companions:data.data[j].companions, flightSeats:data.data[j].fligh2seats};
+           allfl[i+1]=data.data[j].flight2;
+           allfl[i+1].id=i+1;
+           allfl[i+1].reservDet=reservDet2;
+           j++
+       }   
+       console.log("hena1",data.data)
+       console.log("hena",allfl)
+       allfl.forEach((resv) =>{
+        resv["id"] = resv["_id"];
+        const formatDateTime = (input) =>
+         input ? moment(input).format("yyyy-MM-DD hh:mmA") : null;
+
+         resv["arrivalTime"] = formatDateTime(resv["arrivalTime"]);
+         resv["departureTime"] = formatDateTime(resv["departureTime"]);
+        });
+        console.log("data - => ", data);
+        setisLoading(false);
+        
+        setSOTRows(allfl);  
+        console.log("datsssda - => ",allfl);
+      })
+      .catch((err) => {
+        console.log("errr <===", err.response);
+       // const errorMessage = err.response.data;
+        //alert(errorMessage);
+      }, []);
+  };
+
+
   const EditReservation = React.useCallback(
     (id) => () => {
       
@@ -122,6 +174,17 @@ const ReservationView = () => {
       history.push('/');
     });
 
+    const EditSeat = React.useCallback(
+      (id) => () => {
+        
+        const EditedSeat = rows.filter((row) => row.id === id)[0];
+        console.log("Edittttttt", EditedSeat);
+        // contains the details of the edited flight
+        const oldReservation = EditedSeat;
+        setSearchFlights({
+          ...searchFlights,oldReservation});
+        history.push('/SeatReservation');
+      });
 
   const columns = React.useMemo(
     () => [
@@ -182,7 +245,7 @@ const ReservationView = () => {
         <GridActionsCellItem
         icon={<EventSeatIcon  />}
         label="Seats"
-        onClick={CancelReservation(params.id)}
+        onClick={EditSeat(params.id)}
         // showInMenu
       />,
          <GridActionsCellItem
@@ -194,56 +257,8 @@ const ReservationView = () => {
         ]
       },
     ],
-    [CancelReservation, EditReservation]
+    [CancelReservation, EditReservation , EditSeat]
   );
-  const updateReservationList = () => {
-    FlightService.GetAllReservedFlights()
-      .then((data ) => {
-        console.log("recived ===> ", data);
-        // Pre-Proccessing          
-       
-     //   data.forEach((resv) => {
-        // resv.flight["id"] = resv.flight["_id"];
-        /* const formatDateTime = (input) =>
-            input ? moment(input).format("yyyy-MM-DD hh:mmA") : null;
-
-            resv.flight["arrivalTime"] = formatDateTime(resv.flight["arrivalTime"]);
-            resv.flight["departureTime"] = formatDateTime(resv.flight["departureTime"]);*/
-       // });
-       const allfl=[];
-       let size= data.data.length;
-        size =size *2;
-        let j =0;
-       for(let i=0;i<data.data.length*2;i=i+2)  {
-           allfl[i]=data.data[j].flight1;
-           allfl[i].id=i;
-           allfl[i+1]=data.data[j].flight2;
-           allfl[i+1].id=i+1;
-           j++
-       }   
-       console.log("hena1",data.data.length)
-       console.log("hena",allfl)
-       allfl.forEach((resv) =>{
-        resv["id"] = resv["_id"];
-        const formatDateTime = (input) =>
-         input ? moment(input).format("yyyy-MM-DD hh:mmA") : null;
-
-         resv["arrivalTime"] = formatDateTime(resv["arrivalTime"]);
-         resv["departureTime"] = formatDateTime(resv["departureTime"]);
-        });
-        console.log("data - => ", data);
-        setisLoading(false);
-        
-
-        setSOTRows(allfl);  
-        console.log("datsssda - => ",allfl);
-      })
-      .catch((err) => {
-        console.log("errr <===", err.response);
-       // const errorMessage = err.response.data;
-        //alert(errorMessage);
-      }, []);
-  };
 
   
 
