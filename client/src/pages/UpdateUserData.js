@@ -12,7 +12,7 @@ import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import { faPassport } from "@fortawesome/free-solid-svg-icons";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import Alert from "../Components/Alert";
-
+import { Link } from "react-router-dom";
  
 const UpdateUserData = () => {
     let updateFormRef = createRef();
@@ -135,15 +135,20 @@ const showAlert = (message) => {
                  </Form.Group>
 
   </Row>
+  
         <div  style={{height:"3cm",width:"19cm",marginTop:"0.8cm"}}>
+        
         <Button  type="submit" variant="primary">
             Update Info. <FontAwesomeIcon icon={faUserEdit}/>
         </Button>
                 </div>
                     
        </Form>
-
-
+       <Link to="/ChangePassword">
+       <Button  type="submit" variant="primary" >
+             Change Password
+        </Button>
+         </Link>
     </div>
       </div>
             </div>

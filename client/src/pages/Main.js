@@ -36,6 +36,7 @@ import SelectEditFlight from "../pages/SelectEditFlight.js";
 import SelectEditFlightSeat from "../pages/SelectEditFlightSeat.js";
 import ReservationEditSummary from "../pages/ReservationEditSummary.js";
 import EditReservationContext from "../Context/EditReservationContext.js";
+import ChangePassword from "../Components/ChangePassword.js";
 
 function ScrollToTop() {
   const history = useHistory();
@@ -132,7 +133,7 @@ const Main = () => {
         <Route exact path="/createFlight" component={CreateFlight}></Route>
         <Route exact path="/chooseFlight" component={ChooseFlight}></Route>
         <Route exact path="/SignUp" component={SignUp}></Route>
-
+        <Route exact path="/ChangePassword" component={ChangePassword}></Route>
 
         <Route
           exact

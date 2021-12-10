@@ -990,7 +990,26 @@ app.post("/UpdateUser", async (req, res) => {
   );
   res.send(result);
 });
-
+app.post("/passcheck", async (req, res) => {
+  const data = req.body;
+  console.log(data);
+  const result = await user.findOne({ _id: data.findUser });
+  if(result.password===data.password)
+ res.send(true);
+ else
+ res.send(false);
+});
+app.post("/Updatepass", async (req, res) => {
+  const data = req.body;
+  console.log(data);
+  const result = await user.updateOne(
+    { _id: data.findUser },
+    {
+      password: data.password
+    }
+  );
+  res.send(result);
+});
 app.post("/GetUserInfo", async (req, res) => {
   const UserId = req.body.findUser;
   console.log("GetUserInfo =", req.body.findUser);
