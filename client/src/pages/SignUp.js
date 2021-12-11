@@ -33,6 +33,7 @@ const SignUp = () => {
   }
 
   const handleNext = () => {
+    if (!formRef.current.checkValidity()) return;
     if (activeStep < 2) {
       setActiveStep((prevActiveStep) => prevActiveStep + 1);
     }
