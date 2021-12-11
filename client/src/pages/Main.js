@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import {
   BrowserRouter as Router,
   Redirect,
@@ -29,7 +29,6 @@ import ContextRoute from "../Context/ContextRoute.js";
 import SeatReservation from "../pages/SeatReservation";
 import UpdateUserData from "../pages/UpdateUserData";
 import UserService from "../Services/UserService.js";
-import { useEffect } from "react";
 import SignUp from "../pages/SignUp.js";
 import EditFlight from "../pages/EditFlight.js";
 import SelectEditFlight from "../pages/SelectEditFlight.js";
@@ -37,6 +36,10 @@ import SelectEditFlightSeat from "../pages/SelectEditFlightSeat.js";
 import ReservationEditSummary from "../pages/ReservationEditSummary.js";
 import EditReservationContext from "../Context/EditReservationContext.js";
 import ChangePassword from "../Components/ChangePassword.js";
+import SignIn from "../pages/SignIn.js";
+import { UserCtx } from "../Context/GlobalContext.js";
+
+import Cookies from "js-cookies";
 
 function ScrollToTop() {
   const history = useHistory();
@@ -53,6 +56,14 @@ function ScrollToTop() {
 
 const Main = () => {
   const isAdmin = UserService.isAdmin();
+  const [User, setUser] = useContext(UserCtx);
+  // useEffect(() => {
+  //   // When a Refresh happens
+  //   const atoken = Cookies.getItem("accessToken");
+  //   if (atoken) {
+  //     // ask the server for the user info, then update the states
+  //   }
+  // }, []);
   return (
     <>
       <ScrollToTop />
@@ -63,7 +74,7 @@ const Main = () => {
           Context={UserHomeContext}
           CComponent={isAdmin ? AdminHomePage : UserHomePage}
         />
-       
+
         <ContextRoute
           exact
           path="/ReservationSelection"
@@ -107,7 +118,7 @@ const Main = () => {
           Context={UserHomeContext}
           CComponent={SelectEditFlight}
         />
-         <ContextRoute
+        <ContextRoute
           exact
           path="/SelectEditFlightSeat"
           Context={UserHomeContext}
@@ -132,8 +143,10 @@ const Main = () => {
         <Route exact path="/deleteFlight" component={deletePopup}></Route>
         <Route exact path="/createFlight" component={CreateFlight}></Route>
         <Route exact path="/chooseFlight" component={ChooseFlight}></Route>
-        <Route exact path="/SignUp" component={SignUp}></Route>
         <Route exact path="/ChangePassword" component={ChangePassword}></Route>
+
+        <Route exact path="/signup" component={SignUp} />
+        <Route exact path="/login" component={SignIn} />
 
         <Route
           exact

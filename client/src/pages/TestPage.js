@@ -10,53 +10,14 @@ import { Link } from "react-router-dom";
 import UserService from "../Services/UserService.js";
 import PlaneSelection from "../Components/PlanSelection.js";
 import Cookies from "js-cookies";
+import AuthService from "../Services/AuthService.js";
 
-import axios from "axios";
 import http from "../Services/http-common.js";
 
 function isTokenExpired(token) {
   const expiry = JSON.parse(atob(token.split(".")[1])).exp;
   return Math.floor(new Date().getTime() / 1000) >= expiry;
 }
-// normal resource
-const axiosInst = axios.create({
-  headers: {
-    "Content-type": "application/json",
-  },
-  withCredentials: true,
-});
-// authServer axios
-const axiosInst2 = axios.create({
-  headers: {
-    "Content-type": "application/json",
-  },
-  withCredentials: true,
-});
-
-axiosInst.interceptors.request.use(
-  async (config) => {
-    console.log("request interceptor");
-    console.log(config);
-    if (isTokenExpired(Cookies.getItem("accessToken"))) {
-      console.log("token expired trying to refresh");
-      await axiosInst2
-        .post("http://localhost:2000/getaToken/", {})
-        .then((res) => {
-          console.log(res);
-          console.log(res.data);
-          // console.log("config", config);
-          // Cookies.setItem("accessToken", res.data.token);
-        })
-        .catch((err) => {
-          window.location.href = "/login";
-        });
-    }
-    return config;
-  },
-  (error) => {
-    Promise.reject(error);
-  }
-);
 
 const TestPage = () => {
   const [User, setUser] = useContext(UserCtx);
@@ -74,11 +35,10 @@ const TestPage = () => {
 
   const handleBtnClick = () => {
     // login
-    axiosInst2
-      .post("http://localhost:2000/login/", {
-        username: "yehia",
-        password: "user12345",
-      })
+    AuthService.singin({
+      username: "yehia",
+      password: "user12345",
+    })
       .then((res) => {
         console.log(res);
       })
@@ -88,11 +48,10 @@ const TestPage = () => {
   };
   const handleBtnClick3 = () => {
     // login
-    axiosInst2
-      .post("http://localhost:2000/login/", {
-        username: "admin",
-        password: "admin",
-      })
+    AuthService.singin({
+      username: "admin",
+      password: "admin",
+    })
       .then((res) => {
         console.log(res);
       })
@@ -102,7 +61,7 @@ const TestPage = () => {
   };
   const handleBtnClick1 = () => {
     // get a resource
-    axiosInst
+    http
       .get("http://localhost:8080/protected")
       .then((res) => {
         console.log(res);
@@ -126,6 +85,16 @@ const TestPage = () => {
       });
   };
 
+  const handleBtnClick4 = () => {
+    AuthService.logout()
+      .then((res) => {
+        console.log("logout res = ", res);
+      })
+      .catch((err) => {
+        console.log("logout res =", err);
+      });
+  };
+
   console.log(UserService.getTypeString());
   return (
     <>
@@ -137,6 +106,7 @@ const TestPage = () => {
       <Button onClick={handleBtnClick3}> loginAdmin </Button>
       <Button onClick={handleBtnClick1}> normal request </Button>
       <Button onClick={handleBtnClick2}> protected request </Button>
+      <Button onClick={handleBtnClick4}> LogOut </Button>
       <label>
         Token Exired :{" "}
         {JSON.stringify(isTokenExpired(Cookies.getItem("accessToken")))}
@@ -147,7 +117,10 @@ const TestPage = () => {
       <Button onClick={handleChangeContexct}>change init</Button>
 
       <Link to="/">nav to home</Link>
-      <h1>{"user = " + JSON.stringify(UserService.isGuest())}</h1>
+      <Button onClick={() => UserService.SetUser({ type: 1 })}>
+        changeType
+      </Button>
+      <h1>{"user = " + JSON.stringify(User)}</h1>
     </>
   );
 };

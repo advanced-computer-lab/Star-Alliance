@@ -1,7 +1,8 @@
+import { useContext } from "react";
 import Naavbar from "./Components/Naavbar";
 import Main from "./pages/Main.js";
 import Footer from "./Components/Footer";
-import GlobalContext from "./Context/GlobalContext.js";
+import GlobalContext, { UserCtx } from "./Context/GlobalContext.js";
 
 function App() {
   return (
@@ -12,12 +13,10 @@ function App() {
           {/*add margin top compansate for navbar*/}
           <Main />
         </div>
-       
-
       </div>
-      <div  style={{marginTop:"2cm"}}>
+      <div style={{ marginTop: "2cm" }}>
         <Footer />
-        </div>
+      </div>
     </GlobalContext>
   );
 }

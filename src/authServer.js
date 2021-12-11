@@ -53,9 +53,14 @@ app.post("/getaToken", (req, res) => {
 
 app.delete("/logout", (req, res) => {
   // remove the user's refresh token from the collection
-  console.log("before", refreshTokens);
+  // console.log("before", refreshTokens);
   refreshTokens = refreshTokens.filter((token) => token !== req.body.rtoken);
-  console.log("after", refreshTokens);
+  // console.log("after", refreshTokens);
+
+  // clear the tokens cookies
+  res.clearCookie("accessToken");
+  res.clearCookie("refreshToken");
+
   res.sendStatus(204);
 });
 
@@ -97,7 +102,11 @@ app.post("/login", async (req, res) => {
     path: "/getaToken",
     httpOnly: false,
   });
-  res.json({ accessToken: accessToken, refreshToken: refreshToken });
+  res.json({
+    accessToken: accessToken,
+    refreshToken: refreshToken,
+    isAdmin: loggingUser.isAdmin,
+  });
 });
 
 function generateAccessToken(user) {

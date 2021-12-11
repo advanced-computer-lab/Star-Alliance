@@ -7,39 +7,43 @@ const GetUser = () => {
   const [user, setUser] = useContext(UserCtx);
   return user;
 };
+const SetUser = (newUser) => {
+  const [user, setUser] = useContext(UserCtx);
+  setUser(newUser);
+};
 
-class UserService {
-  getUser() {
-    return GetUser();
-  }
-  getType() {
-    return GetUser().type;
-  }
-  getTypeString() {
-    switch (GetUser().type) {
-      case 0:
-        return "Guest";
-      case 1:
-        return "User";
-      case 2:
-        return "Admin";
-      default:
-        return "Error";
-    }
-  }
-  isGuest() {
-    return GetUser().type === 0;
-  }
+const getUser = () => GetUser();
 
-  isUser() {
-    return GetUser().type === 1;
-  }
-  isAdmin() {
-    return GetUser().type === 2;
-  }
-  isLoggedIn() {
-    return GetUser().type !== 0;
-  }
-}
+const getType = () => GetUser().type;
 
-export default new UserService();
+const getTypeString = () => {
+  switch (GetUser().type) {
+    case 0:
+      return "Guest";
+    case 1:
+      return "User";
+    case 2:
+      return "Admin";
+    default:
+      return "Error";
+  }
+};
+const isGuest = () => GetUser().type === 0;
+
+const isUser = () => GetUser().type === 1;
+
+const isAdmin = () => GetUser().type === 2;
+
+const isLoggedIn = () => GetUser().type !== 0;
+
+const UserService = {
+  getUser,
+  getType,
+  getTypeString,
+  isGuest,
+  isUser,
+  isAdmin,
+  isLoggedIn,
+  SetUser,
+};
+export default UserService;

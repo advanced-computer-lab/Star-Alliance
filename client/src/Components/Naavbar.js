@@ -13,6 +13,7 @@ import TextField from "@mui/material/TextField";
 import { LinkContainer } from "react-router-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
+import AuthService from "../Services/AuthService.js";
 
 //const logo= "	https://o.remove.bg/downloads/e14af0fc-8d3f-4a5a-8dc4-15aca52535d1/7-removebg-preview.png"
 const Naavbar = () => {
@@ -71,6 +72,15 @@ const Naavbar = () => {
     setpopLogin(true);
   };
 
+  const handleSignoutClick = () => {
+    AuthService.logout()
+      .then((res) => {
+        console.log(res);
+        setUser({ ...user, type: 0 });
+      })
+      .catch((err) => console.log(err));
+  };
+
   return (
     <>
       {/* <Navbar bg="dark" fixed="top">
@@ -127,47 +137,21 @@ const Naavbar = () => {
           </Navbar.Collapse>
           <Navbar.Collapse className="justify-content-end">
             {/* TODO: Remove Admin User Debug Buttons later */}
-            <Button
-              style={{ color: "white" }}
-              onClick={() => {
-                setUser({ ...user, type: 0 });
-              }}
-            >
-              Guest
-            </Button>
-            <Button
-              style={{ color: "white" }}
-              onClick={() => {
-                setUser({ ...user, type: 1 });
-              }}
-            >
-              User
-            </Button>
-            <Button
-              style={{ color: "white" }}
-              onClick={() => {
-                setUser({ ...user, type: 2 });
-              }}
-            >
-              Admin
-            </Button>
             <Navbar.Text>
-              {!UserService.isLoggedIn() ? (
-                <div>
-                  <Button onClick={handleLoginBtn} style={{ color: "white" }}>
-                    Sign In{" "}
-                    <FontAwesomeIcon
-                      style={{ marginLeft: "0.2cm" }}
-                      icon={faUser}
-                    />
-                  </Button>
-                </div>
-              ) : UserService.isAdmin() ? (
-                "Welcome Admin"
-              ) : (
-                "Welcome User"
-              )}
+              {UserService.isLoggedIn() &&
+                (UserService.isAdmin() ? "Welcome Admin" : "Welcome User")}
             </Navbar.Text>
+            <Nav>
+              {UserService.isLoggedIn() ? (
+                <Navbar.Text>
+                  <Nav.Link onClick={handleSignoutClick}>Sign out</Nav.Link>
+                </Navbar.Text>
+              ) : (
+                <LinkContainer to="/login">
+                  <Nav.Link style={{ color: "#DBE2EF" }}>Login</Nav.Link>
+                </LinkContainer>
+              )}
+            </Nav>
           </Navbar.Collapse>
         </Container>
       </Navbar>

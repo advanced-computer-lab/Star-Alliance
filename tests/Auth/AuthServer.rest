@@ -3,7 +3,7 @@ content-type: application/json
 
 {
     "username": "yehia",
-    "password": "user1234"
+    "password": "user12345"
 }
 
 ###
@@ -27,5 +27,6 @@ DELETE http://localhost:2000/logout
 content-type: application/json
 
 {
-    "rtoken": ""
+    "refreshToken":
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MWEzNWZjZGZkMzNlZDU0OTk3YjUyNzEiLCJpc0FkbWluIjpmYWxzZSwiaWF0IjoxNjM5MTY1MTU4fQ.9XJSd1qQjSa1WkpxbL_Ht44JTc9zrurmKLFFdYEQWmM"
 }
