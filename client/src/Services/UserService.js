@@ -36,6 +36,10 @@ const isAdmin = () => GetUser().type === 2;
 
 const isLoggedIn = () => GetUser().type !== 0;
 
+const signUp = (data) => {
+  return http.post("/User/signUp", data);
+};
+
 const UserService = {
   getUser,
   getType,
@@ -45,5 +49,6 @@ const UserService = {
   isAdmin,
   isLoggedIn,
   SetUser,
+  signUp,
 };
 export default UserService;

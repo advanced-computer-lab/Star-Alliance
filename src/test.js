@@ -6,7 +6,7 @@ const sleep = async (milliseconds) => {
 };
 const moment = require("moment");
 
-const { flight, reservation } = require("../Models/export");
+const { flight, reservation, user } = require("../Models/export");
 
 const mongoose = require("mongoose");
 const dbUrl = process.env.DB_URI;
@@ -17,15 +17,17 @@ mongoose.connect(dbUrl, {
 
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error:"));
-db.once("open", () => {
+db.once("open", async () => {
   console.log("Database connected");
+  const result = await user.syncIndexes();
+  console.log(result);
   // excute();
   // flight.find({}).then((res) => {
   //   console.log(res);
   // });
-  reservation.remove({}).then((res) => {
-    console.log(res);
-  });
+  // reservation.remove({}).then((res) => {
+  //   console.log(res);
+  // });
 });
 
 // const newUser = new user({});

@@ -13,19 +13,15 @@ const userSchema = new Schema({
   firstName: { type: String },
   lastName: { type: String },
   passportNumber: { type: String },
-  countryCode: { type: String },
   address: {
     country: String,
     city: String,
     street: String,
     buildingNumber: Number,
-    floorNumber: Number,
-    appartmentNumber: Number,
   },
+  birthDate: { type: Date },
 
-  birthDate: { type: String },
-  job: { type: String },
-
+  countryCode: { type: String },
   phoneNumbers: [{ type: String }],
   creditcards: [
     {

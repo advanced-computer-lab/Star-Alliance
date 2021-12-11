@@ -40,6 +40,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 app.use("/Admin", require("../Routes/Admin.js"));
+app.use("/User", require("../Routes/User.js"));
 
 const db = require("../Service/DBService.js");
 

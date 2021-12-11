@@ -136,7 +136,6 @@ const Naavbar = () => {
             </Nav>
           </Navbar.Collapse>
           <Navbar.Collapse className="justify-content-end">
-            {/* TODO: Remove Admin User Debug Buttons later */}
             <Navbar.Text>
               {UserService.isLoggedIn() &&
                 (UserService.isAdmin() ? "Welcome Admin" : "Welcome User")}
@@ -147,9 +146,14 @@ const Naavbar = () => {
                   <Nav.Link onClick={handleSignoutClick}>Sign out</Nav.Link>
                 </Navbar.Text>
               ) : (
-                <LinkContainer to="/login">
-                  <Nav.Link style={{ color: "#DBE2EF" }}>Login</Nav.Link>
-                </LinkContainer>
+                <>
+                  <LinkContainer to="/login">
+                    <Nav.Link style={{ color: "#DBE2EF" }}>Login</Nav.Link>
+                  </LinkContainer>
+                  <LinkContainer to="/signup">
+                    <Nav.Link style={{ color: "#DBE2EF" }}>Signup</Nav.Link>
+                  </LinkContainer>
+                </>
               )}
             </Nav>
           </Navbar.Collapse>

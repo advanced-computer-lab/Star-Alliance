@@ -1,0 +1,18 @@
+POST http://localhost:8080/User/signUp/
+content-type: application/json
+
+{
+    "firstName": "John",
+    "lastName": "Doe",
+    "username": "john2",
+    "email": "ahmed@gmail.com",
+    "password": "12345a6",
+    "phoneNumber": "0123456789",
+    "birthDate": "2003-02-01",
+    "country": "Egypt",
+    "city": "Cairo",
+    "street": "El-Nasr",
+    "buildingNumber": "1",
+    "passportNumber": "123456789",
+    "countryCode": "+20"
+}
