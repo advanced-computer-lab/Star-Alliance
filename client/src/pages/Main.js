@@ -57,13 +57,23 @@ function ScrollToTop() {
 const Main = () => {
   const isAdmin = UserService.isAdmin();
   const [User, setUser] = useContext(UserCtx);
-  // useEffect(() => {
-  //   // When a Refresh happens
-  //   const atoken = Cookies.getItem("accessToken");
-  //   if (atoken) {
-  //     // ask the server for the user info, then update the states
-  //   }
-  // }, []);
+  useEffect(() => {
+    // When a Refresh happens
+    const strUserData = localStorage.getItem("user");
+    try {
+      const user = JSON.parse(strUserData);
+      setUser(user);
+    } catch (e) {
+      console.log(e);
+    }
+  }, []);
+
+  useEffect(() => {
+    // console.log("REFRESH User Changed");
+    // console.log(User);
+    localStorage.setItem("user", JSON.stringify(User));
+  }, [User]);
+
   return (
     <>
       <ScrollToTop />

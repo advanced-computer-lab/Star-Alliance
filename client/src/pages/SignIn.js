@@ -58,9 +58,9 @@ const SignIn = () => {
       })
       .catch((err) => {
         console.log("errr <===", err.response);
-        // const errorMessage = err.response.data;
+        const errorMessage = err.response.data;
         // alert(errorMessage);
-        // showAlert(errorMessage);
+        showAlert(errorMessage);
       });
   };
 
@@ -112,8 +112,6 @@ const SignIn = () => {
                 />
               </Form.Group>
             </Row>
-
-            <label>{JSON.stringify(user)}</label>
 
             <br />
             <div>

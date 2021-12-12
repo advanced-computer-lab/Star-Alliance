@@ -79,11 +79,11 @@ app.post("/login", async (req, res) => {
   const password = req.body.password;
   // Authenticate User
   const loggingUser = await user.findOne({ username: username });
-  if (!loggingUser) return res.status(401).send({ message: "Wrong username" });
+  if (!loggingUser) return res.status(401).send("Wrong username");
 
   if (loggingUser.password !== password) {
     console.log("wrong password", loggingUser.password, password);
-    return res.status(401).send({ message: "Wrong password" });
+    return res.status(401).send("Wrong password");
   }
   // const payload = loggingUser._doc;
   const payload = { userId: loggingUser.id, isAdmin: loggingUser.isAdmin };
