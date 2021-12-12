@@ -17,6 +17,14 @@ const axResource = axios.create({
   withCredentials: true,
 });
 
+/** TODO
+axios
+	before sending
+		check atoken is timed out? automatically try to get a new one AuthServer
+	after sending
+		if 403 redirect to login
+*/
+
 function isTokenExpired(token) {
   const expiry = JSON.parse(atob(token.split(".")[1])).exp;
   return Math.floor(new Date().getTime() / 1000) >= expiry;
