@@ -156,7 +156,7 @@ const Main = () => {
         <Route exact path="/ChangePassword" component={ChangePassword}></Route>
 
         <Route exact path="/signup" component={SignUp} />
-        <Route exact path="/login" component={SignIn} />
+        <Route exact path="/singin" component={SignIn} />
 
         <Route
           exact

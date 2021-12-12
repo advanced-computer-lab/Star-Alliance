@@ -147,7 +147,7 @@ const Naavbar = () => {
                 </Navbar.Text>
               ) : (
                 <>
-                  <LinkContainer to="/login">
+                  <LinkContainer to="/singin">
                     <Nav.Link style={{ color: "#DBE2EF" }}>Login</Nav.Link>
                   </LinkContainer>
                   <LinkContainer to="/signup">
