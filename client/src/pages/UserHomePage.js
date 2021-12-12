@@ -24,27 +24,79 @@ import moment from "moment";
 import YouTube from "react-youtube";
 import tot from "../images/tot.png";
 import top from "../images/top.png";
+import Alert from "../Components/Alert";
 
 const UserHomePage = () => { 
      
   const [searchFlights, setSearchFlights] = useContext(UserHomeCtx);
-  //const [Editreservation, setEditReservation] = useContext(EditReservationCtx);
   const [loadingSearch, setloadingSearch] = useState(false);
   const history = useHistory();
   const formRef = useRef(null);
   const goingData = [];
   //var clicked=true;
+  const [alertOpen, setalertOpen] = useState(false);
+  const [alertMessage, setalertMessage] = useState("");
+  const showAlert = (message) => {
+    setalertMessage(message);
+    setalertOpen(true);
+
+    setTimeout(() => {
+      setalertOpen(false);
+    }, 3000);
+  };
   const [clicked, setClicked] = useState(false);
 
   console.log(searchFlights);
 
+  var today = new Date();
+var dd = String(today.getDate()+1).padStart(2, '0');
+var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+var yyyy = today.getFullYear();
+
+today = mm + '/' + dd+ '/' + yyyy;
+
+function checkDate (departureTime,arrivalTime){
+  let date= new Date(departureTime);
+  let date2= new Date(arrivalTime);
+  console.log("checkdate1",date);
+  console.log("checkdate2",date2);
+  console.log("checkdate2",date2.getFullYear());
+  console.log("checkdate2",date2.getDate());
+  console.log("checkdate2",date2.getMonth());
+  if(date.getFullYear()<date2.getFullYear()){
+    return false;
+  }
+  else if(date.getFullYear()==date2.getFullYear()){
+    if(date.getMonth()<date2.getMonth()){
+      return false;
+    }
+    else if(date.getMonth()==date2.getMonth()){
+       if(date.getDate()<=date2.getDate()){
+        return false;
+      }
+    }
+    else {
+      return true;
+    }
+    
+  }
+  else
+  { 
+    return true;
+  }
+  }
+
+
   function show() {
     setClicked(true);
   }
-
   const handleSubmit = () => {
-    setloadingSearch(true);
+   
     var e = formRef.current;
+    let checkBigger=checkDate( moment(e.departureTime.value).format("yyyy-MM-DDThh:mm"), moment(e.arrivalTime.value).format("yyyy-MM-DDThh:mm"));
+    if(checkBigger==false){
+      setloadingSearch(true);
+
     console.log("enter", formRef.current.departureAirport.value);
     const data = {
       //Going
@@ -62,9 +114,11 @@ const UserHomePage = () => {
     console.log(data);
 
     FlightService.GetRequestedFlights(data).then(({ data }) => {
-      //console.log(data);
-      //searchFlights.data = data;
-      //console.log(clicked);
+      if(data.going.length==0||data.returning.length==0){
+        setloadingSearch(false);
+        showAlert("No Available Flights with this Date");
+      }
+      else{
       const selected = {
         flight1: null,
         flight2: null,
@@ -80,7 +134,12 @@ const UserHomePage = () => {
       show();
       console.log(clicked);
       history.push("/SelectFlight");
+    }
     });
+  }
+  else{
+    showAlert("Return Date Cannot be after Going Date");
+  }
   };
   return (
     <div 
@@ -128,14 +187,17 @@ const UserHomePage = () => {
           </Carousel.Caption>
         </Carousel.Item>
       </Carousel>
+      <Alert
+        open={alertOpen}
+        setOpen={setalertOpen}
+        title={alertMessage}
+        desc=""
+      />
       <div 
         className=" mt-5 col-sm-8 offset-sm-2 col-md-8 offset-md-2 col-lg-8 offset-lg-2 " //
         style={{
           borderRadius: "2rem",
           backgroundColor: "#112D4E",
-          //width: "115vh",
-          //marginLeft: "50vh",
-          //marginBottom: "15vh",
           height: "auto",
         }}
       >
@@ -149,7 +211,7 @@ const UserHomePage = () => {
                   <Form.Label>
                     From <FontAwesomeIcon icon={faPlaneDeparture} />
                   </Form.Label>
-                  <Form.Select name="departureAirport" defaultValue="">
+                  <Form.Select name="departureAirport" defaultValue="LAX">
                     <option value="LAX">LAX</option>
                     <option value="JFK">JFK</option>
                     <option value="LHR">LHR</option>
@@ -169,11 +231,9 @@ const UserHomePage = () => {
                   To <FontAwesomeIcon icon={faPlaneArrival} />
                 </Form.Label>
 
-                <Form.Select name="arrivalAirport" defaultValue="">
+                <Form.Select name="arrivalAirport" defaultValue="JFK">
                   <option value="LAX">LAX</option>
-                  <option value="JFK" selected>
-                    JFK
-                  </option>
+                  <option value="JFK"> JFK</option>
                   <option value="LHR">LHR</option>
                   <option value="CAI"> CAI </option>
                   <option value="EXP">EXP</option>
@@ -198,6 +258,9 @@ const UserHomePage = () => {
                     type="date"
                     name="departureTime"
                     placeholder="Enter Departure Time"
+                    defaultValue={moment(new Date).format("yyyy-MM-DD")}
+                    min={moment(new Date).format("yyyy-MM-DD")}
+                    
                   />
                 </Form.Group>
               </Col>
@@ -213,7 +276,8 @@ const UserHomePage = () => {
                     type="date"
                     name="arrivalTime"
                     placeholder="Enter Arrival Time"
-                  />
+                    defaultValue={moment(today).format("yyyy-MM-DD")}
+                    min={moment(new Date).format("yyyy-MM-DD")}                  />
                 </Form.Group>
               </Col>
             </Row>
@@ -266,17 +330,7 @@ const UserHomePage = () => {
 
             <Row>
               <Col>
-                {/* <Button
-                  className="mt-4"
-                  variant="primary"
-                  onClick={handleSubmit}
-                >
-                  Confirm <FontAwesomeIcon icon={faCheckCircle} />
-                </Button> */}
-                {/* {clicked == true ? ( */}
-                {/* <Link to="/SelectFlight"> */}
                 <Button
-                  // style={{ marginLeft: "4vh" }}
                   className="mt-4"
                   variant="primary"
                   type="button"
@@ -296,8 +350,6 @@ const UserHomePage = () => {
                     <FontAwesomeIcon icon={faSearch} />
                   )}
                 </Button>
-                {/* </Link> */}
-                {/* ) : null} */}
               </Col>
             </Row>
           </Form>
@@ -330,7 +382,6 @@ const UserHomePage = () => {
         </div>
         <br />
       </div>
-      {/* <Button style={{height:"1cm",width:"1cm"}} href="#top"><img style={{marginLeft:"0",height:"0.7cm",width:"0.7cm"}} src="https://cdn-icons.flaticon.com/png/512/4196/premium/4196777.png?token=exp=1638365014~hmac=d38a550c5c183f31c4ffdf6e65880d36" /></Button> */}
          
       <MoreThanFlight  />
 

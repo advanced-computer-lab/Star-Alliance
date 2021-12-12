@@ -40,36 +40,21 @@ const EditFlight = () => {
     const handleSubmit = () => {
       setloadingSearch(true);
       var e = formRef.current;
-      //console.log("enter", formRef.current.departureAirport.value);
       const data = {
         //Going
-        //  moment(arrivalTime).format("yyyy-MM-DDThh:mm");
-        
         departureTime: moment(e.departureTime.value).format("yyyy-MM-DDThh:mm"),
         // returning
         arrivalTime2: undefined,
         ///
         type: e.type.value,
-        //arrivalAirport: searchFlights.data.ToEditFlight.arrivalAirport,
-        //departureAirport: searchFlights.data.ToEditFlight.departureAirport,
-        //children: searchFlights.data.ToEditFlight.children,
-        //adult: searchFlights.data.ToEditFlight.adult,
-        //children:0,
-        //adult:1,
-        departureAirport:"JFK",
-        arrivalAirport:"LAX",
-
+        arrivalAirport: searchFlights.data.OldReservation.arrivalAirport,
+        departureAirport: searchFlights.data.OldReservation.departureAirport,
+        children:  parseInt(searchFlights.OldReservation.reservDet.companions.childCount),
+        adult: parseInt(searchFlights.OldReservation.reservDet.companions.adultCount),
       };
-      data.children=searchFlights.OldReservation.companions.adultCount;
-      data.adult=searchFlights.OldReservation.companions.childCount;
-      //data.departureAirport=searchFlights.OldReservation.departureAirport;
-      //data.arrivalAirport=searchFlights.OldReservation.arrivalAirport;
       console.log(data);
   
       FlightService.GetRequestedFlights(data).then(({ data }) => {
-        //console.log(data);
-        //searchFlights.data = data;
-        //console.log(clicked);
         const selected = {
         resId:searchFlights.OldReservation._id,
           flight1: null,
@@ -82,13 +67,9 @@ const EditFlight = () => {
           which:searchFlights.which,
           flight2seat:searchFlights.OldReservation.fligh2seats ,
           companions: {
-            adultCount: parseInt(searchFlights.OldReservation.companions.adultCount),
-            childCount: parseInt(searchFlights.OldReservation.companions.childCount),
+            adultCount: parseInt(searchFlights.OldReservation.reservDet.companions.adultCount),
+            childCount: parseInt(searchFlights.OldReservation.reservDet.companions.childCount),
           },
-         // companions: {
-           // adultCount: 1,
-            //childCount: 0,
-          //},
         };
         setSearchFlights({ data, selected });
         console.log("gigi", searchFlights);
