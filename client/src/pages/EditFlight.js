@@ -48,28 +48,26 @@ const EditFlight = () => {
         arrivalTime2: undefined,
         ///
         type: e.type.value,
-        arrivalAirport: searchFlights.data.OldReservation.arrivalAirport,
-        departureAirport: searchFlights.data.OldReservation.departureAirport,
-        children:  parseInt(searchFlights.OldReservation.reservDet.companions.childCount),
-        adult: parseInt(searchFlights.OldReservation.reservDet.companions.adultCount),
+        arrivalAirport: searchFlights.oldReservation.arrivalAirport,
+        departureAirport: searchFlights.oldReservation.departureAirport,
+        children:  parseInt(searchFlights.oldReservation.reservDet.companions.childCount),
+        adult: parseInt(searchFlights.oldReservation.reservDet.companions.adultCount),
       };
       console.log(data);
   
       FlightService.GetRequestedFlights(data).then(({ data }) => {
         const selected = {
-        resId:searchFlights.OldReservation._id,
+        resId:searchFlights.oldReservation.reservDet.reservationID,
           flight1: null,
-         // resId:"61b0f38d9e2b3fbe0af3ac3e",
-          //flight2:"61a79d30e6a68e5a4354ac12",
-          flight2:searchFlights.OldReservation.flight2, 
+         
+          flight2:searchFlights.oldReservation.reservDet.unEditedFlightID,
           flight1seat: [],
-          //flight2seat:["3D"],
-          //which:"flight2",
-          which:searchFlights.which,
-          flight2seat:searchFlights.OldReservation.fligh2seats ,
+          flight2seat:searchFlights.oldReservation.reservDet.flight2Seats,
+          
+          which:searchFlights.oldReservation.reservDet.which,
           companions: {
-            adultCount: parseInt(searchFlights.OldReservation.reservDet.companions.adultCount),
-            childCount: parseInt(searchFlights.OldReservation.reservDet.companions.childCount),
+            adultCount: parseInt(searchFlights.oldReservation.reservDet.companions.adultCount),
+            childCount: parseInt(searchFlights.oldReservation.reservDet.companions.childCount),
           },
         };
         setSearchFlights({ data, selected });
