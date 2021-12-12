@@ -101,6 +101,7 @@ const SignUp = () => {
       showAlert("Passwords do not match");
       return;
     }
+
     const data = {
       firstName: formRef.current.firstName.value,
       lastName: formRef.current.lastName.value,
@@ -125,7 +126,7 @@ const SignUp = () => {
           console.log("call BACK");
           history.push("/login");
         };
-        showAlert("Your Account has been Registered");
+        showAlert("Your Account has been Registered, you may login now");
       })
       .catch((err) => {
         setloading(false);
