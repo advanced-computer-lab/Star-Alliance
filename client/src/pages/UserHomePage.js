@@ -46,7 +46,6 @@ const UserHomePage = () => {
   };
   const [clicked, setClicked] = useState(false);
 
-  console.log(searchFlights);
 
   var today = new Date();
 var dd = String(today.getDate()+1).padStart(2, '0');

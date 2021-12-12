@@ -114,7 +114,6 @@ const ReservationView = () => {
       .then((data ) => {
         console.log("recived ===> ", data);
         
-
         // Pre-Proccessing          
        
      //   data.forEach((resv) => {
@@ -128,11 +127,12 @@ const ReservationView = () => {
        const allfl=[];
         let j =0;
        for(let i=0;i<data.data.length*2;i=i+2)  {
-           const reservDet1 = {companions:data.data[j].companions, flightSeats:data.data[j].fligh1seats};
+           const reservId = data.data[j]._id;
+           const reservDet1 = {companions:data.data[j].companions, flightSeats:data.data[j].fligh1seats, reservationID:reservId, which:"flight1"};
            allfl[i]=data.data[j].flight1;
            allfl[i].id=i;
            allfl[i].reservDet=reservDet1;
-           const reservDet2 = {companions:data.data[j].companions, flightSeats:data.data[j].fligh2seats};
+           const reservDet2 = {companions:data.data[j].companions, flightSeats:data.data[j].fligh2seats, reservationID:reservId, which:"flight2"};
            allfl[i+1]=data.data[j].flight2;
            allfl[i+1].id=i+1;
            allfl[i+1].reservDet=reservDet2;
@@ -164,14 +164,14 @@ const ReservationView = () => {
 
   const EditReservation = React.useCallback(
     (id) => () => {
-      
+      console.log(id);
       const EditedRow = rows.filter((row) => row.id === id)[0];
       console.log("Edittttttt", EditedRow);
       // contains the details of the edited flight
       const oldReservation = EditedRow;
       setSearchFlights({
         ...searchFlights,oldReservation});
-      history.push('/');
+      history.push('/EditFlight');
     });
 
     const EditSeat = React.useCallback(

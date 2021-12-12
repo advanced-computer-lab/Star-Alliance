@@ -33,6 +33,7 @@ const EditFlight = () => {
     //var clicked=true;
     const [clicked, setClicked] = useState(false);
   
+    console.log(searchFlights);
     function show() {
       setClicked(true);
     }
