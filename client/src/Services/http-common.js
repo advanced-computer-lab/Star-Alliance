@@ -84,6 +84,10 @@ function isTokenExpired(token) {
 //     return Promise.reject(error);
 //   }
 // );
+const clearTheAuthCookie = () => {
+  Cookies.removeItem("accessToken");
+  Cookies.removeItem("refreshToken");
+};
 
 const requestAgain = (originalRequest) => {
   return new Promise((resolve, reject) => resolve(axResource(originalRequest)));
@@ -100,10 +104,12 @@ axResource.interceptors.response.use(
     } = error;
     const originalRequest = config;
 
+    console.log("REQ interceptor on Error");
+
     if (status === 401) {
       if (isTokenExpired(Cookies.getItem("accessToken"))) {
         console.log("token expired trying to refresh");
-        await axAuthServer
+        return await axAuthServer
           .post("http://localhost:2000/getaToken/", {})
           .then((res) => {
             console.log(res);
@@ -112,11 +118,16 @@ axResource.interceptors.response.use(
             return requestAgain(originalRequest);
           })
           .catch((err) => {
+            clearTheAuthCookie();
             window.location.href = "/signin";
           });
+      } else {
+        console.log("token not expired ");
       }
+      console.log("Reject 1");
       return Promise.reject(error);
     } else {
+      console.log("Reject 2");
       return Promise.reject(error);
     }
   }

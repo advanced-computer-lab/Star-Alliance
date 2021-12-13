@@ -85,8 +85,6 @@ const Main = () => {
   }, [User]);
 
   const ConditionedRoute = ({ Component, condition, ...rest }) => {
-    console.log("condition", condition);
-    console.log(rest);
     return <Route {...rest} component={condition ? Component : null} />;
   };
   const AdminRoute = ({ Component, ...rest }) => {

@@ -8,7 +8,7 @@ class FlightService {
     return http.post("/Admin/createFlight", data);
   }
   updateUser(data) {
-    return http.post("/Admin/UpdateUser", data);
+    return http.post("/User/UpdateUser", data);
   }
   passcheck(data, resp) {
     return http.post("/Admin/passcheck", data, resp);
@@ -23,7 +23,7 @@ class FlightService {
     return http.post("/Admin/GetInfo", data);
   }
   GetUserInfo(data) {
-    return http.post("/Admin/GetUserInfo", data);
+    return http.post("/User/GetUserInfo", data);
   }
   GetAllFlights(data) {
     return http.get("/Admin/GetAllFlights");
@@ -35,10 +35,10 @@ class FlightService {
     return http.post("/Admin/DeleteFlight", data, resp);
   }
   CancelReservation(data, resp) {
-    return http.post("/Admin/CancelReservation", data, resp);
+    return http.post("/User/CancelReservation", data, resp);
   }
   GetRequestedFlights(data) {
-    return http.post("/Admin/GetRequestedFlights", data);
+    return http.post("/GetRequestedFlights", data);
   }
 }
 

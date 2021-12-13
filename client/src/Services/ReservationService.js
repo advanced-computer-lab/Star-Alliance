@@ -2,10 +2,10 @@ import http from "./http-common";
 
 class ReservationService {
   reserveNew(data) {
-    return http.post("/Admin/AddReservation", data);
+    return http.post("/User/AddReservation", data);
   }
   reserveNewFlight(data) {
-    return http.post("/Admin/AddEditReservation", data);
+    return http.post("/User/AddEditReservation", data);
   }
 }
 

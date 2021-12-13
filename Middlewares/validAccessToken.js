@@ -14,6 +14,7 @@ function authenticateToken(req, res, next) {
       console.log("Error verfiying token, sending (401)");
       return res.sendStatus(401);
     }
+    console.log("Token verified, setting user", user);
     req.user = user;
     next();
   });

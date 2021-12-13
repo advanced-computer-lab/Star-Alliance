@@ -42,7 +42,8 @@ app.post("/getaToken", (req, res) => {
   jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, user) => {
     if (err) return res.sendStatus(403);
     console.log("user", user);
-    const accessToken = generateAccessToken({ userId: user.userId });
+    const payload = { userId: user.id, isAdmin: user.isAdmin };
+    const accessToken = generateAccessToken(payload);
     console.log("new Access token", accessToken);
     res.cookie("accessToken", accessToken, {
       path: "/",
@@ -111,7 +112,8 @@ app.post("/login", async (req, res) => {
 });
 
 function generateAccessToken(user) {
-  return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, { expiresIn: "15s" });
+  // TODO: change expiresIn
+  return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, { expiresIn: "5s" });
 }
 
 const port = process.env.PORT || 2000;

@@ -5,7 +5,7 @@ function authenticateUserToken(req, res, next) {
     // this is only accessable by users not admins
     if (req.user.isAdmin) {
       console.log("User is Admin blocked (403)");
-      res.sendStatus(403);
+      return res.sendStatus(403);
     }
 
     next();
