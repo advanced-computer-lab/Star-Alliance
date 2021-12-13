@@ -31,7 +31,7 @@ const SelectEditFlight = () => {
           <br />
           <br />
 
-          <Link to="/">
+          <Link to="/ReservationView">
             <img
               style={{
                 marginTop: "0.5cm",

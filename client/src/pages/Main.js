@@ -33,6 +33,8 @@ import EditFlight from "../pages/EditFlight.js";
 import SelectEditFlight from "../pages/SelectEditFlight.js";
 import SelectEditFlightSeat from "../pages/SelectEditFlightSeat.js";
 import ReservationEditSummary from "../pages/ReservationEditSummary.js";
+import SelectNewSeat from "../pages/SelectNewSeat.js";
+
 import EditReservationContext from "../Context/EditReservationContext.js";
 import ChangePassword from "../Components/ChangePassword.js";
 import SignIn from "../pages/SignIn.js";
@@ -124,93 +126,67 @@ const Main = () => {
           Context={UserHomeContext}
           CComponent={isAdmin ? AdminHomePage : UserHomePage}
         />
-        <UserRoute
+        <ContextRoute
           exact
           path="/ReservationSummary"
-          Component={() => (
-            <WrapContext
-              Context={UserHomeContext}
-              Component={ReservationSummary}
-            />
-          )}
+          Context={UserHomeContext}
+          CComponent={ReservationSummary}
         />
-        <UserRoute
+        
+        <ContextRoute
           exact
           path="/SelectFlight"
-          Component={() => (
-            <WrapContext Context={UserHomeContext} Component={SelectFlight} />
-          )}
+          Context={UserHomeContext}
+          CComponent={SelectFlight}
         />
-        <UserRoute
+        <ContextRoute
           exact
           path="/SeatReservation"
-          Component={() => (
-            <WrapContext
-              Context={UserHomeContext}
-              Component={SeatReservation}
-            />
-          )}
+          Context={UserHomeContext}
+          CComponent={SeatReservation}
         />
-        <UserRoute
+        <ContextRoute
           exact
           path="/SelectReturnFlights"
-          Component={() => (
-            <WrapContext
-              Context={UserHomeContext}
-              Component={SelectReturnFlights}
-            />
-          )}
+          Context={UserHomeContext}
+          CComponent={SelectReturnFlights}
         />
-
-        <UserRoute
+        <ContextRoute
           exact
           path="/EditFlight"
-          Component={() => (
-            <WrapContext Context={UserHomeContext} Component={EditFlight} />
-          )}
+          Context={UserHomeContext}
+          CComponent={EditFlight}
         />
-
-        <UserRoute
+         <ContextRoute
           exact
           path="/SelectEditFlight"
-          Component={() => (
-            <WrapContext
-              Context={UserHomeContext}
-              Component={SelectEditFlight}
-            />
-          )}
+          Context={UserHomeContext}
+          CComponent={SelectEditFlight}
         />
-        <UserRoute
+         <ContextRoute
           exact
           path="/SelectEditFlightSeat"
-          Component={() => (
-            <WrapContext
-              Context={UserHomeContext}
-              Component={SelectEditFlightSeat}
-            />
-          )}
+          Context={UserHomeContext}
+          CComponent={SelectEditFlightSeat}
         />
-        <UserRoute
+        <ContextRoute
           exact
           path="/ReservationEditSummary"
-          Component={() => (
-            <WrapContext
-              Context={UserHomeContext}
-              Component={ReservationEditSummary}
-            />
-          )}
+          Context={UserHomeContext}
+          CComponent={ReservationEditSummary}
         />
-        <UserRoute
+        <ContextRoute
           exact
           path="/ReservationView"
-          Component={() => (
-            <WrapContext
-              Context={UserHomeContext}
-              Component={ReservationView}
-            />
-          )}
+          Context={UserHomeContext}
+          CComponent={ReservationView}
         />
-
+        <ContextRoute
+          exact
+          path="/SelectNewSeat"
+          Context={UserHomeContext}
+          CComponent={SelectNewSeat}
+        />
         <AdminRoute exact path="/FlightsList" Component={FlightsList} />
         <AdminRoute exact path="/UpdateForm" Component={UpdateForm} />
         <AdminRoute exact path="/FlightView/:flightId" component={FlightView} />

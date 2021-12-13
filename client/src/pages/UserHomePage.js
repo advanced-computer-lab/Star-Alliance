@@ -113,6 +113,8 @@ function checkDate (departureTime,arrivalTime){
     console.log(data);
 
     FlightService.GetRequestedFlights(data).then(({ data }) => {
+      console.log("ana", data);
+
       if(data.going.length==0||data.returning.length==0){
         setloadingSearch(false);
         showAlert("No Available Flights with this Date");

@@ -71,7 +71,7 @@ app.get("/GetAllReservedFlights", async (req, res) => {
   console.log("/GetAllReservedFlights sending");
 
   const result = await reservation
-    .find({ firstName: "yehia" })
+    .find({ firstName: "user" })
     .populate({ path: "flight1" })
     .populate({ path: "user" })
     .populate({ path: "flight2" });
@@ -141,7 +141,7 @@ app.post("/AddEditReservation", async (req, res) => {
   // check that the user exists, and verifiy that the user can make a reservation
   let resUser = null;
   try {
-    resUser = await user.findOne({ _id: "61a35fcdfd33ed54997b5271" });
+    resUser = await user.findOne({ _id: userId });
   } catch (e) {
     console.log("error getting the user", e);
     res.status(404).send("User not found");
@@ -337,7 +337,7 @@ app.post("/AddReservation", async (req, res) => {
   // check that the user exists, and verifiy that the user can make a reservation
   let resUser = null;
   try {
-    resUser = await user.findOne({ _id: "61a35fcdfd33ed54997b5271" });
+    resUser = await user.findOne({ _id:userId });
   } catch (e) {
     console.log("error getting the user", e);
     res.status(404).send("User not found");

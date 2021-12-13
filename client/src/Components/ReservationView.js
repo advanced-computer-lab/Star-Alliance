@@ -125,6 +125,9 @@ const ReservationView = () => {
         for (let i = 0; i < data.data.length * 2; i = i + 2) {
           const reservId = data.data[j]._id;
           const reservDet1 = {
+            cabin:data.data[j].cabinClass,
+            EditedFlight:data.data[j].flight1,
+            EditedFlightNum:data.data[j].flight1.flightNumber,
             companions: data.data[j].companions,
             currentFlightSeats: data.data[j].fligh1seats,
             reservationID: reservId,
@@ -136,6 +139,9 @@ const ReservationView = () => {
           allfl[i].id = i;
           allfl[i].reservDet = reservDet1;
           const reservDet2 = {
+            EditedFlight:data.data[j].flight2,
+            EditedFlightNum:data.data[j].flight2.flightNumber,
+            cabin:data.data[j].cabinClass,
             companions: data.data[j].companions,
             currentFlightSeats: data.data[j].fligh2seats,
             reservationID: reservId,
@@ -194,7 +200,7 @@ const ReservationView = () => {
       ...searchFlights,
       oldReservation,
     });
-    history.push("/SeatReservation");
+    history.push("/SelectNewSeat");
   });
 
   const columns = React.useMemo(

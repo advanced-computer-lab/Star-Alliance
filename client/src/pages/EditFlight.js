@@ -23,6 +23,9 @@ import moment from "moment";
 import YouTube from "react-youtube";
 import tot from "../images/tot.png";
 import top from "../images/top.png";
+import Alert from "../Components/Alert";
+import back from "../images/back.png";
+
 const EditFlight = () => {
      
     const [searchFlights, setSearchFlights] = useContext(UserHomeCtx);
@@ -37,6 +40,17 @@ const EditFlight = () => {
     function show() {
       setClicked(true);
     }
+    const [alertOpen, setalertOpen] = useState(false);
+  const [alertMessage, setalertMessage] = useState("");
+  const showAlert = (message) => {
+    setalertMessage(message);
+    setalertOpen(true);
+
+    setTimeout(() => {
+      setalertOpen(false);
+    }, 3000);
+    
+  };
   
     const handleSubmit = () => {
       setloadingSearch(true);
@@ -74,7 +88,17 @@ const EditFlight = () => {
         console.log("gigi", searchFlights);
         show();
         console.log(clicked);
+        if(data.going.length==0||data.returning.length==0){
+          setloadingSearch(false);
+          showAlert("No Available Flights with this Date");
+          setTimeout(function(){
+            window.location.href = 'http://localhost:3000/';
+         }, 3000);
+
+        }
+        else{
         history.push("/SelectEditFlight");
+        }
       });
     };
     return (
@@ -87,6 +111,26 @@ const EditFlight = () => {
            <br/>
            <br/>
            <br/>
+           <Row>
+          <br />
+          <Link to="/ReservationView">
+            <img
+              style={{
+                marginLeft: "0.4cm",
+                float: "left",
+                height: "50px",
+                width: "50px",
+              }}
+              src={back}
+            />
+          </Link>
+        </Row>
+           <Alert
+        open={alertOpen}
+        setOpen={setalertOpen}
+        title={alertMessage}
+        desc=""
+      />
         <div 
           className=" mt-5 col-sm-8 offset-sm-2 col-md-8 offset-md-2 col-lg-8 offset-lg-2 " //
           style={{

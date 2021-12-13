@@ -7,7 +7,6 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 var cors = require("cors");
 const jwt = require("jsonwebtoken");
-
 const userAuth = require("../Middlewares/userAuth.js");
 const adminAuth = require("../Middlewares/adminAuth.js");
 
