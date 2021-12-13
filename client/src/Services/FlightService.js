@@ -10,8 +10,9 @@ class FlightService {
   updateUser(data) {
     return http.post("/User/UpdateUser", data);
   }
+  // TODO: Remove
   passcheck(data, resp) {
-    return http.post("/Admin/passcheck", data, resp);
+    return http.post("/User/changePassword", data, resp);
   }
   updatepass(data) {
     return http.post("/Admin/updatepass", data);

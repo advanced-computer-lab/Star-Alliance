@@ -97,27 +97,6 @@ app.post("/UpdateFlight", async (req, res) => {
   res.send(result);
 });
 
-// TODO: Change Password
-app.post("/passcheck", async (req, res) => {
-  const data = req.body;
-  console.log(data);
-  const result = await user.findOne({ _id: data.findUser });
-  if (result.password === data.password) res.send(true);
-  else res.send(false);
-});
-app.post("/Updatepass", async (req, res) => {
-  const data = req.body;
-  console.log(data);
-  const result = await user.updateOne(
-    { _id: data.findUser },
-    {
-      password: data.password,
-    }
-  );
-  res.send(result);
-});
-// ------- todo: change password
-
 app.post("/createFlight", async (req, res) => {
   console.log("creating flight");
   //

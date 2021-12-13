@@ -19,20 +19,16 @@ const UpdateUserData = () => {
   const [alertOpen, setalertOpen] = useState(false);
   const [alertMessage, setalertMessage] = useState("");
 
-  let firstTime = true;
-
-  if (firstTime) {
-    const findUser = "61a35fcdfd33ed54997b5271";
+  useEffect(() => {
     FlightService.GetUserInfo({ findUser: "61a35fcdfd33ed54997b5271" })
       .then(({ data }) => {
         console.log("recived", data);
-        firstTime = false;
         updateFormValues(data);
       })
       .catch((err) => {
         console.log(err);
       });
-  }
+  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();

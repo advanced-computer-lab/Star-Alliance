@@ -88,6 +88,9 @@ const clearTheAuthCookie = () => {
   Cookies.removeItem("accessToken");
   Cookies.removeItem("refreshToken");
 };
+const cleatTheLocalStorage = () => {
+  localStorage.removeItem("user");
+};
 
 const requestAgain = (originalRequest) => {
   return new Promise((resolve, reject) => resolve(axResource(originalRequest)));
@@ -107,25 +110,30 @@ axResource.interceptors.response.use(
     console.log("REQ interceptor on Error");
 
     if (status === 401) {
-      if (isTokenExpired(Cookies.getItem("accessToken"))) {
-        console.log("token expired trying to refresh");
-        return await axAuthServer
-          .post("http://localhost:2000/getaToken/", {})
-          .then((res) => {
-            console.log(res);
-            console.log(res.data);
-            console.log("got new access token, requesting again...");
-            return requestAgain(originalRequest);
-          })
-          .catch((err) => {
-            clearTheAuthCookie();
-            window.location.href = "/signin";
-          });
-      } else {
-        console.log("token not expired ");
-      }
-      console.log("Reject 1");
-      return Promise.reject(error);
+      // if (isTokenExpired(Cookies.getItem("accessToken"))) {
+      console.log("token expired trying to refresh");
+      return axAuthServer
+        .post("http://localhost:2000/getaToken/", {})
+        .then((res) => {
+          console.log(res);
+          console.log(res.data);
+          console.log("got new access token, requesting again...");
+
+          return requestAgain(originalRequest);
+        })
+        .catch((err) => {
+          const scode = err.response.status;
+          if (!(scode === 401 || scode === 403)) return Promise.reject(err);
+          console.log("redirecting to login");
+          clearTheAuthCookie();
+          cleatTheLocalStorage();
+          window.location.href = "/signin";
+        });
+      // } else {
+      //   console.log("token not expired ");
+      // }
+      // console.log("Reject 1");
+      // return Promise.reject(error);
     } else {
       console.log("Reject 2");
       return Promise.reject(error);

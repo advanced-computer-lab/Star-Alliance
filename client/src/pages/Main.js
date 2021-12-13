@@ -72,7 +72,7 @@ const Main = () => {
     const strUserData = localStorage.getItem("user");
     try {
       const user = JSON.parse(strUserData);
-      setUser(user);
+      if (user) setUser(user);
     } catch (e) {
       console.log(e);
     }

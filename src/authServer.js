@@ -108,6 +108,7 @@ app.post("/login", async (req, res) => {
     accessToken: accessToken,
     refreshToken: refreshToken,
     isAdmin: loggingUser.isAdmin,
+    userId: loggingUser.id,
   });
 });
 

@@ -44,6 +44,29 @@ app.post("/UpdateUser", async (req, res) => {
   res.send(result);
 });
 
+// TODO: Change Password
+app.post("/changePassword", async (req, res) => {
+  const { userId, newPassword, oldPassword } = req.body;
+  const targetUser = await user.findOne({ _id: userId });
+  if (!targetUser) return res.status(400).send("No User with this Number");
+
+  if (!bcrypt.compareSync(oldPassword, targetUser.password)) {
+    console.log("wrong password in change password");
+    return res.status(400).send("Wrong Password");
+  }
+
+  const hashedNewPassword = await bcrypt.hash(newPassword, 10);
+  const result = await user.updateOne(
+    { _id: userId },
+    {
+      password: hashedNewPassword,
+    }
+  );
+  console.log(result);
+  res.sendStatus(200);
+});
+// ------- todo: change password
+
 app.get("/GetAllReservedFlights", async (req, res) => {
   console.log("/GetAllReservedFlights sending");
 

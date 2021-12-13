@@ -13,6 +13,7 @@ const SetUser = (newUser) => {
 };
 
 const getUser = () => GetUser();
+const getUserId = () => GetUser().userId;
 
 const getType = () => GetUser().type;
 
@@ -40,6 +41,10 @@ const signUp = (data) => {
   return http.post("/User/signUp", data);
 };
 
+export const changePassword = (data) => {
+  return http.post("/User/changePassword", data);
+};
+
 const UserService = {
   getUser,
   getType,
@@ -50,5 +55,7 @@ const UserService = {
   isLoggedIn,
   SetUser,
   signUp,
+  changePassword,
+  getUserId,
 };
 export default UserService;
