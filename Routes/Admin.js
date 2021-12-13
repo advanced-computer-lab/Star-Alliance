@@ -4,9 +4,12 @@ const db = require("../Service/DBService.js");
 const moment = require("moment");
 const { flight, reservation, user } = require("../Models/export");
 const jwt = require("jsonwebtoken");
+const adminAuth = require("../Middlewares/adminAuth.js");
 
 var nodemailer = require("nodemailer");
 const style = "height:'2cm',width:'2cm'";
+
+app.use(adminAuth);
 
 app.get("/", (req, res) => {
   res.json({ message: "welcome admin" });
@@ -17,16 +20,6 @@ app.get("/GetAllFlights", async (req, res) => {
 
   const result = await flight.find({});
 
-  res.send(result);
-});
-app.get("/GetAllReservedFlights", async (req, res) => {
-  console.log("/GetAllReservedFlights sending");
-
-  const result = await reservation
-    .find({ firstName: "yehia" })
-    .populate({ path: "flight1" })
-    .populate({ path: "user" })
-    .populate({ path: "flight2" });
   res.send(result);
 });
 
@@ -995,10 +988,8 @@ app.post("/passcheck", async (req, res) => {
   const data = req.body;
   console.log(data);
   const result = await user.findOne({ _id: data.findUser });
-  if(result.password===data.password)
- res.send(true);
- else
- res.send(false);
+  if (result.password === data.password) res.send(true);
+  else res.send(false);
 });
 app.post("/Updatepass", async (req, res) => {
   const data = req.body;
@@ -1006,7 +997,7 @@ app.post("/Updatepass", async (req, res) => {
   const result = await user.updateOne(
     { _id: data.findUser },
     {
-      password: data.password
+      password: data.password,
     }
   );
   res.send(result);

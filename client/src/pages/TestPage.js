@@ -36,8 +36,8 @@ const TestPage = () => {
   const handleBtnClick = () => {
     // login
     AuthService.singin({
-      username: "yehia",
-      password: "user12345",
+      username: "user",
+      password: "user",
     })
       .then((res) => {
         console.log(res);

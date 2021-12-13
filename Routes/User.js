@@ -6,10 +6,26 @@ const { flight, reservation, user } = require("../Models/export");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 
+const userAuth = require("../Middlewares/userAuth.js");
+
 var nodemailer = require("nodemailer");
+
+app.use(userAuth);
 
 app.get("/", (req, res) => {
   res.json({ message: "welcome from user route" });
+});
+
+app.get("/GetAllReservedFlights", async (req, res) => {
+  console.log("/GetAllReservedFlights sending");
+
+  const result = await reservation
+    .find({ firstName: "yehia" })
+    .populate({ path: "flight1" })
+    .populate({ path: "user" })
+    .populate({ path: "flight2" });
+  console.log("/GetAllReservedFlights result", result);
+  res.send(result);
 });
 
 app.post("/signUp", async (req, res) => {

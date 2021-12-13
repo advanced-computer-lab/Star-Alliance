@@ -114,7 +114,8 @@ app.get("/", (req, res) => {
   res.json({ message: "From the Node Server !" });
 });
 
-app.get("/protected", adminAuth, (req, res) => {
+app.get("/protected", userAuth, (req, res) => {
+  console.log("/protected Sending");
   res.json({ message: "You are authenticated" });
 });
 

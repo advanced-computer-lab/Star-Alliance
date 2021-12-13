@@ -124,7 +124,7 @@ const SignUp = () => {
         setloading(false);
         popupCloseCBref.current = () => {
           console.log("call BACK");
-          history.push("/login");
+          history.push("/signin");
         };
         showAlert("Your Account has been Registered, you may login now");
       })

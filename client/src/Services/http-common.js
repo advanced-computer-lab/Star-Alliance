@@ -108,10 +108,11 @@ axResource.interceptors.response.use(
           .then((res) => {
             console.log(res);
             console.log(res.data);
+            console.log("got new access token, requesting again...");
             return requestAgain(originalRequest);
           })
           .catch((err) => {
-            window.location.href = "/login";
+            window.location.href = "/signin";
           });
       }
       return Promise.reject(error);

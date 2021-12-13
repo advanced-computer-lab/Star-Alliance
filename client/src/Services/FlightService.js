@@ -10,26 +10,26 @@ class FlightService {
   updateUser(data) {
     return http.post("/Admin/UpdateUser", data);
   }
-  passcheck(data,resp){
+  passcheck(data, resp) {
     return http.post("/Admin/passcheck", data, resp);
   }
-  updatepass(data){
+  updatepass(data) {
     return http.post("/Admin/updatepass", data);
   }
   GetFlightInfo(data) {
     return http.post("/Admin/GetFlightInfo", data);
   }
   GetInfo(data) {
-    return http.post("/Admin/GetInfo", data); 
-  } 
+    return http.post("/Admin/GetInfo", data);
+  }
   GetUserInfo(data) {
-    return http.post("/Admin/GetUserInfo", data); 
-  } 
+    return http.post("/Admin/GetUserInfo", data);
+  }
   GetAllFlights(data) {
-    return http.get("/Admin/GetAllFlights"); 
+    return http.get("/Admin/GetAllFlights");
   }
   GetAllReservedFlights(data) {
-    return http.get("/Admin/GetAllReservedFlights"); 
+    return http.get("/User/GetAllReservedFlights");
   }
   DeleteFlight(data, resp) {
     return http.post("/Admin/DeleteFlight", data, resp);
@@ -38,9 +38,8 @@ class FlightService {
     return http.post("/Admin/CancelReservation", data, resp);
   }
   GetRequestedFlights(data) {
-    return http.post("/Admin/GetRequestedFlights",data); 
+    return http.post("/Admin/GetRequestedFlights", data);
   }
-
 }
 
 export default new FlightService();
