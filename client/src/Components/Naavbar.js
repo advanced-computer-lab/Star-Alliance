@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext, useRef } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Container from "react-bootstrap/Container";
 import { Nav, NavDropdown } from "react-bootstrap";
-//import { NavLink, Link, Redirect, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import Form from "react-bootstrap/Form";
 import Button from "@material-ui/core/Button";
 import Navbar from "react-bootstrap/Navbar";
@@ -20,6 +20,7 @@ const Naavbar = () => {
   const refUserName = useRef(null);
   const refUserPass = useRef(null);
   const [user, setUser] = useContext(UserCtx);
+  const history = useHistory();
 
   const AuthForm = () => {
     return (
@@ -77,6 +78,7 @@ const Naavbar = () => {
       .then((res) => {
         console.log(res);
         setUser({ ...user, type: 0 });
+        history.push("/");
       })
       .catch((err) => console.log(err));
   };
@@ -147,7 +149,7 @@ const Naavbar = () => {
                 </Navbar.Text>
               ) : (
                 <>
-                  <LinkContainer to="/singin">
+                  <LinkContainer to="/signin">
                     <Nav.Link style={{ color: "#DBE2EF" }}>Login</Nav.Link>
                   </LinkContainer>
                   <LinkContainer to="/signup">

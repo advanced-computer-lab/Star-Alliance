@@ -24,7 +24,6 @@ import ReservationContext from "../Context/ReservationContext.js";
 import UserHomeContext from "../Context/UserHomeContext.js";
 import SelectFlight from "./SelectFlight";
 import SelectReturnFlights from "./SelectReturnFlights";
-import ReservationSelection from "./ReservationSelection.js";
 import ContextRoute from "../Context/ContextRoute.js";
 import SeatReservation from "../pages/SeatReservation";
 import UpdateUserData from "../pages/UpdateUserData";
@@ -54,11 +53,22 @@ function ScrollToTop() {
   return null;
 }
 
+const WrapContext = ({ children, Component, Context }) => {
+  return (
+    <Context>
+      <Component />
+    </Context>
+  );
+};
+
 const Main = () => {
   const isAdmin = UserService.isAdmin();
+  const isUser = UserService.isUser();
   const [User, setUser] = useContext(UserCtx);
+
   useEffect(() => {
     // When a Refresh happens
+    console.log("REFRESH");
     const strUserData = localStorage.getItem("user");
     try {
       const user = JSON.parse(strUserData);
@@ -69,103 +79,157 @@ const Main = () => {
   }, []);
 
   useEffect(() => {
-    // console.log("REFRESH User Changed");
-    // console.log(User);
+    console.log("REFRESH User Changed");
+    console.log(User);
     localStorage.setItem("user", JSON.stringify(User));
   }, [User]);
+
+  const ConditionedRoute = ({ Component, condition, ...rest }) => {
+    console.log("condition", condition);
+    console.log(rest);
+    return <Route {...rest} component={condition ? Component : null} />;
+  };
+  const AdminRoute = ({ Component, ...rest }) => {
+    return (
+      <ConditionedRoute {...rest} Component={Component} condition={isAdmin} />
+    );
+  };
+
+  const UserRoute = ({ Component, ...rest }) => {
+    // console.log("UserRoute");
+    // console.log(rest);
+    return (
+      <ConditionedRoute {...rest} Component={Component} condition={isUser} />
+    );
+  };
+
+  // if (!valid) return null;
 
   return (
     <>
       <ScrollToTop />
       <Switch>
+        {/* 
+      Everyone can access the page:
+          without context: <Route path="/" exact component={Home} />
+          with context: <ContextRoute exact path="/SelectFlight" Context={UserHomeContext} CComponent={SelectFlight} />
+      Only Admin:
+          without context: <AdminRoute exact path="/SelectFlight" Component={SelectFlight}/> 
+          with context <AdminRoute exact path="/SelectFlight" Component={() => ( <WrapContext Context={UserHomeContext} Component={SelectFlight} />)} /> 
+      Only User:
+          without context: <UserRoute exact path="/SelectFlight" Component={SelectFlight}/> 
+          with context <UserRoute exact path="/SelectFlight" Component={() => ( <WrapContext Context={UserHomeContext} Component={SelectFlight} />)} /> 
+*/}
         <ContextRoute
           exact
           path="/"
           Context={UserHomeContext}
           CComponent={isAdmin ? AdminHomePage : UserHomePage}
         />
-
-        <ContextRoute
-          exact
-          path="/ReservationSelection"
-          Context={ReservationContext}
-          CComponent={ReservationSelection}
-        />
-
-        <ContextRoute
+        <UserRoute
           exact
           path="/ReservationSummary"
-          Context={UserHomeContext}
-          CComponent={ReservationSummary}
+          Component={() => (
+            <WrapContext
+              Context={UserHomeContext}
+              Component={ReservationSummary}
+            />
+          )}
         />
-        <ContextRoute
+        <UserRoute
           exact
           path="/SelectFlight"
-          Context={UserHomeContext}
-          CComponent={SelectFlight}
+          Component={() => (
+            <WrapContext Context={UserHomeContext} Component={SelectFlight} />
+          )}
         />
-        <ContextRoute
+        <UserRoute
           exact
           path="/SeatReservation"
-          Context={UserHomeContext}
-          CComponent={SeatReservation}
+          Component={() => (
+            <WrapContext
+              Context={UserHomeContext}
+              Component={SeatReservation}
+            />
+          )}
         />
-        <ContextRoute
+        <UserRoute
           exact
           path="/SelectReturnFlights"
-          Context={UserHomeContext}
-          CComponent={SelectReturnFlights}
+          Component={() => (
+            <WrapContext
+              Context={UserHomeContext}
+              Component={SelectReturnFlights}
+            />
+          )}
         />
-        <ContextRoute
+
+        <UserRoute
           exact
           path="/EditFlight"
-          Context={UserHomeContext}
-          CComponent={EditFlight}
+          Component={() => (
+            <WrapContext Context={UserHomeContext} Component={EditFlight} />
+          )}
         />
-        <ContextRoute
+
+        <UserRoute
           exact
           path="/SelectEditFlight"
-          Context={UserHomeContext}
-          CComponent={SelectEditFlight}
+          Component={() => (
+            <WrapContext
+              Context={UserHomeContext}
+              Component={SelectEditFlight}
+            />
+          )}
         />
-        <ContextRoute
+        <UserRoute
           exact
           path="/SelectEditFlightSeat"
-          Context={UserHomeContext}
-          CComponent={SelectEditFlightSeat}
+          Component={() => (
+            <WrapContext
+              Context={UserHomeContext}
+              Component={SelectEditFlightSeat}
+            />
+          )}
         />
-        <ContextRoute
+        <UserRoute
           exact
           path="/ReservationEditSummary"
-          Context={UserHomeContext}
-          CComponent={ReservationEditSummary}
+          Component={() => (
+            <WrapContext
+              Context={UserHomeContext}
+              Component={ReservationEditSummary}
+            />
+          )}
         />
-        <ContextRoute
+        <UserRoute
           exact
           path="/ReservationView"
-          Context={UserHomeContext}
-          CComponent={ReservationView}
+          Component={() => (
+            <WrapContext
+              Context={UserHomeContext}
+              Component={ReservationView}
+            />
+          )}
         />
-        <Route exact path="/FlightsList" component={FlightsList} />
-        <Route exact path="/test" component={TestPage} />
-        <Route exact path="/UpdateForm" component={UpdateForm} />
-        <Route exact path="/FlightView/:flightId" component={FlightView} />
-        <Route exact path="/deleteFlight" component={deletePopup}></Route>
-        <Route exact path="/createFlight" component={CreateFlight}></Route>
-        <Route exact path="/chooseFlight" component={ChooseFlight}></Route>
-        <Route exact path="/ChangePassword" component={ChangePassword}></Route>
 
+        <AdminRoute exact path="/FlightsList" Component={FlightsList} />
+        <AdminRoute exact path="/UpdateForm" Component={UpdateForm} />
+        <AdminRoute exact path="/FlightView/:flightId" component={FlightView} />
+        <AdminRoute exact path="/deleteFlight" Component={deletePopup} />
+        <AdminRoute exact path="/createFlight" Component={CreateFlight} />
+
+        {/* ??? what is this */}
+        <Route exact path="/chooseFlight" component={ChooseFlight} />
+
+        {/* updateuserdata Should be renammed to my profile */}
+        <Route exact path="/UpdateUserData" component={UpdateUserData} />
+        <Route exact path="/more" component={MoreThanFlight} />
+        <Route exact path="/ChangePassword" component={ChangePassword} />
         <Route exact path="/signup" component={SignUp} />
-        <Route exact path="/singin" component={SignIn} />
+        <Route exact path="/signin" component={SignIn} />
 
-        <Route
-          exact
-          path="/ReservationView"
-          component={ReservationView}
-        ></Route>
-        <Route exact path="/more" component={MoreThanFlight}></Route>
-
-        <Route exact path="/UpdateUserData" component={UpdateUserData}></Route>
+        <Route exact path="/test" component={TestPage} />
       </Switch>
     </>
   );
