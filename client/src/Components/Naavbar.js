@@ -21,8 +21,12 @@ const Naavbar = () => {
   const refUserPass = useRef(null);
   const [user, setUser] = useContext(UserCtx);
   const history = useHistory();
+  let r = user.id;
+  console.log("showName",user)
 
   const AuthForm = () => {
+   
+
     return (
       <>
         <TextField
@@ -72,6 +76,7 @@ const Naavbar = () => {
   const handleLoginBtn = () => {
     setpopLogin(true);
   };
+  
 
   const handleSignoutClick = () => {
     AuthService.logout()
@@ -82,7 +87,6 @@ const Naavbar = () => {
       })
       .catch((err) => console.log(err));
   };
-
   return (
     <>
       {/* <Navbar bg="dark" fixed="top">
@@ -111,7 +115,7 @@ const Naavbar = () => {
           <LinkContainer to="/">
             <Navbar.Brand style={{ color: "#DBE2EF" }}>
               <img style={{ height: "1cm", width: "2cm" }} src={logo} />
-              Star-Alliance
+              Star-Alliance {user.Name}
             </Navbar.Brand>
           </LinkContainer>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -129,6 +133,11 @@ const Naavbar = () => {
                   <Nav.Link style={{ color: "#DBE2EF" }}>My Profile</Nav.Link>
                 </LinkContainer>
               )}
+              {UserService.isUser() && (
+                <LinkContainer to="/">
+                  <Nav.Link style={{ color: "#DBE2EF" }}>Book Flight</Nav.Link>
+                </LinkContainer>
+              )}
               {/* <Nav.Link href="#link" style={{ color: "#DBE2EF" }}>
                 Link
               </Nav.Link>
@@ -138,9 +147,10 @@ const Naavbar = () => {
             </Nav>
           </Navbar.Collapse>
           <Navbar.Collapse className="justify-content-end">
+          
             <Navbar.Text>
               {UserService.isLoggedIn() &&
-                (UserService.isAdmin() ? "Welcome Admin" : "Welcome User")}
+                (UserService.isAdmin() ? `Welcome ${user.Name}` : `Welcome ${user.Name}`)}
             </Navbar.Text>
             <Nav>
               {UserService.isLoggedIn() ? (

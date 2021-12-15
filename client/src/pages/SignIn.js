@@ -53,10 +53,10 @@ const SignIn = () => {
       .then((res) => {
         console.log(res);
 
-        console.log(res.data);
+        console.log("show",res.data);
         const { isAdmin, userId } = res.data;
 
-        setUser({ ...user, id: userId, type: isAdmin ? 2 : 1 });
+        setUser({ ...user, id: userId,Name:res.data.Name, type: isAdmin ? 2 : 1 });
 
         history.push("/");
       })

@@ -14,6 +14,7 @@ const ChangePassword = () => {
   // let passFormRef = createRef();
   const [alertOpen, setalertOpen] = useState(false);
   const [alertMessage, setalertMessage] = useState("");
+  console.log("user",User)
   const handleSubmit = (e) => {
     e.preventDefault();
     // datetime example "2016-05-18T16:00:00Z"

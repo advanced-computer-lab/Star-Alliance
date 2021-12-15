@@ -111,10 +111,14 @@ function checkDate (departureTime,arrivalTime){
       adult: e.adult.value,
     };
     console.log(data);
-
+    if(data.arrivalAirport==data.departureAirport){
+      setloadingSearch(false);
+      showAlert("Going Destination cannot be the same as return");
+    }
+    else{
     FlightService.GetRequestedFlights(data).then(({ data }) => {
       console.log("ana", data);
-
+      
       if(data.going.length==0||data.returning.length==0){
         setloadingSearch(false);
         showAlert("No Available Flights with this Date");
@@ -138,6 +142,7 @@ function checkDate (departureTime,arrivalTime){
     }
     });
   }
+}
   else{
     showAlert("Return Date Cannot be after Going Date");
   }
