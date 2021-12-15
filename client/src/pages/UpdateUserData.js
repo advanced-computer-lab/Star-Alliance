@@ -1,4 +1,4 @@
-import { React, useState, useEffect, createRef } from "react";
+import { React, useState, useEffect, createRef,useContext  } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Button from "react-bootstrap/Button";
 import FormControl from "react-bootstrap/FormControl";
@@ -13,14 +13,16 @@ import { faPassport } from "@fortawesome/free-solid-svg-icons";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import Alert from "../Components/Alert";
 import { Link } from "react-router-dom";
+import { UserCtx } from "../Context/GlobalContext";
 
 const UpdateUserData = () => {
   let updateFormRef = createRef();
   const [alertOpen, setalertOpen] = useState(false);
   const [alertMessage, setalertMessage] = useState("");
+  const [User, setUser] = useContext(UserCtx);
 
   useEffect(() => {
-    FlightService.GetUserInfo({ findUser: "61a35fcdfd33ed54997b5271" })
+    FlightService.GetUserInfo({ findUser: User.id })
       .then(({ data }) => {
         console.log("recived", data);
         updateFormValues(data);
@@ -35,7 +37,7 @@ const UpdateUserData = () => {
 
     // datetime example "2016-05-18T16:00:00Z"
     const data = {
-      findUser: "61a35fcdfd33ed54997b5271",
+      findUser: User.id,
       firstName: e.target.firstName.value,
       lastName: e.target.lastName.value,
       passportNumber: e.target.passportNumber.value,
@@ -82,6 +84,7 @@ const UpdateUserData = () => {
         title={alertMessage}
         desc=""
       />
+      
       <div
         className="mt-5"
         style={{
@@ -137,18 +140,30 @@ const UpdateUserData = () => {
                 <Form.Control name="email" placeholder="enter your email" />
               </Form.Group>
             </Row>
-
+                
             <div style={{ height: "3cm", width: "19cm", marginTop: "0.8cm" }}>
+            <Row>
+
+            <Col>
               <Button type="submit" variant="primary">
                 Update Info. <FontAwesomeIcon icon={faUserEdit} />
               </Button>
-            </div>
-          </Form>
-          <Link to="/ChangePassword">
-            <Button type="submit" variant="primary">
+              {/* <div style={{marginLeft:"0.5cm"}}> */}
+              <Link style={{marginLeft:"0.4cm"}} to="/ChangePassword">
+            <Button type="button" variant="primary">
               Change Password
             </Button>
           </Link>
+          {/* </div> */}
+              </Col>
+            
+          </Row>
+
+            </div>
+            
+            
+          </Form>
+         
         </div>
       </div>
     </div>

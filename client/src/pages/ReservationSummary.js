@@ -226,7 +226,7 @@ const ReservationSummary = () => {
 	  if(!resp) return;
       setloadingConfirm(true);
       let data = {
-        userId: User.id, // TODO: new Reservation dynmaic user
+        userId: User.id, 
         flight1num: flight1.flightDet.flightNumber,
         flight2num: flight2.flightDet.flightNumber,
         seatType: searchFlights.data.seatType,
@@ -242,8 +242,10 @@ const ReservationSummary = () => {
 
           setloadingConfirm(false);
           popupCloseCBref.current = () => {
+            console.log("here i am")
             history.push("/"); // navigate home
             // clear every selection the user made
+           // console.log("here i am")
             setSearchFlights({ ...searchFlights, selected: {} });
           };
           setpopupChild(

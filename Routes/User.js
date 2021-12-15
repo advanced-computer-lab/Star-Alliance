@@ -528,7 +528,6 @@ const sendEmail = (userEmail, result1, Price) => {
     from: email,
     to: userEmail,
     subject: "RESERVATION CANCEL ",
-    //html: '<img src="https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg"/>',
 
     text:
       "Dear " +
@@ -557,14 +556,14 @@ const sendEmail = (userEmail, result1, Price) => {
 };
 
 app.post("/CancelReservation", async (req, res) => {
-  console.log(req.body.resp);
+  console.log("--------------------------at backend");
   const flightNumber = req.body.flightNumber;
   console.log("Here is the flight number", flightNumber);
 
   const result1 = await reservation
-    .findOne({ flightNumber: flightNumber }, { firstName: "yehia" })
-    .populate({ path: "user" });
+    .findOne({ _id: req.body.reservation});//To be changed
   const result8 = await reservation.findById({ _id: result1._id });
+  console.log("test flight1",result8)
   const flightNumber1 = result8.flight1;
   const flightNumber2 = result8.flight2;
   console.log("result8", result8);

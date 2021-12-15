@@ -10,6 +10,7 @@ import PlaneSelection from "../Components/PlanSelection.js";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faExclamationCircle } from "@fortawesome/free-solid-svg-icons";
 import { faCheckCircle, faSearch } from "@fortawesome/free-solid-svg-icons";
+import PopupView from "../Components/PopupView";
 
 import { useHistory } from "react-router-dom";
 import seat from "../images/seat.png";
@@ -68,11 +69,11 @@ const SelectNewSeat = (props) => {
 
     
     const handleConfirmBtn = () => {
-        const resp = window.confirm("Are you sure you want to Reserve?", "");
+        const resp = window.confirm("Are you sure you want to Change your seat?", "");
         if(!resp) return;
         setloadingConfirm(true);
         let data = {     
-          userId: User.id, // TODO: new Reservation dynmaic user
+          userId: User.id, 
           flight1num:searchFlights.oldReservation.reservDet.EditedFlightNum,
           flight2Id: searchFlights.oldReservation.reservDet.unEditedFlightID,
           seatType: searchFlights.oldReservation.reservDet.cabin,
@@ -88,14 +89,18 @@ const SelectNewSeat = (props) => {
         ReservationService.reserveNewFlight(data)
           .then((res) => {
             console.log("res", res);
-            const bookingNumber = res.data.bookingNumber;
-            console.log("OK ===> ", res);
+            const bookingNumber =searchFlights.oldReservation.reservDet.reservationID;
+            console.log("OK ===> ", bookingNumber);
   
             setloadingConfirm(false);
+            console.log("here i am")
+
             popupCloseCBref.current = () => {
-              history.push("/"); // navigate home
-              // clear every selection the user made
-              setSearchFlights({ ...searchFlights, selected: {} });
+              console.log("here i am2")
+
+              history.push("/");
+              console.log("here i am3")
+
             };
             setpopupChild(
               <>
@@ -105,11 +110,6 @@ const SelectNewSeat = (props) => {
               </>
             );
             setpopupOpen(true);
-  
-            // alert(
-            //   `Your Flights has been Reserved, Booking Number ${bookingNumber}`,
-            //   res
-            // );
           })
           .catch((err) => {
             // alert("Error", err);
@@ -177,7 +177,7 @@ const SelectNewSeat = (props) => {
           }}
         >
           <Button variant="primary" type="confirm" onClick={handleConfirmBtn}>
-            Confirm Seat(s) <FontAwesomeIcon icon={faCheckCircle} />
+            Change Seat <FontAwesomeIcon icon={faCheckCircle} />
           </Button>
         </div>
         <br />
@@ -196,6 +196,13 @@ const SelectNewSeat = (props) => {
             />
           </a>
         </Row>
+        <PopupView
+          showDialog={popupOpen}
+          setshowDialog={setpopupOpen}
+          cancelCB={popupCloseCBref.current}
+        >
+          {popupChild}
+        </PopupView>
       </>
     );
   

@@ -6,8 +6,10 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Alert from "../Components/Alert";
 import UserService from "../Services/UserService";
 import { UserCtx } from "../Context/GlobalContext";
+import { useHistory } from "react-router-dom";
 
 const ChangePassword = () => {
+  let history = useHistory();
   const [User, setUser] = useContext(UserCtx);
   // let passFormRef = createRef();
   const [alertOpen, setalertOpen] = useState(false);
@@ -43,6 +45,10 @@ const ChangePassword = () => {
         console.log(res);
         setalertMessage("Password changed successfully");
         setalertOpen(true);
+        setTimeout(() => {
+          history.push("/");
+        }, 5000);
+
       })
       .catch((err) => {
         console.log(err);
@@ -89,14 +95,14 @@ const ChangePassword = () => {
         desc=""
       />
       <span class="anchor" id="formChangePassword"></span>
-      <hr class="mb-5" />
-      <div class="card card-outline-secondary">
+      <div >
         <div
           class="card-body"
           style={{
             backgroundColor: "#112D4E",
-            fontFamily: "cursive",
+            fontFamily: "",
             color: "white",
+            borderRadius: "2rem",            
           }}
         >
           <h3 class="mb-0">Change Password</h3>

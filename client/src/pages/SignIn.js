@@ -72,7 +72,7 @@ const SignIn = () => {
   return (
     <div
       class="align-items-center justify-content-center"
-      style={{ fontFamily: "cursive" }}
+      style={{ fontFamily: "" }}
     >
       <br></br>
       <br></br>

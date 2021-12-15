@@ -29,6 +29,7 @@ import { ReservationCtx } from "../Context/ReservationContext";
 import { UserHomeCtx } from "../Context/UserHomeContext";
 import { EditReservationCtx } from "../Context/EditReservationContext";
 import { useHistory } from "react-router-dom";
+import { UserCtx } from "../Context/GlobalContext";
 
 function escapeRegExp(value) {
   return value.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
@@ -74,6 +75,8 @@ const ReservationView = () => {
   let history = useHistory();
 
   const classes = useStyles();
+  const [User, setUser] = useContext(UserCtx);
+
   const [popupOpen, setPopupOpen] = useState(false); // the initial state of the dialog is set to false
   const [popupChild, setpopupChild] = useState(); // the initial state of the dialog is set to false
 
@@ -86,9 +89,16 @@ const ReservationView = () => {
   const CancelReservation = React.useCallback(
     (id) => () => {
       const deletedRow = rows.filter((row) => row.id === id)[0];
+      console.log("deletedRow",deletedRow);
       const resp = window.confirm("Are you sure you want to delete", "");
+      const data2={
+        flightNumber:deletedRow.flightNumber,
+        reservation:deletedRow.reservDet.reservationID,
+        id:User.id
+      }
       if (resp) {
-        FlightService.CancelReservation(deletedRow)
+        console.log("yes i did")
+        FlightService.CancelReservation(data2)
           .then((res) => {
             console.log("OK ===> ", res);
             updateReservationList();

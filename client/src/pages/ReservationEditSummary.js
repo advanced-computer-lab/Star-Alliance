@@ -23,6 +23,7 @@ import moment from "moment";
 import { unstable_composeClasses } from "@mui/core";
 import { faCheckCircle, faSearch } from "@fortawesome/free-solid-svg-icons";
 import { faEdit } from "@fortawesome/free-solid-svg-icons";
+import { UserCtx } from "../Context/GlobalContext";
 
 const FlightCard = ({
   title,
@@ -146,6 +147,8 @@ const Card = (props) => {
 
 const ReservationEditSummary = () => {
   let history = useHistory();
+  const [User, setUser] = useContext(UserCtx);
+
   const [searchFlights, setSearchFlights] = useContext(UserHomeCtx);
   const [loadingConfirm, setloadingConfirm] = useState(false);
 
@@ -217,7 +220,7 @@ const ReservationEditSummary = () => {
 	  if(!resp) return;
       setloadingConfirm(true);
       let data = {
-        userId: "61a35fcdfd33ed54997b5271", // TODO: new Reservation dynmaic user
+        userId: User.id, // TODO: new Reservation dynmaic user
         flight1num: flight1.flightDet.flightNumber,
         flight2Id: searchFlights.selected.flight2,
         seatType: searchFlights.data.seatType,

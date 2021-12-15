@@ -101,7 +101,7 @@ const Naavbar = () => {
         fixed="top"
         style={{
           height: "5rem",
-          fontFamily: "cursive",
+          fontFamily: "",
           backgroundColor: "#112D4E",
         }}
         expand="lg"

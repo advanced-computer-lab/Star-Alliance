@@ -105,7 +105,7 @@ const EditFlight = () => {
       <div 
         className="mt-1  "
         id="testing"
-        style={{ fontFamily: "cursive", color: "white" }}
+        style={{ fontFamily: "", color: "white" }}
       >
       <br/>
            <br/>
