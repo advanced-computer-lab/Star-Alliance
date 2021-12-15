@@ -116,7 +116,9 @@ const ReservationView = () => {
   );
 
   const updateReservationList = () => {
-    FlightService.GetAllReservedFlights()
+    const data ={id:User.id}
+    console.log("sddfwf",data);
+    FlightService.GetAllReservedFlights(data)
       .then((data) => {
         console.log("recived ===> ", data);
 

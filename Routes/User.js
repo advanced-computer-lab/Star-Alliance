@@ -67,15 +67,17 @@ app.post("/changePassword", async (req, res) => {
 });
 // ------- todo: change password
 
-app.get("/GetAllReservedFlights", async (req, res) => {
+app.post("/GetAllReservedFlights", async (req, res) => {
+  const data=req.body;
+  console.log("dataaaa",data)
   console.log("/GetAllReservedFlights sending");
-
   const result = await reservation
-    .find({ firstName: "user" })
-    .populate({ path: "flight1" })
+    .find({user:{_id:data.id}})
     .populate({ path: "user" })
-    .populate({ path: "flight2" });
-  console.log("/GetAllReservedFlights result", result);
+    .populate({path:"flight1"})
+    .populate({path:"flight2"});
+  //console.log("/GetAllReservedFlights result", result);
+  console.log("user1111111111111",result);
   res.send(result);
 });
 

@@ -30,7 +30,7 @@ class FlightService {
     return http.get("/Admin/GetAllFlights");
   }
   GetAllReservedFlights(data) {
-    return http.get("/User/GetAllReservedFlights");
+    return http.post("/User/GetAllReservedFlights",data);
   }
   DeleteFlight(data, resp) {
     return http.post("/Admin/DeleteFlight", data, resp);
