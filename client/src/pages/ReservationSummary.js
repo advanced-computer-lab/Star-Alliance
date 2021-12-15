@@ -24,6 +24,7 @@ import { unstable_composeClasses } from "@mui/core";
 import { faCheckCircle, faSearch } from "@fortawesome/free-solid-svg-icons";
 import { faEdit } from "@fortawesome/free-solid-svg-icons";
 import { UserCtx } from "../Context/GlobalContext";
+import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 
 const FlightCard = ({
   title,
@@ -284,28 +285,25 @@ const ReservationSummary = () => {
 
     return (
       <>
-        {/* <Link to="/ReservationSelection">{"<< Get Back"}</Link> */}
-
+      <br/>
+      <br/>
         <div
           style={{
             height: "150vh",
             backgroundColor: "#f5f5f5",
           }}
         >
-          <Row>
-            <Link to="/SeatReservation">
-              <img
-                style={{
-                  marginTop: "1cm",
-                  marginLeft: "0.4cm",
-                  float: "left",
-                  height: "50px",
-                  width: "50px",
-                }}
-                src={back}
-              />
-            </Link>
-          </Row>
+        
+          <div style={{display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center"}}>
+                  <h6> <Link to="/" style={{color:"black",textDecoration:"none"}}>Home Page</Link> <FontAwesomeIcon icon={faArrowRight}/>
+                  <Link to="/SelectFlight" style={{color:"black",textDecoration:"none"}}>  Select Flight </Link><FontAwesomeIcon icon={faArrowRight}/>
+                  <Link to="/SelectReturnFlights" style={{color:"black",textDecoration:"none"}}>  Select Return Flight </Link><FontAwesomeIcon icon={faArrowRight}/>
+                  <Link to="/SeatReservation" style={{color:"black",textDecoration:"none"}}>  Select Seats </Link><FontAwesomeIcon icon={faArrowRight}/>
+                    {" "}<b>Reservation Summary</b></h6>
+         </div>
           <br />
           <div className="col-md-6 offset-md-3">
             <h1 style={{ padding: "1rem 0 1rem" }}>Summary</h1>

@@ -51,7 +51,36 @@ const EditFlight = () => {
     }, 3000);
     
   };
-  
+  function checkDate (departureTime,arrivalTime){
+    let date= new Date(departureTime);
+    let date2= new Date(arrivalTime);
+    console.log("checkdate1",date);
+    console.log("checkdate2",date2);
+    console.log("checkdate2",date2.getFullYear());
+    console.log("checkdate2",date2.getDate());
+    console.log("checkdate2",date2.getMonth());
+    if(date.getFullYear()<date2.getFullYear()){
+      return false;
+    }
+    else if(date.getFullYear()==date2.getFullYear()){
+      if(date.getMonth()<date2.getMonth()){
+        return false;
+      }
+      else if(date.getMonth()==date2.getMonth()){
+         if(date.getDate()<=date2.getDate()){
+          return false;
+        }
+      }
+      else {
+        return true;
+      }
+      
+    }
+    else
+    { 
+      return true;
+    }
+    }
     const handleSubmit = () => {
       setloadingSearch(true);
       var e = formRef.current;
@@ -70,6 +99,7 @@ const EditFlight = () => {
       console.log(data);
   
       FlightService.GetRequestedFlights(data).then(({ data }) => {
+        
         const selected = {
         resId:searchFlights.oldReservation.reservDet.reservationID,
           flight1: null,
@@ -88,6 +118,19 @@ const EditFlight = () => {
         console.log("gigi", searchFlights);
         show();
         console.log(clicked);
+        if(searchFlights.oldReservation.reservDet.which=="flight1"){
+          let checkBigger=checkDate( moment(e.departureTime.value).format("yyyy-MM-DDThh:mm"), 
+          moment(searchFlights.oldReservation.reservDet.remianFlightDate).format("yyyy-MM-DDThh:mm"));
+          if(checkBigger==true){
+            showAlert("going Date Cannot be after returning Date");
+            setTimeout(function(){
+              window.location.href = 'http://localhost:3000/';
+           }, 3000);
+          }
+          else{
+          
+        
+        
         if(data.going.length==0||data.returning.length==0){
           setloadingSearch(false);
           showAlert("No Available Flights with this Date");
@@ -96,10 +139,43 @@ const EditFlight = () => {
          }, 3000);
 
         }
+        
         else{
         history.push("/SelectEditFlight");
         }
+      }
+      }
+      else{
+        if(searchFlights.oldReservation.reservDet.which=="flight2"){
+          let checkBigger=checkDate(moment(searchFlights.oldReservation.reservDet.remianFlightDate).format("yyyy-MM-DDThh:mm"),
+          moment(e.departureTime.value).format("yyyy-MM-DDThh:mm"));
+          if(checkBigger==true){
+            showAlert("Return Date Cannot be before Going Date");
+            setTimeout(function(){
+              window.location.href = 'http://localhost:3000/';
+           }, 3000);
+          }
+          else{
+          
+        
+        
+        if(data.going.length==0||data.returning.length==0){
+          setloadingSearch(false);
+          showAlert("No Available Flights with this Date");
+          setTimeout(function(){
+            window.location.href = 'http://localhost:3000/';
+         }, 3000);
+
+        }
+        
+        else{
+        history.push("/SelectEditFlight");
+        }
+      }
+      }
+      }
       });
+    
     };
     return (
       <div 
@@ -161,6 +237,8 @@ const EditFlight = () => {
                       type="date"
                       name="departureTime"
                       placeholder="Enter Departure Time"
+                      defaultValue={moment(new Date).format("yyyy-MM-DD")}
+                    min={moment(new Date).format("yyyy-MM-DD")}
                     />
                   </Form.Group>
                 </Col>

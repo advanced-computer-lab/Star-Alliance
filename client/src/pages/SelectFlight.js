@@ -8,7 +8,7 @@ import { json } from "body-parser";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faStickyNote } from "@fortawesome/free-solid-svg-icons";
+import { faArrowRight, faStickyNote } from "@fortawesome/free-solid-svg-icons";
 import back from "../images/back.png";
 import top from "../images/top.png";
 import { faExclamationCircle } from "@fortawesome/free-solid-svg-icons";
@@ -29,7 +29,8 @@ const SelectFlight = () => {
         <Row>
           <br />
           <br />
-
+          <br />
+          <br />
           <Link to="/">
             <img
               style={{
@@ -73,6 +74,9 @@ const SelectFlight = () => {
     return (
       <div>
         <Row>
+        <br />
+          <br />
+          <br />
           <br />
           <br />
 
@@ -213,21 +217,14 @@ const SelectFlight = () => {
         <br />
         <br />
         {/* <h2> Reservation Summary {JSON.stringify(flights)}</h2>   */}
-        <Row>
-          <br />
-          <Link to="/">
-            <img
-              style={{
-                marginLeft: "0.4cm",
-                float: "left",
-                height: "50px",
-                width: "50px",
-              }}
-              src={back}
-            />
-          </Link>
-        </Row>
-        {/* <h3>Home Page --{">"} Select Going Flight </h3> */}
+        
+        <div style={{display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center"}}>
+                  <h6><Link to="/" style={{color:"black",textDecoration:"none"}}>Home Page </Link><FontAwesomeIcon icon={faArrowRight}/> <b>Select Going Flight</b></h6>
+         </div>
+         
         <br />
         <Row>
           <Col>

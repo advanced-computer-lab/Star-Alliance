@@ -7,6 +7,8 @@ import Alert from "../Components/Alert";
 import UserService from "../Services/UserService";
 import { UserCtx } from "../Context/GlobalContext";
 import { useHistory } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEdit } from "@fortawesome/free-solid-svg-icons";
 
 const ChangePassword = () => {
   let history = useHistory();
@@ -89,6 +91,10 @@ const ChangePassword = () => {
   };
   return (
     <div class="col-md-6 offset-md-3 ">
+        <br/>
+        <br/>
+        <br/>
+
       <Alert
         open={alertOpen}
         setOpen={setalertOpen}
@@ -145,7 +151,7 @@ const ChangePassword = () => {
               </span>
             </Form.Group>
             <Button type="submit" class="btn btn-primary btn-lg float-right">
-              Save
+              Change <FontAwesomeIcon icon={faEdit} />
             </Button>
           </Form>
         </div>

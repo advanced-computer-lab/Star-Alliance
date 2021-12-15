@@ -10,6 +10,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faExclamationCircle } from "@fortawesome/free-solid-svg-icons";
 import { faCalendarAlt } from "@fortawesome/free-solid-svg-icons";
 import { useHistory } from "react-router-dom";
+import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 
 const SelectReturnFlights = (props) => {
   const [searchFlights, setSearchFlights] = useContext(UserHomeCtx);
@@ -148,20 +149,13 @@ const SelectReturnFlights = (props) => {
       <div>
         <br />
         <br />
-        <Row>
-          <br />
-          <Link to="/SelectFlight">
-            <img
-              style={{
-                marginLeft: "0.4cm",
-                float: "left",
-                height: "50px",
-                width: "50px",
-              }}
-              src={back}
-            />
-          </Link>
-        </Row>
+        
+        <div style={{display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center"}}>
+                  <h6> <Link to="/" style={{color:"black",textDecoration:"none"}}>Home Page</Link> <FontAwesomeIcon icon={faArrowRight}/><Link to="/SelectFlight" style={{color:"black",textDecoration:"none"}}>  Select Flight </Link><FontAwesomeIcon icon={faArrowRight}/> <b>Select Return Flight</b></h6>
+         </div>
         {/* <h3>Home Page --{">"} Select Going Flight --{">"} Select Returning Flight </h3> */}
         <br />
         {/*  <h1>{allData.flights[0].flightDet.flightNumber}</h1> */}

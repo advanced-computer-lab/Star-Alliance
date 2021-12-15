@@ -11,9 +11,10 @@ import UserService, { UserCtx } from "../Services/UserService.js";
 import PopupView from "./PopupView";
 import TextField from "@mui/material/TextField";
 import { LinkContainer } from "react-router-bootstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUser } from "@fortawesome/free-solid-svg-icons";
+import { faSignInAlt, faTicketAlt, faUser, faUserAlt } from "@fortawesome/free-solid-svg-icons";
 import AuthService from "../Services/AuthService.js";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
 
 //const logo= "	https://o.remove.bg/downloads/e14af0fc-8d3f-4a5a-8dc4-15aca52535d1/7-removebg-preview.png"
 const Naavbar = () => {
@@ -104,7 +105,7 @@ const Naavbar = () => {
       <Navbar
         fixed="top"
         style={{
-          height: "5rem",
+          height: "8rem",
           fontFamily: "",
           backgroundColor: "#112D4E",
         }}
@@ -114,8 +115,8 @@ const Naavbar = () => {
         <Container>
           <LinkContainer to="/">
             <Navbar.Brand style={{ color: "#DBE2EF" }}>
-              <img style={{ height: "1cm", width: "2cm" }} src={logo} />
-              Star-Alliance {user.Name}
+              <img style={{ height: "2cm", width: "2cm" }} src={logo} />
+              Star-Alliance
             </Navbar.Brand>
           </LinkContainer>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -124,18 +125,18 @@ const Naavbar = () => {
               {UserService.isUser() && (
                 <LinkContainer to="/ReservationView">
                   <Nav.Link style={{ color: "#DBE2EF" }}>
-                    My reservations
+                    My reservations <FontAwesomeIcon icon={faTicketAlt} />
                   </Nav.Link>
                 </LinkContainer>
               )}
               {UserService.isUser() && (
                 <LinkContainer to="/UpdateUserData">
-                  <Nav.Link style={{ color: "#DBE2EF" }}>My Profile</Nav.Link>
+                  <Nav.Link style={{ color: "#DBE2EF" }}>My Profile <FontAwesomeIcon icon={faUserAlt} /></Nav.Link>
                 </LinkContainer>
               )}
               {UserService.isUser() && (
                 <LinkContainer to="/">
-                  <Nav.Link style={{ color: "#DBE2EF" }}>Book Flight</Nav.Link>
+                  <Nav.Link style={{ color: "#DBE2EF" }}>Book Flight ✈</Nav.Link>
                 </LinkContainer>
               )}
               {/* <Nav.Link href="#link" style={{ color: "#DBE2EF" }}>
@@ -148,22 +149,22 @@ const Naavbar = () => {
           </Navbar.Collapse>
           <Navbar.Collapse className="justify-content-end">
           
-            <Navbar.Text>
+            <Navbar.Text style={{marginRight:"1cm"}}>
               {UserService.isLoggedIn() &&
-                (UserService.isAdmin() ? `Welcome ${user.Name}` : `Welcome ${user.Name}`)}
+                (UserService.isAdmin() ? `Welcome, ${user.Name}` : `Welcome, ${user.Name}`)}
             </Navbar.Text>
             <Nav>
               {UserService.isLoggedIn() ? (
                 <Navbar.Text>
-                  <Nav.Link onClick={handleSignoutClick}>Sign out</Nav.Link>
+                  <Nav.Link onClick={handleSignoutClick}>Log Out <FontAwesomeIcon icon={faSignOutAlt} /></Nav.Link>
                 </Navbar.Text>
               ) : (
                 <>
                   <LinkContainer to="/signin">
-                    <Nav.Link style={{ color: "#DBE2EF" }}>Login</Nav.Link>
+                    <Nav.Link style={{ color: "#DBE2EF" }}>Login <FontAwesomeIcon icon={faSignInAlt} /></Nav.Link>
                   </LinkContainer>
                   <LinkContainer to="/signup">
-                    <Nav.Link style={{ color: "#DBE2EF" }}>Signup</Nav.Link>
+                    <Nav.Link style={{ color: "#DBE2EF" }}>Sign up</Nav.Link>
                   </LinkContainer>
                 </>
               )}

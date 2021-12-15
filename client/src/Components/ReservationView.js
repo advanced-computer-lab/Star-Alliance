@@ -144,6 +144,7 @@ const ReservationView = () => {
             which: "flight1",
             unEditedFlightID: data.data[j].flight2._id,
             flight2Seats: data.data[j].fligh2seats,
+            remianFlightDate:data.data[j].flight2.departureTime
           };
           allfl[i] = data.data[j].flight1;
           allfl[i].id = i;
@@ -158,6 +159,7 @@ const ReservationView = () => {
             which: "flight2",
             unEditedFlightID: data.data[j].flight1._id,
             flight2Seats: data.data[j].fligh1seats,
+            remianFlightDate:data.data[j].flight1.departureTime
           };
           allfl[i + 1] = data.data[j].flight2;
           allfl[i + 1].id = i + 1;
