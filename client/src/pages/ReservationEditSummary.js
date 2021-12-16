@@ -24,6 +24,7 @@ import { unstable_composeClasses } from "@mui/core";
 import { faCheckCircle, faSearch } from "@fortawesome/free-solid-svg-icons";
 import { faEdit } from "@fortawesome/free-solid-svg-icons";
 import { UserCtx } from "../Context/GlobalContext";
+import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 
 const FlightCard = ({
   title,
@@ -285,21 +286,24 @@ const ReservationEditSummary = () => {
             height: "150vh",
             backgroundColor: "#f5f5f5",
           }}
+         
+
         >
-          <Row>
-            <Link to="/SelectEditFlightSeat">
-              <img
-                style={{
-                  marginTop: "1cm",
-                  marginLeft: "0.4cm",
-                  float: "left",
-                  height: "50px",
-                  width: "50px",
-                }}
-                src={back}
-              />
-            </Link>
-          </Row>
+          <div style={{display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center"}}>
+             <br/>
+          <br/>
+          <br/>
+          <br/>
+                  <h6 style={{color:"black"}}><Link to="/" style={{color:"black",textDecoration:"none"}}>Home Page </Link><FontAwesomeIcon style={{color:"black"}} icon={faArrowRight}/>
+                 {" "} <Link to="/ReservationView" style={{color:"black",textDecoration:"none"}}>My Reservations </Link><FontAwesomeIcon icon={faArrowRight}/>
+                 {" "} <Link to="/EditFlight" style={{color:"black",textDecoration:"none"}}>Search </Link><FontAwesomeIcon icon={faArrowRight}/>
+                 {" "} <Link to="/SelectEditFlightSeat" style={{color:"black",textDecoration:"none"}}>Select Seat </Link><FontAwesomeIcon icon={faArrowRight}/>
+
+                 {" "}  <b>Summary</b></h6>
+         </div>
           <br />
           <div className="col-md-6 offset-md-3">
             <h1 style={{ padding: "1rem 0 1rem" }}>Summary</h1>

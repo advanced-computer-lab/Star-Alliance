@@ -4,6 +4,10 @@ import { useContext } from "react";
 import PropTypes from "prop-types";
 import IconButton from "@mui/material/IconButton";
 import TextField from "@mui/material/TextField";
+import { Link } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowRight, faStickyNote } from "@fortawesome/free-solid-svg-icons";
+
 import {
   DataGrid,
   GridActionsCellItem,
@@ -308,6 +312,12 @@ const ReservationView = () => {
       <br></br>
       <br></br>
       <br></br>
+      <div style={{display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center"}}>
+                  <h6><Link to="/" style={{color:"black",textDecoration:"none"}}>Home Page </Link><FontAwesomeIcon icon={faArrowRight}/> <b>My Reservations</b></h6>
+         </div>
       <PopupView
         showDialog={popupOpen}
         setshowDialog={setPopupOpen}

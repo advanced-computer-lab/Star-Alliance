@@ -9,6 +9,9 @@ import { UserCtx } from "../Context/GlobalContext";
 import { useHistory } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit } from "@fortawesome/free-solid-svg-icons";
+import { Link } from "react-router-dom";
+import { faArrowRight, faStickyNote } from "@fortawesome/free-solid-svg-icons";
+
 
 const ChangePassword = () => {
   let history = useHistory();
@@ -94,6 +97,15 @@ const ChangePassword = () => {
         <br/>
         <br/>
         <br/>
+        <div style={{display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center"}}>
+                  <h6 style={{color:"black"}}><Link to="/" style={{color:"black",textDecoration:"none"}}>Home Page </Link><FontAwesomeIcon icon={faArrowRight}/>
+                  {" "}<Link to="/UpdateUserData" style={{color:"black",textDecoration:"none"}}>Update Info. </Link><FontAwesomeIcon icon={faArrowRight}/>
+
+                  {" "} <b>Change Password</b></h6>
+         </div>
 
       <Alert
         open={alertOpen}

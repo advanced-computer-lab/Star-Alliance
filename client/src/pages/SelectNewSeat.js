@@ -11,6 +11,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faExclamationCircle } from "@fortawesome/free-solid-svg-icons";
 import { faCheckCircle, faSearch } from "@fortawesome/free-solid-svg-icons";
 import PopupView from "../Components/PopupView";
+import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 
 import { useHistory } from "react-router-dom";
 import seat from "../images/seat.png";
@@ -124,20 +125,14 @@ const SelectNewSeat = (props) => {
       <>
         <br />
         <br />
-        <Row>
-          <br />
-          <Link to="/SelectEditFlight">
-            <img
-              style={{
-                marginLeft: "0.4cm",
-                float: "left",
-                height: "50px",
-                width: "50px",
-              }}
-              src={back}
-            />
-          </Link>
-        </Row>
+        <div style={{display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center"}}>
+                  <h6 style={{color:"black"}}><Link to="/" style={{color:"black",textDecoration:"none"}}>Home Page </Link><FontAwesomeIcon style={{color:"black"}} icon={faArrowRight}/>
+                 {" "} <Link to="/ReservationView" style={{color:"black",textDecoration:"none"}}>My Reservations </Link><FontAwesomeIcon icon={faArrowRight}/>
+                 {" "}  <b>Select Seat</b></h6>
+         </div>
         <br />
         <Row>
           <Col>

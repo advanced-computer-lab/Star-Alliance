@@ -14,6 +14,7 @@ import { faUser } from "@fortawesome/free-solid-svg-icons";
 import Alert from "../Components/Alert";
 import { Link } from "react-router-dom";
 import { UserCtx } from "../Context/GlobalContext";
+import { faArrowRight, faStickyNote } from "@fortawesome/free-solid-svg-icons";
 
 const UpdateUserData = () => {
   let updateFormRef = createRef();
@@ -78,6 +79,13 @@ const UpdateUserData = () => {
       <br></br>
       <br></br>
       <br></br>
+      <div style={{display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center"}}>
+                  <h6 style={{color:"black"}}><Link to="/" style={{color:"black",textDecoration:"none"}}>Home Page </Link><FontAwesomeIcon icon={faArrowRight}/>
+                  {" "} <b>Update Info.</b></h6>
+         </div>
       <Alert
         open={alertOpen}
         setOpen={setalertOpen}

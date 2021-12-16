@@ -25,6 +25,7 @@ import tot from "../images/tot.png";
 import top from "../images/top.png";
 import Alert from "../Components/Alert";
 import back from "../images/back.png";
+import { faArrowRight, faStickyNote } from "@fortawesome/free-solid-svg-icons";
 
 const EditFlight = () => {
      
@@ -187,20 +188,15 @@ const EditFlight = () => {
            <br/>
            <br/>
            <br/>
-           <Row>
-          <br />
-          <Link to="/ReservationView">
-            <img
-              style={{
-                marginLeft: "0.4cm",
-                float: "left",
-                height: "50px",
-                width: "50px",
-              }}
-              src={back}
-            />
-          </Link>
-        </Row>
+          
+        <div style={{display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center"}}>
+                  <h6 style={{color:"black"}}><Link to="/" style={{color:"black",textDecoration:"none"}}>Home Page </Link><FontAwesomeIcon style={{color:"black"}} icon={faArrowRight}/>
+                 {" "} <Link to="/ReservationView" style={{color:"black",textDecoration:"none"}}>My Reservations </Link><FontAwesomeIcon icon={faArrowRight}/>
+                 {" "}  <b>Search</b></h6>
+         </div>
            <Alert
         open={alertOpen}
         setOpen={setalertOpen}

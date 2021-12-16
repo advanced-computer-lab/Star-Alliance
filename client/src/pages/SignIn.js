@@ -133,7 +133,7 @@ const SignIn = () => {
               >
                 {loading ? (
                   <>
-                    {"Siging In "}
+                    {"Login "}
                     <Spinner
                       as="span"
                       animation="border"
