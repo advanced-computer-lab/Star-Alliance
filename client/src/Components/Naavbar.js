@@ -108,6 +108,7 @@ const Naavbar = () => {
           height: "8rem",
           fontFamily: "",
           backgroundColor: "#112D4E",
+          opacity: 0.86
         }}
         expand="lg"
         variant="dark"

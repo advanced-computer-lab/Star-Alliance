@@ -37,6 +37,7 @@ app.use(
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
+const bcrypt = require("bcryptjs");
 
 app.use("/Admin", require("../Routes/Admin.js"));
 app.use("/User", require("../Routes/User.js"));
@@ -49,8 +50,10 @@ const createUser = async (req, res) => {
   newUser.lastName = "Mohamed";
   newUser.passportNumber = "3002345678";
   newUser.isAdmin = false;
-  newUser.password = "user1234";
+  newUser.password = await bcrypt.hash("user",10);
   newUser.email = "starallianceproject@gmail.com";
+  newUser.username="user"
+  //const hashedPassword = password, 10);
   await newUser.save();
 };
 //createUser();
@@ -69,6 +72,8 @@ const createReservation = async (req, res) => {
 
 const createAdmin = async (req, res) => {
   const newAd = new user();
+  newAd.username="admin"
+  newAd.password="admin"
   newAd.firstName = "Adminstrator";
   newAd.isAdmin = true;
   await newAd.save();

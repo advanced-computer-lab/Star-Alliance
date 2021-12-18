@@ -486,32 +486,66 @@ app.post("/AddReservation", async (req, res) => {
     companions.adultCount * classPriceFlight2 +
     companions.childCount * (0.5 * classPriceFlight2);
   const totalPrice = flight1totalPrice + flight2totalPrice;
+let totalPeople= companions.adultCount;
+  let i =0;
+  let whatToReturn="";
+  companions.adultCount=1;
+  for(i;i<totalPeople;i++){
+    if(i>0){
+    const newReservation = new reservation({
+      user: resUser._id,
+      flight1: resFlight1._id,
+      flight2: resFlight2._id,
+      cabinClass: seatType,
+      //companions: companions,
+      totalPrice: classPriceFlight1+classPriceFlight2,
+      fligh1seats: flight1seat[i],
+      fligh2seats: flight2seat[i],
+      isCompanion:true
 
-  const newReservation = new reservation({
-    user: resUser._id,
-    flight1: resFlight1._id,
-    flight2: resFlight2._id,
-    cabinClass: seatType,
-    companions: companions,
-    totalPrice: totalPrice,
-    fligh1seats: flight1seat,
-    fligh2seats: flight2seat,
-  });
-  console.log("new Reservation", newReservation);
-  let reservationId = null;
-  try {
-    reservationId = (await newReservation.save()).id;
-  } catch (e) {
-    console.log("error saving the reservation");
-    res.status(503).send("Error saving the reservation");
-    return;
+    });
+    console.log("new Reservation", newReservation);
+    let reservationId = null;
+    try {
+      reservationId = (await newReservation.save()).id;
+    } catch (e) {
+      console.log("error saving the reservation");
+      res.status(503).send("Error saving the reservation");
+      return;
+    }
   }
-  //  roundtrid={going:result3, returning:result4, seatType:type ,
-  //  companionsCount:total,CheckCountry:country};
-  //  res.send(roundtrid);
-  //  console.log(roundtrid);
+  else{
+    const newReservation = new reservation({
+      user: resUser._id,
+      flight1: resFlight1._id,
+      flight2: resFlight2._id,
+      cabinClass: seatType,
+      companions: companions,
+      totalPrice: classPriceFlight1+classPriceFlight2+companions.childCount 
+      * (0.5 * classPriceFlight1)+companions.childCount * (0.5 * classPriceFlight2),
+      fligh1seats: flight1seat[i],
+      fligh2seats: flight2seat[i],
+      isCompanion:false
+    
+    });
+    console.log("new Reservation", newReservation);
+    let reservationId = null;
+    try {
+      reservationId = (await newReservation.save()).id;
+      whatToReturn=reservationId;
+    } catch (e) {
+      console.log("error saving the reservation");
+      res.status(503).send("Error saving the reservation");
+      return;
+    }
+  }
 
-  res.send({ bookingNumber: reservationId });
+  
+
+  }
+  
+
+  res.send({ bookingNumber: whatToReturn});
 });
 
 const sendEmail = (userEmail, result1, Price) => {

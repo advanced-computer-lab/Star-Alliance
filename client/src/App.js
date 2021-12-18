@@ -7,7 +7,7 @@ import GlobalContext, { UserCtx } from "./Context/GlobalContext.js";
 function App() {
   return (
     <GlobalContext>
-      <div style={{ fontFamily: "Verdana " }}>//Verdana
+      <div style={{ fontFamily: "Verdana " }}>
         <Naavbar />
         <div style={{ marginTop: "80px" }}>
           {/*add margin top compansate for navbar*/}
