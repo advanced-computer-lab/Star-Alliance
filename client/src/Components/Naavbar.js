@@ -11,7 +11,12 @@ import UserService, { UserCtx } from "../Services/UserService.js";
 import PopupView from "./PopupView";
 import TextField from "@mui/material/TextField";
 import { LinkContainer } from "react-router-bootstrap";
-import { faSignInAlt, faTicketAlt, faUser, faUserAlt } from "@fortawesome/free-solid-svg-icons";
+import {
+  faSignInAlt,
+  faTicketAlt,
+  faUser,
+  faUserAlt,
+} from "@fortawesome/free-solid-svg-icons";
 import AuthService from "../Services/AuthService.js";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
@@ -23,11 +28,9 @@ const Naavbar = () => {
   const [user, setUser] = useContext(UserCtx);
   const history = useHistory();
   let r = user.id;
-  console.log("showName",user)
+  console.log("showName", user);
 
   const AuthForm = () => {
-   
-
     return (
       <>
         <TextField
@@ -77,7 +80,6 @@ const Naavbar = () => {
   const handleLoginBtn = () => {
     setpopLogin(true);
   };
-  
 
   const handleSignoutClick = () => {
     AuthService.logout()
@@ -108,7 +110,7 @@ const Naavbar = () => {
           height: "8rem",
           fontFamily: "",
           backgroundColor: "#112D4E",
-          opacity: 0.86
+          opacity: 0.86,
         }}
         expand="lg"
         variant="dark"
@@ -132,12 +134,16 @@ const Naavbar = () => {
               )}
               {UserService.isUser() && (
                 <LinkContainer to="/UpdateUserData">
-                  <Nav.Link style={{ color: "#DBE2EF" }}>My Profile <FontAwesomeIcon icon={faUserAlt} /></Nav.Link>
+                  <Nav.Link style={{ color: "#DBE2EF" }}>
+                    My Profile <FontAwesomeIcon icon={faUserAlt} />
+                  </Nav.Link>
                 </LinkContainer>
               )}
               {UserService.isUser() && (
                 <LinkContainer to="/">
-                  <Nav.Link style={{ color: "#DBE2EF" }}>Book Flight ✈</Nav.Link>
+                  <Nav.Link style={{ color: "#DBE2EF" }}>
+                    Book Flight ✈
+                  </Nav.Link>
                 </LinkContainer>
               )}
               {/* <Nav.Link href="#link" style={{ color: "#DBE2EF" }}>
@@ -149,20 +155,25 @@ const Naavbar = () => {
             </Nav>
           </Navbar.Collapse>
           <Navbar.Collapse className="justify-content-end">
-          
-            <Navbar.Text style={{marginRight:"1cm"}}>
+            <Navbar.Text style={{ marginRight: "1cm" }}>
               {UserService.isLoggedIn() &&
-                (UserService.isAdmin() ? `Welcome, ${user.Name}` : `Welcome, ${user.Name}`)}
+                (UserService.isAdmin()
+                  ? `Welcome, ${user.name}`
+                  : `Welcome, ${user.name}`)}
             </Navbar.Text>
             <Nav>
               {UserService.isLoggedIn() ? (
                 <Navbar.Text>
-                  <Nav.Link onClick={handleSignoutClick}>Log Out <FontAwesomeIcon icon={faSignOutAlt} /></Nav.Link>
+                  <Nav.Link onClick={handleSignoutClick}>
+                    Log Out <FontAwesomeIcon icon={faSignOutAlt} />
+                  </Nav.Link>
                 </Navbar.Text>
               ) : (
                 <>
                   <LinkContainer to="/signin">
-                    <Nav.Link style={{ color: "#DBE2EF" }}>Login <FontAwesomeIcon icon={faSignInAlt} /></Nav.Link>
+                    <Nav.Link style={{ color: "#DBE2EF" }}>
+                      Login <FontAwesomeIcon icon={faSignInAlt} />
+                    </Nav.Link>
                   </LinkContainer>
                   <LinkContainer to="/signup">
                     <Nav.Link style={{ color: "#DBE2EF" }}>Sign up</Nav.Link>

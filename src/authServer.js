@@ -109,7 +109,7 @@ app.post("/login", async (req, res) => {
     refreshToken: refreshToken,
     isAdmin: loggingUser.isAdmin,
     userId: loggingUser.id,
-    Name:loggingUser.firstName
+    name: loggingUser.firstName,
   });
 });
 
