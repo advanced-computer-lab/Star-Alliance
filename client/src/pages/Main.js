@@ -39,6 +39,7 @@ import EditReservationContext from "../Context/EditReservationContext.js";
 import ChangePassword from "../Components/ChangePassword.js";
 import SignIn from "../pages/SignIn.js";
 import { UserCtx } from "../Context/GlobalContext.js";
+import CompanionsList from "./CompanionsList.js";
 
 import Cookies from "js-cookies";
 
@@ -204,6 +205,7 @@ const Main = () => {
         <Route exact path="/signin" component={SignIn} />
 
         <Route exact path="/test" component={TestPage} />
+        <Route exact path="/CompanionsList" component={CompanionsList} />
       </Switch>
     </>
   );
