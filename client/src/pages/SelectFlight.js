@@ -74,7 +74,7 @@ const SelectFlight = () => {
     return (
       <div>
         <Row>
-        <br />
+          <br />
           <br />
           <br />
           <br />
@@ -217,14 +217,21 @@ const SelectFlight = () => {
         <br />
         <br />
         {/* <h2> Reservation Summary {JSON.stringify(flights)}</h2>   */}
-        
-        <div style={{display: "flex",
+        <div
+          style={{
+            display: "flex",
             flexDirection: "column",
             justifyContent: "center",
-            alignItems: "center"}}>
-                  <h6><Link to="/" style={{color:"black",textDecoration:"none"}}>Home Page </Link><FontAwesomeIcon icon={faArrowRight}/> <b>Select Going Flight</b></h6>
-         </div>
-         
+            alignItems: "center",
+          }}
+        >
+          <h6>
+            <Link to="/" style={{ color: "black", textDecoration: "none" }}>
+              Home Page{" "}
+            </Link>
+            <FontAwesomeIcon icon={faArrowRight} /> <b>Select Going Flight</b>
+          </h6>
+        </div>
         <br />
         <Row>
           <Col>

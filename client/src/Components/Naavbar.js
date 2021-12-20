@@ -85,8 +85,8 @@ const Naavbar = () => {
     AuthService.logout()
       .then((res) => {
         console.log(res);
-        setUser({ ...user, type: 0 });
         history.push("/");
+        setUser({ ...user, type: 0 });
       })
       .catch((err) => console.log(err));
   };

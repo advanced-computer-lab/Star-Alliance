@@ -11,14 +11,16 @@ import TextField from "@mui/material/TextField";
 import Alert from "../Components/Alert.js";
 import { gridRowsStateSelector } from "@mui/x-data-grid-pro";
 import AuthService from "../Services/AuthService";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import { UserCtx } from "../Context/GlobalContext.js";
+import { UserHomeCtx } from "../Context/UserHomeContext.js";
 import UserService from "../Services/UserService";
 import Spinner from "react-bootstrap/Spinner";
 
 const SignIn = () => {
   let history = useHistory();
   const [user, setUser] = useContext(UserCtx);
+  const [searchFlights, setSearchFlights] = useContext(UserHomeCtx);
   const [loading, setloading] = useState(false);
 
   // if logged in redirect to home page
