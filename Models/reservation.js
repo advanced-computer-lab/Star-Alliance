@@ -23,6 +23,7 @@ const reservationSchema = new Schema({
 
   fligh1seats: { type: [String] },
   fligh2seats: { type: [String] },
+  TicketName: { type: String },
 
   isPaied: {
     type: Boolean,

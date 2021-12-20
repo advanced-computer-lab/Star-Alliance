@@ -68,16 +68,16 @@ app.post("/changePassword", async (req, res) => {
 // ------- todo: change password
 
 app.post("/GetAllReservedFlights", async (req, res) => {
-  const data = req.body;
-  console.log("dataaaa", data);
+  const data=req.body;
+  console.log("dataaaa",data)
   console.log("/GetAllReservedFlights sending");
   const result = await reservation
-    .find({ user: { _id: data.id } })
+    .find({user:{_id:data.id}})
     .populate({ path: "user" })
-    .populate({ path: "flight1" })
-    .populate({ path: "flight2" });
+    .populate({path:"flight1"})
+    .populate({path:"flight2"});
   //console.log("/GetAllReservedFlights result", result);
-  console.log("user1111111111111", result);
+  console.log("user1111111111111",result);
   res.send(result);
 });
 
@@ -208,33 +208,33 @@ app.post("/AddEditReservation", async (req, res) => {
     return;
   }
 
-  if (
-    !flight1seat.every((seat) =>
-      flight1AvailableSeatsForCabin.includes(seat)
-    ) ||
-    flight1seat.length == 0
-  ) {
-    console.log("Seat Number error");
-    res.status(503).send("Seat number error");
-    return;
-  }
+  // if (
+  //   !flight1seat.every((seat) =>
+  //     flight1AvailableSeatsForCabin.includes(seat)
+  //   ) ||
+  //   flight1seat.length == 0
+  // ) {
+  //   console.log("Seat Number error");
+  //   res.status(503).send("Seat number error");
+  //   return;
+  // }
   // Make sure flight1 seating count is equal to flight2 seating count
-  if (flight1seat.length != flight2seat.length) {
-    const errMsg = `Seat Number error, flight1seats != flight2seats, f1s=${flight1seat} f2s=${flight2seat}`;
-    console.log(errMsg);
-    res.status(503).send(errMsg);
-    return;
-  }
+  // if (flight1seat.length != flight2seat.length) {
+  //   const errMsg = `Seat Number error, flight1seats != flight2seats, f1s=${flight1seat} f2s=${flight2seat}`;
+  //   console.log(errMsg);
+  //   res.status(503).send(errMsg);
+  //   return;
+  // }
 
-  // Make sure companios count matches seating count
-  if (companions.adultCount + companions.childCount != flight1seat.length) {
-    const errMsg = `Seat Number error, companions != flight1seats, companions=${JSON.stringify(
-      companions
-    )} flight1seats=${flight1seat}`;
-    console.log(errMsg);
-    res.status(503).send(errMsg);
-    return;
-  }
+  // // Make sure companios count matches seating count
+  // if (companions.adultCount + companions.childCount != flight1seat.length) {
+  //   const errMsg = `Seat Number error, companions != flight1seats, companions=${JSON.stringify(
+  //     companions
+  //   )} flight1seats=${flight1seat}`;
+  //   console.log(errMsg);
+  //   res.status(503).send(errMsg);
+  //   return;
+  // }
 
   resFlight1.availableSeats = {
     first: resFlight1FirstSeats,
@@ -334,12 +334,13 @@ app.post("/AddReservation", async (req, res) => {
     flight1seat,
     flight2seat,
     companions,
+    companionNames
   } = req.body;
 
   // check that the user exists, and verifiy that the user can make a reservation
   let resUser = null;
   try {
-    resUser = await user.findOne({ _id: userId });
+    resUser = await user.findOne({ _id:userId });
   } catch (e) {
     console.log("error getting the user", e);
     res.status(404).send("User not found");
@@ -402,49 +403,46 @@ app.post("/AddReservation", async (req, res) => {
     return;
   }
 
-  if (
-    !flight1seat.every((seat) =>
-      flight1AvailableSeatsForCabin.includes(seat)
-    ) ||
-    flight1seat.length == 0
-  ) {
-    console.log("Seat Number error");
-    res.status(503).send("Seat number error");
-    return;
-  }
-  if (
-    !flight2seat.every((seat) =>
-      flight2AvailableSeatsForCabin.includes(seat)
-    ) ||
-    flight2seat.length == 0
-  ) {
-    console.log("Seat Number error");
-    res.status(503).send("Seat number error");
-    return;
-  }
+  // if (
+  //   !flight1seat.every((seat) =>
+  //     flight1AvailableSeatsForCabin.includes(seat)
+  //   ) ||
+  //   flight1seat.length == 0
+  // ) {
+  //   console.log("Seat Number error");
+  //   res.status(503).send("Seat number error");
+  //   return;
+  // }
+  // if (
+  //   !flight2seat.every((seat) =>
+  //     flight2AvailableSeatsForCabin.includes(seat)
+  //   ) ||
+  //   flight2seat.length == 0
+  // ) {
+  //   console.log("Seat Number error");
+  //   res.status(503).send("Seat number error");
+  //   return;
+  // }
 
   // Make sure flight1 seating count is equal to flight2 seating count
-  if (flight1seat.length != flight2seat.length) {
-    const errMsg = `Seat Number error, flight1seats != flight2seats, f1s=${flight1seat} f2s=${flight2seat}`;
-    console.log(errMsg);
-    res.status(503).send(errMsg);
-    return;
-  }
+  // if (flight1seat.length != flight2seat.length) {
+  //   const errMsg = `Seat Number error, flight1seats != flight2seats, f1s=${flight1seat} f2s=${flight2seat}`;
+  //   console.log(errMsg);
+  //   res.status(503).send(errMsg);
+  //   return;
+  // }
 
   // Make sure companios count matches seating count
-  if (companions.adultCount + companions.childCount != flight1seat.length) {
-    const errMsg = `Seat Number error, companions != flight1seats, companions=${JSON.stringify(
-      companions
-    )} flight1seats=${flight1seat}`;
-    console.log(errMsg);
-    res.status(503).send(errMsg);
-    return;
-  }
+  // if (companions.adultCount + companions.childCount != flight1seat.length) {
+  //   const errMsg = `Seat Number error, companions != flight1seats, companions=${JSON.stringify(
+  //     companions
+  //   )} flight1seats=${flight1seat}`;
+  //   console.log(errMsg);
+  //   res.status(503).send(errMsg);
+  //   return;
+  // }
 
-  //update flight seats
-  // resFlight1.avaiableSeats = resFlight1.avaiableSeats.filter(
-  //   (seat) => !flight1seat.includes(seat)
-  // );
+ 
 
   resFlight1.availableSeats = {
     first: resFlight1FirstSeats,
@@ -486,62 +484,102 @@ app.post("/AddReservation", async (req, res) => {
     companions.adultCount * classPriceFlight2 +
     companions.childCount * (0.5 * classPriceFlight2);
   const totalPrice = flight1totalPrice + flight2totalPrice;
-  let totalPeople = companions.adultCount;
-  let i = 0;
-  let whatToReturn = "";
-  companions.adultCount = 1;
-  for (i; i < totalPeople; i++) {
-    if (i > 0) {
-      const newReservation = new reservation({
-        user: resUser._id,
-        flight1: resFlight1._id,
-        flight2: resFlight2._id,
-        cabinClass: seatType,
-        //companions: companions,
-        totalPrice: classPriceFlight1 + classPriceFlight2,
-        fligh1seats: flight1seat[i],
-        fligh2seats: flight2seat[i],
-        isCompanion: true,
-      });
-      console.log("new Reservation", newReservation);
-      let reservationId = null;
-      try {
-        reservationId = (await newReservation.save()).id;
-      } catch (e) {
-        console.log("error saving the reservation");
-        res.status(503).send("Error saving the reservation");
-        return;
+let totalPeople= companions.adultCount;
+  let i =0;
+  let whatToReturn="";
+  let allSeats1=[]
+  let allSeats2=[]
+  console.log("----------------------------------------------------------");
+
+  console.log("fligh1seat",flight1seat);
+  console.log("fligh2seat",flight2seat);
+  if(companions.childCount>0){
+    let j=0;
+    for( j=0;j<companions.childCount;j++){
+      if(j==0){
+        allSeats1.push(flight1seat[0])
+       allSeats2.push(flight2seat[0])
       }
-    } else {
-      const newReservation = new reservation({
-        user: resUser._id,
-        flight1: resFlight1._id,
-        flight2: resFlight2._id,
-        cabinClass: seatType,
-        companions: companions,
-        totalPrice:
-          classPriceFlight1 +
-          classPriceFlight2 +
-          companions.childCount * (0.5 * classPriceFlight1) +
-          companions.childCount * (0.5 * classPriceFlight2),
-        fligh1seats: flight1seat[i],
-        fligh2seats: flight2seat[i],
-        isCompanion: false,
-      });
-      console.log("new Reservation", newReservation);
-      let reservationId = null;
-      try {
-        reservationId = (await newReservation.save()).id;
-        whatToReturn = reservationId;
-      } catch (e) {
-        console.log("error saving the reservation");
-        res.status(503).send("Error saving the reservation");
-        return;
-      }
+       allSeats1.push(flight1seat[flight1seat.length-1])
+       allSeats2.push(flight2seat[flight2seat.length-1])
+       flight1seat.pop();
+       flight2seat.pop();
+       //console.log("allSeats1",allSeats1);
+       //console.log("allSeats1",flight1seat);
+
+    }
+
+  }
+  if(companions.childCount==0){
+    allSeats1.push(flight1seat[0])
+       allSeats2.push(flight2seat[0])
+  }
+  console.log("fligh1seat",flight1seat);
+  console.log("fligh2seat",flight2seat);
+  console.log("----------------------------------------------------------");
+
+
+  companions.adultCount=1;
+
+  for(i;i<totalPeople;i++){
+    if(i>0){
+    const newReservation = new reservation({
+      user: resUser._id,
+      flight1: resFlight1._id,
+      flight2: resFlight2._id,
+      cabinClass: seatType,
+      //companions: companions,
+      totalPrice: classPriceFlight1+classPriceFlight2,
+      fligh1seats: flight1seat[i],
+      fligh2seats: flight2seat[i],
+      isCompanion:true,
+      TicketName:companionNames[i-1]
+
+    });
+    console.log("new Reservation", newReservation);
+    let reservationId = null;
+    try {
+      reservationId = (await newReservation.save()).id;
+    } catch (e) {
+      console.log("error saving the reservation");
+      res.status(503).send("Error saving the reservation");
+      return;
+    }
+  }
+  else{
+    const newReservation = new reservation({
+      user: resUser._id,
+      flight1: resFlight1._id,
+      flight2: resFlight2._id,
+      cabinClass: seatType,
+      companions: companions,
+      totalPrice: classPriceFlight1+classPriceFlight2+companions.childCount 
+      * (0.5 * classPriceFlight1)+companions.childCount * (0.5 * classPriceFlight2),
+      fligh1seats: allSeats1,
+      fligh2seats: allSeats2,
+      isCompanion:false,
+      TicketName:resUser.firstName
+
+    
+    });
+    console.log("new Reservation", newReservation);
+    let reservationId = null;
+    try {
+      reservationId = (await newReservation.save()).id;
+      whatToReturn=reservationId;
+    } catch (e) {
+      console.log("error saving the reservation");
+      res.status(503).send("Error saving the reservation");
+      return;
     }
   }
 
-  res.send({ bookingNumber: whatToReturn });
+  
+
+  }
+  
+
+  res.send({ bookingNumber: whatToReturn});
 });
 
 const sendEmail = (userEmail, result1, Price) => {
@@ -592,9 +630,10 @@ app.post("/CancelReservation", async (req, res) => {
   const flightNumber = req.body.flightNumber;
   console.log("Here is the flight number", flightNumber);
 
-  const result1 = await reservation.findOne({ _id: req.body.reservation }); //To be changed
+  const result1 = await reservation
+    .findOne({ _id: req.body.reservation});//To be changed
   const result8 = await reservation.findById({ _id: result1._id });
-  console.log("test flight1", result8);
+  console.log("test flight1",result8)
   const flightNumber1 = result8.flight1;
   const flightNumber2 = result8.flight2;
   console.log("result8", result8);
@@ -608,6 +647,36 @@ app.post("/CancelReservation", async (req, res) => {
   const getSeats2 = await flight.findByIdAndUpdate({ _id: flightNumber2 });
   const seats1 = getSeats1.availableSeats;
   const seats2 = getSeats2.availableSeats;
+  if(result8.companions!=undefined){
+  if(result8.companions.childCount>0){
+    const result9 = await reservation.findOne({ user:result8.user,flight1:flightNumber1,
+      flight2:flightNumber2,isCompanion:true });
+      if(result9!=undefined){
+      const childSeat1=flightNumberseat1[flightNumberseat1.length-1];
+      const  childSeat2=flightNumberseat2[flightNumberseat2.length-1];
+      flightNumberseat1.pop();
+      flightNumberseat2.pop();
+
+      const seats3= result9.fligh1seats;
+      seats3.push(childSeat1);
+
+      const seats4= result9.fligh2seats;
+      seats4.push(childSeat2);
+      const addCildCompanion={adultCount:1,childCount:result8.companions.childCount};
+      console.log("----------------------");
+      console.log("result9._id",result9._id)
+      console.log("----------------------");
+      const updateSeats1 = await reservation.updateOne(
+        { _id: result9._id},
+
+        {$set:{ companions: addCildCompanion,totalPrice:result9.totalPrice+
+          result9.totalPrice*result8.companions.childCount,fligh1seats:seats3,
+          fligh2seats:seats4}}
+      );
+      }
+    }
+
+  }
   if (cabinType === "economy") {
     const seats1 = getSeats1.availableSeats;
     const seats2 = getSeats2.availableSeats;
@@ -666,6 +735,61 @@ app.post("/CancelReservation", async (req, res) => {
     return;
   }
   res.send(result);
+});
+
+app.post("/signUp", async (req, res) => {
+  const {
+    firstName,
+    lastName,
+    username,
+    email,
+    password,
+    phoneNumber,
+    birthDate,
+    country,
+    city,
+    street,
+    buildingNumber,
+    passportNumber,
+    countryCode,
+  } = req.body;
+
+  const address = {
+    country: country,
+    city: city,
+    street: street,
+    buildingNumber: buildingNumber,
+  };
+
+  const hashedPassword = await bcrypt.hash(password, 10);
+
+  const phoneNumbers = [phoneNumber];
+
+  const newUser = new user({
+    firstName,
+    lastName,
+    username,
+    email,
+    password: hashedPassword,
+    phoneNumbers,
+    birthDate,
+    address,
+    buildingNumber,
+    passportNumber,
+    countryCode,
+    isAdmin: false,
+  });
+  try {
+    const result = await newUser.save();
+    console.log(result);
+    res.sendStatus(200);
+  } catch (error) {
+    const emsg = error.message;
+    console.log(emsg);
+    if (emsg.includes("duplicate key")) {
+      res.status(400).send("Username already exists, choose another one");
+    } else res.status(400).send(error.message);
+  }
 });
 
 module.exports = app;

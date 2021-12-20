@@ -40,6 +40,9 @@ const ContinueReservingBar = (props) => {
     goToLocation = "/ReservationSummary";
     showThis = true;
   }
+  /*if(searchFlights.confirmed === undefined || (!searchFlights.confirmed)){
+    showThis = false;
+  }*/
 
   //   const handleClick = () => {
   //     history.push(goToLocation);
@@ -66,7 +69,8 @@ const ContinueReservingBar = (props) => {
 
   return (
     <>
-      <div
+      <div 
+      className="col-6 offset-3 mt-3"
         style={{
           display: "flex",
           alignItems: "center",

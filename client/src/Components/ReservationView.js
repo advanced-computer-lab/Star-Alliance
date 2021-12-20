@@ -89,7 +89,7 @@ const ReservationView = () => {
   const [SOTrows, setSOTRows] = React.useState([]);
 
   const [isLoading, setisLoading] = useState(true);
-
+  let row2 = [];
   const CancelReservation = React.useCallback(
     (id) => () => {
       const deletedRow = rows.filter((row) => row.id === id)[0];
@@ -118,7 +118,7 @@ const ReservationView = () => {
     },
     [rows]
   );
-
+  console.log("rows", rows);
   const updateReservationList = () => {
     const data = { id: User.id };
     console.log("sddfwf", data);
@@ -126,19 +126,10 @@ const ReservationView = () => {
       .then((data) => {
         console.log("recived ===> ", data);
 
-        // Pre-Proccessing
-
-        //   data.forEach((resv) => {
-        // resv.flight["id"] = resv.flight["_id"];
-        /* const formatDateTime = (input) =>
-            input ? moment(input).format("yyyy-MM-DD hh:mmA") : null;
-
-            resv.flight["arrivalTime"] = formatDateTime(resv.flight["arrivalTime"]);
-            resv.flight["departureTime"] = formatDateTime(resv.flight["departureTime"]);*/
-        // });
         const allfl = [];
         let j = 0;
         for (let i = 0; i < data.data.length * 2; i = i + 2) {
+          console.log("j", j);
           const reservId = data.data[j]._id;
           const reservDet1 = {
             cabin: data.data[j].cabinClass,
@@ -155,6 +146,7 @@ const ReservationView = () => {
           allfl[i] = data.data[j].flight1;
           allfl[i].id = i;
           allfl[i].reservDet = reservDet1;
+          allfl[i].TicketName = data.data[j].TicketName;
           const reservDet2 = {
             EditedFlight: data.data[j].flight2,
             EditedFlightNum: data.data[j].flight2.flightNumber,
@@ -170,6 +162,8 @@ const ReservationView = () => {
           allfl[i + 1] = data.data[j].flight2;
           allfl[i + 1].id = i + 1;
           allfl[i + 1].reservDet = reservDet2;
+          allfl[i + 1].TicketName = data.data[j].TicketName;
+
           j++;
         }
         console.log("hena1", data.data);
@@ -181,11 +175,15 @@ const ReservationView = () => {
 
           resv["arrivalTime"] = formatDateTime(resv["arrivalTime"]);
           resv["departureTime"] = formatDateTime(resv["departureTime"]);
+          // resv["companionName"] = (resv["companionName"]);
         });
         console.log("data - => ", data);
         setisLoading(false);
 
         setSOTRows(allfl);
+
+        console.log("rows", rows);
+
         console.log("datsssda - => ", allfl);
       })
       .catch((err) => {
@@ -224,6 +222,12 @@ const ReservationView = () => {
   const columns = React.useMemo(
     () => [
       {
+        field: "TicketName",
+        headerName: "Name",
+
+        flex: 1,
+      },
+      {
         field: "flightNumber",
         headerName: "Flight Number",
         headerClassName: "super-app-theme--header",
@@ -260,6 +264,7 @@ const ReservationView = () => {
         headerName: "Arrival Terminal",
         flex: 1,
       },
+
       {
         field: "actions",
         type: "actions",
@@ -306,6 +311,7 @@ const ReservationView = () => {
     setRows(SOTrows);
   }, [SOTrows]);
 
+  console.log("rows3", rows);
   return (
     <>
       <br></br>

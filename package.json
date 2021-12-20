@@ -25,7 +25,8 @@
     "mongoose": "^6.0.12",
     "nodemailer": "^6.7.2",
     "nodemon": "^2.0.14",
-    "react-bootstrap": "^2.0.1"
+    "react-bootstrap": "^2.0.1",
+    "stripe": "^8.193.0"
   },
   "devDependencies": {
     "@types/node": "^16.11.12"

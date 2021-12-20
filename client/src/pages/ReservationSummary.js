@@ -157,6 +157,9 @@ const ReservationSummary = () => {
   const [popupChild, setpopupChild] = useState(null);
   const popupCloseCBref = useRef(null);
 
+  
+  
+
   if (searchFlights.data == "inital not set data") {
     setTimeout(() => {
       history.push("/");
@@ -222,55 +225,34 @@ const ReservationSummary = () => {
     // TODO: check if there is some passed values from the previous page [reservation]
     // TODO: else query reservstion data from params
     console.log("searchFlights in Resrvation summary", searchFlights);
-    const handleSubmitReservation = () => {
-	  const resp = window.confirm("Are you sure you want to Reserve?", "");
-	  if(!resp) return;
-      setloadingConfirm(true);
-      let data = {
-        userId: User.id, 
-        flight1num: flight1.flightDet.flightNumber,
-        flight2num: flight2.flightDet.flightNumber,
-        seatType: searchFlights.data.seatType,
-        flight1seat: flight1seat,
-        flight2seat: flight2seat,
-        companions: searchFlights.selected.companions,
-      };
-      ReservationService.reserveNew(data)
-        .then((res) => {
-          console.log("res", res);
-          const bookingNumber = res.data.bookingNumber;
-          console.log("OK ===> ", res);
+    const handleClickk = () => {
 
-          setloadingConfirm(false);
-          popupCloseCBref.current = () => {
-            console.log("here i am")
-            history.push("/"); // navigate home
-            // clear every selection the user made
-           // console.log("here i am")
-            setSearchFlights({ ...searchFlights, selected: {} });
-          };
-          setpopupChild(
-            <>
-              <h2>Your Flights has been Reserved</h2>
-              <h2> Booking Number:</h2>
-              <h2>{bookingNumber}</h2>
-            </>
-          );
-          setpopupOpen(true);
+      //const { user, rememberMe } = this.state;
+      //localStorage.setItem('reservation', JSON.stringify(searchFlights));
+      //localStorage.setItem('user', rememberMe ? user : '');
 
-          // alert(
-          //   `Your Flights has been Reserved, Booking Number ${bookingNumber}`,
-          //   res
-          // );
-        })
-        .catch((err) => {
-          // alert("Error", err);
-          console.log("errr <===", err.response);
-          const errorMessage = err.response.data;
-          // console.log("errorMessage", errorMessage);
-          alert("Error: " + errorMessage);
-        });
-    };
+      fetch('/create-checkout-session', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          items: [
+            { id: 1, quantity: 1,price: totalPrice*100 },
+          ],
+  
+        }),
+    
+    }).then(res => {
+        if(res.ok) return res.json()
+        return res.json().then(json => Promise.reject(json))
+    }).then(({ url }) => {
+        //console.log(url);
+        window.location = url
+    }).catch(e => {
+        console.error(e.error);
+    })
+    }
 
     const handleEditClick = () => {
       setSearchFlights({
@@ -368,23 +350,10 @@ const ReservationSummary = () => {
                   Edit <FontAwesomeIcon icon={faEdit} />
                 </Button>
               </LinkContainer>
-              <Button
-                onClick={handleSubmitReservation}
-                disabled={loadingConfirm}
-              >
-                Confirm {"  "}
-                {loadingConfirm ? (
-                  <Spinner
-                    as="span"
-                    animation="border"
-                    size="sm"
-                    role="status"
-                    aria-hidden="true"
-                  />
-                ) : (
-                  <FontAwesomeIcon icon={faCheckCircle} />
-                )}
-              </Button>
+            
+              <button className="btn btn-primary mx-3" onClick={handleClickk}>
+            Checkout <FontAwesomeIcon icon={faCheckCircle} />
+          </button>
             </Stack>
           </div>
 

@@ -259,25 +259,7 @@ const FlightsList = () => {
     [deleteFlight, updateFlight]
   );
 
-  // "_id": "617be2ec9fa58494388aca3c",
-  // "__v": 0,
-  // "flightNumber": "155646"
-  // "arrivalAirport": "jedda",
-  // "departureAirport": "cairo",
-  // "arrivalTime": "2016-05-18T16:00:00.000Z",
-  // "departureTime": "2016-05-18T16:00:00.000Z",
-  // "businessSeatsNum": 5,
-  // "economySeatsNum": 3,
-  // "firstSeatsNum": 4,
-  // "firstClassPrice": 3333,
-  // "economyClassPrice": 2222,
-  // "businessClassPrice": 2222,
-
-  // const { data } = useDemoData({
-  //   dataSet: "Commodity",
-  //   rowLength: 100,
-  //   maxColumns: 6,
-  // });
+ 
 
   const requestSearch = (searchValue) => {
     setSearchText(searchValue);
