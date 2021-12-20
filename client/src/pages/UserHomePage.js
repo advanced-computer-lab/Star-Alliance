@@ -25,6 +25,7 @@ import YouTube from "react-youtube";
 import tot from "../images/tot.png";
 import top from "../images/top.png";
 import Alert from "../Components/Alert";
+import ContinueReservingBar from "../Components/ContinueReservingBar";
 
 const UserHomePage = () => {
   const [searchFlights, setSearchFlights] = useContext(UserHomeCtx);
@@ -193,8 +194,10 @@ const UserHomePage = () => {
         title={alertMessage}
         desc=""
       />
+
+<ContinueReservingBar />
       <div
-        className=" mt-5 col-sm-8 offset-sm-2 col-md-8 offset-md-2 col-lg-8 offset-lg-2 " //
+        className="mt-5 col-sm-8 offset-sm-2 col-md-8 offset-md-2 col-lg-8 offset-lg-2 " //
         style={{
           borderRadius: "2rem",
           backgroundColor: "#112D4E",
