@@ -234,6 +234,7 @@ const ReservationSummary = () => {
         flight1seat: flight1seat,
         flight2seat: flight2seat,
         companions: searchFlights.selected.companions,
+        companionNames:searchFlights.companionNames
       };
       ReservationService.reserveNew(data)
         .then((res) => {

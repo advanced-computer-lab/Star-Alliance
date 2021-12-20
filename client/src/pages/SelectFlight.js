@@ -17,6 +17,7 @@ import { faMapMarkerAlt } from "@fortawesome/free-solid-svg-icons";
 
 const SelectFlight = () => {
   const [searchFlights, setSearchFlights] = useContext(UserHomeCtx);
+  console.log("selectflightpage",searchFlights)
   let history = useHistory();
 
   let flights = searchFlights.data.going;
@@ -204,6 +205,7 @@ const SelectFlight = () => {
         flight1seat: [],
         flight2seat: [],
         companions: searchFlights.selected.companions,
+        companionNames:searchFlights.companionNames
       };
 
       setSearchFlights({

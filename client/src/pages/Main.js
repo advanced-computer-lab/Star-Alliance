@@ -39,6 +39,7 @@ import EditReservationContext from "../Context/EditReservationContext.js";
 import ChangePassword from "../Components/ChangePassword.js";
 import SignIn from "../pages/SignIn.js";
 import { UserCtx } from "../Context/GlobalContext.js";
+import AddCompanionNames from "../pages/AddCompanionNames.js";
 
 import Cookies from "js-cookies";
 
@@ -187,6 +188,12 @@ const Main = () => {
           Context={UserHomeContext}
           CComponent={SelectNewSeat}
         />
+        <ContextRoute
+          exact
+          path="/AddCompanionNames"
+          Context={UserHomeContext}
+          CComponent={AddCompanionNames}
+        />
         <AdminRoute exact path="/FlightsList" Component={FlightsList} />
         <AdminRoute exact path="/UpdateForm" Component={UpdateForm} />
         <AdminRoute exact path="/FlightView/:flightId" component={FlightView} />
@@ -202,7 +209,6 @@ const Main = () => {
         <Route exact path="/ChangePassword" component={ChangePassword} />
         <Route exact path="/signup" component={SignUp} />
         <Route exact path="/signin" component={SignIn} />
-
         <Route exact path="/test" component={TestPage} />
       </Switch>
     </>

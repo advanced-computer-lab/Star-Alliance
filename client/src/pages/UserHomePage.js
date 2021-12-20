@@ -134,12 +134,18 @@ function checkDate (departureTime,arrivalTime){
           childCount: parseInt(e.children.value),
         },
       };
-      setSearchFlights({ data, selected });
+      const totalNames=e.adult.value;
+      setSearchFlights({ data, selected,totalNames});
       console.log("gigi", searchFlights);
       show();
       console.log(clicked);
+      if(totalNames>1){
+      history.push("/AddCompanionNames");
+      }
+      else{
       history.push("/SelectFlight");
     }
+  }
     });
   }
 }
