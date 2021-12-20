@@ -68,16 +68,16 @@ app.post("/changePassword", async (req, res) => {
 // ------- todo: change password
 
 app.post("/GetAllReservedFlights", async (req, res) => {
-  const data=req.body;
-  console.log("dataaaa",data)
+  const data = req.body;
+  console.log("dataaaa", data);
   console.log("/GetAllReservedFlights sending");
   const result = await reservation
-    .find({user:{_id:data.id}})
+    .find({ user: { _id: data.id } })
     .populate({ path: "user" })
-    .populate({path:"flight1"})
-    .populate({path:"flight2"});
+    .populate({ path: "flight1" })
+    .populate({ path: "flight2" });
   //console.log("/GetAllReservedFlights result", result);
-  console.log("user1111111111111",result);
+  console.log("user1111111111111", result);
   res.send(result);
 });
 
@@ -339,7 +339,7 @@ app.post("/AddReservation", async (req, res) => {
   // check that the user exists, and verifiy that the user can make a reservation
   let resUser = null;
   try {
-    resUser = await user.findOne({ _id:userId });
+    resUser = await user.findOne({ _id: userId });
   } catch (e) {
     console.log("error getting the user", e);
     res.status(404).send("User not found");
@@ -486,66 +486,62 @@ app.post("/AddReservation", async (req, res) => {
     companions.adultCount * classPriceFlight2 +
     companions.childCount * (0.5 * classPriceFlight2);
   const totalPrice = flight1totalPrice + flight2totalPrice;
-let totalPeople= companions.adultCount;
-  let i =0;
-  let whatToReturn="";
-  companions.adultCount=1;
-  for(i;i<totalPeople;i++){
-    if(i>0){
-    const newReservation = new reservation({
-      user: resUser._id,
-      flight1: resFlight1._id,
-      flight2: resFlight2._id,
-      cabinClass: seatType,
-      //companions: companions,
-      totalPrice: classPriceFlight1+classPriceFlight2,
-      fligh1seats: flight1seat[i],
-      fligh2seats: flight2seat[i],
-      isCompanion:true
-
-    });
-    console.log("new Reservation", newReservation);
-    let reservationId = null;
-    try {
-      reservationId = (await newReservation.save()).id;
-    } catch (e) {
-      console.log("error saving the reservation");
-      res.status(503).send("Error saving the reservation");
-      return;
+  let totalPeople = companions.adultCount;
+  let i = 0;
+  let whatToReturn = "";
+  companions.adultCount = 1;
+  for (i; i < totalPeople; i++) {
+    if (i > 0) {
+      const newReservation = new reservation({
+        user: resUser._id,
+        flight1: resFlight1._id,
+        flight2: resFlight2._id,
+        cabinClass: seatType,
+        //companions: companions,
+        totalPrice: classPriceFlight1 + classPriceFlight2,
+        fligh1seats: flight1seat[i],
+        fligh2seats: flight2seat[i],
+        isCompanion: true,
+      });
+      console.log("new Reservation", newReservation);
+      let reservationId = null;
+      try {
+        reservationId = (await newReservation.save()).id;
+      } catch (e) {
+        console.log("error saving the reservation");
+        res.status(503).send("Error saving the reservation");
+        return;
+      }
+    } else {
+      const newReservation = new reservation({
+        user: resUser._id,
+        flight1: resFlight1._id,
+        flight2: resFlight2._id,
+        cabinClass: seatType,
+        companions: companions,
+        totalPrice:
+          classPriceFlight1 +
+          classPriceFlight2 +
+          companions.childCount * (0.5 * classPriceFlight1) +
+          companions.childCount * (0.5 * classPriceFlight2),
+        fligh1seats: flight1seat[i],
+        fligh2seats: flight2seat[i],
+        isCompanion: false,
+      });
+      console.log("new Reservation", newReservation);
+      let reservationId = null;
+      try {
+        reservationId = (await newReservation.save()).id;
+        whatToReturn = reservationId;
+      } catch (e) {
+        console.log("error saving the reservation");
+        res.status(503).send("Error saving the reservation");
+        return;
+      }
     }
   }
-  else{
-    const newReservation = new reservation({
-      user: resUser._id,
-      flight1: resFlight1._id,
-      flight2: resFlight2._id,
-      cabinClass: seatType,
-      companions: companions,
-      totalPrice: classPriceFlight1+classPriceFlight2+companions.childCount 
-      * (0.5 * classPriceFlight1)+companions.childCount * (0.5 * classPriceFlight2),
-      fligh1seats: flight1seat[i],
-      fligh2seats: flight2seat[i],
-      isCompanion:false
-    
-    });
-    console.log("new Reservation", newReservation);
-    let reservationId = null;
-    try {
-      reservationId = (await newReservation.save()).id;
-      whatToReturn=reservationId;
-    } catch (e) {
-      console.log("error saving the reservation");
-      res.status(503).send("Error saving the reservation");
-      return;
-    }
-  }
 
-  
-
-  }
-  
-
-  res.send({ bookingNumber: whatToReturn});
+  res.send({ bookingNumber: whatToReturn });
 });
 
 const sendEmail = (userEmail, result1, Price) => {
@@ -596,10 +592,9 @@ app.post("/CancelReservation", async (req, res) => {
   const flightNumber = req.body.flightNumber;
   console.log("Here is the flight number", flightNumber);
 
-  const result1 = await reservation
-    .findOne({ _id: req.body.reservation});//To be changed
+  const result1 = await reservation.findOne({ _id: req.body.reservation }); //To be changed
   const result8 = await reservation.findById({ _id: result1._id });
-  console.log("test flight1",result8)
+  console.log("test flight1", result8);
   const flightNumber1 = result8.flight1;
   const flightNumber2 = result8.flight2;
   console.log("result8", result8);
@@ -671,61 +666,6 @@ app.post("/CancelReservation", async (req, res) => {
     return;
   }
   res.send(result);
-});
-
-app.post("/signUp", async (req, res) => {
-  const {
-    firstName,
-    lastName,
-    username,
-    email,
-    password,
-    phoneNumber,
-    birthDate,
-    country,
-    city,
-    street,
-    buildingNumber,
-    passportNumber,
-    countryCode,
-  } = req.body;
-
-  const address = {
-    country: country,
-    city: city,
-    street: street,
-    buildingNumber: buildingNumber,
-  };
-
-  const hashedPassword = await bcrypt.hash(password, 10);
-
-  const phoneNumbers = [phoneNumber];
-
-  const newUser = new user({
-    firstName,
-    lastName,
-    username,
-    email,
-    password: hashedPassword,
-    phoneNumbers,
-    birthDate,
-    address,
-    buildingNumber,
-    passportNumber,
-    countryCode,
-    isAdmin: false,
-  });
-  try {
-    const result = await newUser.save();
-    console.log(result);
-    res.sendStatus(200);
-  } catch (error) {
-    const emsg = error.message;
-    console.log(emsg);
-    if (emsg.includes("duplicate key")) {
-      res.status(400).send("Username already exists, choose another one");
-    } else res.status(400).send(error.message);
-  }
 });
 
 module.exports = app;

@@ -50,9 +50,9 @@ const createUser = async (req, res) => {
   newUser.lastName = "Mohamed";
   newUser.passportNumber = "3002345678";
   newUser.isAdmin = false;
-  newUser.password = await bcrypt.hash("user",10);
+  newUser.password = await bcrypt.hash("user", 10);
   newUser.email = "starallianceproject@gmail.com";
-  newUser.username="user"
+  newUser.username = "user";
   //const hashedPassword = password, 10);
   await newUser.save();
 };
@@ -72,8 +72,8 @@ const createReservation = async (req, res) => {
 
 const createAdmin = async (req, res) => {
   const newAd = new user();
-  newAd.username="admin"
-  newAd.password="admin"
+  newAd.username = "admin";
+  newAd.password = "admin";
   newAd.firstName = "Adminstrator";
   newAd.isAdmin = true;
   await newAd.save();
@@ -675,5 +675,59 @@ app.post("/GetRequestedFlights", async (req, res) => {
   console.log(roundtrid);
 });
 
+app.post("/signUp", async (req, res) => {
+  const {
+    firstName,
+    lastName,
+    username,
+    email,
+    password,
+    phoneNumber,
+    birthDate,
+    country,
+    city,
+    street,
+    buildingNumber,
+    passportNumber,
+    countryCode,
+  } = req.body;
+
+  const address = {
+    country: country,
+    city: city,
+    street: street,
+    buildingNumber: buildingNumber,
+  };
+
+  const hashedPassword = await bcrypt.hash(password, 10);
+
+  const phoneNumbers = [phoneNumber];
+
+  const newUser = new user({
+    firstName,
+    lastName,
+    username,
+    email,
+    password: hashedPassword,
+    phoneNumbers,
+    birthDate,
+    address,
+    buildingNumber,
+    passportNumber,
+    countryCode,
+    isAdmin: false,
+  });
+  try {
+    const result = await newUser.save();
+    console.log(result);
+    res.sendStatus(200);
+  } catch (error) {
+    const emsg = error.message;
+    console.log(emsg);
+    if (emsg.includes("duplicate key")) {
+      res.status(400).send("Username already exists, choose another one");
+    } else res.status(400).send(error.message);
+  }
+});
 const port = process.env.PORT || 8080;
 app.listen(port, () => console.log(`server at localhost:${port}`));

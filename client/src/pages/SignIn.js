@@ -11,7 +11,7 @@ import TextField from "@mui/material/TextField";
 import Alert from "../Components/Alert.js";
 import { gridRowsStateSelector } from "@mui/x-data-grid-pro";
 import AuthService from "../Services/AuthService";
-import { useHistory, useLocation } from "react-router-dom";
+import { Link, useHistory, useLocation } from "react-router-dom";
 import { UserCtx } from "../Context/GlobalContext.js";
 import { UserHomeCtx } from "../Context/UserHomeContext.js";
 import UserService from "../Services/UserService";
@@ -99,7 +99,7 @@ const SignIn = () => {
             <br />
             <br />
             <h2>Sign in</h2>
-            <pre>admin:admin|user:user |||| TODO: remove this</pre>
+
             <Row>
               <Form.Group as={Col} controlId="username">
                 <Form.Label>Username</Form.Label>
@@ -123,7 +123,7 @@ const SignIn = () => {
             <br />
             <div>
               <Button
-                className="mt-2"
+                className="mt-1 mb-3"
                 style={{
                   display: "block",
                   marginLeft: "auto",
@@ -148,6 +148,20 @@ const SignIn = () => {
                   "Login"
                 )}
               </Button>
+            </div>
+            <div
+              style={{
+                display: "flex",
+                width: "auto",
+                // justifyContent: "center",
+                color: "#d1d1d1",
+              }}
+            >
+              Don't have an account?
+              {/* <br /> */}
+              <Link to="/signup" style={{ color: "#d1d1d1" }}>
+                Sign Up
+              </Link>
             </div>
             <br />
           </Form>
