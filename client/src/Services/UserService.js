@@ -38,10 +38,11 @@ const isAdmin = () => GetUser().type === 2;
 const isLoggedIn = () => GetUser().type !== 0;
 
 const signUp = (data) => {
-  return http.post("/User/signUp", data);
+  return http.post("/signUp", data);
 };
 
 export const changePassword = (data) => {
+  // TODO: make it for both admin or users
   return http.post("/User/changePassword", data);
 };
 

@@ -10,6 +10,7 @@ import React, { useState, useMemo } from "react";
 const UserCtxInit = {
   id: null,
   type: 0,
+  name: "",
 };
 
 const UserCtx = React.createContext();

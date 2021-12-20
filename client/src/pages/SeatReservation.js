@@ -192,16 +192,40 @@ const SeatReservation = (props) => {
       <>
         <br />
         <br />
-       
-        <div style={{display: "flex",
+
+        <div
+          style={{
+            display: "flex",
             flexDirection: "column",
             justifyContent: "center",
-            alignItems: "center"}}>
-                  <h6> <Link to="/" style={{color:"black",textDecoration:"none"}}>Home Page</Link> <FontAwesomeIcon icon={faArrowRight}/>
-                  <Link to="/SelectFlight" style={{color:"black",textDecoration:"none"}}>  Select Flight </Link><FontAwesomeIcon icon={faArrowRight}/>
-                  <Link to="/SelectReturnFlights" style={{color:"black",textDecoration:"none"}}>  Select Return Flight </Link><FontAwesomeIcon icon={faArrowRight}/>
-                   <b>Select Seats</b></h6>
-         </div>
+            alignItems: "center",
+          }}
+        >
+          <h6>
+            {" "}
+            <Link to="/" style={{ color: "black", textDecoration: "none" }}>
+              Home Page
+            </Link>{" "}
+            <FontAwesomeIcon icon={faArrowRight} />
+            <Link
+              to="/SelectFlight"
+              style={{ color: "black", textDecoration: "none" }}
+            >
+              {" "}
+              Select Flight{" "}
+            </Link>
+            <FontAwesomeIcon icon={faArrowRight} />
+            <Link
+              to="/SelectReturnFlights"
+              style={{ color: "black", textDecoration: "none" }}
+            >
+              {" "}
+              Select Return Flight{" "}
+            </Link>
+            <FontAwesomeIcon icon={faArrowRight} />
+            <b>Select Seats</b>
+          </h6>
+        </div>
         <br />
         <Row>
           <Col>

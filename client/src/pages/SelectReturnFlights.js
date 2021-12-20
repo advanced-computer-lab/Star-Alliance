@@ -26,7 +26,7 @@ const SelectReturnFlights = (props) => {
       history.push("/");
     }, 5000);
     return (
-      <div >
+      <div>
         <Row>
           <br />
           <br />
@@ -45,25 +45,27 @@ const SelectReturnFlights = (props) => {
           </Link>
         </Row>
         <br />
-       <div style={{
+        <div
+          style={{
             display: "flex",
             flexDirection: "column",
             justifyContent: "center",
             alignItems: "center",
-          }}>
-        <h1 style={{ marginLeft: "0.4cm" }}>
-          {" "}
-          <FontAwesomeIcon
-            style={{ color: "red" }}
-            icon={faExclamationCircle}
-          />{" "}
-          No Available returning flights with this date {" "}
-          <FontAwesomeIcon icon={faCalendarAlt} /> 
-        </h1>
-        <label>
+          }}
+        >
+          <h1 style={{ marginLeft: "0.4cm" }}>
+            {" "}
+            <FontAwesomeIcon
+              style={{ color: "red" }}
+              icon={faExclamationCircle}
+            />{" "}
+            No Available returning flights with this date{" "}
+            <FontAwesomeIcon icon={faCalendarAlt} />
+          </h1>
+          <label>
             <i>Redirecting to Home in 5 seconds</i>
           </label>
-        <br />
+          <br />
         </div>
       </div>
     );
@@ -152,13 +154,30 @@ const SelectReturnFlights = (props) => {
       <div>
         <br />
         <br />
-        
-        <div style={{display: "flex",
+        <div
+          style={{
+            display: "flex",
             flexDirection: "column",
             justifyContent: "center",
-            alignItems: "center"}}>
-                  <h6> <Link to="/" style={{color:"black",textDecoration:"none"}}>Home Page</Link> <FontAwesomeIcon icon={faArrowRight}/><Link to="/SelectFlight" style={{color:"black",textDecoration:"none"}}>  Select Flight </Link><FontAwesomeIcon icon={faArrowRight}/> <b>Select Return Flight</b></h6>
-         </div>
+            alignItems: "center",
+          }}
+        >
+          <h6>
+            {" "}
+            <Link to="/" style={{ color: "black", textDecoration: "none" }}>
+              Home Page
+            </Link>{" "}
+            <FontAwesomeIcon icon={faArrowRight} />
+            <Link
+              to="/SelectFlight"
+              style={{ color: "black", textDecoration: "none" }}
+            >
+              {" "}
+              Select Flight{" "}
+            </Link>
+            <FontAwesomeIcon icon={faArrowRight} /> <b>Select Return Flight</b>
+          </h6>
+        </div>
         {/* <h3>Home Page --{">"} Select Going Flight --{">"} Select Returning Flight </h3> */}
         <br />
         {/*  <h1>{allData.flights[0].flightDet.flightNumber}</h1> */}

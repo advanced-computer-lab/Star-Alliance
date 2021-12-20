@@ -36,6 +36,7 @@ const AddCompanionNames = () => {
   //var clicked=true;
   const [alertMessage, setalertMessage] = useState("");
 let x=[];
+console.log("totalNames",searchFlights)
   for(let i=0;i<searchFlights.totalNames-1;i++){
     x.push(1);
   }

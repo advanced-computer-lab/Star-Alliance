@@ -169,7 +169,7 @@ const SignUp = () => {
             <Form ref={formRef} id="form1" onSubmit={handleSubmit}>
               <br />
               <br />
-              <h2>Fill The Form</h2>
+              <h2>Sign up</h2>
               <div style={{ display: activeStep !== 0 ? "none" : "" }}>
                 <Row>
                   <Col>
