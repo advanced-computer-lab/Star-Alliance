@@ -42,6 +42,7 @@ import { UserCtx } from "../Context/GlobalContext.js";
 import { UserHomeCtx } from "../Context/UserHomeContext";
 import CompanionsList from "./CompanionsList.js";
 import LoadingSpinnerPage from "./LoadingSpinnerPage.js";
+import AddCompanionNames from "./AddCompanionNames.js";
 import Cookies from "js-cookies";
 import successfulPayment from "./SuccessfulPayment.js";
 import FailurePayment from "./FailurePayment.js";
@@ -200,6 +201,14 @@ const Main = () => {
           path="/ReservationSummary"
           component={ReservationSummary}
         />
+    <Route exact path="/AddCompanionNames" component={AddCompanionNames} />
+
+        <ContextRoute
+          exact
+          path="/AddCompanionNames"
+           Context={UserHomeContext}
+          CComponent={AddCompanionNames}
+        />
 
         <UserRoute exact path="/EditFlight" CComponent={EditFlight} />
         <UserRoute
@@ -217,6 +226,7 @@ const Main = () => {
           path="/ReservationEditSummary"
           CComponent={ReservationEditSummary}
         />
+        
         <UserRoute exact path="/ReservationView" CComponent={ReservationView} />
         <UserRoute exact path="/SelectNewSeat" CComponent={SelectNewSeat} />
         <AdminRoute exact path="/FlightsList" CComponent={FlightsList} />
@@ -226,8 +236,12 @@ const Main = () => {
           path="/FlightView/:flightId"
           CComponent={FlightView}
         />
-        <AdminRoute exact path="/deleteFlight" CComponent={deletePopup} />
-        <AdminRoute exact path="/createFlight" CComponent={CreateFlight} />
+        
+        <AdminRoute exact path="/FlightsList" Component={FlightsList} />
+        <AdminRoute exact path="/UpdateForm" Component={UpdateForm} />
+        <AdminRoute exact path="/FlightView/:flightId" component={FlightView} />
+        <AdminRoute exact path="/deleteFlight" Component={deletePopup} />
+        <AdminRoute exact path="/createFlight" Component={CreateFlight} />
 
         {/* ??? what is this */}
         <Route exact path="/chooseFlight" component={ChooseFlight} />
@@ -249,6 +263,7 @@ const Main = () => {
         <Route exact path="/signup" component={SignUp} />
         <Route exact path="/signin" component={SignIn} />
         <Route exact path="/test" component={TestPage} />
+        <Route exact path="/AddCompanionNames" component={AddCompanionNames} />
         <Route path="/*" component={NotFoundPage} />
       </Switch>
     </>

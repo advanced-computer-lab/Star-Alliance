@@ -228,7 +228,7 @@ const ReservationSummary = () => {
     const handleClickk = () => {
 
       //const { user, rememberMe } = this.state;
-      localStorage.setItem('reservation', JSON.stringify(searchFlights));
+      //localStorage.setItem('reservation', JSON.stringify(searchFlights));
       //localStorage.setItem('user', rememberMe ? user : '');
 
       fetch('/create-checkout-session', {

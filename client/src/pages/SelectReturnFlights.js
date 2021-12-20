@@ -144,11 +144,11 @@ const SelectReturnFlights = (props) => {
         flight1seat: [],
         flight2seat: [],
         companions: searchFlights.selected.companions,
+        companionNames:searchFlights.selected.companionNames
+
       };
-      setSearchFlights({
-        ...searchFlights,
-        selected,
-      });
+      setSearchFlights({ ...searchFlights, selected });
+      console.log("selectretyrjun",searchFlights);
     };
     return (
       <div>
