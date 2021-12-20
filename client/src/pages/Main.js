@@ -80,8 +80,10 @@ const Main = () => {
       if (user) setUser(user);
 
       // const searchFlights = JSON.parse(strSearchFlights);
-      const searchFlights = parse(strSearchFlights);
+      let searchFlights = {};
+      if (strSearchFlights) searchFlights = parse(strSearchFlights);
 
+      console.log("retreived search flights", searchFlights);
       if (searchFlights) setSearchFlights(searchFlights);
 
       render.current = true;
@@ -206,12 +208,12 @@ const Main = () => {
           path="/ReservationSummary"
           component={ReservationSummary}
         />
-    <Route exact path="/AddCompanionNames" component={AddCompanionNames} />
+        <Route exact path="/AddCompanionNames" component={AddCompanionNames} />
 
         <ContextRoute
           exact
           path="/AddCompanionNames"
-           Context={UserHomeContext}
+          Context={UserHomeContext}
           CComponent={AddCompanionNames}
         />
 
@@ -231,7 +233,7 @@ const Main = () => {
           path="/ReservationEditSummary"
           CComponent={ReservationEditSummary}
         />
-        
+
         <UserRoute exact path="/ReservationView" CComponent={ReservationView} />
         <UserRoute exact path="/SelectNewSeat" CComponent={SelectNewSeat} />
         <AdminRoute exact path="/FlightsList" CComponent={FlightsList} />
@@ -241,7 +243,7 @@ const Main = () => {
           path="/FlightView/:flightId"
           CComponent={FlightView}
         />
-        
+
         <AdminRoute exact path="/FlightsList" Component={FlightsList} />
         <AdminRoute exact path="/UpdateForm" Component={UpdateForm} />
         <AdminRoute exact path="/FlightView/:flightId" component={FlightView} />
@@ -254,7 +256,11 @@ const Main = () => {
         {/* updateuserdata Should be renammed to my profile */}
         <UserRoute exact path="/UpdateUserData" CComponent={UpdateUserData} />
         <UserRoute exact path="/CompanionsList" CComponent={CompanionsList} />
-        <Route exact path="/successfulPayment" component={successfulPayment}></Route>
+        <Route
+          exact
+          path="/successfulPayment"
+          component={successfulPayment}
+        ></Route>
         <Route exact path="/FailurePayment" component={FailurePayment}></Route>
 
         <ConditionedRoute
