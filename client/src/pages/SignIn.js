@@ -14,10 +14,12 @@ import AuthService from "../Services/AuthService";
 import { useHistory } from "react-router-dom";
 import { UserCtx } from "../Context/GlobalContext.js";
 import UserService from "../Services/UserService";
+import Spinner from "react-bootstrap/Spinner";
 
 const SignIn = () => {
   let history = useHistory();
   const [user, setUser] = useContext(UserCtx);
+  const [loading, setloading] = useState(false);
 
   // if logged in redirect to home page
   console.log("checking");
@@ -46,6 +48,7 @@ const SignIn = () => {
       password: e.target.password.value,
     };
 
+    setloading(true);
     AuthService.singin(data)
       .then((res) => {
         console.log(res);
@@ -58,9 +61,10 @@ const SignIn = () => {
       })
       .catch((err) => {
         console.log("errr <===", err.response);
-        // const errorMessage = err.response.data;
+        setloading(false);
+        const errorMessage = err.response.data;
         // alert(errorMessage);
-        // showAlert(errorMessage);
+        showAlert(errorMessage);
       });
   };
 
@@ -92,6 +96,7 @@ const SignIn = () => {
             <br />
             <br />
             <h2>Sign in</h2>
+            <pre>admin:admin|user:user |||| TODO: remove this</pre>
             <Row>
               <Form.Group as={Col} controlId="username">
                 <Form.Label>Username</Form.Label>
@@ -112,9 +117,6 @@ const SignIn = () => {
                 />
               </Form.Group>
             </Row>
-
-            <label>{JSON.stringify(user)}</label>
-
             <br />
             <div>
               <Button
@@ -126,8 +128,22 @@ const SignIn = () => {
                 }}
                 variant="primary"
                 type="submit"
+                disabled={loading}
               >
-                Login
+                {loading ? (
+                  <>
+                    {"Siging In "}
+                    <Spinner
+                      as="span"
+                      animation="border"
+                      size="sm"
+                      role="status"
+                      aria-hidden="true"
+                    />
+                  </>
+                ) : (
+                  "Login"
+                )}
               </Button>
             </div>
             <br />

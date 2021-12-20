@@ -46,6 +46,8 @@ const UserHomePage = () => {
   };
   const [clicked, setClicked] = useState(false);
 
+  //const reservationStored = localStorage.getItem('reservation');
+  //console.log("Here is the stored reservation",JSON.parse(reservationStored));
 
   var today = new Date();
 var dd = String(today.getDate()+1).padStart(2, '0');
@@ -89,6 +91,9 @@ function checkDate (departureTime,arrivalTime){
   function show() {
     setClicked(true);
   }
+
+
+
   const handleSubmit = () => {
    
     var e = formRef.current;
@@ -202,6 +207,7 @@ function checkDate (departureTime,arrivalTime){
       >
       
         <div  style={{height: "auto"}} className=" col-sm-8 offset-sm-2 col-md-8 offset-md-2 col-lg-10 offset-lg-1 ">
+          
           <Form ref={formRef}>
             <Row >
               <h3 className="mt-3 mb-2">Book Your Flight! ✈ </h3>

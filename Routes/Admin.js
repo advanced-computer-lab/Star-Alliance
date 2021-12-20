@@ -789,7 +789,7 @@ app.post("/AddReservation", async (req, res) => {
   // check that the user exists, and verifiy that the user can make a reservation
   let resUser = null;
   try {
-    resUser = await user.findOne({ _id: "61a35fcdfd33ed54997b5271" });
+    resUser = await user.findOne({ _id: "61be20aaafaa13eb6e6f66ed" });
   } catch (e) {
     console.log("error getting the user", e);
     res.status(404).send("User not found");

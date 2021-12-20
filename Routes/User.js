@@ -4,6 +4,7 @@ const db = require("../Service/DBService.js");
 const moment = require("moment");
 const { flight, reservation, user } = require("../Models/export");
 const jwt = require("jsonwebtoken");
+const bcrypt = require("bcryptjs");
 
 var nodemailer = require("nodemailer");
 
@@ -35,13 +36,18 @@ app.post("/signUp", async (req, res) => {
     buildingNumber: buildingNumber,
   };
 
+
+  
+  const hashedPassword = await bcrypt.hash(password, 10);
+
   const phoneNumbers = [phoneNumber];
+
   const newUser = new user({
     firstName,
     lastName,
     username,
     email,
-    password,
+    password: hashedPassword,
     phoneNumbers,
     birthDate,
     address,
@@ -62,5 +68,6 @@ app.post("/signUp", async (req, res) => {
     } else res.status(400).send(error.message);
   }
 });
+
 
 module.exports = app;

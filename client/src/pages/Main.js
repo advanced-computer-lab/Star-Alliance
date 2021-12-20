@@ -40,6 +40,7 @@ import SignIn from "../pages/SignIn.js";
 import { UserCtx } from "../Context/GlobalContext.js";
 
 import Cookies from "js-cookies";
+import successfulPayment from "./successfulPayment.js";
 
 function ScrollToTop() {
   const history = useHistory();
@@ -57,13 +58,23 @@ function ScrollToTop() {
 const Main = () => {
   const isAdmin = UserService.isAdmin();
   const [User, setUser] = useContext(UserCtx);
-  // useEffect(() => {
-  //   // When a Refresh happens
-  //   const atoken = Cookies.getItem("accessToken");
-  //   if (atoken) {
-  //     // ask the server for the user info, then update the states
-  //   }
-  // }, []);
+  useEffect(() => {
+    // When a Refresh happens
+    const strUserData = localStorage.getItem("user");
+    try {
+      const user = JSON.parse(strUserData);
+      setUser(user);
+    } catch (e) {
+      console.log(e);
+    }
+  }, []);
+
+  useEffect(() => {
+    // console.log("REFRESH User Changed");
+    // console.log(User);
+    localStorage.setItem("user", JSON.stringify(User));
+  }, [User]);
+
   return (
     <>
       <ScrollToTop />
@@ -144,6 +155,7 @@ const Main = () => {
         <Route exact path="/createFlight" component={CreateFlight}></Route>
         <Route exact path="/chooseFlight" component={ChooseFlight}></Route>
         <Route exact path="/ChangePassword" component={ChangePassword}></Route>
+        <Route exact path="/successfulPayment" component={successfulPayment}></Route>
 
         <Route exact path="/signup" component={SignUp} />
         <Route exact path="/login" component={SignIn} />

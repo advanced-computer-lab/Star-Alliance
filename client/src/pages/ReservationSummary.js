@@ -153,6 +153,9 @@ const ReservationSummary = () => {
   const [popupChild, setpopupChild] = useState(null);
   const popupCloseCBref = useRef(null);
 
+  
+  
+
   if (searchFlights.data == "inital not set data") {
     setTimeout(() => {
       history.push("/");
@@ -266,6 +269,35 @@ const ReservationSummary = () => {
         });
     };
 
+    const handleClickk = () => {
+
+      //const { user, rememberMe } = this.state;
+      localStorage.setItem('reservation', JSON.stringify(searchFlights));
+      //localStorage.setItem('user', rememberMe ? user : '');
+
+      fetch('/create-checkout-session', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          items: [
+            { id: 1, quantity: 1,price: totalPrice*100 },
+          ],
+  
+        }),
+    
+    }).then(res => {
+        if(res.ok) return res.json()
+        return res.json().then(json => Promise.reject(json))
+    }).then(({ url }) => {
+        //console.log(url);
+        window.location = url
+    }).catch(e => {
+        console.error(e.error);
+    })
+    }
+
     const handleEditClick = () => {
       setSearchFlights({
         ...searchFlights,
@@ -287,6 +319,7 @@ const ReservationSummary = () => {
             backgroundColor: "#f5f5f5",
           }}
         >
+        
           <Row>
             <Link to="/SeatReservation">
               <img
@@ -382,6 +415,9 @@ const ReservationSummary = () => {
                   <FontAwesomeIcon icon={faCheckCircle} />
                 )}
               </Button>
+              <button className="btn btn-primary mx-3" onClick={handleClickk}>
+            checkout
+          </button>
             </Stack>
           </div>
 

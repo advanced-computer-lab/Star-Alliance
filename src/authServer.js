@@ -7,6 +7,7 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 var cors = require("cors");
 const jwt = require("jsonwebtoken");
+const bcrypt = require("bcryptjs");
 
 const {
   user,
@@ -79,11 +80,11 @@ app.post("/login", async (req, res) => {
   const password = req.body.password;
   // Authenticate User
   const loggingUser = await user.findOne({ username: username });
-  if (!loggingUser) return res.status(401).send({ message: "Wrong username" });
+  if (!loggingUser) return res.status(401).send("Wrong username");
 
-  if (loggingUser.password !== password) {
+  if (!bcrypt.compareSync(password, loggingUser.password)) {
     console.log("wrong password", loggingUser.password, password);
-    return res.status(401).send({ message: "Wrong password" });
+    return res.status(401).send("Wrong password");
   }
   // const payload = loggingUser._doc;
   const payload = { userId: loggingUser.id, isAdmin: loggingUser.isAdmin };
