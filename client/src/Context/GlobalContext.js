@@ -7,7 +7,7 @@ import React, { useState, useMemo } from "react";
     2 = Admin
   }
 */
-const UserCtxInit = {
+export const UserCtxInit = {
   id: null,
   type: 0,
   name: "",

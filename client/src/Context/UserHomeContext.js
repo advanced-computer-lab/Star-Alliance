@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const initialState = {
+export const UserHomeCtxInit = {
   data: "inital not set data",
   selected: {
     flight1: null,
@@ -18,7 +18,7 @@ const initialState = {
 export const UserHomeCtx = React.createContext();
 
 const UserHomeContext = ({ children }) => {
-  const [searchFlights, setSearchFlights] = useState(initialState);
+  const [searchFlights, setSearchFlights] = useState(UserHomeCtxInit);
 
   return (
     <UserHomeCtx.Provider value={[searchFlights, setSearchFlights]}>

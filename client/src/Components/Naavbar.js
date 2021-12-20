@@ -8,9 +8,11 @@ import Button from "@material-ui/core/Button";
 import Navbar from "react-bootstrap/Navbar";
 import logo from "../images/logo.png";
 import UserService, { UserCtx } from "../Services/UserService.js";
+import { UserCtxInit } from "../Context/GlobalContext";
 import PopupView from "./PopupView";
 import TextField from "@mui/material/TextField";
 import { LinkContainer } from "react-router-bootstrap";
+import { UserHomeCtx, UserHomeCtxInit } from "../Context/UserHomeContext";
 import {
   faSignInAlt,
   faTicketAlt,
@@ -26,6 +28,8 @@ const Naavbar = () => {
   const refUserName = useRef(null);
   const refUserPass = useRef(null);
   const [user, setUser] = useContext(UserCtx);
+  const [searchFlights, setSearchFlights] = useContext(UserHomeCtx);
+
   const history = useHistory();
   let r = user.id;
   console.log("showName", user);
@@ -86,7 +90,8 @@ const Naavbar = () => {
       .then((res) => {
         console.log(res);
         history.push("/");
-        setUser({ ...user, type: 0 });
+        setUser(UserCtxInit);
+        setSearchFlights(UserHomeCtxInit);
       })
       .catch((err) => console.log(err));
   };
