@@ -42,6 +42,7 @@ import { UserCtx } from "../Context/GlobalContext.js";
 import { UserHomeCtx } from "../Context/UserHomeContext";
 import CompanionsList from "./CompanionsList.js";
 import LoadingSpinnerPage from "./LoadingSpinnerPage.js";
+import AddCompanionNames from "./AddCompanionNames.js";
 import Cookies from "js-cookies";
 
 function ScrollToTop() {
@@ -245,6 +246,7 @@ const Main = () => {
         <Route exact path="/signup" component={SignUp} />
         <Route exact path="/signin" component={SignIn} />
         <Route exact path="/test" component={TestPage} />
+        <Route exact path="/AddCompanionNames" component={AddCompanionNames} />
         <Route path="/*" component={NotFoundPage} />
       </Switch>
     </>
