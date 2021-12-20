@@ -34,6 +34,10 @@ const reservationSchema = new Schema({
     weight: { type: Number, default: 23 },
     number: { type: Number, default: 2 },
   },
+  isCompanion: {
+    type: Boolean,
+    default: false,
+  },
   totalPrice:{
     type: Number,
     default:0,

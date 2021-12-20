@@ -1,4 +1,6 @@
 import { useEffect, useContext, useState } from "react";
+import { Children, useRef } from "react";
+
 import Button from "react-bootstrap/Button";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -8,74 +10,38 @@ import PlaneSelection from "../Components/PlanSelection.js";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faExclamationCircle } from "@fortawesome/free-solid-svg-icons";
 import { faCheckCircle, faSearch } from "@fortawesome/free-solid-svg-icons";
+import PopupView from "../Components/PopupView";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 
 import { useHistory } from "react-router-dom";
 import seat from "../images/seat.png";
 import back from "../images/back.png";
 import top from "../images/top.png";
+import ReservationService from "../Services/ReservationService.js";
+import { UserCtx } from "../Context/GlobalContext";
 
 const assert = require("assert");
 
-const SelectEditFlightSeat = (props) => {
+const SelectNewSeat = (props) => {
   let history = useHistory();
 
   const [searchFlights, setSearchFlights] = useContext(UserHomeCtx);
   const [flight1seatSt, setflight1seatSt] = useState([]);
+  const [loadingConfirm, setloadingConfirm] = useState(false);
+  const [popupOpen, setpopupOpen] = useState(false);
+  const [popupChild, setpopupChild] = useState(null);
+  const popupCloseCBref = useRef(null);
+  const [User, setUser] = useContext(UserCtx);
 
   console.log("search flight in seat reservation", searchFlights);
 
-  if (searchFlights.data == "inital not set data") {
-    setTimeout(() => {
-      history.push("/");
-    }, 5000);
-    return (
-      <div>
-        <Row>
-          <Link to="/">
-            <img
-              style={{
-                marginTop: "0.5cm",
-                marginLeft: "0.4cm",
-                float: "left",
-                height: "50px",
-                width: "50px",
-              }}
-              src={back}
-            />
-          </Link>
-        </Row>
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <h1 style={{ marginLeft: "0.4cm" }}>
-            {"  "}
-            <FontAwesomeIcon
-              style={{ color: "red" }}
-              icon={faExclamationCircle}
-            />
-            No Available seats{" "}
-            <img style={{ height: "50px", width: "50px" }} src={seat} />
-          </h1>
-          <label>
-            <i>Redirecting to Home in 5 seconds</i>
-          </label>
-        </div>
-        <br />
-      </div>
-    );
-  } else {
-    const flight1 = searchFlights.selected.flight1;
+  
+    const flight1 = searchFlights.oldReservation.reservDet.EditedFlight;
 
-    const userCabinClass = searchFlights.data.seatType;
+    const userCabinClass = searchFlights.oldReservation.reservDet.cabin;
     const numSeatSelected =
-      searchFlights.selected.companions.adultCount +
-      searchFlights.selected.companions.childCount;
+    parseInt(searchFlights.oldReservation.reservDet.companions.adultCount) +
+    parseInt(searchFlights.oldReservation.reservDet.companions.childCount);
 
 
     function seatClick1(e) {
@@ -104,29 +70,56 @@ const SelectEditFlightSeat = (props) => {
 
     
     const handleConfirmBtn = () => {
-      if (
-        flight1seatSt.length < numSeatSelected ) {
-        alert(
-          "Please select your specified number of seat(s) which is : " +
-            numSeatSelected +
-            " seat(s)"
-        );
-        return;
-      }
+        const resp = window.confirm("Are you sure you want to Change your seat?", "");
+        if(!resp) return;
+        setloadingConfirm(true);
+        let data = {     
+          userId: User.id, 
+          flight1num:searchFlights.oldReservation.reservDet.EditedFlightNum,
+          flight2Id: searchFlights.oldReservation.reservDet.unEditedFlightID,
+          seatType: searchFlights.oldReservation.reservDet.cabin,
+          flight1seat:flight1seatSt,
+          flight2seat:searchFlights.oldReservation.reservDet.flight2Seats,
+          companions: {
+            adultCount: parseInt(searchFlights.oldReservation.reservDet.companions.adultCount),
+            childCount: parseInt(searchFlights.oldReservation.reservDet.companions.childCount),
+          },
+          resId:searchFlights.oldReservation.reservDet.reservationID,
+          which:searchFlights.oldReservation.reservDet.which
+        };
+        ReservationService.reserveNewFlight(data)
+          .then((res) => {
+            console.log("res", res);
+            const bookingNumber =searchFlights.oldReservation.reservDet.reservationID;
+            console.log("OK ===> ", bookingNumber);
+  
+            setloadingConfirm(false);
+            console.log("here i am")
 
-      // the seats are selected while clicking
-      // no, here
-      setSearchFlights({
-        ...searchFlights,
-        selected: {
-          ...searchFlights.selected,
-          flight1seat: flight1seatSt,
-        },
-      });
+            popupCloseCBref.current = () => {
+              console.log("here i am2")
 
-      console.log("searchFlights", searchFlights);
-      history.push("/ReservationEditSummary");
-    };
+              history.push("/");
+              console.log("here i am3")
+
+            };
+            setpopupChild(
+              <>
+                <h2>Your Seats has been Updated</h2>
+                <h2> Booking Number:</h2>
+                <h2>{bookingNumber}</h2>
+              </>
+            );
+            setpopupOpen(true);
+          })
+          .catch((err) => {
+            // alert("Error", err);
+            console.log("errr <===", err.response);
+            const errorMessage = err.response.data;
+            // console.log("errorMessage", errorMessage);
+            alert("Error: " + errorMessage);
+          });
+      };
 
     return (
       <>
@@ -138,9 +131,6 @@ const SelectEditFlightSeat = (props) => {
             alignItems: "center"}}>
                   <h6 style={{color:"black"}}><Link to="/" style={{color:"black",textDecoration:"none"}}>Home Page </Link><FontAwesomeIcon style={{color:"black"}} icon={faArrowRight}/>
                  {" "} <Link to="/ReservationView" style={{color:"black",textDecoration:"none"}}>My Reservations </Link><FontAwesomeIcon icon={faArrowRight}/>
-                 {" "} <Link to="/EditFlight" style={{color:"black",textDecoration:"none"}}>Search </Link><FontAwesomeIcon icon={faArrowRight}/>
-                 {" "} <Link to="/SelectEditFlight" style={{color:"black",textDecoration:"none"}}>Select Flight </Link><FontAwesomeIcon icon={faArrowRight}/>
-
                  {" "}  <b>Select Seat</b></h6>
          </div>
         <br />
@@ -161,13 +151,13 @@ const SelectEditFlightSeat = (props) => {
         >
           <div>
             <h3 className="mx-3 mb-4">
-              From {flight1.flightDet.departureAirport} ✈{" "}
-              {flight1.flightDet.arrivalAirport}
+              From {flight1.departureAirport} ✈{" "}
+              {flight1.arrivalAirport}
             </h3>
             <PlaneSelection
               seatClick={seatClick1}
               id={0}
-              availableSeats={flight1.flightDet.availableSeats}
+              availableSeats={flight1.availableSeats}
               userCabinClass={userCabinClass}
               checkedSeates={flight1seatSt}
             />
@@ -182,7 +172,7 @@ const SelectEditFlightSeat = (props) => {
           }}
         >
           <Button variant="primary" type="confirm" onClick={handleConfirmBtn}>
-            Confirm Seat(s) <FontAwesomeIcon icon={faCheckCircle} />
+            Change Seat <FontAwesomeIcon icon={faCheckCircle} />
           </Button>
         </div>
         <br />
@@ -201,9 +191,16 @@ const SelectEditFlightSeat = (props) => {
             />
           </a>
         </Row>
+        <PopupView
+          showDialog={popupOpen}
+          setshowDialog={setpopupOpen}
+          cancelCB={popupCloseCBref.current}
+        >
+          {popupChild}
+        </PopupView>
       </>
     );
-  }
+  
 };
 
-export default SelectEditFlightSeat;
+export default SelectNewSeat;

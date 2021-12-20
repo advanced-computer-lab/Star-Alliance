@@ -124,7 +124,7 @@ const SignUp = () => {
         setloading(false);
         popupCloseCBref.current = () => {
           console.log("call BACK");
-          history.push("/login");
+          history.push("/signin");
         };
         showAlert("Your Account has been Registered, you may login now");
       })
@@ -149,7 +149,7 @@ const SignUp = () => {
       </PopupView>
       <div
         class="align-items-center justify-content-center"
-        style={{ fontFamily: "cursive" }}
+        style={{ fontFamily: "" }}
       >
         <br></br>
         <br></br>
@@ -169,7 +169,7 @@ const SignUp = () => {
             <Form ref={formRef} id="form1" onSubmit={handleSubmit}>
               <br />
               <br />
-              <h2>Fill The Form</h2>
+              <h2>Sign up</h2>
               <div style={{ display: activeStep !== 0 ? "none" : "" }}>
                 <Row>
                   <Col>

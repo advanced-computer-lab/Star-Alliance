@@ -13,6 +13,7 @@ const SetUser = (newUser) => {
 };
 
 const getUser = () => GetUser();
+const getUserId = () => GetUser().userId;
 
 const getType = () => GetUser().type;
 
@@ -37,7 +38,12 @@ const isAdmin = () => GetUser().type === 2;
 const isLoggedIn = () => GetUser().type !== 0;
 
 const signUp = (data) => {
-  return http.post("/User/signUp", data);
+  return http.post("/signUp", data);
+};
+
+export const changePassword = (data) => {
+  // TODO: make it for both admin or users
+  return http.post("/User/changePassword", data);
 };
 
 const UserService = {
@@ -50,5 +56,7 @@ const UserService = {
   isLoggedIn,
   SetUser,
   signUp,
+  changePassword,
+  getUserId,
 };
 export default UserService;

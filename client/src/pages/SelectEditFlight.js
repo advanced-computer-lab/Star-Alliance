@@ -13,6 +13,8 @@ import back from "../images/back.png";
 import top from "../images/top.png";
 import { faExclamationCircle } from "@fortawesome/free-solid-svg-icons";
 import { faCalendarAlt } from "@fortawesome/free-solid-svg-icons";
+import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
+
 import { faMapMarkerAlt } from "@fortawesome/free-solid-svg-icons";
 
 const SelectEditFlight = () => {
@@ -31,7 +33,7 @@ const SelectEditFlight = () => {
           <br />
           <br />
 
-          <Link to="/">
+          <Link to="/ReservationView">
             <img
               style={{
                 marginTop: "0.5cm",
@@ -155,20 +157,15 @@ const SelectEditFlight = () => {
         <br />
         <br />
         {/* <h2> Reservation Summary {JSON.stringify(flights)}</h2>   */}
-        <Row>
-          <br />
-          <Link to="/EditFlight">
-            <img
-              style={{
-                marginLeft: "0.4cm",
-                float: "left",
-                height: "50px",
-                width: "50px",
-              }}
-              src={back}
-            />
-          </Link>
-        </Row>
+        <div style={{display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center"}}>
+                  <h6 style={{color:"black"}}><Link to="/" style={{color:"black",textDecoration:"none"}}>Home Page </Link><FontAwesomeIcon style={{color:"black"}} icon={faArrowRight}/>
+                 {" "} <Link to="/ReservationView" style={{color:"black",textDecoration:"none"}}>My Reservations </Link><FontAwesomeIcon icon={faArrowRight}/>
+                 {" "} <Link to="/EditFlight" style={{color:"black",textDecoration:"none"}}>Search </Link><FontAwesomeIcon icon={faArrowRight}/>
+                 {" "}  <b>Select Flight</b></h6>
+         </div>
         <br />
         <Row>
           <Col>

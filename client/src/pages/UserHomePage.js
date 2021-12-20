@@ -25,9 +25,9 @@ import YouTube from "react-youtube";
 import tot from "../images/tot.png";
 import top from "../images/top.png";
 import Alert from "../Components/Alert";
+import ContinueReservingBar from "../Components/ContinueReservingBar";
 
-const UserHomePage = () => { 
-     
+const UserHomePage = () => {
   const [searchFlights, setSearchFlights] = useContext(UserHomeCtx);
   const [loadingSearch, setloadingSearch] = useState(false);
   const history = useHistory();
@@ -46,47 +46,37 @@ const UserHomePage = () => {
   };
   const [clicked, setClicked] = useState(false);
 
-  //const reservationStored = localStorage.getItem('reservation');
-  //console.log("Here is the stored reservation",JSON.parse(reservationStored));
-
   var today = new Date();
-var dd = String(today.getDate()+1).padStart(2, '0');
-var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-var yyyy = today.getFullYear();
+  var dd = String(today.getDate() + 1).padStart(2, "0");
+  var mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
+  var yyyy = today.getFullYear();
 
-today = mm + '/' + dd+ '/' + yyyy;
+  today = mm + "/" + dd + "/" + yyyy;
 
-function checkDate (departureTime,arrivalTime){
-  let date= new Date(departureTime);
-  let date2= new Date(arrivalTime);
-  console.log("checkdate1",date);
-  console.log("checkdate2",date2);
-  console.log("checkdate2",date2.getFullYear());
-  console.log("checkdate2",date2.getDate());
-  console.log("checkdate2",date2.getMonth());
-  if(date.getFullYear()<date2.getFullYear()){
-    return false;
-  }
-  else if(date.getFullYear()==date2.getFullYear()){
-    if(date.getMonth()<date2.getMonth()){
+  function checkDate(departureTime, arrivalTime) {
+    let date = new Date(departureTime);
+    let date2 = new Date(arrivalTime);
+    console.log("checkdate1", date);
+    console.log("checkdate2", date2);
+    console.log("checkdate2", date2.getFullYear());
+    console.log("checkdate2", date2.getDate());
+    console.log("checkdate2", date2.getMonth());
+    if (date.getFullYear() < date2.getFullYear()) {
       return false;
-    }
-    else if(date.getMonth()==date2.getMonth()){
-       if(date.getDate()<=date2.getDate()){
+    } else if (date.getFullYear() == date2.getFullYear()) {
+      if (date.getMonth() < date2.getMonth()) {
         return false;
+      } else if (date.getMonth() == date2.getMonth()) {
+        if (date.getDate() <= date2.getDate()) {
+          return false;
+        }
+      } else {
+        return true;
       }
-    }
-    else {
+    } else {
       return true;
     }
-    
   }
-  else
-  { 
-    return true;
-  }
-  }
-
 
   function show() {
     setClicked(true);
@@ -95,68 +85,78 @@ function checkDate (departureTime,arrivalTime){
 
 
   const handleSubmit = () => {
-   
     var e = formRef.current;
-    let checkBigger=checkDate( moment(e.departureTime.value).format("yyyy-MM-DDThh:mm"), moment(e.arrivalTime.value).format("yyyy-MM-DDThh:mm"));
-    if(checkBigger==false){
+    let checkBigger = checkDate(
+      moment(e.departureTime.value).format("yyyy-MM-DDThh:mm"),
+      moment(e.arrivalTime.value).format("yyyy-MM-DDThh:mm")
+    );
+    if (checkBigger == false) {
       setloadingSearch(true);
 
-    console.log("enter", formRef.current.departureAirport.value);
-    const data = {
-      //Going
-      //  moment(arrivalTime).format("yyyy-MM-DDThh:mm");
-      arrivalAirport: e.arrivalAirport.value,
-      departureAirport: e.departureAirport.value,
-      departureTime: moment(e.departureTime.value).format("yyyy-MM-DDThh:mm"),
-      // returning
-      arrivalTime2: moment(e.arrivalTime.value).format("yyyy-MM-DDThh:mm"),
-      ///
-      type: e.type.value,
-      children: e.children.value,
-      adult: e.adult.value,
-    };
-    console.log(data);
-
-    FlightService.GetRequestedFlights(data).then(({ data }) => {
-      if(data.going.length==0||data.returning.length==0){
-        setloadingSearch(false);
-        showAlert("No Available Flights with this Date");
-      }
-      else{
-      const selected = {
-        flight1: null,
-        flight2: null,
-        flight1seat: [],
-        flight2seat: [],
-        companions: {
-          adultCount: parseInt(e.adult.value),
-          childCount: parseInt(e.children.value),
-        },
+      console.log("enter", formRef.current.departureAirport.value);
+      const data = {
+        //Going
+        //  moment(arrivalTime).format("yyyy-MM-DDThh:mm");
+        arrivalAirport: e.arrivalAirport.value,
+        departureAirport: e.departureAirport.value,
+        departureTime: moment(e.departureTime.value).format("yyyy-MM-DDThh:mm"),
+        // returning
+        arrivalTime2: moment(e.arrivalTime.value).format("yyyy-MM-DDThh:mm"),
+        ///
+        type: e.type.value,
+        children: e.children.value,
+        adult: e.adult.value,
       };
-      setSearchFlights({ data, selected });
-      console.log("gigi", searchFlights);
-      show();
-      console.log(clicked);
-      history.push("/SelectFlight");
+      console.log(data);
+      if (data.arrivalAirport == data.departureAirport) {
+        setloadingSearch(false);
+        showAlert("Going Destination cannot be the same as return");
+      } else {
+        FlightService.GetRequestedFlights(data).then(({ data }) => {
+          console.log("ana", data);
+
+          if (data.going.length == 0 || data.returning.length == 0) {
+            setloadingSearch(false);
+            showAlert("No Available Flights with this Date");
+          } else {
+            const selected = {
+              flight1: null,
+              flight2: null,
+              flight1seat: [],
+              flight2seat: [],
+              companions: {
+                adultCount: parseInt(e.adult.value),
+                childCount: parseInt(e.children.value),
+              },
+            };
+            setSearchFlights({
+              ...searchFlights,
+              data,
+              selected,
+            });
+            console.log("gigi", searchFlights);
+            show();
+            console.log(clicked);
+            history.push("/SelectFlight");
+          }
+        });
+      }
+    } else {
+      showAlert("Return Date Cannot be after Going Date");
     }
-    });
-  }
-  else{
-    showAlert("Return Date Cannot be after Going Date");
-  }
   };
   return (
-    <div 
+    <div
       className="mt-1  "
       id="testing"
-      style={{ fontFamily: "cursive", color: "white" }}
+      style={{ fontFamily: "", color: "white" }}
     >
       <Carousel>
         <Carousel.Item>
           <img
             className="d-block w-100 "
-            style={{ height: "50vh" }}
-            src="https://media.istockphoto.com/photos/passenger-airplane-flying-above-clouds-during-sunset-picture-id155439315?b=1&k=20&m=155439315&s=170667a&w=0&h=N2BzlH2GYabhWN0LXZTqTkVODuTb8qDAESQYCPzIig8="
+            style={{ height: "70vh" }}
+            src="https://images.unsplash.com/photo-1512465467056-c049f745d95b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1173&q=80"
             alt="First slide"
           />
           <Carousel.Caption>
@@ -167,8 +167,8 @@ function checkDate (departureTime,arrivalTime){
         <Carousel.Item>
           <img
             className="d-block w-100"
-            style={{ height: "50vh" }}
-            src="https://media.istockphoto.com/photos/corporate-jet-picture-id1305805559?b=1&k=20&m=1305805559&s=170667a&w=0&h=PgS30I7bdCmaWZXC7tHeRjhAUFoiv7LDgeqJBpfVorw="
+            style={{ height: "70vh" }}
+            src="https://images.unsplash.com/photo-1524592714635-d77511a4834d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
             alt="Second slide"
           />
 
@@ -180,8 +180,8 @@ function checkDate (departureTime,arrivalTime){
         <Carousel.Item>
           <img
             className="d-block w-100"
-            style={{ height: "50vh" }}
-            src="https://t4.ftcdn.net/jpg/02/71/78/29/240_F_271782927_keMVFo9PnBwrMEmbiUGKRcDT2rzf85dj.jpg"
+            style={{ height: "70vh" }}
+            src="https://images.unsplash.com/photo-1532364158125-02d75a0f7fb9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80"
             alt="Third slide"
           />
 
@@ -197,8 +197,10 @@ function checkDate (departureTime,arrivalTime){
         title={alertMessage}
         desc=""
       />
-      <div 
-        className=" mt-5 col-sm-8 offset-sm-2 col-md-8 offset-md-2 col-lg-8 offset-lg-2 " //
+
+<ContinueReservingBar/>
+      <div
+        className="mt-5 col-sm-8 offset-sm-2 col-md-8 offset-md-2 col-lg-8 offset-lg-2 " //
         style={{
           borderRadius: "2rem",
           backgroundColor: "#112D4E",
@@ -209,10 +211,14 @@ function checkDate (departureTime,arrivalTime){
         <div  style={{height: "auto"}} className=" col-sm-8 offset-sm-2 col-md-8 offset-md-2 col-lg-10 offset-lg-1 ">
           
           <Form ref={formRef}>
-            <Row >
+            <Row>
               <h3 className="mt-3 mb-2">Book Your Flight! ✈ </h3>
               <Col>
-                <Form.Group as={Col} style={{ width: "auto" }} controlId="formGridState">
+                <Form.Group
+                  as={Col}
+                  style={{ width: "auto" }}
+                  controlId="formGridState"
+                >
                   <Form.Label>
                     From <FontAwesomeIcon icon={faPlaneDeparture} />
                   </Form.Label>
@@ -231,7 +237,11 @@ function checkDate (departureTime,arrivalTime){
                 </Form.Group>
               </Col>
 
-              <Form.Group style={{ width: "auto" }} as={Col} controlId="formGridState">
+              <Form.Group
+                style={{ width: "auto" }}
+                as={Col}
+                controlId="formGridState"
+              >
                 <Form.Label>
                   To <FontAwesomeIcon icon={faPlaneArrival} />
                 </Form.Label>
@@ -263,9 +273,9 @@ function checkDate (departureTime,arrivalTime){
                     type="date"
                     name="departureTime"
                     placeholder="Enter Departure Time"
-                    defaultValue={moment(new Date).format("yyyy-MM-DD")}
-                    min={moment(new Date).format("yyyy-MM-DD")}
-                    
+                    defaultValue={moment(new Date()).format("yyyy-MM-DD")}
+                    min={moment(new Date()).format("yyyy-MM-DD")}
+                    value="2022-04-01"
                   />
                 </Form.Group>
               </Col>
@@ -282,7 +292,9 @@ function checkDate (departureTime,arrivalTime){
                     name="arrivalTime"
                     placeholder="Enter Arrival Time"
                     defaultValue={moment(today).format("yyyy-MM-DD")}
-                    min={moment(new Date).format("yyyy-MM-DD")}                  />
+                    min={moment(new Date()).format("yyyy-MM-DD")}
+                    value="2022-05-01"
+                  />
                 </Form.Group>
               </Col>
             </Row>
@@ -358,11 +370,11 @@ function checkDate (departureTime,arrivalTime){
               </Col>
             </Row>
           </Form>
-          <br/>
+          <br />
         </div>
       </div>
-      <br/>
-      <br/>
+      <br />
+      <br />
 
       <div
         className="col-lg-10 offset-lg-1 col-md-10 offset-md-1 col-sm-10 offset-sm-1  "
@@ -372,23 +384,23 @@ function checkDate (departureTime,arrivalTime){
           <br />
           <Row>
             <h2 as={Col}>
-            Discover Egypt with a stopover <FontAwesomeIcon icon={faAnkh} />{" "}
+              Discover Egypt with a stopover <FontAwesomeIcon icon={faAnkh} />{" "}
               <img as={Col} style={{ height: "5vh", width: "5vh" }} src={tot} />
             </h2>
           </Row>
           <br />
-          <iframe  className="col-lg-12 col-md-12 col-sm-12  "
+          <iframe
+            className="col-lg-12 col-md-12 col-sm-12  "
             id="ytplayer"
             // width="1050"
-             height="600"
+            height="600"
             src="https://www.youtube.com/embed/HwM86WQ-0vY?autoplay=1&mute=1&playlist=HwM86WQ-0vY,msJ_JJB8q3s,k3KqP69xuPc&loop=1"
           ></iframe>
-
         </div>
         <br />
       </div>
-         
-      <MoreThanFlight  />
+
+      <MoreThanFlight />
 
       <br />
       <br />
@@ -406,10 +418,7 @@ function checkDate (departureTime,arrivalTime){
           />
         </a>
       </Row>
-      <div style={{height:"40cm"}} className="footerInc">
-      
-      </div>
-     
+      <div style={{ height: "40cm" }} className="footerInc"></div>
     </div>
   );
 };

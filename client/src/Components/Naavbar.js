@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext, useRef } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Container from "react-bootstrap/Container";
 import { Nav, NavDropdown } from "react-bootstrap";
-//import { NavLink, Link, Redirect, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import Form from "react-bootstrap/Form";
 import Button from "@material-ui/core/Button";
 import Navbar from "react-bootstrap/Navbar";
@@ -11,15 +11,24 @@ import UserService, { UserCtx } from "../Services/UserService.js";
 import PopupView from "./PopupView";
 import TextField from "@mui/material/TextField";
 import { LinkContainer } from "react-router-bootstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUser } from "@fortawesome/free-solid-svg-icons";
+import {
+  faSignInAlt,
+  faTicketAlt,
+  faUser,
+  faUserAlt,
+} from "@fortawesome/free-solid-svg-icons";
 import AuthService from "../Services/AuthService.js";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
 
 //const logo= "	https://o.remove.bg/downloads/e14af0fc-8d3f-4a5a-8dc4-15aca52535d1/7-removebg-preview.png"
 const Naavbar = () => {
   const refUserName = useRef(null);
   const refUserPass = useRef(null);
   const [user, setUser] = useContext(UserCtx);
+  const history = useHistory();
+  let r = user.id;
+  console.log("showName", user);
 
   const AuthForm = () => {
     return (
@@ -76,11 +85,11 @@ const Naavbar = () => {
     AuthService.logout()
       .then((res) => {
         console.log(res);
+        history.push("/");
         setUser({ ...user, type: 0 });
       })
       .catch((err) => console.log(err));
   };
-
   return (
     <>
       {/* <Navbar bg="dark" fixed="top">
@@ -98,9 +107,10 @@ const Naavbar = () => {
       <Navbar
         fixed="top"
         style={{
-          height: "5rem",
-          fontFamily: "cursive",
+          height: "8rem",
+          fontFamily: "",
           backgroundColor: "#112D4E",
+          opacity: 0.86,
         }}
         expand="lg"
         variant="dark"
@@ -108,7 +118,7 @@ const Naavbar = () => {
         <Container>
           <LinkContainer to="/">
             <Navbar.Brand style={{ color: "#DBE2EF" }}>
-              <img style={{ height: "1cm", width: "2cm" }} src={logo} />
+              <img style={{ height: "2cm", width: "2cm" }} src={logo} />
               Star-Alliance
             </Navbar.Brand>
           </LinkContainer>
@@ -118,13 +128,22 @@ const Naavbar = () => {
               {UserService.isUser() && (
                 <LinkContainer to="/ReservationView">
                   <Nav.Link style={{ color: "#DBE2EF" }}>
-                    My reservations
+                    My reservations <FontAwesomeIcon icon={faTicketAlt} />
                   </Nav.Link>
                 </LinkContainer>
               )}
               {UserService.isUser() && (
                 <LinkContainer to="/UpdateUserData">
-                  <Nav.Link style={{ color: "#DBE2EF" }}>My Profile</Nav.Link>
+                  <Nav.Link style={{ color: "#DBE2EF" }}>
+                    My Profile <FontAwesomeIcon icon={faUserAlt} />
+                  </Nav.Link>
+                </LinkContainer>
+              )}
+              {UserService.isUser() && (
+                <LinkContainer to="/">
+                  <Nav.Link style={{ color: "#DBE2EF" }}>
+                    Book Flight ✈
+                  </Nav.Link>
                 </LinkContainer>
               )}
               {/* <Nav.Link href="#link" style={{ color: "#DBE2EF" }}>
@@ -136,22 +155,28 @@ const Naavbar = () => {
             </Nav>
           </Navbar.Collapse>
           <Navbar.Collapse className="justify-content-end">
-            <Navbar.Text>
+            <Navbar.Text style={{ marginRight: "1cm" }}>
               {UserService.isLoggedIn() &&
-                (UserService.isAdmin() ? "Welcome Admin" : "Welcome User")}
+                (UserService.isAdmin()
+                  ? `Welcome, ${user.name}`
+                  : `Welcome, ${user.name}`)}
             </Navbar.Text>
             <Nav>
               {UserService.isLoggedIn() ? (
                 <Navbar.Text>
-                  <Nav.Link onClick={handleSignoutClick}>Sign out</Nav.Link>
+                  <Nav.Link onClick={handleSignoutClick}>
+                    Log Out <FontAwesomeIcon icon={faSignOutAlt} />
+                  </Nav.Link>
                 </Navbar.Text>
               ) : (
                 <>
-                  <LinkContainer to="/login">
-                    <Nav.Link style={{ color: "#DBE2EF" }}>Login</Nav.Link>
+                  <LinkContainer to="/signin">
+                    <Nav.Link style={{ color: "#DBE2EF" }}>
+                      Login <FontAwesomeIcon icon={faSignInAlt} />
+                    </Nav.Link>
                   </LinkContainer>
                   <LinkContainer to="/signup">
-                    <Nav.Link style={{ color: "#DBE2EF" }}>Signup</Nav.Link>
+                    <Nav.Link style={{ color: "#DBE2EF" }}>Sign up</Nav.Link>
                   </LinkContainer>
                 </>
               )}

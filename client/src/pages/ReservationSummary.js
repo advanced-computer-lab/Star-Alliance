@@ -23,6 +23,8 @@ import moment from "moment";
 import { unstable_composeClasses } from "@mui/core";
 import { faCheckCircle, faSearch } from "@fortawesome/free-solid-svg-icons";
 import { faEdit } from "@fortawesome/free-solid-svg-icons";
+import { UserCtx } from "../Context/GlobalContext";
+import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 
 const FlightCard = ({
   title,
@@ -148,6 +150,8 @@ const ReservationSummary = () => {
   let history = useHistory();
   const [searchFlights, setSearchFlights] = useContext(UserHomeCtx);
   const [loadingConfirm, setloadingConfirm] = useState(false);
+  const [User, setUser] = useContext(UserCtx);
+  console.log("nono",User);
 
   const [popupOpen, setpopupOpen] = useState(false);
   const [popupChild, setpopupChild] = useState(null);
@@ -221,54 +225,6 @@ const ReservationSummary = () => {
     // TODO: check if there is some passed values from the previous page [reservation]
     // TODO: else query reservstion data from params
     console.log("searchFlights in Resrvation summary", searchFlights);
-    const handleSubmitReservation = () => {
-	  const resp = window.confirm("Are you sure you want to Reserve?", "");
-	  if(!resp) return;
-      setloadingConfirm(true);
-      let data = {
-        userId: "61a35fcdfd33ed54997b5271", // TODO: new Reservation dynmaic user
-        flight1num: flight1.flightDet.flightNumber,
-        flight2num: flight2.flightDet.flightNumber,
-        seatType: searchFlights.data.seatType,
-        flight1seat: flight1seat,
-        flight2seat: flight2seat,
-        companions: searchFlights.selected.companions,
-      };
-      ReservationService.reserveNew(data)
-        .then((res) => {
-          console.log("res", res);
-          const bookingNumber = res.data.bookingNumber;
-          console.log("OK ===> ", res);
-
-          setloadingConfirm(false);
-          popupCloseCBref.current = () => {
-            history.push("/"); // navigate home
-            // clear every selection the user made
-            setSearchFlights({ ...searchFlights, selected: {} });
-          };
-          setpopupChild(
-            <>
-              <h2>Your Flights has been Reserved</h2>
-              <h2> Booking Number:</h2>
-              <h2>{bookingNumber}</h2>
-            </>
-          );
-          setpopupOpen(true);
-
-          // alert(
-          //   `Your Flights has been Reserved, Booking Number ${bookingNumber}`,
-          //   res
-          // );
-        })
-        .catch((err) => {
-          // alert("Error", err);
-          console.log("errr <===", err.response);
-          const errorMessage = err.response.data;
-          // console.log("errorMessage", errorMessage);
-          alert("Error: " + errorMessage);
-        });
-    };
-
     const handleClickk = () => {
 
       //const { user, rememberMe } = this.state;
@@ -311,8 +267,8 @@ const ReservationSummary = () => {
 
     return (
       <>
-        {/* <Link to="/ReservationSelection">{"<< Get Back"}</Link> */}
-
+      <br/>
+      <br/>
         <div
           style={{
             height: "150vh",
@@ -320,20 +276,16 @@ const ReservationSummary = () => {
           }}
         >
         
-          <Row>
-            <Link to="/SeatReservation">
-              <img
-                style={{
-                  marginTop: "1cm",
-                  marginLeft: "0.4cm",
-                  float: "left",
-                  height: "50px",
-                  width: "50px",
-                }}
-                src={back}
-              />
-            </Link>
-          </Row>
+          <div style={{display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center"}}>
+                  <h6> <Link to="/" style={{color:"black",textDecoration:"none"}}>Home Page</Link> <FontAwesomeIcon icon={faArrowRight}/>
+                  <Link to="/SelectFlight" style={{color:"black",textDecoration:"none"}}>  Select Flight </Link><FontAwesomeIcon icon={faArrowRight}/>
+                  <Link to="/SelectReturnFlights" style={{color:"black",textDecoration:"none"}}>  Select Return Flight </Link><FontAwesomeIcon icon={faArrowRight}/>
+                  <Link to="/SeatReservation" style={{color:"black",textDecoration:"none"}}>  Select Seats </Link><FontAwesomeIcon icon={faArrowRight}/>
+                    {" "}<b>Reservation Summary</b></h6>
+         </div>
           <br />
           <div className="col-md-6 offset-md-3">
             <h1 style={{ padding: "1rem 0 1rem" }}>Summary</h1>
@@ -398,25 +350,9 @@ const ReservationSummary = () => {
                   Edit <FontAwesomeIcon icon={faEdit} />
                 </Button>
               </LinkContainer>
-              <Button
-                onClick={handleSubmitReservation}
-                disabled={loadingConfirm}
-              >
-                Confirm {"  "}
-                {loadingConfirm ? (
-                  <Spinner
-                    as="span"
-                    animation="border"
-                    size="sm"
-                    role="status"
-                    aria-hidden="true"
-                  />
-                ) : (
-                  <FontAwesomeIcon icon={faCheckCircle} />
-                )}
-              </Button>
+            
               <button className="btn btn-primary mx-3" onClick={handleClickk}>
-            checkout
+            Checkout <FontAwesomeIcon icon={faCheckCircle} />
           </button>
             </Stack>
           </div>

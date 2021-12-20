@@ -53,7 +53,7 @@ const CreateFlight = () => {
 
 
   return (
-    <div class="align-items-center justify-content-center" style={{fontFamily:"cursive"}}>
+    <div class="align-items-center justify-content-center" style={{fontFamily:""}}>
    
       <br></br>
       <br></br>
