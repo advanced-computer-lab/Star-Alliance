@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState, useRef } from "react";
+import { parse, stringify } from "flatted/cjs";
 import {
   BrowserRouter as Router,
   Redirect,
@@ -75,7 +76,9 @@ const Main = () => {
       const user = JSON.parse(strUserData);
       if (user) setUser(user);
 
-      const searchFlights = JSON.parse(strSearchFlights);
+      // const searchFlights = JSON.parse(strSearchFlights);
+      const searchFlights = parse(strSearchFlights);
+
       if (searchFlights) setSearchFlights(searchFlights);
 
       render.current = true;
@@ -93,8 +96,10 @@ const Main = () => {
 
   useEffect(() => {
     console.log("REFRESH searchFlights Changed");
-    console.log(searchFlights);
-    localStorage.setItem("searchflights", JSON.stringify(searchFlights));
+    const stringified = stringify(searchFlights);
+    console.log(stringified);
+    // localStorage.setItem("searchflights", JSON.stringify(searchFlights));
+    localStorage.setItem("searchflights", stringified);
   }, [searchFlights]);
 
   const AdminRoute = ({ CComponent, ...rest }) => {
@@ -231,7 +236,7 @@ const Main = () => {
         <Route exact path="/chooseFlight" component={ChooseFlight} />
 
         {/* updateuserdata Should be renammed to my profile */}
-        <UserRoute exact path="/UpdateUserData" component={UpdateUserData} />
+        <UserRoute exact path="/UpdateUserData" CComponent={UpdateUserData} />
         <UserRoute exact path="/CompanionsList" CComponent={CompanionsList} />
 
         <ConditionedRoute
