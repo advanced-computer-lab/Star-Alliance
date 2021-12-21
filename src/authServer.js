@@ -42,7 +42,7 @@ app.post("/getaToken", (req, res) => {
   jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, user) => {
     if (err) return res.sendStatus(403);
     console.log("user", user);
-    const payload = { userId: user.id, isAdmin: user.isAdmin };
+    const payload = { userId: user.userId, isAdmin: user.isAdmin };
     const accessToken = generateAccessToken(payload);
     console.log("new Access token", accessToken);
     res.cookie("accessToken", accessToken, {
