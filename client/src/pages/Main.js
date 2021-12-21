@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState, useRef } from "react";
+import { parse, stringify } from "flatted/cjs";
 import {
   BrowserRouter as Router,
   Redirect,
@@ -78,7 +79,11 @@ const Main = () => {
       const user = JSON.parse(strUserData);
       if (user) setUser(user);
 
-      const searchFlights = JSON.parse(strSearchFlights);
+      // const searchFlights = JSON.parse(strSearchFlights);
+      let searchFlights = {};
+      if (strSearchFlights) searchFlights = parse(strSearchFlights);
+
+      console.log("retreived search flights", searchFlights);
       if (searchFlights) setSearchFlights(searchFlights);
 
       render.current = true;
@@ -96,8 +101,10 @@ const Main = () => {
 
   useEffect(() => {
     console.log("REFRESH searchFlights Changed");
-    console.log(searchFlights);
-    localStorage.setItem("searchflights", JSON.stringify(searchFlights));
+    const stringified = stringify(searchFlights);
+    console.log(stringified);
+    // localStorage.setItem("searchflights", JSON.stringify(searchFlights));
+    localStorage.setItem("searchflights", stringified);
   }, [searchFlights]);
 
   const AdminRoute = ({ CComponent, ...rest }) => {
@@ -201,12 +208,12 @@ const Main = () => {
           path="/ReservationSummary"
           component={ReservationSummary}
         />
-    <Route exact path="/AddCompanionNames" component={AddCompanionNames} />
+        <Route exact path="/AddCompanionNames" component={AddCompanionNames} />
 
         <ContextRoute
           exact
           path="/AddCompanionNames"
-           Context={UserHomeContext}
+          Context={UserHomeContext}
           CComponent={AddCompanionNames}
         />
 
@@ -226,7 +233,7 @@ const Main = () => {
           path="/ReservationEditSummary"
           CComponent={ReservationEditSummary}
         />
-        
+
         <UserRoute exact path="/ReservationView" CComponent={ReservationView} />
         <UserRoute exact path="/SelectNewSeat" CComponent={SelectNewSeat} />
         <AdminRoute exact path="/FlightsList" CComponent={FlightsList} />
@@ -236,7 +243,7 @@ const Main = () => {
           path="/FlightView/:flightId"
           CComponent={FlightView}
         />
-        
+
         <AdminRoute exact path="/FlightsList" Component={FlightsList} />
         <AdminRoute exact path="/UpdateForm" Component={UpdateForm} />
         <AdminRoute exact path="/FlightView/:flightId" component={FlightView} />
@@ -247,9 +254,13 @@ const Main = () => {
         <Route exact path="/chooseFlight" component={ChooseFlight} />
 
         {/* updateuserdata Should be renammed to my profile */}
-        <UserRoute exact path="/UpdateUserData" component={UpdateUserData} />
+        <UserRoute exact path="/UpdateUserData" CComponent={UpdateUserData} />
         <UserRoute exact path="/CompanionsList" CComponent={CompanionsList} />
-        <Route exact path="/successfulPayment" component={successfulPayment}></Route>
+        <Route
+          exact
+          path="/successfulPayment"
+          component={successfulPayment}
+        ></Route>
         <Route exact path="/FailurePayment" component={FailurePayment}></Route>
 
         <ConditionedRoute

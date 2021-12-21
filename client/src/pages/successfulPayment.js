@@ -9,10 +9,9 @@ const SuccessfulPayment = () => {
   const ref = useRef(0); 
   console.log("search Flightssssss",searchFlights);
   const [user, setUser] = useContext(UserCtx);
-    //const searchFlights = JSON.parse(localStorage.getItem('reservation'));
-    //console.log("to confirm the reservation", searchFlights);
-    useEffect(() => {
-    
+  //const searchFlights = JSON.parse(localStorage.getItem('reservation'));
+  //console.log("to confirm the reservation", searchFlights);
+  useEffect(() => {
     let userID = user.id;
     const flight1 = searchFlights.selected.flight1;
     const flight2 = searchFlights.selected.flight2;
@@ -29,7 +28,7 @@ const SuccessfulPayment = () => {
       searchFlights.selected.companions.adultCount * flight2.finalPrice +
       searchFlights.selected.companions.childCount * (0.5 * flight2.finalPrice);
     const totalPrice = flight1totalPrice + flight2totalPrice;
-      
+
     let data = {
         userId: userID, // TODO: new Reservation dynmaic user
         flight1num: flight1.flightDet.flightNumber,
@@ -76,5 +75,6 @@ const SuccessfulPayment = () => {
         </div>
     );
 
-}
+  
+};
 export default SuccessfulPayment;

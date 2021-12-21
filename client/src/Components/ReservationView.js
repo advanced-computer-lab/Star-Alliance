@@ -89,19 +89,19 @@ const ReservationView = () => {
   const [SOTrows, setSOTRows] = React.useState([]);
 
   const [isLoading, setisLoading] = useState(true);
-let row2=[];
+  let row2 = [];
   const CancelReservation = React.useCallback(
     (id) => () => {
       const deletedRow = rows.filter((row) => row.id === id)[0];
-      console.log("deletedRow",deletedRow);
+      console.log("deletedRow", deletedRow);
       const resp = window.confirm("Are you sure you want to delete", "");
-      const data2={
-        flightNumber:deletedRow.flightNumber,
-        reservation:deletedRow.reservDet.reservationID,
-        id:User.id
-      }
+      const data2 = {
+        flightNumber: deletedRow.flightNumber,
+        reservation: deletedRow.reservDet.reservationID,
+        id: User.id,
+      };
       if (resp) {
-        console.log("yes i did")
+        console.log("yes i did");
         FlightService.CancelReservation(data2)
           .then((res) => {
             console.log("OK ===> ", res);
@@ -117,54 +117,52 @@ let row2=[];
       }
     },
     [rows]
-
   );
-  console.log("rows",rows);
+  console.log("rows", rows);
   const updateReservationList = () => {
-    const data ={id:User.id}
-    console.log("sddfwf",data);
+    const data = { id: User.id };
+    console.log("sddfwf", data);
     FlightService.GetAllReservedFlights(data)
       .then((data) => {
         console.log("recived ===> ", data);
 
         const allfl = [];
         let j = 0;
-        for (let i = 0; i < (data.data.length)*2; i = i + 2) {
-          console.log("j",j)
+        for (let i = 0; i < data.data.length * 2; i = i + 2) {
+          console.log("j", j);
           const reservId = data.data[j]._id;
           const reservDet1 = {
-            cabin:data.data[j].cabinClass,
-            EditedFlight:data.data[j].flight1,
-            EditedFlightNum:data.data[j].flight1.flightNumber,
+            cabin: data.data[j].cabinClass,
+            EditedFlight: data.data[j].flight1,
+            EditedFlightNum: data.data[j].flight1.flightNumber,
             companions: data.data[j].companions,
             currentFlightSeats: data.data[j].fligh1seats,
             reservationID: reservId,
             which: "flight1",
             unEditedFlightID: data.data[j].flight2._id,
             flight2Seats: data.data[j].fligh2seats,
-            remianFlightDate:data.data[j].flight2.departureTime,
+            remianFlightDate: data.data[j].flight2.departureTime,
           };
           allfl[i] = data.data[j].flight1;
           allfl[i].id = i;
           allfl[i].reservDet = reservDet1;
           allfl[i].TicketName = data.data[j].TicketName;
           const reservDet2 = {
-            EditedFlight:data.data[j].flight2,
-            EditedFlightNum:data.data[j].flight2.flightNumber,
-            cabin:data.data[j].cabinClass,
+            EditedFlight: data.data[j].flight2,
+            EditedFlightNum: data.data[j].flight2.flightNumber,
+            cabin: data.data[j].cabinClass,
             companions: data.data[j].companions,
             currentFlightSeats: data.data[j].fligh2seats,
             reservationID: reservId,
             which: "flight2",
             unEditedFlightID: data.data[j].flight1._id,
             flight2Seats: data.data[j].fligh1seats,
-            remianFlightDate:data.data[j].flight1.departureTime,
-
+            remianFlightDate: data.data[j].flight1.departureTime,
           };
           allfl[i + 1] = data.data[j].flight2;
           allfl[i + 1].id = i + 1;
           allfl[i + 1].reservDet = reservDet2;
-          allfl[i+1].TicketName = data.data[j].TicketName;
+          allfl[i + 1].TicketName = data.data[j].TicketName;
 
           j++;
         }
@@ -177,15 +175,14 @@ let row2=[];
 
           resv["arrivalTime"] = formatDateTime(resv["arrivalTime"]);
           resv["departureTime"] = formatDateTime(resv["departureTime"]);
-         // resv["companionName"] = (resv["companionName"]);
+          // resv["companionName"] = (resv["companionName"]);
         });
         console.log("data - => ", data);
         setisLoading(false);
 
         setSOTRows(allfl);
-        
-        
-        console.log("rows",rows);
+
+        console.log("rows", rows);
 
         console.log("datsssda - => ", allfl);
       })
@@ -227,7 +224,7 @@ let row2=[];
       {
         field: "TicketName",
         headerName: "Name",
-        
+
         flex: 1,
       },
       {
@@ -267,7 +264,7 @@ let row2=[];
         headerName: "Arrival Terminal",
         flex: 1,
       },
-      
+
       {
         field: "actions",
         type: "actions",
@@ -315,19 +312,28 @@ let row2=[];
     setRows(SOTrows);
   }, [SOTrows]);
 
-  console.log("rows3",rows); 
+  console.log("rows3", rows);
   return (
     <>
       <br></br>
       <br></br>
       <br></br>
       <br></br>
-      <div style={{display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center"}}>
-                  <h6><Link to="/" style={{color:"black",textDecoration:"none"}}>Home Page </Link><FontAwesomeIcon icon={faArrowRight}/> <b>My Reservations</b></h6>
-         </div>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <h6>
+          <Link to="/" style={{ color: "black", textDecoration: "none" }}>
+            Home Page{" "}
+          </Link>
+          <FontAwesomeIcon icon={faArrowRight} /> <b>My Reservations</b>
+        </h6>
+      </div>
       <PopupView
         showDialog={popupOpen}
         setshowDialog={setPopupOpen}
