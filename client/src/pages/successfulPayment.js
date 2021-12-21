@@ -1,10 +1,12 @@
-import {useContext, useEffect} from "react";
+import {useContext, useEffect, useRef} from "react";
 import { UserHomeCtx } from "../Context/UserHomeContext";
 import UserService, { UserCtx } from "../Services/UserService.js";
+import { Alert } from "@mui/material";
 
 import ReservationService from "../Services/ReservationService.js";
 const SuccessfulPayment = () => {
   const [searchFlights, setSearchFlights] = useContext(UserHomeCtx);
+  const ref = useRef(0); 
   console.log("search Flightssssss",searchFlights);
   const [user, setUser] = useContext(UserCtx);
     //const searchFlights = JSON.parse(localStorage.getItem('reservation'));
@@ -40,12 +42,14 @@ const SuccessfulPayment = () => {
       ReservationService.reserveNew(data)
         .then((res) => {
           console.log("res", res);
-          const bookingNumber = res.data.bookingNumber;
+           // setBookingNumber(res.data.bookingNumber);
+           ref.current = res.data.bookingNumber;
+           console.log(ref);
           console.log("OK ===> ", res);
-          /*setSearchFlights({
+          setSearchFlights({
             ...searchFlights,
-            confirmed: "false",
-          });*/
+            confirmed: "true", 
+          });
            /*alert(
              `Your Flights has been Reserved, Booking Number ${bookingNumber}`,
              res
@@ -58,15 +62,17 @@ const SuccessfulPayment = () => {
           // console.log("errorMessage", errorMessage);
           alert("Error: " + errorMessage);
         });
-      });
+      }, []);
+      const bookingNumber = ref.current;
     return(
         <div>
             <br></br>
             <br></br>
             <br></br>
-           
-            <h1 className="col-4 offset-4">Successful Payment</h1>
-            <h2 className="col-4 offset-4 text-muted">your Booking number:</h2>
+            <Alert severity="success" className="col-6 offset-3">
+            <h1 >Successful Payment</h1>
+            <h2 >your Booking number: {bookingNumber}</h2>
+            </Alert>
         </div>
     );
 

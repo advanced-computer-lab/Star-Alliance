@@ -311,6 +311,7 @@ let row2=[];
   }, []);
 
   useEffect(() => {
+    console.log("rowsssssssssssssss",SOTrows);
     setRows(SOTrows);
   }, [SOTrows]);
 

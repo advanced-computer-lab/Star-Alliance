@@ -40,12 +40,12 @@ const ContinueReservingBar = (props) => {
     goToLocation = "/ReservationSummary";
     showThis = true;
   }
-  /*if(searchFlights.confirmed === undefined || (!searchFlights.confirmed)){
+  if((searchFlights.confirmed)){
     showThis = false;
-  }*/
+  } 
 
   //   const handleClick = () => {
-  //     history.push(goToLocation);
+  //     history.push(goToLocation); 
   //   };
   const handleClickDelete = () => {
     setSearchFlights({

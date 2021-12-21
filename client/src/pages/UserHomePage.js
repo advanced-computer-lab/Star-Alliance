@@ -30,6 +30,7 @@ import ContinueReservingBar from "../Components/ContinueReservingBar";
 const UserHomePage = () => { 
      
   const [searchFlights, setSearchFlights] = useContext(UserHomeCtx);
+  
   const [loadingSearch, setloadingSearch] = useState(false);
   const history = useHistory();
   const formRef = useRef(null);
