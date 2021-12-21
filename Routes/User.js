@@ -41,6 +41,8 @@ app.post("/UpdateUser", async (req, res) => {
       email: data.email,
     }
   );
+
+  await reservation.updateMany({user:data.findUser},{TicketName:data.firstName});
   res.send(result);
 });
 
