@@ -575,6 +575,9 @@ app.post("/AddReservation", async (req, res) => {
   console.log("----------------------------------------------------------");
 
   companions.adultCount=1;
+  let notUser=companions;
+  notUser.adultCount=1;
+  notUser.childCount=0;
 
   for(i;i<totalPeople;i++){
     if(i>0){
@@ -583,7 +586,7 @@ app.post("/AddReservation", async (req, res) => {
       flight1: resFlight1._id,
       flight2: resFlight2._id,
       cabinClass: seatType,
-      //companions: companions,
+      companions: notUser,
       totalPrice: classPriceFlight1+classPriceFlight2,
       fligh1seats: flight1seat[i],
       fligh2seats: flight2seat[i],

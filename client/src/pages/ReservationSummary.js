@@ -244,8 +244,6 @@ const ReservationSummary = () => {
         paymentId:res.paymentId,
         selected: {
           ...searchFlights.selected,
-          flight1seat: [],
-          flight2seat: [],
         },
       });
       console.log("ressssss",res);

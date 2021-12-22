@@ -34,6 +34,7 @@ import { UserHomeCtx } from "../Context/UserHomeContext";
 import { EditReservationCtx } from "../Context/EditReservationContext";
 import { useHistory } from "react-router-dom";
 import { UserCtx } from "../Context/GlobalContext";
+import { all } from "express/lib/application";
 
 function escapeRegExp(value) {
   return value.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
@@ -128,7 +129,13 @@ const ReservationView = () => {
 
         const allfl = [];
         let j = 0;
-        for (let i = 0; i < data.data.length * 2; i = i + 2) {
+        const allflid1 = [];
+        const allflid2 = [];
+        for (let i = 0; i < (data.data.length ); i ++) {
+          allflid1.push(data.data[i].flight2._id)
+          allflid2.push(data.data[i].flight1._id)
+        }
+        for (let i = 0; i < (data.data.length * 2); i = i + 2) {
           console.log("j", j);
           const reservId = data.data[j]._id;
           const reservDet1 = {
@@ -139,15 +146,17 @@ const ReservationView = () => {
             currentFlightSeats: data.data[j].fligh1seats,
             reservationID: reservId,
             which: "flight1",
-            unEditedFlightID: data.data[j].flight2._id,
+            unEditedFlightID:allflid1[j],
             flight2Seats: data.data[j].fligh2seats,
             remianFlightDate: data.data[j].flight2.departureTime,
             flighttotalPrice: data.data[j].flight1totalPrice
           };
           allfl[i] = data.data[j].flight1;
-          allfl[i].id = i;
+          allfl[i]._id = i;
           allfl[i].reservDet = reservDet1;
           allfl[i].TicketName = data.data[j].TicketName;
+          allfl[i].seatNum = data.data[j].fligh1seats;
+
           const reservDet2 = {
             EditedFlight: data.data[j].flight2,
             EditedFlightNum: data.data[j].flight2.flightNumber,
@@ -156,18 +165,22 @@ const ReservationView = () => {
             currentFlightSeats: data.data[j].fligh2seats,
             reservationID: reservId,
             which: "flight2",
-            unEditedFlightID: data.data[j].flight1._id,
+            unEditedFlightID: allflid2[j],
             flight2Seats: data.data[j].fligh1seats,
             remianFlightDate: data.data[j].flight1.departureTime,
             flighttotalPrice: data.data[j].flight2totalPrice
           };
           allfl[i + 1] = data.data[j].flight2;
-          allfl[i + 1].id = i + 1;
+          allfl[i + 1]._id = i + 1;
           allfl[i + 1].reservDet = reservDet2;
           allfl[i + 1].TicketName = data.data[j].TicketName;
-
+          allfl[i+1].seatNum = data.data[j].fligh2seats;
+        
           j++;
-        }
+ 
+        
+      }
+     
         console.log("hena1", data.data);
         console.log("hena", allfl);
         allfl.forEach((resv) => {
@@ -264,6 +277,12 @@ const ReservationView = () => {
       {
         field: "arrivalTerminal",
         headerName: "Arrival Terminal",
+        flex: 1,
+      },
+      {
+        field: "seatNum",
+        headerName: "Seat",
+
         flex: 1,
       },
 
