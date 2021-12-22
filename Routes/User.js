@@ -574,9 +574,6 @@ app.post("/AddReservation", async (req, res) => {
   console.log("fligh2seat", flight2seat);
   console.log("----------------------------------------------------------");
 
-  companions.adultCount = 1;
-
-<<<<<<< HEAD
   companions.adultCount=1;
 
   for(i;i<totalPeople;i++){
@@ -605,7 +602,7 @@ app.post("/AddReservation", async (req, res) => {
       res.status(503).send("Error saving the reservation");
       return;
     }
-  }
+    }
   else{
     const newReservation = new reservation({
       user: resUser._id,
@@ -633,62 +630,11 @@ app.post("/AddReservation", async (req, res) => {
       console.log("error saving the reservation");
       res.status(503).send("Error saving the reservation");
       return;
-=======
-  for (i; i < totalPeople; i++) {
-    if (i > 0) {
-      const newReservation = new reservation({
-        user: resUser._id,
-        flight1: resFlight1._id,
-        flight2: resFlight2._id,
-        cabinClass: seatType,
-        //companions: companions,
-        totalPrice: classPriceFlight1 + classPriceFlight2,
-        fligh1seats: flight1seat[i],
-        fligh2seats: flight2seat[i],
-        isCompanion: true,
-        TicketName: companionNames[i - 1],
-      });
-      console.log("new Reservation", newReservation);
-      let reservationId = null;
-      try {
-        reservationId = (await newReservation.save()).id;
-      } catch (e) {
-        console.log("error saving the reservation");
-        res.status(503).send("Error saving the reservation");
-        return;
-      }
-    } else {
-      const newReservation = new reservation({
-        user: resUser._id,
-        flight1: resFlight1._id,
-        flight2: resFlight2._id,
-        cabinClass: seatType,
-        companions: companions,
-        totalPrice:
-          classPriceFlight1 +
-          classPriceFlight2 +
-          companions.childCount * (0.5 * classPriceFlight1) +
-          companions.childCount * (0.5 * classPriceFlight2),
-        fligh1seats: allSeats1,
-        fligh2seats: allSeats2,
-        isCompanion: false,
-        TicketName: resUser.firstName,
-      });
-      console.log("new Reservation", newReservation);
-      let reservationId = null;
-      try {
-        reservationId = (await newReservation.save()).id;
-        whatToReturn = reservationId;
-      } catch (e) {
-        console.log("error saving the reservation");
-        res.status(503).send("Error saving the reservation");
-        return;
-      }
->>>>>>> 7ccb4e2a8634bfa96ed786e8634023ebed808114
     }
   }
 
   res.send({ bookingNumber: whatToReturn });
+}
 });
 
 const sendEmail = (userEmail, result1, Price) => {
@@ -755,7 +701,6 @@ app.post("/CancelReservation", async (req, res) => {
   const getSeats2 = await flight.findByIdAndUpdate({ _id: flightNumber2 });
   const seats1 = getSeats1.availableSeats;
   const seats2 = getSeats2.availableSeats;
-<<<<<<< HEAD
   if(result8.companions!=undefined){
   if(result8.companions.childCount>0){
     const result9 = await reservation.findOne({ user:result8.user,flight1:flightNumber1,
@@ -785,48 +730,6 @@ app.post("/CancelReservation", async (req, res) => {
           flight2totalPrice: result9.flight2totalPrice+0.5*(result9.flight2totalPrice)*result8.companions.childCount}}
           
       );
-=======
-  if (result8.companions != undefined) {
-    if (result8.companions.childCount > 0) {
-      const result9 = await reservation.findOne({
-        user: result8.user,
-        flight1: flightNumber1,
-        flight2: flightNumber2,
-        isCompanion: true,
-      });
-      if (result9 != undefined) {
-        const childSeat1 = flightNumberseat1[flightNumberseat1.length - 1];
-        const childSeat2 = flightNumberseat2[flightNumberseat2.length - 1];
-        flightNumberseat1.pop();
-        flightNumberseat2.pop();
-
-        const seats3 = result9.fligh1seats;
-        seats3.push(childSeat1);
-
-        const seats4 = result9.fligh2seats;
-        seats4.push(childSeat2);
-        const addCildCompanion = {
-          adultCount: 1,
-          childCount: result8.companions.childCount,
-        };
-        console.log("----------------------");
-        console.log("result9._id", result9._id);
-        console.log("----------------------");
-        const updateSeats1 = await reservation.updateOne(
-          { _id: result9._id },
-
-          {
-            $set: {
-              companions: addCildCompanion,
-              totalPrice:
-                result9.totalPrice +
-                result9.totalPrice * result8.companions.childCount,
-              fligh1seats: seats3,
-              fligh2seats: seats4,
-            },
-          }
-        );
->>>>>>> 7ccb4e2a8634bfa96ed786e8634023ebed808114
       }
     }
   }
