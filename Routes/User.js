@@ -5,6 +5,7 @@ const moment = require("moment");
 const { flight, reservation, user } = require("../Models/export");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
+const stripe = require('stripe')(process.env.STRIPE_PRIVATE_KEY);
 
 const userAuth = require("../Middlewares/userAuth.js");
 
@@ -41,8 +42,11 @@ app.post("/UpdateUser", async (req, res) => {
       email: data.email,
     }
   );
+
+  await reservation.updateMany({user:data.findUser},{TicketName:data.firstName});
   res.send(result);
 });
+
 
 // TODO: Change Password
 app.post("/changePassword", async (req, res) => {
@@ -125,6 +129,60 @@ async function cancel(resId, which) {
 
   console.log("updateSeats1", updateSeats1);
 }
+
+app.post("/CreateCheckoutSession", async (req, res) => {
+
+    /*const paymentIntent = await stripe.paymentIntents.create({
+      amount: 1099,
+      currency: 'usd',
+      payment_method_types: ['card'],
+      receipt_email: 'yousefelbon@gmail.com',
+    });*/
+    const storeItems = new Map([
+      [1, { priceInCents: 10000, name: "Flight Reservation" }],
+      
+    ])
+    console.log("Debugging req bodyyyyyyyyyyyy",req.body);
+    const session = await stripe.checkout.sessions.create({
+      payment_method_types: ['card'],
+      mode: 'payment',
+      //receipt_email: 'yousefelbon@gmail.com',
+      line_items: req.body.items.map(item => {
+        const storeItem = storeItems.get(item.id)
+        return {
+          price_data: {
+            currency: "usd",
+            
+            product_data: {
+              name: storeItem.name,
+            },
+            unit_amount: item.price,
+          },
+          quantity: item.quantity,
+          
+          //confirmation_method: "automatic",
+          //receipt_email: "staralliancegucproject@gmail.com",
+        }
+      }),
+      success_url: 'http://localhost:3000/successfulPayment',
+      cancel_url: 'https://localhost:3000/FailurePayment'
+    })
+    console.log("payment returnnnnn", session);
+    //const newPayment = new payment();
+    //newPayment.
+    res.json({url: session.url, paymentId:session.id})
+ 
+    //res.status(500).json({ error:e.message})
+ 
+});
+
+app.post('/RefundCheckoutSession', async (req, res) => {
+  console.log(req.body);
+  const refund = await stripe.refunds.create({
+    charge: 'ch_3K9EJ52eZvKYlo2C1UV2vBjr',
+    amount: 100
+  });
+  });
 
 app.post("/AddEditReservation", async (req, res) => {
   const {
@@ -283,6 +341,8 @@ app.post("/AddEditReservation", async (req, res) => {
     totalPrice: totalPrice,
     fligh1seats: flight1seat,
     fligh2seats: flight2seat,
+    flight1Price: flight1totalPrice,
+    flight2Price: flight2totalPrice
   });
   console.log("newwwwwwcheck,", newReservation);
   //resId
@@ -533,7 +593,9 @@ let totalPeople= companions.adultCount;
       fligh1seats: flight1seat[i],
       fligh2seats: flight2seat[i],
       isCompanion:true,
-      TicketName:companionNames[i-1]
+      TicketName:companionNames[i-1],
+      flight1totalPrice: classPriceFlight1,
+      flight2totalPrice: classPriceFlight2,
 
     });
     console.log("new Reservation", newReservation);
@@ -558,7 +620,9 @@ let totalPeople= companions.adultCount;
       fligh1seats: allSeats1,
       fligh2seats: allSeats2,
       isCompanion:false,
-      TicketName:resUser.firstName
+      TicketName:resUser.firstName,
+      flight1totalPrice: classPriceFlight1+companions.childCount * (0.5 * classPriceFlight1),
+      flight2totalPrice: classPriceFlight2+companions.childCount * (0.5 * classPriceFlight2),
 
     
     });
@@ -670,8 +734,11 @@ app.post("/CancelReservation", async (req, res) => {
         { _id: result9._id},
 
         {$set:{ companions: addCildCompanion,totalPrice:result9.totalPrice+
-          result9.totalPrice*result8.companions.childCount,fligh1seats:seats3,
-          fligh2seats:seats4}}
+          result9.totalPrice*result8.companions.childCount*0.5,fligh1seats:seats3,
+          fligh2seats:seats4,
+          flight1totalPrice: result9.flight1totalPrice+0.5*(result9.flight1totalPrice)*result8.companions.childCount,
+          flight2totalPrice: result9.flight2totalPrice+0.5*(result9.flight2totalPrice)*result8.companions.childCount}}
+          
       );
       }
     }

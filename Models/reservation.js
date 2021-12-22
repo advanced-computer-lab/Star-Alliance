@@ -25,10 +25,8 @@ const reservationSchema = new Schema({
   fligh2seats: { type: [String] },
   TicketName: { type: String },
 
-  isPaied: {
-    type: Boolean,
-    default: false,
-  },
+  flight1totalPrice: Number,
+  flight2totalPrice: Number,
 
   cabinClass: { type: String, enum: ["Business", "Economy", "First"] },
   baggageAllowance: {

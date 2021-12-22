@@ -142,6 +142,7 @@ const ReservationView = () => {
             unEditedFlightID: data.data[j].flight2._id,
             flight2Seats: data.data[j].fligh2seats,
             remianFlightDate: data.data[j].flight2.departureTime,
+            flighttotalPrice: data.data[j].flight1totalPrice
           };
           allfl[i] = data.data[j].flight1;
           allfl[i].id = i;
@@ -158,6 +159,7 @@ const ReservationView = () => {
             unEditedFlightID: data.data[j].flight1._id,
             flight2Seats: data.data[j].fligh1seats,
             remianFlightDate: data.data[j].flight1.departureTime,
+            flighttotalPrice: data.data[j].flight2totalPrice
           };
           allfl[i + 1] = data.data[j].flight2;
           allfl[i + 1].id = i + 1;

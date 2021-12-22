@@ -231,28 +231,35 @@ const ReservationSummary = () => {
       //localStorage.setItem('reservation', JSON.stringify(searchFlights));
       //localStorage.setItem('user', rememberMe ? user : '');
 
-      fetch('/create-checkout-session', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          items: [
+  const data ={
+           items:[
             { id: 1, quantity: 1,price: totalPrice*100 },
-          ],
+          ]
+        }
   
-        }),
-    
-    }).then(res => {
-        if(res.ok) return res.json()
-        return res.json().then(json => Promise.reject(json))
-    }).then(({ url }) => {
+    ReservationService.reservePayment(data)
+    .then(res  => {
+      setSearchFlights({
+        ...searchFlights,
+        paymentId:res.paymentId,
+        selected: {
+          ...searchFlights.selected,
+          flight1seat: [],
+          flight2seat: [],
+        },
+      });
+      console.log("ressssss",res);
         //console.log(url);
-        window.location = url
+        //console.log("urllllllll is hereee",url);
+        
+        console.log("payment Id sentttt",searchFlights);
+        window.location = res.data.url
     }).catch(e => {
         console.error(e.error);
     })
-    }
+    
+  }
+    
 
     const handleEditClick = () => {
       setSearchFlights({

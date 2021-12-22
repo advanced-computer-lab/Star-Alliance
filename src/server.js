@@ -9,7 +9,7 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 var cors = require("cors");
 const jwt = require("jsonwebtoken");
-const stripe = require('stripe')(process.env.STRIPE_PRIVATE_KEY);
+
 
 const userAuth = require("../Middlewares/userAuth.js");
 const adminAuth = require("../Middlewares/adminAuth.js");
@@ -25,6 +25,7 @@ const {
   flight,
   creditCard,
   companion,
+  payment
 } = require("../Models/export");
 
 // Express App Setup
@@ -64,46 +65,8 @@ const storeItems = new Map([
   
 ])
 
-app.post('/create-checkout-session', async (req, res) => {
-  try {
 
-    /*const paymentIntent = await stripe.paymentIntents.create({
-      amount: 1099,
-      currency: 'usd',
-      payment_method_types: ['card'],
-      receipt_email: 'yousefelbon@gmail.com',
-    });*/
 
-    const session = await stripe.checkout.sessions.create({
-      payment_method_types: ['card'],
-      mode: 'payment',
-      //receipt_email: 'yousefelbon@gmail.com',
-      line_items: req.body.items.map(item => {
-        const storeItem = storeItems.get(item.id)
-        return {
-          price_data: {
-            currency: "usd",
-            
-            product_data: {
-              name: storeItem.name,
-            },
-            unit_amount: item.price,
-          },
-          quantity: item.quantity,
-          
-          //confirmation_method: "automatic",
-          //receipt_email: "staralliancegucproject@gmail.com",
-        }
-      }),
-      success_url: 'http://localhost:3000/successfulPayment',
-      cancel_url: 'https://localhost:3000/FailurePayment'
-    })
-    res.json({url: session.url})
-  }catch(e){
-    res.status(500).json({ error:e.message})
-  }
- 
-})
 
 const createReservation = async (req, res) => {
   const reserv = new reservation();

@@ -105,6 +105,7 @@ const EditFlight = () => {
         flight2seat: searchFlights.oldReservation.reservDet.flight2Seats,
 
         which: searchFlights.oldReservation.reservDet.which,
+        flighttotalPrice:searchFlights.oldReservation.reservDet.flighttotalPrice,
         companions: {
           adultCount: parseInt(
             searchFlights.oldReservation.reservDet.companions.adultCount

@@ -45,7 +45,7 @@ import CompanionsList from "./CompanionsList.js";
 import LoadingSpinnerPage from "./LoadingSpinnerPage.js";
 import AddCompanionNames from "./AddCompanionNames.js";
 import Cookies from "js-cookies";
-import successfulPayment from "./SuccessfulPayment.js";
+import SuccessfulPayment from "./SuccessfulPayment.js";
 import FailurePayment from "./FailurePayment.js";
 
 function ScrollToTop() {
@@ -258,8 +258,8 @@ const Main = () => {
         <UserRoute exact path="/CompanionsList" CComponent={CompanionsList} />
         <Route
           exact
-          path="/successfulPayment"
-          component={successfulPayment}
+          path="/SuccessfulPayment"
+          component={SuccessfulPayment}
         ></Route>
         <Route exact path="/FailurePayment" component={FailurePayment}></Route>
 
