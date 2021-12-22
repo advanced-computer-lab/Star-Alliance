@@ -27,7 +27,7 @@ const TestPage = () => {
   console.log("Refresh Token : ");
   console.log(Cookies.getItem("refreshToken"));
   console.log("expired : ");
-  console.log(isTokenExpired(Cookies.getItem("accessToken")));
+  // console.log(isTokenExpired(Cookies.getItem("accessToken")));
 
   const handleChangeContexct = () => {
     setUser("ceecec");
@@ -94,6 +94,15 @@ const TestPage = () => {
         console.log("logout res =", err);
       });
   };
+  const handleTestRequest = () => {
+    UserService.testUser()
+      .then((res) => {
+        console.log("testuser res = ", res);
+      })
+      .catch((err) => {
+        console.log("testuser res =", err);
+      });
+  };
 
   console.log(UserService.getTypeString());
   return (
@@ -109,13 +118,13 @@ const TestPage = () => {
       <Button onClick={handleBtnClick4}> LogOut </Button>
       <label>
         Token Exired :{" "}
-        {JSON.stringify(isTokenExpired(Cookies.getItem("accessToken")))}
+        {/* {JSON.stringify(isTokenExpired(Cookies.getItem("accessToken")))} */}
       </label>
       <label>{Cookies.getItem("accessToken")}</label>
       <label>{Cookies.getItem("refreshToken")}</label>
 
       <Button onClick={handleChangeContexct}>change init</Button>
-
+      <Button onClick={handleTestRequest}>send test request</Button>
       <Link to="/">nav to home</Link>
       <Button onClick={() => UserService.SetUser({ type: 1 })}>
         changeType

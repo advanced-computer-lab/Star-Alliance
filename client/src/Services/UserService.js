@@ -46,6 +46,10 @@ export const changePassword = (data) => {
   return http.post("/User/changePassword", data);
 };
 
+export const testUser = () => {
+  return http.get("/User/test");
+};
+
 const UserService = {
   getUser,
   getType,
@@ -58,5 +62,6 @@ const UserService = {
   signUp,
   changePassword,
   getUserId,
+  testUser,
 };
 export default UserService;
