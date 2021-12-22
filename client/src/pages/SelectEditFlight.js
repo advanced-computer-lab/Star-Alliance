@@ -22,7 +22,7 @@ const SelectEditFlight = () => {
   let history = useHistory();
 
   let flights = searchFlights.data.going;
-  
+
    if (flights == undefined || flights[0] == undefined) {
     setTimeout(() => {
       history.push("/");
@@ -71,6 +71,18 @@ const SelectEditFlight = () => {
       </div>
     );
   } else {
+      flights=[];
+     for (let i=0;i<searchFlights.data.going.length;i++){
+       if(i>0){
+         if(searchFlights.data.going[i].flightNumber!==searchFlights.data.going[i-1].flightNumber){
+           flights.push(searchFlights.data.going[i])
+         }
+       }
+       else{
+         flights.push(searchFlights.data.going[i])
+       }
+
+     } 
     let flights2 = searchFlights.data.returning;
     let seatType = searchFlights.data.seatType;
     let allData = { flights, flights2, seatType };

@@ -242,7 +242,7 @@ const ReservationEditSummary = () => {
           popupCloseCBref.current = () => {
             history.push("/"); // navigate home
             // clear every selection the user made
-            setSearchFlights({ ...searchFlights, selected: {} });
+            //setSearchFlights({ ...searchFlights, selected: {} });
           };
           setpopupChild(
             <>
