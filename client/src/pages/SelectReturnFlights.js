@@ -4,6 +4,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { Link } from "react-router-dom";
 import { UserHomeCtx } from "../Context/UserHomeContext";
+import { UserCtx } from "../Context/GlobalContext";
 import back from "../images/back.png";
 import top from "../images/top.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -11,9 +12,13 @@ import { faExclamationCircle } from "@fortawesome/free-solid-svg-icons";
 import { faCalendarAlt } from "@fortawesome/free-solid-svg-icons";
 import { useHistory } from "react-router-dom";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
+import UserService from "../Services/UserService";
+import Button from "react-bootstrap/Button";
 
 const SelectReturnFlights = (props) => {
   const [searchFlights, setSearchFlights] = useContext(UserHomeCtx);
+  const [User, setUser] = useContext(UserCtx);
+
   let history = useHistory();
 
   //   const allData = props.location.state;
@@ -144,11 +149,10 @@ const SelectReturnFlights = (props) => {
         flight1seat: [],
         flight2seat: [],
         companions: searchFlights.selected.companions,
-        companionNames:searchFlights.selected.companionNames
-
+        companionNames: searchFlights.selected.companionNames,
       };
       setSearchFlights({ ...searchFlights, selected });
-      console.log("selectretyrjun",searchFlights);
+      console.log("selectretyrjun", searchFlights);
     };
     return (
       <div>
@@ -258,7 +262,13 @@ const SelectReturnFlights = (props) => {
                 </Col>
               </Row>
               <Col>
-                <Link to={{ pathname: "/SeatReservation", state: allData }}>
+                <Link
+                  to={
+                    UserService.isGuest()
+                      ? "/ReservationSummary"
+                      : "/SeatReservation"
+                  }
+                >
                   <a
                     style={{ float: "right" }}
                     class="btn btn-primary"

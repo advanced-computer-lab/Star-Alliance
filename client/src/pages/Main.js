@@ -101,8 +101,8 @@ const Main = () => {
 
   useEffect(() => {
     console.log("REFRESH searchFlights Changed");
+    console.log(searchFlights);
     const stringified = stringify(searchFlights);
-    console.log(stringified);
     // localStorage.setItem("searchflights", JSON.stringify(searchFlights));
     localStorage.setItem("searchflights", stringified);
   }, [searchFlights]);
