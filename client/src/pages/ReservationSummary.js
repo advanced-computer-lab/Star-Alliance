@@ -25,6 +25,7 @@ import { faCheckCircle, faSearch } from "@fortawesome/free-solid-svg-icons";
 import { faEdit } from "@fortawesome/free-solid-svg-icons";
 import { UserCtx } from "../Context/GlobalContext";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
+import UserService from "../Services/UserService.js";
 
 const FlightCard = ({
   title,
@@ -151,14 +152,11 @@ const ReservationSummary = () => {
   const [searchFlights, setSearchFlights] = useContext(UserHomeCtx);
   const [loadingConfirm, setloadingConfirm] = useState(false);
   const [User, setUser] = useContext(UserCtx);
-  console.log("nono",User);
+  console.log("nono", User);
 
   const [popupOpen, setpopupOpen] = useState(false);
   const [popupChild, setpopupChild] = useState(null);
   const popupCloseCBref = useRef(null);
-
-  
-  
 
   if (searchFlights.data == "inital not set data") {
     setTimeout(() => {
@@ -226,7 +224,6 @@ const ReservationSummary = () => {
     // TODO: else query reservstion data from params
     console.log("searchFlights in Resrvation summary", searchFlights);
     const handleClickk = () => {
-
       //const { user, rememberMe } = this.state;
       //localStorage.setItem('reservation', JSON.stringify(searchFlights));
       //localStorage.setItem('user', rememberMe ? user : '');
@@ -243,6 +240,7 @@ const ReservationSummary = () => {
       setSearchFlights({
         ...searchFlights,
         payment_intent:res.data.payment_intent,
+        toBeEdited:false,
         selected: {
           ...searchFlights.selected,
           flight1seat: [],
@@ -270,31 +268,62 @@ const ReservationSummary = () => {
           ...searchFlights.selected,
           flight1seat: [],
           flight2seat: [],
+          toBeEdited:false
         },
       });
     };
 
     return (
       <>
-      <br/>
-      <br/>
+        <br />
+        <br />
         <div
           style={{
             height: "150vh",
             backgroundColor: "#f5f5f5",
           }}
         >
-        
-          <div style={{display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center"}}>
-                  <h6> <Link to="/" style={{color:"black",textDecoration:"none"}}>Home Page</Link> <FontAwesomeIcon icon={faArrowRight}/>
-                  <Link to="/SelectFlight" style={{color:"black",textDecoration:"none"}}>  Select Flight </Link><FontAwesomeIcon icon={faArrowRight}/>
-                  <Link to="/SelectReturnFlights" style={{color:"black",textDecoration:"none"}}>  Select Return Flight </Link><FontAwesomeIcon icon={faArrowRight}/>
-                  <Link to="/SeatReservation" style={{color:"black",textDecoration:"none"}}>  Select Seats </Link><FontAwesomeIcon icon={faArrowRight}/>
-                    {" "}<b>Reservation Summary</b></h6>
-         </div>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <h6>
+              {" "}
+              <Link to="/" style={{ color: "black", textDecoration: "none" }}>
+                Home Page
+              </Link>{" "}
+              <FontAwesomeIcon icon={faArrowRight} />
+              <Link
+                to="/SelectFlight"
+                style={{ color: "black", textDecoration: "none" }}
+              >
+                {" "}
+                Select Flight{" "}
+              </Link>
+              <FontAwesomeIcon icon={faArrowRight} />
+              <Link
+                to="/SelectReturnFlights"
+                style={{ color: "black", textDecoration: "none" }}
+              >
+                {" "}
+                Select Return Flight{" "}
+              </Link>
+              <FontAwesomeIcon icon={faArrowRight} />
+              <Link
+                to="/SeatReservation"
+                style={{ color: "black", textDecoration: "none" }}
+              >
+                {" "}
+                Select Seats
+                {UserService.isGuest() ? " (requires an Account) " : " "}
+              </Link>
+              <FontAwesomeIcon icon={faArrowRight} /> <b>Reservation Summary</b>
+            </h6>
+          </div>
           <br />
           <div className="col-md-6 offset-md-3">
             <h1 style={{ padding: "1rem 0 1rem" }}>Summary</h1>
@@ -347,6 +376,13 @@ const ReservationSummary = () => {
               />
             </Card>
 
+            {UserService.isGuest() && (
+              <label className="mb-3">
+                Please <Link to="/signin">login</Link> or{" "}
+                <Link to="/signup">create an account</Link> first, to continue
+                reserving your flights.
+              </label>
+            )}
             <Stack
               direction="row"
               justifyContent="flex-end"
@@ -359,10 +395,14 @@ const ReservationSummary = () => {
                   Edit <FontAwesomeIcon icon={faEdit} />
                 </Button>
               </LinkContainer>
-            
-              <button className="btn btn-primary mx-3" onClick={handleClickk}>
-            Checkout <FontAwesomeIcon icon={faCheckCircle} />
-          </button>
+
+              <button
+                className="btn btn-primary mx-3"
+                onClick={handleClickk}
+                disabled={UserService.isGuest()}
+              >
+                Checkout <FontAwesomeIcon icon={faCheckCircle} />
+              </button>
             </Stack>
           </div>
 

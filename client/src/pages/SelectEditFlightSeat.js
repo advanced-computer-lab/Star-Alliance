@@ -121,6 +121,7 @@ const SelectEditFlightSeat = (props) => {
         selected: {
           ...searchFlights.selected,
           flight1seat: flight1seatSt,
+         
         },
       });
 

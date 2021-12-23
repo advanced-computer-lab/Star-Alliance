@@ -24,7 +24,7 @@ const reservationSchema = new Schema({
   fligh1seats: { type: [String] },
   fligh2seats: { type: [String] },
   TicketName: { type: String },
-
+  childName:{type:[String]},
   flight1totalPrice: Number,
   flight2totalPrice: Number,
 

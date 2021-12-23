@@ -32,14 +32,23 @@ class FlightService {
   GetAllReservedFlights(data) {
     return http.post("/User/GetAllReservedFlights",data);
   }
+  email(data,resp) {
+    return http.post("/User/sendEmail",data,resp);
+   }
   DeleteFlight(data, resp) {
     return http.post("/Admin/DeleteFlight", data, resp);
   }
   CancelReservation(data, resp) {
     return http.post("/User/CancelReservation", data, resp);
   }
+  CancelChildReservation(data, resp) {
+    return http.post("/User/CancelChildReservation", data, resp);
+  }
   GetRequestedFlights(data) {
     return http.post("/GetRequestedFlights", data);
+  }
+  GetAllChildReservedFlights(data) {
+    return http.post("/User/GetAllChildReservedFlights",data);
   }
 }
 

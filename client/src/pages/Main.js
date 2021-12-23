@@ -48,6 +48,7 @@ import Cookies from "js-cookies";
 import SuccessfulPayment from "./SuccessfulPayment.js";
 import FailurePayment from "./FailurePayment.js";
 import Refund from "./Refund.js";
+import ViewChild from "./ViewChild.js";
 
 function ScrollToTop() {
   const history = useHistory();
@@ -102,13 +103,14 @@ const Main = () => {
 
   useEffect(() => {
     console.log("REFRESH searchFlights Changed");
+    console.log(searchFlights);
     const stringified = stringify(searchFlights);
-    console.log("From refresh in Main",searchFlights);
+    //console.log("From refresh in Main",searchFlights);
     // localStorage.setItem("searchflights", JSON.stringify(searchFlights));
     localStorage.setItem("searchflights", stringified);
   }, [searchFlights]);
 
-  const AdminRoute = ({ CComponent, ...rest }) => {
+  const AdminRoute = ({ CComponent, ...rest }) => { 
     // return (
     //   <ConditionedRoute {...rest} Component={Component} condition={isAdmin} />
     // );
@@ -233,6 +235,11 @@ const Main = () => {
           exact
           path="/ReservationEditSummary"
           CComponent={ReservationEditSummary}
+        />
+        <UserRoute
+          exact
+          path="/ViewChild"
+          CComponent={ViewChild}
         />
 
         <UserRoute exact path="/ReservationView" CComponent={ReservationView} />

@@ -14,6 +14,7 @@ import TextField from "@mui/material/TextField";
 import { LinkContainer } from "react-router-bootstrap";
 import { UserHomeCtx, UserHomeCtxInit } from "../Context/UserHomeContext";
 import {
+  faChild,
   faSignInAlt,
   faTicketAlt,
   faUser,
@@ -148,6 +149,13 @@ const Naavbar = () => {
                 <LinkContainer to="/">
                   <Nav.Link style={{ color: "#DBE2EF" }}>
                     Book Flight ✈
+                  </Nav.Link>
+                </LinkContainer>
+              )}
+              {UserService.isUser() && (
+                <LinkContainer to="ViewChild">
+                  <Nav.Link style={{ color: "#DBE2EF" }}>
+                    Child Reserservations <FontAwesomeIcon icon={faChild} />
                   </Nav.Link>
                 </LinkContainer>
               )}

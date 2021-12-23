@@ -228,10 +228,7 @@ const ReservationEditSummary = () => {
     console.log("searchFlights in Resrvation summary", searchFlights);
 
     const handleCheckoutClickk = () => {
-
-      //const { user, rememberMe } = this.state;
-      //localStorage.setItem('reservation', JSON.stringify(searchFlights));
-      //localStorage.setItem('user', rememberMe ? user : '');
+     
 
   const data ={
            items:[
@@ -244,6 +241,7 @@ const ReservationEditSummary = () => {
       setSearchFlights({
         ...searchFlights,
         paymentId:res.paymentId,
+        toBeEdited:true,
         selected: {
           ...searchFlights.selected,
           flight1seat: [],
@@ -259,9 +257,8 @@ const ReservationEditSummary = () => {
     }).catch(e => {
         console.error(e.error);
     })
-    
   }
-  console.log("search flightsssss to check", searchFlights);
+  //console.log("search flightsssss to check", searchFlights);
   const handleRefundClickk = () => {
     
      /*  setSearchFlights({
@@ -288,6 +285,7 @@ const ReservationEditSummary = () => {
         selected: {
           ...searchFlights.selected,
           flight1seat: [],
+          toBeEdited:true
         },
       });
     };

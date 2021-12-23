@@ -13,6 +13,7 @@ import {
   GridActionsCellItem,
   GridToolbarColumnsButton,
 } from "@mui/x-data-grid";
+import Alert from "../Components/Alert";
 
 import ClearIcon from "@mui/icons-material/Clear";
 import SearchIcon from "@mui/icons-material/Search";
@@ -34,6 +35,7 @@ import { UserHomeCtx } from "../Context/UserHomeContext";
 import { EditReservationCtx } from "../Context/EditReservationContext";
 import { useHistory } from "react-router-dom";
 import { UserCtx } from "../Context/GlobalContext";
+import { all } from "express/lib/application";
 
 function escapeRegExp(value) {
   return value.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
@@ -89,6 +91,16 @@ const ReservationView = () => {
   const [SOTrows, setSOTRows] = React.useState([]);
 
   const [isLoading, setisLoading] = useState(true);
+  const [alertOpen, setalertOpen] = useState(false);
+  const [alertMessage, setalertMessage] = useState("");
+  const showAlert = (message) => {
+    setalertMessage(message);
+    setalertOpen(true);
+
+    setTimeout(() => {
+      setalertOpen(false);
+    }, 3000);
+  };
   let row2 = [];
   const CancelReservation = React.useCallback(
     (id) => () => {
@@ -128,7 +140,13 @@ const ReservationView = () => {
 
         const allfl = [];
         let j = 0;
-        for (let i = 0; i < data.data.length * 2; i = i + 2) {
+        const allflid1 = [];
+        const allflid2 = [];
+        for (let i = 0; i < (data.data.length ); i ++) {
+          allflid1.push(data.data[i].flight2._id)
+          allflid2.push(data.data[i].flight1._id)
+        }
+        for (let i = 0; i < (data.data.length * 2); i = i + 2) {
           console.log("j", j);
           const reservId = data.data[j]._id;
           const reservDet1 = {
@@ -139,15 +157,17 @@ const ReservationView = () => {
             currentFlightSeats: data.data[j].fligh1seats,
             reservationID: reservId,
             which: "flight1",
-            unEditedFlightID: data.data[j].flight2._id,
+            unEditedFlightID:allflid1[j],
             flight2Seats: data.data[j].fligh2seats,
             remianFlightDate: data.data[j].flight2.departureTime,
             flighttotalPrice: data.data[j].flight1totalPrice
           };
           allfl[i] = data.data[j].flight1;
-          allfl[i].id = i;
+          allfl[i]._id = i;
           allfl[i].reservDet = reservDet1;
           allfl[i].TicketName = data.data[j].TicketName;
+          allfl[i].seatNum = data.data[j].fligh1seats;
+
           const reservDet2 = {
             EditedFlight: data.data[j].flight2,
             EditedFlightNum: data.data[j].flight2.flightNumber,
@@ -156,18 +176,22 @@ const ReservationView = () => {
             currentFlightSeats: data.data[j].fligh2seats,
             reservationID: reservId,
             which: "flight2",
-            unEditedFlightID: data.data[j].flight1._id,
+            unEditedFlightID: allflid2[j],
             flight2Seats: data.data[j].fligh1seats,
             remianFlightDate: data.data[j].flight1.departureTime,
             flighttotalPrice: data.data[j].flight2totalPrice
           };
           allfl[i + 1] = data.data[j].flight2;
-          allfl[i + 1].id = i + 1;
+          allfl[i + 1]._id = i + 1;
           allfl[i + 1].reservDet = reservDet2;
           allfl[i + 1].TicketName = data.data[j].TicketName;
-
+          allfl[i+1].seatNum = data.data[j].fligh2seats;
+        
           j++;
-        }
+ 
+        
+      }
+     
         console.log("hena1", data.data);
         console.log("hena", allfl);
         allfl.forEach((resv) => {
@@ -220,7 +244,21 @@ const ReservationView = () => {
     });
     history.push("/SelectNewSeat");
   });
+  const Mail = React.useCallback((id) => () => {
+    const mail1 = rows.filter((row) => row.id === id)[0];
+    //const resp = window.confirm("Do you want a Email with all details", "");
+    console.log("mail", mail1);
+    const data= { arrivalTime:mail1.arrivalTime,arrivalAirport:mail1.arrivalAirport,departureAirport:mail1.departureAirport,departureTime:mail1.departureTime,seatNum:mail1.seatNum,cabin:mail1.reservDet.cabin,reservationID:mail1.reservDet.reservationID,flightNumber:mail1.flightNumber,id: User.id};
+    console.log("momo",data);
+    //if (resp) {
+      console.log("momo111",data);
+    FlightService.email(data).then(({ data }) => {
+      showAlert("Mail was sent Successfully");
 
+
+    })
+
+  },[rows]); 
   const columns = React.useMemo(
     () => [
       {
@@ -266,6 +304,12 @@ const ReservationView = () => {
         headerName: "Arrival Terminal",
         flex: 1,
       },
+      {
+        field: "seatNum",
+        headerName: "Seat",
+
+        flex: 1,
+      },
 
       {
         field: "actions",
@@ -279,11 +323,11 @@ const ReservationView = () => {
             // showInMenu
           />,
           <GridActionsCellItem
-            icon={<EmailIcon sx={{ color: blue[600] }} />}
-            label="Email"
-            onClick={CancelReservation(params.id)}
-            // showInMenu
-          />,
+          icon={<EmailIcon sx={{ color: blue[600] }} />}
+          label="Email"
+          onClick={Mail(params.id)}
+          // showInMenu
+        />,
           <GridActionsCellItem
             icon={<EventSeatIcon />}
             label="Seats"
@@ -299,7 +343,7 @@ const ReservationView = () => {
         ],
       },
     ],
-    [CancelReservation, EditReservation, EditSeat]
+    [CancelReservation, EditReservation, EditSeat, Mail]
   );
 
   useEffect(() => {
@@ -329,6 +373,13 @@ const ReservationView = () => {
           alignItems: "center",
         }}
       >
+       <Alert
+        open={alertOpen}
+        setOpen={setalertOpen}
+        title={alertMessage}
+        desc=""
+      />
+
         <h6>
           <Link to="/" style={{ color: "black", textDecoration: "none" }}>
             Home Page{" "}

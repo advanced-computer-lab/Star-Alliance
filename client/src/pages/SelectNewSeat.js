@@ -85,7 +85,8 @@ const SelectNewSeat = (props) => {
             childCount: parseInt(searchFlights.oldReservation.reservDet.companions.childCount),
           },
           resId:searchFlights.oldReservation.reservDet.reservationID,
-          which:searchFlights.oldReservation.reservDet.which
+          which:searchFlights.oldReservation.reservDet.which,
+          editingseat:true
         };
         ReservationService.reserveNewFlight(data)
           .then((res) => {
