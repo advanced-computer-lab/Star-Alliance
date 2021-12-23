@@ -14,6 +14,7 @@ import { useHistory } from "react-router-dom";
 import seat from "../images/seat.png";
 import back from "../images/back.png";
 import top from "../images/top.png";
+import UserService from "../Services/UserService";
 
 const assert = require("assert");
 
@@ -23,6 +24,12 @@ const SeatReservation = (props) => {
   const [searchFlights, setSearchFlights] = useContext(UserHomeCtx);
   const [flight1seatSt, setflight1seatSt] = useState([]);
   const [flight2seatSt, setflight2seatSt] = useState([]);
+
+  // This page is not allowed for Guests. if its a Guest, redirect to summary page
+  if (UserService.isGuest()) {
+    history.push("/ReservationSummary");
+    return null; // make sure nothing redered
+  }
 
   console.log("search flight in seat reservation", searchFlights);
 
