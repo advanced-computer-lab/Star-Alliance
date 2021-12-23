@@ -128,7 +128,10 @@ const UserHomePage = () => {
                 childCount: parseInt(e.children.value),
               },
             };
-            const totalNames = e.adult.value;
+           
+            const adults=parseInt(e.adult.value);
+            const children=parseInt(e.children.value);
+            const totalNames = adults+children;
             setSearchFlights({ data, selected, totalNames });
             console.log("gigi", searchFlights);
             show();
@@ -276,7 +279,6 @@ const UserHomePage = () => {
                     placeholder="Enter Departure Time"
                     defaultValue={moment(new Date()).format("yyyy-MM-DD")}
                     min={moment(new Date()).format("yyyy-MM-DD")}
-                    value="2022-04-01"
                   />
                 </Form.Group>
               </Col>
@@ -294,7 +296,6 @@ const UserHomePage = () => {
                     placeholder="Enter Arrival Time"
                     defaultValue={moment(today).format("yyyy-MM-DD")}
                     min={moment(new Date()).format("yyyy-MM-DD")}
-                    value="2022-05-01"
                   />
                 </Form.Group>
               </Col>

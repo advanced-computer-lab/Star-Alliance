@@ -577,7 +577,7 @@ let x=companions.childCount;
   console.log("fligh2seat", flight2seat);
   console.log("count",companions.childCount )
   console.log("----------------------------------------------------------");
-
+let childName=[];
   if (companions.childCount > 0) {
     let j = 0;
     for (j = 0; j < companions.childCount; j++) {
@@ -587,6 +587,7 @@ let x=companions.childCount;
       }
       allSeats1.push(flight1seat[flight1seat.length - 1]);
       allSeats2.push(flight2seat[flight2seat.length - 1]);
+      childName.push(companionNames.pop());
       flight1seat.pop();
       flight2seat.pop();
       //console.log("allSeats1",allSeats1);
@@ -602,11 +603,7 @@ let x=companions.childCount;
   console.log("----------------------------------------------------------");
 
   companions.adultCount=1;
-  //companions.childCount=x;
-
-  //let userWithChild=companions;
-  //userWithChild.childCount=x;
-  //userWithChild.ad
+  
   let notUser={adultCount:1,childCount:0};
 
 
@@ -650,6 +647,7 @@ let x=companions.childCount;
       fligh2seats: allSeats2,
       isCompanion:false,
       TicketName:resUser.firstName,
+      childName:childName,
       flight1totalPrice: classPriceFlight1+companions.childCount * (0.5 * classPriceFlight1),
       flight2totalPrice: classPriceFlight2+companions.childCount * (0.5 * classPriceFlight2),
 
@@ -761,8 +759,9 @@ app.post("/CancelReservation", async (req, res) => {
           result9.totalPrice*result8.companions.childCount*0.5,fligh1seats:seats3,
           fligh2seats:seats4,
           flight1totalPrice: result9.flight1totalPrice+0.5*(result9.flight1totalPrice)*result8.companions.childCount,
-          flight2totalPrice: result9.flight2totalPrice+0.5*(result9.flight2totalPrice)*result8.companions.childCount}}
-          
+          flight2totalPrice: result9.flight2totalPrice+0.5*(result9.flight2totalPrice)*result8.companions.childCount
+        , childName:result8.childName
+      }}
       );
       }
     }
@@ -848,7 +847,12 @@ app.post("/CancelChildReservation", async (req, res) => {
   const getSeats2 = await flight.findByIdAndUpdate({ _id: flightNumber2 });
   const seats1 = getSeats1.availableSeats;
   const seats2 = getSeats2.availableSeats;
-  
+  let newch=[];
+  for(let i=0;i<result8.childName.length;i++){
+    if(result8.childName[i]!=req.body.child){
+      newch.push(result8.childName[i]);
+    }
+  }
     
 let totalNum= result8.companions.childCount+result8.companions.adultCount;
   
@@ -860,7 +864,8 @@ let totalNum= result8.companions.childCount+result8.companions.adultCount;
          ,fligh1seats:seats3,
           fligh2seats:seats4,
           flight1totalPrice:result8.flight1totalPrice-(result8.flight1totalPrice*(1/(totalNum+1))),
-          flight2totalPrice:result8.flight2totalPrice-(result8.flight2totalPrice*(1/(totalNum+1)))
+          flight2totalPrice:result8.flight2totalPrice-(result8.flight2totalPrice*(1/(totalNum+1))),
+          childName:newch
          }}
           
       );

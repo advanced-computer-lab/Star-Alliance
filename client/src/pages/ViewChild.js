@@ -93,7 +93,7 @@ const ViewChild = () => {
         flightNumber: deletedRow.flightNumber,
         reservation: deletedRow.reservationID,
         id: User.id,
-        seatNum:deletedRow.seatNum[0]
+        child:deletedRow.TicketName
       };
       console.log("testing data2",data2)
        if (resp) {
@@ -124,34 +124,39 @@ const ViewChild = () => {
         console.log("recived ===> ", data);
 
         const allfl = [];
-        let j = 0;
-        const allflid1 = [];
-        const allflid2 = [];
-        for (let i = 0; i < (data.data.length ); i ++) {
-          allflid1.push(data.data[i].flight2._id)
-          allflid2.push(data.data[i].flight1._id)
-        }
-      
-        
-        
-        for (let i = 0; i < (data.data.length * 2); i = i + 2) {
+        console.log("data.data",data.data)
+        let count =0;
+        for (let j = 0; j < (data.data.length);j++) {
           console.log("j", j);
-          const reservId = data.data[j]._id;
-          allfl[i] = data.data[j].flight1;
-          allfl[i]._id = i;
-          allfl[i].TicketName = data.data[j].TicketName;
           data.data[j].fligh1seats.shift();
-          allfl[i].seatNum = data.data[j].fligh1seats;
-          allfl[i].reservationID=reservId;
-
-          allfl[i + 1] = data.data[j].flight2;
-          allfl[i + 1]._id = i + 1;
-          allfl[i + 1].TicketName = data.data[j].TicketName;
           data.data[j].fligh2seats.shift();
-          allfl[i+1].seatNum = data.data[j].fligh2seats;
-          allfl[i+1].reservationID=reservId;        
-          j++;
+          const reservId = data.data[j]._id;
+          let l=0;
+          let kk=count;
+          let _id=0;
+          console.log("data.data[j].fligh1seats",data.data[j].fligh1seats)
+         for(kk;kk<data.data[j].fligh1seats.length*2;kk=kk+2){
+          
+          allfl[kk]= {_id:kk,seatNum:data.data[j].fligh1seats[l],reservationID:reservId,
+            TicketName:data.data[j].childName[l],flightNumber:data.data[j].flight1.flightNumber,
+            departureAirport:data.data[j].flight1.departureAirport,arrivalAirport:data.data[j].flight1.arrivalAirport
+            ,departureTime:data.data[j].flight1.departureTime,arrivalTime:data.data[j].flight1.arrivalTime,
+            departureTerminal:data.data[j].flight1.departureTerminal,
+            arrivalTerminal:data.data[j].flight1.arrivalTerminal
+          };
+
+          allfl[kk+1]= {_id:kk+1,seatNum:data.data[j].fligh2seats[l],reservationID:reservId,
+            TicketName:data.data[j].childName[l],flightNumber:data.data[j].flight2.flightNumber,
+            departureAirport:data.data[j].flight2.departureAirport,arrivalAirport:data.data[j].flight2.arrivalAirport
+            ,departureTime:data.data[j].flight2.departureTime,arrivalTime:data.data[j].flight2.arrivalTime,
+            departureTerminal:data.data[j].flight2.departureTerminal,
+            arrivalTerminal:data.data[j].flight2.arrivalTerminal
+          };    
+          l++;
+          count=count+2;
       }
+
+    }
      
         console.log("hena1", data.data);
         console.log("hena", allfl);
@@ -186,48 +191,48 @@ const ViewChild = () => {
   const columns = React.useMemo(
     () => [
       {
-        field: "TicketName",
-        headerName: "Name",
+         field: "TicketName",
+         headerName: "Name",
 
-        flex: 1,
-      },
-      {
-        field: "flightNumber",
-        headerName: "Flight Number",
-        headerClassName: "super-app-theme--header",
-        headerAlign: "center",
-        flex: 1,
-      },
-      {
-        field: "departureAirport",
-        headerName: "Departure Airport",
-        flex: 1,
-      },
-      {
-        field: "arrivalAirport",
-        headerName: "Arrival Airport",
-        flex: 1,
-      },
-      {
-        field: "departureTime",
-        headerName: "Departure Time",
-        flex: 1,
-      },
-      {
-        field: "arrivalTime",
-        headerName: "Arrival Time",
-        flex: 1,
-      },
-      {
-        field: "departureTerminal",
-        headerName: "Departure Terminal",
-        flex: 1,
-      },
-      {
-        field: "arrivalTerminal",
-        headerName: "Arrival Terminal",
-        flex: 1,
-      },
+         flex: 1,
+       },
+       {
+         field: "flightNumber",
+         headerName: "Flight Number",
+         headerClassName: "super-app-theme--header",
+         headerAlign: "center",
+         flex: 1,
+       },
+       {
+         field: "departureAirport",
+         headerName: "Departure Airport",
+         flex: 1,
+       },
+       {
+         field: "arrivalAirport",
+         headerName: "Arrival Airport",
+         flex: 1,
+       },
+       {
+         field: "departureTime",
+         headerName: "Departure Time",
+         flex: 1,
+       },
+       {
+         field: "arrivalTime",
+         headerName: "Arrival Time",
+         flex: 1,
+       },
+       {
+         field: "departureTerminal",
+         headerName: "Departure Terminal",
+         flex: 1,
+       },
+       {
+         field: "arrivalTerminal",
+         headerName: "Arrival Terminal",
+         flex: 1,
+       },
       {
         field: "seatNum",
         headerName: "Seat",
