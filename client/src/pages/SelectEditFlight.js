@@ -149,7 +149,7 @@ const SelectEditFlight = () => {
       console.log("selected ", flight);
       const selected = {
         flight1: flight, // flight to be changed
-        flight2:searchFlights.selected.flight2, // returnFlight Unchanged
+        flight2Id:searchFlights.selected.flight2, // returnFlight Unchanged
         resId:searchFlights.selected.resId,
         which:searchFlights.selected.which,
         num: searchFlights.data.companionsCount,

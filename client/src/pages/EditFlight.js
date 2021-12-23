@@ -100,7 +100,7 @@ const EditFlight = () => {
         resId: searchFlights.oldReservation.reservDet.reservationID,
         flight1: null,
 
-        flight2: searchFlights.oldReservation.reservDet.unEditedFlightID,
+        flight2Id: searchFlights.oldReservation.reservDet.unEditedFlightID,
         flight1seat: [],
         flight2seat: searchFlights.oldReservation.reservDet.flight2Seats,
 
