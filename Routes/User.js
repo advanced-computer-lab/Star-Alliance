@@ -259,7 +259,93 @@ app.post('/RefundCheckoutSession', async (req, res) => {
     amount: 100
   });
   });
-
+  const sendEmail4 = (resUser, data,flight,seat) => {
+    const email = process.env.email;
+    const pass = process.env.pass;
+    var transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: email,
+        pass: pass,
+      },
+    });
+    
+  
+    var mailOptions = {
+      from: email,
+      to: resUser.email,
+      subject: "RESERVATION EDIT ",
+  
+      text:
+      "Dear " +
+      resUser.firstName +
+      " " +
+      resUser.lastName +
+        ",\n" +
+        "Your New Reservation: " +
+        data._id +
+        "\n"+
+        "Flight:"+ flight.flightNumber+
+        "\n"+
+        "Departure Airport: " + flight.departureAirport +"            " + "Arrival airport: "+ flight.arrivalAirport+
+        "\n"+
+        "Arrival Time: "+flight.arrivalTime +"            "+"Departure Time: "+ flight.departureTime +
+        "\n"+
+         "seat: "+ seat +
+         "\n"+
+         "Cabin: "+ data.cabinClass +
+        "\n" +
+        "Thank you for Choosing Star-Alliance Airline \n" +
+        "Best Regards, \n" +
+        "Star-Alliance Team",
+    };
+    transporter.sendMail(mailOptions, function (error, info) {
+      if (error) {
+        console.log(error);
+      } else {
+        console.log("Email sent: " + info.response);
+      }
+    });
+  }
+  const sendEmail5 = (resUser,seat,newReservation) => {
+    const email = process.env.email;
+    const pass = process.env.pass;
+    var transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: email,
+        pass: pass,
+      },
+    });
+    
+  
+    var mailOptions = {
+      from: email,
+      to: resUser.email,
+      subject: "SEAT EDIT ",
+  
+      text:
+      "Dear " +
+      resUser.firstName +
+      " " +
+      resUser.lastName +
+        ",\n" +
+        "Your new seat is: " +
+        seat + "in reservation "+ newReservation._id +
+        
+        "\n" +
+        "Thank you for Choosing Star-Alliance Airline \n" +
+        "Best Regards, \n" +
+        "Star-Alliance Team",
+    };
+    transporter.sendMail(mailOptions, function (error, info) {
+      if (error) {
+        console.log(error);
+      } else {
+        console.log("Email sent: " + info.response);
+      }
+    });
+  }
 app.post("/AddEditReservation", async (req, res) => {
   const {
     userId,
@@ -271,6 +357,7 @@ app.post("/AddEditReservation", async (req, res) => {
     companions,
     resId,
     which,
+    editingseat
   } = req.body;
   console.log("printing request.body", req.body);
   // resFlight2 = await flight.findOne({ _id: flight2Id });
@@ -431,7 +518,15 @@ app.post("/AddEditReservation", async (req, res) => {
         totalPrice: totalPrice,
         fligh1seats: flight1seat,
       }
+      
     );
+    if(editingseat){
+      sendEmail5(resUser,flight1seat,newReservation);
+    }
+    else{
+      sendEmail4  (resUser, newReservation,resFlight1,flight1seat);
+    }
+    
     //
   } else {
     await reservation.updateOne(
@@ -443,6 +538,13 @@ app.post("/AddEditReservation", async (req, res) => {
         fligh2seats: flight1seat,
       }
     );
+    if(editingseat){
+      sendEmail5(resUser,flight1seat);
+    }
+    else{
+      sendEmail4  (resUser, newReservation,resFlight1,flight1seat);
+    }
+    
   }
   console.log("new Reservation", newReservation);
   let reservationId = null;
