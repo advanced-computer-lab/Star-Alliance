@@ -108,7 +108,7 @@ const Main = () => {
     localStorage.setItem("searchflights", stringified);
   }, [searchFlights]);
 
-  const AdminRoute = ({ CComponent, ...rest }) => {
+  const AdminRoute = ({ CComponent, ...rest }) => { 
     // return (
     //   <ConditionedRoute {...rest} Component={Component} condition={isAdmin} />
     // );

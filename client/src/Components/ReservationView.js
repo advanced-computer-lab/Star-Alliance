@@ -233,7 +233,17 @@ const ReservationView = () => {
     });
     history.push("/SelectNewSeat");
   });
-
+  const Mail = React.useCallback((id) => () => {
+    const mail1 = rows.filter((row) => row.id === id)[0];
+    const resp = window.confirm("Do you want a Email with all details", "");
+    console.log("mail", mail1);
+    const data= { arrivalTime:mail1.arrivalTime,arrivalAirport:mail1.arrivalAirport,departureAirport:mail1.departureAirport,departureTime:mail1.departureTime,seatNum:mail1.seatNum,cabin:mail1.reservDet.cabin,reservationID:mail1.reservDet.reservationID,flightNumber:mail1.flightNumber,id: User.id};
+    console.log("momo",data);
+    if (resp) {
+      console.log("momo111",data);
+    FlightService.email(data)
+    }
+  },[rows]); 
   const columns = React.useMemo(
     () => [
       {
@@ -298,11 +308,11 @@ const ReservationView = () => {
             // showInMenu
           />,
           <GridActionsCellItem
-            icon={<EmailIcon sx={{ color: blue[600] }} />}
-            label="Email"
-            onClick={CancelReservation(params.id)}
-            // showInMenu
-          />,
+          icon={<EmailIcon sx={{ color: blue[600] }} />}
+          label="Email"
+          onClick={Mail(params.id)}
+          // showInMenu
+        />,
           <GridActionsCellItem
             icon={<EventSeatIcon />}
             label="Seats"
@@ -318,7 +328,7 @@ const ReservationView = () => {
         ],
       },
     ],
-    [CancelReservation, EditReservation, EditSeat]
+    [CancelReservation, EditReservation, EditSeat, Mail]
   );
 
   useEffect(() => {
