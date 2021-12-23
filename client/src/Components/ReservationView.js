@@ -235,14 +235,14 @@ const ReservationView = () => {
   });
   const Mail = React.useCallback((id) => () => {
     const mail1 = rows.filter((row) => row.id === id)[0];
-    const resp = window.confirm("Do you want a Email with all details", "");
+    //const resp = window.confirm("Do you want a Email with all details", "");
     console.log("mail", mail1);
     const data= { arrivalTime:mail1.arrivalTime,arrivalAirport:mail1.arrivalAirport,departureAirport:mail1.departureAirport,departureTime:mail1.departureTime,seatNum:mail1.seatNum,cabin:mail1.reservDet.cabin,reservationID:mail1.reservDet.reservationID,flightNumber:mail1.flightNumber,id: User.id};
     console.log("momo",data);
-    if (resp) {
+    //if (resp) {
       console.log("momo111",data);
     FlightService.email(data)
-    }
+    //}
   },[rows]); 
   const columns = React.useMemo(
     () => [

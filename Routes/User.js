@@ -830,12 +830,55 @@ const sendEmail = (userEmail, result1, Price) => {
   });
 };
 
+const sendEmail3 = (userEmail, childName,result1, Price) => {
+  const email = process.env.email;
+  const pass = process.env.pass;
+  var transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: email,
+      pass: pass,
+    },
+  });
+  console.log("price:", result1);
+
+  var mailOptions = {
+    from: email,
+    to: userEmail,
+    subject: "RESERVATION CANCEL ",
+
+    text:
+      "Dear " +
+      result1.user.firstName +
+      " " +
+      result1.user.lastName +
+      ",\n" +
+      "Your Child "+childName+"'s"+" Reservation: " +
+      result1._id +
+      " is canceled and the total amount refunded is " +
+      Price +
+      " $." +
+      "\n" +
+      "Thank you for Choosing Star-Alliance Airline \n" +
+      "Best Regards, \n" +
+      "Star-Alliance Team",
+  };
+
+  transporter.sendMail(mailOptions, function (error, info) {
+    if (error) {
+      console.log(error);
+    } else {
+      console.log("Email sent: " + info.response);
+    }
+  });
+};
+
 app.post("/CancelReservation", async (req, res) => {
   console.log("--------------------------at backend");
   const flightNumber = req.body.flightNumber;
   console.log("Here is the flight number", flightNumber);
 
-  const result1 = await reservation.findOne({ _id: req.body.reservation }); //To be changed
+  const result1 = await reservation.findOne({ _id: req.body.reservation }).populate({ path: "user" }); //To be changed
   const result8 = await reservation.findById({ _id: result1._id });
   console.log("test flight1", result8);
   const flightNumber1 = result8.flight1;
@@ -943,6 +986,8 @@ app.post("/CancelReservation", async (req, res) => {
   }
   res.send(result);
 });
+
+
 app.post("/CancelChildReservation", async (req, res) => {
   const flightNumber = req.body.flightNumber;
   console.log("Here is the flight number", flightNumber);
@@ -974,7 +1019,7 @@ app.post("/CancelChildReservation", async (req, res) => {
   }
     
 let totalNum= result8.companions.childCount+result8.companions.adultCount;
-  
+  let refunded= result8.totalPrice*(1/(totalNum+1));
   let newCompanions={adultCount:1,childCount:result8.companions.childCount-1}
       const updateSeats0 = await reservation.updateOne(
         { _id: result8._id},
@@ -1019,7 +1064,7 @@ let totalNum= result8.companions.childCount+result8.companions.adultCount;
   console.log("updateSeats1", updateSeats1);
   console.log("updateSeats2", updateSeats2);
   console.log();
-  sendEmail(result1.user.email, result1, result3.totalPrice);
+  sendEmail3(result1.user.email,req.body.child, result1, refunded);
   res.send(updateSeats0) ;
 
 
