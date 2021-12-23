@@ -2,11 +2,12 @@ import {useContext, useEffect, useRef} from "react";
 import { UserHomeCtx } from "../Context/UserHomeContext";
 import UserService, { UserCtx } from "../Services/UserService.js";
 import { Alert } from "@mui/material";
+import LoadingSpinnerPage from "../pages/LoadingSpinnerPage";
 
 import ReservationService from "../Services/ReservationService.js";
 const SuccessfulPayment = () => {
   const [searchFlights, setSearchFlights] = useContext(UserHomeCtx);
-  const ref = useRef(0); 
+  const ref = useRef(<LoadingSpinnerPage />); 
   console.log("search Flightssssss",searchFlights);
   const [user, setUser] = useContext(UserCtx);
   //const searchFlights = JSON.parse(localStorage.getItem('reservation'));
@@ -42,18 +43,38 @@ const SuccessfulPayment = () => {
       ReservationService.reserveNew(data)
         .then((res) => {
           console.log("res", res);
+          let reservationId=res.data.bookingNumber;
            // setBookingNumber(res.data.bookingNumber);
            ref.current = res.data.bookingNumber;
            console.log(ref);
+
           console.log("OK ===> ", res);
           setSearchFlights({
             ...searchFlights,
+            reservationId: res.data.bookingNumber,
             confirmed: "true", 
           });
-           /*alert(
-             `Your Flights has been Reserved, Booking Number ${bookingNumber}`,
-             res
-           );*/
+          
+          const data1 = {
+          reservationId: reservationId,
+          payment_intent: searchFlights.payment_intent
+        };
+
+
+        ReservationService.addPayment(data1)
+        .then((res) => {
+          console.log("res", res);
+        })
+        .catch((err) => {
+          // alert("Error", err);
+          console.log("errr <===", err.response);
+          const errorMessage = err.response.data;
+          // console.log("errorMessage", errorMessage);
+          alert("Error: " + errorMessage);
+        });
+
+     
+
         })
         .catch((err) => {
           // alert("Error", err);
@@ -63,6 +84,8 @@ const SuccessfulPayment = () => {
           alert("Error: " + errorMessage);
         });
       }, []);
+        
+        
       const bookingNumber = ref.current;
     return(
         <div>

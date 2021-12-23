@@ -3,6 +3,7 @@ const app = express();
 const db = require("../Service/DBService.js");
 const moment = require("moment");
 const { flight, reservation, user } = require("../Models/export");
+const payment = require("..//Models/payment");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const stripe = require('stripe')(process.env.STRIPE_PRIVATE_KEY);
@@ -170,18 +171,38 @@ app.post("/CreateCheckoutSession", async (req, res) => {
     console.log("payment returnnnnn", session);
     //const newPayment = new payment();
     //newPayment.
-    res.json({url: session.url, paymentId:session.id})
+    res.send({url: session.url, payment_intent:session.payment_intent})
  
     //res.status(500).json({ error:e.message})
  
 });
 
+
+app.post('/AddPayment', async (req, res) => {
+  console.log("hereeeeee",req.body);
+  const paymenttt = new payment({});
+    paymenttt.userId= req.user.userId;
+    paymenttt.reservationId= req.body.reservationId;
+    paymenttt.payment_intent= req.body.payment_intent;
+ 
+    await paymenttt.save();
+  
+  console.log("paymentttttttttttt",paymenttt);
+  
+  });
+
 app.post('/RefundCheckoutSession', async (req, res) => {
-  console.log(req.body);
+  console.log("hereeeeee",req.body);
+  const paymentRecord = await payment.findOne({
+    reservationId: req.body.reservationId, userId: req.user.userId
+  })
+  console.log("payment Record ", paymentRecord);
   const refund = await stripe.refunds.create({
-    charge: 'ch_3K9EJ52eZvKYlo2C1UV2vBjr',
+    payment_intent: paymentRecord.payment_intent,
     amount: 100
   });
+  console.log("refunddd variableee", refund);
+  res.send({status:"successful"});
   });
 
 app.post("/AddEditReservation", async (req, res) => {

@@ -116,7 +116,7 @@ const EditFlight = () => {
         },
       };
       console.log("gigi", searchFlights);
-      setSearchFlights({ data, selected });
+      setSearchFlights({...searchFlights, data, selected });
       show();
       console.log(clicked);
       if (searchFlights.oldReservation.reservDet.which == "flight1") {

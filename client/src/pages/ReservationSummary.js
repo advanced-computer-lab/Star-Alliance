@@ -239,9 +239,10 @@ const ReservationSummary = () => {
   
     ReservationService.reservePayment(data)
     .then(res  => {
+      console.log("payment id resss", res);
       setSearchFlights({
         ...searchFlights,
-        paymentId:res.paymentId,
+        payment_intent:res.data.payment_intent,
         selected: {
           ...searchFlights.selected,
           flight1seat: [],
@@ -251,8 +252,9 @@ const ReservationSummary = () => {
       console.log("ressssss",res);
         //console.log(url);
         //console.log("urllllllll is hereee",url);
-        
+
         console.log("payment Id sentttt",searchFlights);
+       // history.push(res.data.url);
         window.location = res.data.url
     }).catch(e => {
         console.error(e.error);
