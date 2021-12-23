@@ -230,7 +230,8 @@ const ReservationEditSummary = () => {
         flight2seat:searchFlights.selected.flight2seat,
         companions: searchFlights.selected.companions,
         resId:searchFlights.selected.resId,
-        which:searchFlights.selected.which
+        which:searchFlights.selected.which,
+        editingseat:false
       };
       ReservationService.reserveNewFlight(data)
         .then((res) => {
