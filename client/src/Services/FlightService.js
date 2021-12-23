@@ -38,8 +38,14 @@ class FlightService {
   CancelReservation(data, resp) {
     return http.post("/User/CancelReservation", data, resp);
   }
+  CancelChildReservation(data, resp) {
+    return http.post("/User/CancelChildReservation", data, resp);
+  }
   GetRequestedFlights(data) {
     return http.post("/GetRequestedFlights", data);
+  }
+  GetAllChildReservedFlights(data) {
+    return http.post("/User/GetAllChildReservedFlights",data);
   }
 }
 

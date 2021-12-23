@@ -47,6 +47,7 @@ import AddCompanionNames from "./AddCompanionNames.js";
 import Cookies from "js-cookies";
 import SuccessfulPayment from "./SuccessfulPayment.js";
 import FailurePayment from "./FailurePayment.js";
+import ViewChild from "./ViewChild.js";
 
 function ScrollToTop() {
   const history = useHistory();
@@ -232,6 +233,11 @@ const Main = () => {
           exact
           path="/ReservationEditSummary"
           CComponent={ReservationEditSummary}
+        />
+        <UserRoute
+          exact
+          path="/ViewChild"
+          CComponent={ViewChild}
         />
 
         <UserRoute exact path="/ReservationView" CComponent={ReservationView} />

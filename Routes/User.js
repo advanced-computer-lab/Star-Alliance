@@ -84,6 +84,25 @@ app.post("/GetAllReservedFlights", async (req, res) => {
   console.log("user1111111111111", result);
   res.send(result);
 });
+app.post("/GetAllChildReservedFlights", async (req, res) => {
+   const data = req.body;
+   console.log("dataaaa", data);
+   console.log("/GetAllChildReservedFlights sending");
+   const result = await reservation
+     .find({ user: { _id: data.id } })
+     .populate({ path: "user" })
+     .populate({ path: "flight1" })
+     .populate({ path: "flight2" });
+//   //console.log("/GetAllReservedFlights result", result);
+let result2=[];
+for(let i=0;i<result.length;i++){
+  if(result[i].companions.childCount>0){
+    result2.push(result[i]);
+  }
+}
+   console.log("user1111111111111", result);
+   res.send(result2);
+ });
 
 async function cancel(resId, which) {
   const result8 = await reservation.findById({ _id: resId });
@@ -396,7 +415,12 @@ app.post("/AddReservation", async (req, res) => {
     companions,
     companionNames,
   } = req.body;
-
+  console.log("----------------------------------------------------------");
+  console.log("----------------------------------------------------------");
+console.log("req.body testing companions",req.body);
+console.log("----------------------------------------------------------");
+console.log("----------------------------------------------------------");
+let x=companions.childCount;
   // check that the user exists, and verifiy that the user can make a reservation
   let resUser = null;
   try {
@@ -551,6 +575,9 @@ app.post("/AddReservation", async (req, res) => {
 
   console.log("fligh1seat", flight1seat);
   console.log("fligh2seat", flight2seat);
+  console.log("count",companions.childCount )
+  console.log("----------------------------------------------------------");
+
   if (companions.childCount > 0) {
     let j = 0;
     for (j = 0; j < companions.childCount; j++) {
@@ -575,9 +602,13 @@ app.post("/AddReservation", async (req, res) => {
   console.log("----------------------------------------------------------");
 
   companions.adultCount=1;
-  let notUser=companions;
-  notUser.adultCount=1;
-  notUser.childCount=0;
+  //companions.childCount=x;
+
+  //let userWithChild=companions;
+  //userWithChild.childCount=x;
+  //userWithChild.ad
+  let notUser={adultCount:1,childCount:0};
+
 
   for(i;i<totalPeople;i++){
     if(i>0){
@@ -794,6 +825,79 @@ app.post("/CancelReservation", async (req, res) => {
     return;
   }
   res.send(result);
+});
+app.post("/CancelChildReservation", async (req, res) => {
+  const flightNumber = req.body.flightNumber;
+  console.log("Here is the flight number", flightNumber);
+
+  const result1 = await reservation.findOne({ _id: req.body.reservation }); //To be changed
+  const result8 = await reservation.findById({ _id: result1._id });
+  console.log("test flight1", result8);
+  const flightNumber1 = result8.flight1;
+  const flightNumber2 = result8.flight2;
+  console.log("result8", result8);
+  const cabinType = result8.cabinClass.toLowerCase();
+  console.log("flightNumber1id", flightNumber1);
+  console.log("flightNumber2id", flightNumber2);
+  console.log("cabinType", cabinType);
+  let seats3= result8.fligh1seats;
+  let seats4= result8.fligh2seats;
+  const flightNumberseat1 =seats3.pop();
+  const flightNumberseat2 =seats4.pop();
+  const getSeats1 = await flight.findByIdAndUpdate({ _id: flightNumber1 });
+  const getSeats2 = await flight.findByIdAndUpdate({ _id: flightNumber2 });
+  const seats1 = getSeats1.availableSeats;
+  const seats2 = getSeats2.availableSeats;
+  
+    
+let totalNum= result8.companions.childCount+result8.companions.adultCount;
+  
+  let newCompanions={adultCount:1,childCount:result8.companions.childCount-1}
+      const updateSeats0 = await reservation.updateOne(
+        { _id: result8._id},
+
+        {$set:{ companions:newCompanions,totalPrice:result8.totalPrice-(result8.totalPrice*(1/(totalNum+1)))
+         ,fligh1seats:seats3,
+          fligh2seats:seats4,
+          flight1totalPrice:result8.flight1totalPrice-(result8.flight1totalPrice*(1/(totalNum+1))),
+          flight2totalPrice:result8.flight2totalPrice-(result8.flight2totalPrice*(1/(totalNum+1)))
+         }}
+          
+      );
+     
+  
+  if (cabinType === "economy") {
+    const seats1 = getSeats1.availableSeats;
+    const seats2 = getSeats2.availableSeats;
+      seats1.economy.push(flightNumberseat1);
+      seats2.economy.push(flightNumberseat2);
+  } else if (cabinType === "business") {
+    const seats1 = getSeats1.availableSeats;
+    const seats2 = getSeats2.availableSeats;
+    seats1.economy.push(flightNumberseat1);
+    seats2.economy.push(flightNumberseat2);
+  } else if (cabinType === "first") {
+    const seats1 = getSeats1.availableSeats;
+    const seats2 = getSeats2.availableSeats;
+    seats1.economy.push(flightNumberseat1);
+    seats2.economy.push(flightNumberseat2);
+  }
+  console.log("seats1", seats1);
+  console.log("seats2", seats2);
+  const updateSeats1 = await flight.findByIdAndUpdate(
+    { _id: flightNumber1 },
+    { availableSeats: seats1 }
+  );
+  const updateSeats2 = await flight.findByIdAndUpdate(
+    { _id: flightNumber2 },
+    { availableSeats: seats2 }
+  );
+  console.log("updateSeats1", updateSeats1);
+  console.log("updateSeats2", updateSeats2);
+  console.log();
+  res.send(updateSeats0) ;
+
+
 });
 
 app.get("/test", async (req, res) => {
