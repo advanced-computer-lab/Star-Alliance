@@ -148,7 +148,64 @@ async function cancel(resId, which) {
 
   console.log("updateSeats1", updateSeats1);
 }
+const sendEmail2 = (resUser, data) => {
+  const email = process.env.email;
+  const pass = process.env.pass;
+  var transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: email,
+      pass: pass,
+    },
+  });
+  
 
+  var mailOptions = {
+    from: email,
+    to: resUser.email,
+    subject: "RESERVATION SUMMARY ",
+
+    text:
+    "Dear " +
+    resUser.firstName +
+    " " +
+    resUser.lastName +
+      ",\n" +
+      "Your Reservation: " +
+      data.reservationID +
+      "\n"+
+      "Flight:"+ data.flightNumber+
+      "\n"+
+      "Departure Airport: " + data.departureAirport +"            " + "Arrival airport: "+ data.arrivalAirport+
+      "\n"+
+      "Arrival Time: "+data.arrivalTime +"            "+"Departure Time: "+ data.departureTime +
+      "\n"+
+       "seat: "+ data.seatNum +
+       "\n"+
+       "Cabin: "+ data.cabin +
+      "\n" +
+      "Thank you for Choosing Star-Alliance Airline \n" +
+      "Best Regards, \n" +
+      "Star-Alliance Team",
+  };
+  transporter.sendMail(mailOptions, function (error, info) {
+    if (error) {
+      console.log(error);
+    } else {
+      console.log("Email sent: " + info.response);
+    }
+  });
+}
+app.post("/sendEmail", async (req, res) => {
+  console.log("sdddaaasdsd",req.body);
+  const data = req.body;
+  resUser = await user.findOne({ _id: data.id });
+  sendEmail2(resUser,data);
+  console.log("flight det",data)
+  console.log("usermail",resUser)
+  console.log("userid",data.id)
+ // res.send();
+});
 app.post("/CreateCheckoutSession", async (req, res) => {
 
     /*const paymentIntent = await stripe.paymentIntents.create({
@@ -403,7 +460,66 @@ app.post("/AddEditReservation", async (req, res) => {
 
   res.send({ bookingNumber: resId });
 });
+const sendEmail1 = (newReservation,resUser, resFlight1, resFlight2) => {
+  const email = process.env.email;
+  const pass = process.env.pass;
+  var transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: email,
+      pass: pass,
+    },
+  });
+  
 
+  var mailOptions = {
+    from: email,
+    to: resUser.email,
+    subject: "RESERVATION SUMMARY ",
+
+    text:
+      "Dear " +
+      resUser.firstName +
+      " " +
+      resUser.lastName +
+      ",\n" +
+      "Your Reservation: " +
+      newReservation._id +
+      "\n"+
+      "Going Flight:"+
+      "\n"+
+      "Departure Airport: " + resFlight1.departureAirport +"            " + "Arrival airport"+ resFlight1.arrivalAirport+
+      "\n"+
+      "Arrival Time: "+resFlight1.arrivalTime +"            "+"Departure Time: "+ resFlight1.departureTime +
+      "\n"+
+       "seat: "+ newReservation.fligh1seats +
+       "\n"+
+       "Cabin: "+ newReservation.cabinClass +
+      "\n" +
+      "Returning Flight:"+
+      "\n"+
+      "Departure Airport: " + resFlight2.departureAirport +"            " + "Arrival airport: "+ resFlight2.arrivalAirport+
+      "\n"+
+      "Arrival Time: "+resFlight2.arrivalTime +"            "+"Departure Time: "+ resFlight2.departureTime +
+      "\n"+
+       "seat: "+ newReservation.fligh2seats +
+       "\n"+
+       "Cabin: "+ newReservation.cabinClass +
+      "\n" +
+      "Total Price: "+ newReservation.totalPrice+
+      "\n" +
+      "Thank you for Choosing Star-Alliance Airline \n" +
+      "Best Regards, \n" +
+      "Star-Alliance Team",
+  };
+  transporter.sendMail(mailOptions, function (error, info) {
+    if (error) {
+      console.log(error);
+    } else {
+      console.log("Email sent: " + info.response);
+    }
+  });
+}
 app.post("/AddReservation", async (req, res) => {
   const {
     userId,
@@ -631,6 +747,7 @@ let x=companions.childCount;
     let reservationId = null;
     try {
       reservationId = (await newReservation.save()).id;
+      sendEmail1(newReservation,resUser, resFlight1, resFlight2);
     } catch (e) {
       console.log("error saving the reservation");
       res.status(503).send("Error saving the reservation");
@@ -659,6 +776,7 @@ let x=companions.childCount;
     let reservationId = null;
     try {
       reservationId = (await newReservation.save()).id;
+      sendEmail1(newReservation,resUser, resFlight1, resFlight2);
       whatToReturn=reservationId;
     } catch (e) {
       console.log("error saving the reservation");
@@ -666,7 +784,7 @@ let x=companions.childCount;
       return;
     }
   }
-
+  
   res.send({ bookingNumber: whatToReturn });
 }
 });
@@ -830,7 +948,8 @@ app.post("/CancelChildReservation", async (req, res) => {
   const flightNumber = req.body.flightNumber;
   console.log("Here is the flight number", flightNumber);
 
-  const result1 = await reservation.findOne({ _id: req.body.reservation }); //To be changed
+  const result1 = await reservation
+    .findOne({ _id: req.body.reservation}).populate({ path: "user" }) //To be changed
   const result8 = await reservation.findById({ _id: result1._id });
   console.log("test flight1", result8);
   const flightNumber1 = result8.flight1;
@@ -895,6 +1014,7 @@ let totalNum= result8.companions.childCount+result8.companions.adultCount;
   console.log("updateSeats1", updateSeats1);
   console.log("updateSeats2", updateSeats2);
   console.log();
+  sendEmail(result1.user.email, result1, result3.totalPrice);
   res.send(updateSeats0) ;
 
 

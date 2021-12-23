@@ -32,6 +32,9 @@ class FlightService {
   GetAllReservedFlights(data) {
     return http.post("/User/GetAllReservedFlights",data);
   }
+  email(data) {
+    return http.post("/User/sendEmail",data);
+   }
   DeleteFlight(data, resp) {
     return http.post("/Admin/DeleteFlight", data, resp);
   }
