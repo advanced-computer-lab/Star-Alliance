@@ -204,7 +204,7 @@ app.post("/sendEmail", async (req, res) => {
   console.log("flight det",data)
   console.log("usermail",resUser)
   console.log("userid",data.id)
- // res.send();
+  res.send(true);
 });
 app.post("/CreateCheckoutSession", async (req, res) => {
 

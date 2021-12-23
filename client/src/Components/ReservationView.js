@@ -13,6 +13,7 @@ import {
   GridActionsCellItem,
   GridToolbarColumnsButton,
 } from "@mui/x-data-grid";
+import Alert from "../Components/Alert";
 
 import ClearIcon from "@mui/icons-material/Clear";
 import SearchIcon from "@mui/icons-material/Search";
@@ -90,6 +91,16 @@ const ReservationView = () => {
   const [SOTrows, setSOTRows] = React.useState([]);
 
   const [isLoading, setisLoading] = useState(true);
+  const [alertOpen, setalertOpen] = useState(false);
+  const [alertMessage, setalertMessage] = useState("");
+  const showAlert = (message) => {
+    setalertMessage(message);
+    setalertOpen(true);
+
+    setTimeout(() => {
+      setalertOpen(false);
+    }, 3000);
+  };
   let row2 = [];
   const CancelReservation = React.useCallback(
     (id) => () => {
@@ -241,8 +252,12 @@ const ReservationView = () => {
     console.log("momo",data);
     //if (resp) {
       console.log("momo111",data);
-    FlightService.email(data)
-    //}
+    FlightService.email(data).then(({ data }) => {
+      showAlert("Mail was sent Successfully");
+
+
+    })
+
   },[rows]); 
   const columns = React.useMemo(
     () => [
@@ -358,6 +373,13 @@ const ReservationView = () => {
           alignItems: "center",
         }}
       >
+       <Alert
+        open={alertOpen}
+        setOpen={setalertOpen}
+        title={alertMessage}
+        desc=""
+      />
+
         <h6>
           <Link to="/" style={{ color: "black", textDecoration: "none" }}>
             Home Page{" "}
