@@ -18,7 +18,7 @@ Sprint 3
 Mohamed Yehia 46-0916        => Change password & Handling all Mails
 Youssef Magdy 46-2387        => Payment & Refund
 Mostafa Mohamed 46-0409      => Handling Companions names Page
-Youssef Alaa 46-7368         => Edit seats & Edit Reservation
+Youssef Alaa 46-7368         => Edit seats & Edit Reservation & Child Reservation
 Abdelrahman Hafez 46-12167   => Authorization & Authentication
 
 rest of the work the whole team worked on it.
