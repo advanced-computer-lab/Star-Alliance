@@ -1,3 +1,4 @@
+Sprint 1
 Update Flight : Abderahman Hafez  46-12167
 Create Flight : Youssef Alaa 46-7368
 Delete Flight:  Youssef Magdy  46-2387
@@ -5,11 +6,20 @@ Show All Flights :  Mohamed Yehia  46-0916
 Searching :   Mostafa Mohamed  46-0409
 
 
-
 Sprint 2
 Mohamed Yehia 46-0916        => View/Cancel reservation /autoMail
 Youssef Magdy 46-2387        => Select Flight
 Mostafa Mohamed 46-0409      => Seat Reservation/Update User Info.
 Youssef Alaa 46-7368         => User Home Page/Search for flights 
-Abdelrahman Hafez 46- 12167  => Summray/Confirm Reservation
+Abdelrahman Hafez 46-12167   => Summray/Confirm Reservation
+  
+
+Sprint 3
+Mohamed Yehia 46-0916        => Change password & Handling all Mails
+Youssef Magdy 46-2387        => Payment & Refund
+Mostafa Mohamed 46-0409      => Handling Companions names Page
+Youssef Alaa 46-7368         => Edit seats & Edit Reservation
+Abdelrahman Hafez 46-12167   => Authorization & Authentication
+
+rest of the work the whole team worked on it.
   
