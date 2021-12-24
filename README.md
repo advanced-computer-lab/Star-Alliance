@@ -13,13 +13,12 @@ MERN Stack was used to build the website
 **User**
 - Round-Trip Flight Reservation.
 - Reservation Cancellation.
-- Payment for Reservations.
+- Payment & Refunding for Reservations.
 - Editing each Flight in Reservation.
 - Automatic Mailing for the above features.
 - User can choose seat(s) after viewing airplane grid.
 - Login, Logout, Change Password 
 - Opportunity to have other services(renting a car, booking a taxi, reserving a room, buying from duty free, discover activities).
- 
 
 **Admin**
 - Creating Flights.
