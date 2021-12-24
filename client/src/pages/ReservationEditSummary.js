@@ -240,7 +240,7 @@ const ReservationEditSummary = () => {
     .then(res  => {
       setSearchFlights({
         ...searchFlights,
-        paymentId:res.paymentId,
+        payment_intent:res.data.payment_intent,
         toBeEdited:true,
         selected: {
           ...searchFlights.selected,
