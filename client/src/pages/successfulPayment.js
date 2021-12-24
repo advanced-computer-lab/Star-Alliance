@@ -2,7 +2,7 @@ import {useContext, useEffect, useRef} from "react";
 import { UserHomeCtx } from "../Context/UserHomeContext";
 import UserService, { UserCtx } from "../Services/UserService.js";
 import { Alert } from "@mui/material";
-import LoadingSpinnerPage from "../pages/LoadingSpinnerPage";
+import LoadingSpinnerPage from "./LoadingSpinnerPage";
 
 import ReservationService from "../Services/ReservationService.js";
 const SuccessfulPayment = () => {

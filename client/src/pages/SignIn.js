@@ -28,7 +28,7 @@ const SignIn = () => {
   console.log("isloggedin", UserService.isLoggedIn());
 
   if (UserService.isLoggedIn()) {
-    console.log("redirecting to home page");
+    console.log("redirecting to home page, user logged in");
     history.push("/");
   }
 
@@ -60,7 +60,11 @@ const SignIn = () => {
 
         setUser({ ...user, id: userId, name, type: isAdmin ? 2 : 1 });
 
-        history.push("/");
+        // Redirect to continue, Meaning the guest was blocked from main.js
+        const ContinueLocation = searchFlights.ContinueLocation;
+        if (ContinueLocation) history.push(ContinueLocation);
+        else history.push("/");
+        setSearchFlights({ ...searchFlights, ContinueLocation: "" });
       })
       .catch((err) => {
         console.log("errr <===", err.response);

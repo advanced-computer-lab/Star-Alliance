@@ -72,17 +72,13 @@ const SelectEditFlight = () => {
     );
   } else {
       flights=[];
-     for (let i=0;i<searchFlights.data.going.length;i++){
-       if(i>0){
-         if(searchFlights.data.going[i].flightNumber!==searchFlights.data.going[i-1].flightNumber){
+     for (let i=0;i<searchFlights.data.going.length/3;i++){
            flights.push(searchFlights.data.going[i])
-         }
-       }
-       else{
-         flights.push(searchFlights.data.going[i])
-       }
 
      } 
+console.log("flights",flights)
+console.log("<searchFlights.data.going",searchFlights.data.going)
+
     let flights2 = searchFlights.data.returning;
     let seatType = searchFlights.data.seatType;
     let allData = { flights, flights2, seatType };
@@ -149,7 +145,7 @@ const SelectEditFlight = () => {
       console.log("selected ", flight);
       const selected = {
         flight1: flight, // flight to be changed
-        flight2Id:searchFlights.selected.flight2, // returnFlight Unchanged
+        flight2Id:searchFlights.selected.flight2Id, // returnFlight Unchanged
         resId:searchFlights.selected.resId,
         which:searchFlights.selected.which,
         num: searchFlights.data.companionsCount,

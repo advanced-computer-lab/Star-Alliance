@@ -243,6 +243,7 @@ const ReservationSummary = () => {
         toBeEdited:false,
         selected: {
           ...searchFlights.selected,
+          
         },
       });
       console.log("ressssss",res);

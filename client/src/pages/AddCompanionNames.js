@@ -15,7 +15,7 @@ import { faMale } from "@fortawesome/free-solid-svg-icons";
 import { faAnkh } from "@fortawesome/free-solid-svg-icons";
 import { faPlaneDeparture } from "@fortawesome/free-solid-svg-icons";
 import { faPlaneArrival } from "@fortawesome/free-solid-svg-icons";
-import { faCalendarAlt } from "@fortawesome/free-solid-svg-icons";
+import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import { Link, useHistory } from "react-router-dom";
 import { UserHomeCtx } from "../Context/UserHomeContext";
 import { EditReservationCtx } from "../Context/EditReservationContext";
@@ -33,7 +33,7 @@ const AddCompanionNames = () => {
   const history = useHistory();
   const formRef = useRef(null);
   const goingData = [];
-  //var clicked=true;
+  //var clicked=true; 
   const [alertMessage, setalertMessage] = useState("");
 let x=[];
 console.log("totalNames",searchFlights)
@@ -75,6 +75,9 @@ console.log("totalNames",searchFlights)
          <br/>
         <br/>
         <br/>
+        <div style={{borderRadius: "2rem"}} className=" mt-5 col-sm-8 offset-sm-2 col-md-8 offset-md-2 col-lg-4 offset-lg-4  alert alert-info" role="alert">
+        <FontAwesomeIcon icon={faInfoCircle}/> Use the Last {searchFlights.children} field(s) for Child(ren) Name(s)
+</div>
 <div 
         className=" mt-5 col-sm-8 offset-sm-2 col-md-8 offset-md-2 col-lg-4 offset-lg-4 " //
         style={{
@@ -82,10 +85,11 @@ console.log("totalNames",searchFlights)
           backgroundColor: "#112D4E",
           height: "auto",
         }}>
-
-       
+     
+   
         <div  style={{height: "auto"}} className=" col-sm-8 offset-sm-2 col-md-8 offset-md-2 col-lg-10 offset-lg-1">
-        <br/>  
+        <br/> 
+  
 
             <h3>Add Companion Names</h3>
             <Form ref={formRef}> 

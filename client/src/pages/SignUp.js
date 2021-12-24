@@ -31,8 +31,8 @@ const SignUp = () => {
   const [loading, setloading] = useState(false);
 
   if (UserService.isLoggedIn()) {
-    // if logged in redirect to home page
-    console.log("redirecting to home page");
+    //f logged in redirect to home page
+    console.log("redirecting to home page, user logged in");
     history.push("/");
   }
 
