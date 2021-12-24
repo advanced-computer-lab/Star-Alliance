@@ -44,7 +44,7 @@ import CompanionsList from "./CompanionsList.js";
 import LoadingSpinnerPage from "./LoadingSpinnerPage.js";
 import AddCompanionNames from "./AddCompanionNames.js";
 import Cookies from "js-cookies";
-import successfulPayment from "./successfulPayment.js";
+import SuccessfulPayment from "./SuccessfulPayment.js";
 import FailurePayment from "./FailurePayment.js";
 import Refund from "./Refund.js";
 import ViewChild from "./ViewChild.js";
@@ -262,7 +262,7 @@ const Main = () => {
         <Route
           exact
           path="/SuccessfulPayment"
-          component={successfulPayment}
+          component={SuccessfulPayment}
         ></Route>
         <Route exact path="/Refund" component={Refund}></Route>
         <Route exact path="/FailurePayment" component={FailurePayment}></Route>

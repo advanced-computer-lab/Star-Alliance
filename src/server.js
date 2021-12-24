@@ -10,7 +10,6 @@ const mongoose = require("mongoose");
 var cors = require("cors");
 const jwt = require("jsonwebtoken");
 
-
 const userAuth = require("../Middlewares/userAuth.js");
 const adminAuth = require("../Middlewares/adminAuth.js");
 
@@ -25,7 +24,7 @@ const {
   flight,
   creditCard,
   companion,
-  payment
+  payment,
 } = require("../Models/export");
 
 // Express App Setup
@@ -42,6 +41,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 const bcrypt = require("bcryptjs");
 
+app.use("/", require("./authServer.js"));
 app.use("/Admin", require("../Routes/Admin.js"));
 app.use("/User", require("../Routes/User.js"));
 
@@ -62,11 +62,7 @@ const createUser = async (req, res) => {
 //createUser();
 const storeItems = new Map([
   [1, { priceInCents: 10000, name: "Flight Reservation" }],
-  
-])
-
-
-
+]);
 
 const createReservation = async (req, res) => {
   const reserv = new reservation();
@@ -123,9 +119,19 @@ const testdeleteReservation = async (req, res) => {
 };
 // testdeleteReservation();
 
-app.get("/", (req, res) => {
-  // console.log(req.cookies);
-  res.json({ message: "From the Node Server !" });
+// app.use(express.static(path.join(__dirname, "build")));
+// app.use("/", express.static(path.join(__dirname, "/Client/build")));
+
+// app.get("/", function (req, res) {
+//   res.sendFile(path.join(__dirname, "build", "index.html"));
+// });
+// ... other app.use middleware
+app.use(express.static(path.join(__dirname, "../client", "build")));
+
+// ...
+
+app.get("/a", function (req, res) {
+  res.send({ message: "hello" });
 });
 
 app.get("/protected", userAuth, (req, res) => {
@@ -739,5 +745,10 @@ app.post("/signUp", async (req, res) => {
     } else res.status(400).send(error.message);
   }
 });
+
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "../client", "build", "index.html"));
+});
+
 const port = process.env.PORT || 8080;
 app.listen(port, () => console.log(`server at localhost:${port}`));

@@ -67,11 +67,15 @@ const SignIn = () => {
         setSearchFlights({ ...searchFlights, ContinueLocation: "" });
       })
       .catch((err) => {
-        console.log("errr <===", err.response);
-        setloading(false);
-        const errorMessage = err.response.data;
-        // alert(errorMessage);
-        showAlert(errorMessage);
+        if (err) {
+          console.log("errr <===", err.response);
+          setloading(false);
+          const errorMessage = err.response?.data;
+          // alert(errorMessage);
+          showAlert(errorMessage);
+        } else {
+          alert("Something went wrong");
+        }
       });
   };
 
