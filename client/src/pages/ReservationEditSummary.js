@@ -232,7 +232,7 @@ const ReservationEditSummary = () => {
 
   const data ={
            items:[
-            { id: 1, quantity: 1,price: totalPrice*100 },
+            { id: 1, quantity: 1,price: Math.abs(refundOrPayment)*100 },
           ]
         }
   
