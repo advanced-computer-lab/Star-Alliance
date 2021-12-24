@@ -99,7 +99,7 @@ const EditFlight = () => {
       const selected = {
         resId: searchFlights.oldReservation.reservDet.reservationID,
         flight1: null,
-
+        //flight2: searchFlights,
         flight2Id: searchFlights.oldReservation.reservDet.unEditedFlightID,
         flight1seat: [],
         flight2seat: searchFlights.oldReservation.reservDet.flight2Seats,
@@ -116,7 +116,7 @@ const EditFlight = () => {
         },
       };
       console.log("gigi", searchFlights);
-      setSearchFlights({ data, selected });
+      setSearchFlights({...searchFlights, data, selected});
       show();
       console.log(clicked);
       if (searchFlights.oldReservation.reservDet.which == "flight1") {

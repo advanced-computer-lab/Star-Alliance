@@ -13,6 +13,10 @@ class ReservationService {
   reserveRefund(data) {
     return http.post("/User/RefundCheckoutSession", data);
   }
+  addPayment(data) {
+    return http.post("/User/AddPayment", data);
+  }
+  
 }
 
 export default new ReservationService();

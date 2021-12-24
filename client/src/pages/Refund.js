@@ -14,9 +14,8 @@ const Refund = () => {
   useEffect(() => {
     let userID = user.id;
    
-    let data = {
-        userId: userID, // TODO: new Reservation dynmaic user
-        paymentId: searchFlights.paymentId
+    let data = {// TODO: new Reservation dynmaic user
+        reservationId: searchFlights.selected.resId
       };
       ReservationService.reserveRefund(data)
         .then((res) => {
@@ -27,6 +26,8 @@ const Refund = () => {
           console.log("OK ===> ", res);
           setSearchFlights({
             ...searchFlights,
+            selected: {
+              ...searchFlights.selected},
             confirmed: "true", 
           });
            /*alert(
@@ -48,7 +49,7 @@ const Refund = () => {
             <br></br>
             <br></br>
             <Alert severity="success" className="col-6 offset-3">
-            <h1 >Successful Payment</h1>
+            <h1 >Payment Refunded Successfuly</h1>
             
             </Alert>
         </div>

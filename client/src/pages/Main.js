@@ -47,6 +47,7 @@ import AddCompanionNames from "./AddCompanionNames.js";
 import Cookies from "js-cookies";
 import SuccessfulPayment from "./SuccessfulPayment.js";
 import FailurePayment from "./FailurePayment.js";
+import Refund from "./Refund.js";
 import ViewChild from "./ViewChild.js";
 
 function ScrollToTop() {
@@ -104,6 +105,7 @@ const Main = () => {
     console.log("REFRESH searchFlights Changed");
     console.log(searchFlights);
     const stringified = stringify(searchFlights);
+    //console.log("From refresh in Main",searchFlights);
     // localStorage.setItem("searchflights", JSON.stringify(searchFlights));
     localStorage.setItem("searchflights", stringified);
   }, [searchFlights]);
@@ -266,6 +268,11 @@ const Main = () => {
           exact
           path="/SuccessfulPayment"
           component={SuccessfulPayment}
+        ></Route>
+         <Route
+          exact
+          path="/Refund"
+          component={Refund}
         ></Route>
         <Route exact path="/FailurePayment" component={FailurePayment}></Route>
 

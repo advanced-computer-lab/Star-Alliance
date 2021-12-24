@@ -228,30 +228,38 @@ const ReservationSummary = () => {
       //localStorage.setItem('reservation', JSON.stringify(searchFlights));
       //localStorage.setItem('user', rememberMe ? user : '');
 
-      const data = {
-        items: [{ id: 1, quantity: 1, price: totalPrice * 100 }],
-      };
+  const data ={
+           items:[
+            { id: 1, quantity: 1,price: totalPrice*100 },
+          ]
+        }
+  
+    ReservationService.reservePayment(data)
+    .then(res  => {
+      console.log("payment id resss", res);
+      setSearchFlights({
+        ...searchFlights,
+        payment_intent:res.data.payment_intent,
+        toBeEdited:false,
+        selected: {
+          ...searchFlights.selected,
+          flight1seat: [],
+          flight2seat: [],
+        },
+      });
+      console.log("ressssss",res);
+        //console.log(url);
+        //console.log("urllllllll is hereee",url);
 
-      ReservationService.reservePayment(data)
-        .then((res) => {
-          setSearchFlights({
-            ...searchFlights,
-            paymentId: res.paymentId,
-            selected: {
-              ...searchFlights.selected,
-            },
-          });
-          console.log("ressssss", res);
-          //console.log(url);
-          //console.log("urllllllll is hereee",url);
-
-          console.log("payment Id sentttt", searchFlights);
-          window.location = res.data.url;
-        })
-        .catch((e) => {
-          console.error(e.error);
-        });
-    };
+        console.log("payment Id sentttt",searchFlights);
+       // history.push(res.data.url);
+        window.location = res.data.url
+    }).catch(e => {
+        console.error(e.error);
+    })
+    
+  }
+    
 
     const handleEditClick = () => {
       setSearchFlights({
@@ -260,6 +268,7 @@ const ReservationSummary = () => {
           ...searchFlights.selected,
           flight1seat: [],
           flight2seat: [],
+          toBeEdited:false
         },
       });
     };

@@ -156,7 +156,7 @@ console.log("<searchFlights.data.going",searchFlights.data.going)
 
       setSearchFlights({
         ...searchFlights,
-        selected: { ...searchFlights.selected, flight1: flight },
+        selected: { ...searchFlights.selected, flight1: flight},
       });
     };
 

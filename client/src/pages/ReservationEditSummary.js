@@ -151,7 +151,12 @@ const ReservationEditSummary = () => {
   let history = useHistory();
   const [User, setUser] = useContext(UserCtx);
 
+  console.log("User id printedddd",User.id);
+  
   const [searchFlights, setSearchFlights] = useContext(UserHomeCtx);
+
+  console.log("search flightsssss check payment ", searchFlights);
+
   const [loadingConfirm, setloadingConfirm] = useState(false);
 
   const [popupOpen, setpopupOpen] = useState(false);
@@ -214,59 +219,65 @@ const ReservationEditSummary = () => {
       searchFlights.selected.companions.childCount * (0.5 * flight1.finalPrice);
     const totalPrice = flight1totalPrice ;
 
+    const prevAmount = searchFlights.selected.flighttotalPrice;
+    const refundOrPayment = prevAmount-flight1totalPrice;
+    console.log("refund or payment",refundOrPayment);
+
     // TODO: check if there is some passed values from the previous page [reservation]
     // TODO: else query reservstion data from params
     console.log("searchFlights in Resrvation summary", searchFlights);
-    const handleSubmitReservation = () => {
-	  const resp = window.confirm("Are you sure you want to Reserve?", "");
-	  if(!resp) return;
-      setloadingConfirm(true);
-      let data = {
-        userId: User.id, // TODO: new Reservation dynmaic user
-        flight1num: flight1.flightDet.flightNumber,
-        flight2Id: searchFlights.selected.flight2Id,
-        seatType: searchFlights.data.seatType,
-        flight1seat: flight1seat,
-        flight2seat:searchFlights.selected.flight2seat,
-        companions: searchFlights.selected.companions,
-        resId:searchFlights.selected.resId,
-        which:searchFlights.selected.which,
-        editingseat:false
-      };
-      ReservationService.reserveNewFlight(data)
-        .then((res) => {
-          console.log("res", res);
-          const bookingNumber = res.data.bookingNumber;
-          console.log("OK ===> ", res);
 
-          setloadingConfirm(false);
-          popupCloseCBref.current = () => {
-            history.push("/"); // navigate home
-            // clear every selection the user made
-            //setSearchFlights({ ...searchFlights, selected: {} });
-          };
-          setpopupChild(
-            <>
-              <h2>Your Flights has been Reserved</h2>
-              <h2> Booking Number:</h2>
-              <h2>{bookingNumber}</h2>
-            </>
-          );
-          setpopupOpen(true);
+    const handleCheckoutClickk = () => {
+     
 
-          // alert(
-          //   `Your Flights has been Reserved, Booking Number ${bookingNumber}`,
-          //   res
-          // );
-        })
-        .catch((err) => {
-          // alert("Error", err);
-          console.log("errr <===", err.response);
-          const errorMessage = err.response.data;
-          // console.log("errorMessage", errorMessage);
-          alert("Error: " + errorMessage);
-        });
-    };
+  const data ={
+           items:[
+            { id: 1, quantity: 1,price: totalPrice*100 },
+          ]
+        }
+  
+    ReservationService.reservePayment(data)
+    .then(res  => {
+      setSearchFlights({
+        ...searchFlights,
+        payment_intent:res.data.payment_intent,
+        toBeEdited:true,
+        selected: {
+          ...searchFlights.selected,
+          flight1seat: [],
+          flight2seat: [],
+        },
+      });
+      console.log("ressssss",res);
+        //console.log(url);
+        //console.log("urllllllll is hereee",url);
+        
+        console.log("payment Id sentttt",searchFlights);
+        window.location = res.data.url
+    }).catch(e => {
+        console.error(e.error);
+    })
+  }
+  //console.log("search flightsssss to check", searchFlights);
+  const handleRefundClickk = () => {
+    
+     /*  setSearchFlights({
+        ...searchFlights,
+        paymentId:res.paymentId,
+        selected: {
+          ...searchFlights.selected,
+          flight1seat: [],
+          flight2seat: [],
+        },
+      }); */
+    
+        //console.log(url);
+        //console.log("urllllllll is hereee",url);
+        
+        history.push('/Refund');
+        //window.location = res.data.url
+   
+  }
 
     const handleEditClick = () => {
       setSearchFlights({
@@ -274,6 +285,7 @@ const ReservationEditSummary = () => {
         selected: {
           ...searchFlights.selected,
           flight1seat: [],
+          toBeEdited:true
         },
       });
     };
@@ -361,23 +373,14 @@ const ReservationEditSummary = () => {
                   Edit <FontAwesomeIcon icon={faEdit} />
                 </Button>
               </LinkContainer>
-              <Button
-                onClick={handleSubmitReservation}
-                disabled={loadingConfirm}
-              >
-                Confirm {"  "}
-                {loadingConfirm ? (
-                  <Spinner
-                    as="span"
-                    animation="border"
-                    size="sm"
-                    role="status"
-                    aria-hidden="true"
-                  />
-                ) : (
-                  <FontAwesomeIcon icon={faCheckCircle} />
-                )}
-              </Button>
+              {refundOrPayment<0?
+              (<button className="btn btn-primary mx-3" onClick={handleCheckoutClickk}>
+                Checkout <FontAwesomeIcon icon={faCheckCircle} />
+              </button>):
+              (<button className="btn btn-primary mx-3" onClick={handleRefundClickk}>
+                Refund <FontAwesomeIcon icon={faCheckCircle} />
+              </button>)
+            }
             </Stack>
           </div>
 
