@@ -84,6 +84,53 @@ const ViewChild = () => {
 
   const [isLoading, setisLoading] = useState(true);
   let row2 = [];
+  function getTime(date1, date2) {
+    var hours2 = new Date(date2).getHours();
+    // console.log("hours2", hours2);
+    var hours1 = new Date(date1).getHours();
+    // console.log("hours", hours1);
+    var minutes2 = new Date(date2).getMinutes();
+    // console.log("minutes2", minutes2);
+
+    var minutes1 = new Date(date1).getMinutes();
+    // console.log("minutes1", minutes1);
+
+    // console.log("Day:", new Date(date1).getDate());
+    var hours = 0;
+    var minutes = 0;
+    if (minutes2 != minutes1) {
+      if (minutes2 > minutes1) {
+        minutes = minutes2 - minutes1;
+      } else if (minutes2 < minutes1) {
+        minutes = minutes2 + (60 - minutes1);
+        hours1 = hours1 + 1;
+      } else {
+        if (minutes2 == 0) {
+          minutes = minutes1;
+        } else {
+          minutes = minutes2;
+        }
+      }
+    }
+    if (hours2 > hours1) {
+      hours = hours2 - hours1;
+    } else if (hours2 == hours1) {
+      hours = 0;
+    } else {
+      hours = 24 - hours1 + hours2;
+    }
+    while (minutes > 60) {
+      hours = hours + 1;
+      minutes = minutes - 60;
+    }
+    if (minutes == 60) {
+      hours = hours + 1;
+      minutes = minutes - 60;
+    }
+    var duration = hours + " hours " + minutes + " minutes";
+    return duration;
+  }
+
   const CancelReservation = React.useCallback(
     (id) => () => {
       const deletedRow = rows.filter((row) => row.id === id)[0];
@@ -142,15 +189,20 @@ const ViewChild = () => {
             departureAirport:data.data[j].flight1.departureAirport,arrivalAirport:data.data[j].flight1.arrivalAirport
             ,departureTime:data.data[j].flight1.departureTime,arrivalTime:data.data[j].flight1.arrivalTime,
             departureTerminal:data.data[j].flight1.departureTerminal,
-            arrivalTerminal:data.data[j].flight1.arrivalTerminal
+            arrivalTerminal:data.data[j].flight1.arrivalTerminal,cabin:data.data[j].cabinClass,
+            baggage:data.data[j].baggageAllowance.number,
+            duration:getTime(data.data[j].flight1.departureTime,data.data[j].flight1.arrivalTime)
           };
+        
 
           allfl[kk+1]= {_id:kk+1,seatNum:data.data[j].fligh2seats[l],reservationID:reservId,
             TicketName:data.data[j].childName[l],flightNumber:data.data[j].flight2.flightNumber,
             departureAirport:data.data[j].flight2.departureAirport,arrivalAirport:data.data[j].flight2.arrivalAirport
             ,departureTime:data.data[j].flight2.departureTime,arrivalTime:data.data[j].flight2.arrivalTime,
             departureTerminal:data.data[j].flight2.departureTerminal,
-            arrivalTerminal:data.data[j].flight2.arrivalTerminal
+            arrivalTerminal:data.data[j].flight2.arrivalTerminal,cabin:data.data[j].cabinClass,
+            baggage:data.data[j].baggageAllowance.number,
+            duration:getTime(data.data[j].flight2.departureTime,data.data[j].flight2.arrivalTime)
           };    
           l++;
           count=count+2;
@@ -224,15 +276,20 @@ const ViewChild = () => {
          flex: 1,
        },
        {
-         field: "departureTerminal",
-         headerName: "Departure Terminal",
-         flex: 1,
-       },
-       {
-         field: "arrivalTerminal",
-         headerName: "Arrival Terminal",
-         flex: 1,
-       },
+        field: "duration",
+        headerName: "Trip Duration",
+        flex: 1,
+      },
+      {
+        field: "cabin",
+        headerName: "Cabin Class",
+        flex: 1,
+      },
+      {
+        field: "baggage",
+        headerName: "Baggage Allowance",
+        flex: 1,
+      },
       {
         field: "seatNum",
         headerName: "Seat",

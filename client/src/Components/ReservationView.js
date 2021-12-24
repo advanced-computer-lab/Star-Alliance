@@ -101,6 +101,54 @@ const ReservationView = () => {
       setalertOpen(false);
     }, 3000);
   };
+
+  function getTime(date1, date2) {
+    var hours2 = new Date(date2).getHours();
+    // console.log("hours2", hours2);
+    var hours1 = new Date(date1).getHours();
+    // console.log("hours", hours1);
+    var minutes2 = new Date(date2).getMinutes();
+    // console.log("minutes2", minutes2);
+
+    var minutes1 = new Date(date1).getMinutes();
+    // console.log("minutes1", minutes1);
+
+    // console.log("Day:", new Date(date1).getDate());
+    var hours = 0;
+    var minutes = 0;
+    if (minutes2 != minutes1) {
+      if (minutes2 > minutes1) {
+        minutes = minutes2 - minutes1;
+      } else if (minutes2 < minutes1) {
+        minutes = minutes2 + (60 - minutes1);
+        hours1 = hours1 + 1;
+      } else {
+        if (minutes2 == 0) {
+          minutes = minutes1;
+        } else {
+          minutes = minutes2;
+        }
+      }
+    }
+    if (hours2 > hours1) {
+      hours = hours2 - hours1;
+    } else if (hours2 == hours1) {
+      hours = 0;
+    } else {
+      hours = 24 - hours1 + hours2;
+    }
+    while (minutes > 60) {
+      hours = hours + 1;
+      minutes = minutes - 60;
+    }
+    if (minutes == 60) {
+      hours = hours + 1;
+      minutes = minutes - 60;
+    }
+    var duration = hours + " hours " + minutes + " minutes";
+    return duration;
+  }
+
   let row2 = [];
   const CancelReservation = React.useCallback(
     (id) => () => {
@@ -167,6 +215,10 @@ const ReservationView = () => {
           allfl[i].reservDet = reservDet1;
           allfl[i].TicketName = data.data[j].TicketName;
           allfl[i].seatNum = data.data[j].fligh1seats;
+          allfl[i].cabin = data.data[j].cabinClass;
+          allfl[i].baggage = data.data[j].baggageAllowance.number;
+          allfl[i].duration=getTime(data.data[j].flight1.departureTime,data.data[j].flight1.arrivalTime)
+
 
           const reservDet2 = {
             EditedFlight: data.data[j].flight2,
@@ -186,7 +238,11 @@ const ReservationView = () => {
           allfl[i + 1].reservDet = reservDet2;
           allfl[i + 1].TicketName = data.data[j].TicketName;
           allfl[i+1].seatNum = data.data[j].fligh2seats;
-        
+          allfl[i+1].cabin = data.data[j].cabinClass;
+          allfl[i+1].baggage = data.data[j].baggageAllowance.number;
+          allfl[i+1].duration=getTime(data.data[j].flight2.departureTime,data.data[j].flight2.arrivalTime)
+
+          
           j++;
  
         
@@ -295,13 +351,18 @@ const ReservationView = () => {
         flex: 1,
       },
       {
-        field: "departureTerminal",
-        headerName: "Departure Terminal",
+        field: "duration",
+        headerName: "Trip Duration",
         flex: 1,
       },
       {
-        field: "arrivalTerminal",
-        headerName: "Arrival Terminal",
+        field: "cabin",
+        headerName: "Cabin Class",
+        flex: 1,
+      },
+      {
+        field: "baggage",
+        headerName: "Baggage Allowance",
         flex: 1,
       },
       {
