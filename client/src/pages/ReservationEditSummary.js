@@ -261,15 +261,13 @@ const ReservationEditSummary = () => {
   //console.log("search flightsssss to check", searchFlights);
   const handleRefundClickk = () => {
     
-     /*  setSearchFlights({
-        ...searchFlights,
-        paymentId:res.paymentId,
-        selected: {
-          ...searchFlights.selected,
-          flight1seat: [],
-          flight2seat: [],
-        },
-      }); */
+    setSearchFlights({
+      ...searchFlights,
+      toBeEdited:true,
+      selected: {
+        ...searchFlights.selected,
+      },
+    });
     
         //console.log(url);
         //console.log("urllllllll is hereee",url);
