@@ -980,8 +980,8 @@ app.post("/CancelReservation", async (req, res) => {
   const flightNumber = req.body.flightNumber;
   console.log("Here is the flight number", flightNumber);
 
-  const result1 = await reservation.findOne({ _id: req.body.reservation }).populate({ path: "user" }); //To be changed
-  const result8 = await reservation.findById({ _id: result1._id });
+  const result1 = await reservation.findOne({ _id: req.body.reservation}).populate({ path: "user" }); //To be changed
+  const result8 = await reservation.findById({ _id: result1._id});
   console.log("test flight1", result8);
   const flightNumber1 = result8.flight1;
   const flightNumber2 = result8.flight2;
@@ -997,20 +997,28 @@ app.post("/CancelReservation", async (req, res) => {
   const seats1 = getSeats1.availableSeats;
   const seats2 = getSeats2.availableSeats;
   if(result8.companions!=undefined){
-  if(result8.companions.childCount>0){
+  if(result8.companions.childCount>0 &&result8.isCompanion==false){
     const result9 = await reservation.findOne({ user:result8.user,flight1:flightNumber1,
       flight2:flightNumber2,isCompanion:true });
       if(result9!=undefined){
-      const childSeat1=flightNumberseat1[flightNumberseat1.length-1];
-      const  childSeat2=flightNumberseat2[flightNumberseat2.length-1];
-      flightNumberseat1.pop();
-      flightNumberseat2.pop();
+        let  childSeat1=[];
+        let  childSeat2=[];
+        console.log("-----------------------------------------------------------")
+        console.log("result8.companions.childCount",result8.companions.childCount)
+        console.log("flightNumberseat1",flightNumberseat1)
+        console.log("flightNumberseat2",flightNumberseat2)
+        console.log("-----------------------------------------------------------")
+        for(let i=0;i<result8.companions.childCount;i++){
+        childSeat1.push(flightNumberseat1.pop());
+        childSeat2.push(flightNumberseat2.pop());
+        }
+      let seats3= result9.fligh1seats;
+      let seats4= result9.fligh2seats;
+      for(let i=0;i<childSeat1.length;i++){
+        seats3.push(childSeat1[i]);
+        seats4.push(childSeat2[i]);
+      }
 
-      const seats3= result9.fligh1seats;
-      seats3.push(childSeat1);
-
-      const seats4= result9.fligh2seats;
-      seats4.push(childSeat2);
       const addCildCompanion={adultCount:1,childCount:result8.companions.childCount};
       console.log("----------------------");
       console.log("result9._id",result9._id)
@@ -1023,7 +1031,8 @@ app.post("/CancelReservation", async (req, res) => {
           fligh2seats:seats4,
           flight1totalPrice: result9.flight1totalPrice+0.5*(result9.flight1totalPrice)*result8.companions.childCount,
           flight2totalPrice: result9.flight2totalPrice+0.5*(result9.flight2totalPrice)*result8.companions.childCount
-        , childName:result8.childName
+        , childName:result8.childName,
+        isCompanion:false
       }}
       );
       }
@@ -1072,9 +1081,9 @@ app.post("/CancelReservation", async (req, res) => {
   console.log();
 
   console.log("test1", result1);
-  const result3 = await reservation.findOne({ _id: result1._id });
+  const result3 = await reservation.findOne({ _id: result1._id, });
   const result = await reservation
-    .deleteOne({ flightNumber: flightNumber })
+    .deleteOne({ _id:  req.body.reservation })
     .populate({ path: "user" });
   console.log(result1);
   console.log("test12", result3.finalPrice);

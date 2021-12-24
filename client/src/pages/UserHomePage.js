@@ -132,7 +132,7 @@ const UserHomePage = () => {
             const adults=parseInt(e.adult.value);
             const children=parseInt(e.children.value);
             const totalNames = adults+children;
-            setSearchFlights({ data, selected, totalNames });
+            setSearchFlights({ data, selected, totalNames,children });
             console.log("gigi", searchFlights);
             show();
             console.log(clicked);

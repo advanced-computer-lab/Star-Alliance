@@ -224,7 +224,7 @@ const ReservationEditSummary = () => {
       let data = {
         userId: User.id, // TODO: new Reservation dynmaic user
         flight1num: flight1.flightDet.flightNumber,
-        flight2Id: searchFlights.selected.flight2,
+        flight2Id: searchFlights.selected.flight2Id,
         seatType: searchFlights.data.seatType,
         flight1seat: flight1seat,
         flight2seat:searchFlights.selected.flight2seat,
