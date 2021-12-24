@@ -39,7 +39,7 @@ MERN Stack was used to build the website
   3. `npm i && cd client && npm i && cd ..`
   3. `npm run dev`
 
-### API reference
+## API reference
 - [Nodemailer](https://www.npmjs.com/package/nodemailer)
 - [Stripe](https://www.npmjs.com/package/stripe)
 
