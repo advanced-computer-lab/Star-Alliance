@@ -8,7 +8,6 @@ import {
   useHistory,
 } from "react-router-dom";
 
-import home from "./AdminHomePage.js";
 import UpdateForm from "../Components/UpdateForm.js";
 import deletePopup from "../Components/DeletePopup.js";
 import FlightsList from "../Components/FlightsList.js";
@@ -110,7 +109,7 @@ const Main = () => {
     localStorage.setItem("searchflights", stringified);
   }, [searchFlights]);
 
-  const AdminRoute = ({ CComponent, ...rest }) => { 
+  const AdminRoute = ({ CComponent, ...rest }) => {
     // return (
     //   <ConditionedRoute {...rest} Component={Component} condition={isAdmin} />
     // );
@@ -236,11 +235,7 @@ const Main = () => {
           path="/ReservationEditSummary"
           CComponent={ReservationEditSummary}
         />
-        <UserRoute
-          exact
-          path="/ViewChild"
-          CComponent={ViewChild}
-        />
+        <UserRoute exact path="/ViewChild" CComponent={ViewChild} />
 
         <UserRoute exact path="/ReservationView" CComponent={ReservationView} />
         <UserRoute exact path="/SelectNewSeat" CComponent={SelectNewSeat} />
@@ -269,11 +264,7 @@ const Main = () => {
           path="/SuccessfulPayment"
           component={SuccessfulPayment}
         ></Route>
-         <Route
-          exact
-          path="/Refund"
-          component={Refund}
-        ></Route>
+        <Route exact path="/Refund" component={Refund}></Route>
         <Route exact path="/FailurePayment" component={FailurePayment}></Route>
 
         <ConditionedRoute
