@@ -561,7 +561,7 @@ app.post("/AddEditReservation", async (req, res) => {
       }
     );
     if(editingseat){
-      sendEmail5(resUser,flight1seat);
+      sendEmail5(resUser,flight1seat,newReservation);
     }
     else{
       sendEmail4  (resUser, newReservation,resFlight1,flight1seat);
