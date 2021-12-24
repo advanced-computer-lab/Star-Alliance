@@ -128,16 +128,13 @@ const EditFlight = () => {
         );
         if (checkBigger == true) {
           showAlert("going Date Cannot be after returning Date");
-          setTimeout(function () {
-            window.location.href = "http://localhost:3000/";
-          }, 3000);
+          //setTimeout(function () {
+            //window.location.href = "http://localhost:3000/";
+          //}, 3000);
         } else {
           if (data.going.length == 0 || data.returning.length == 0) {
-            setloadingSearch(false);
+            //setloadingSearch(false);
             showAlert("No Available Flights with this Date");
-            setTimeout(function () {
-              window.location.href = "http://localhost:3000/";
-            }, 3000);
           } else {
             history.push("/SelectEditFlight");
           }
@@ -152,16 +149,16 @@ const EditFlight = () => {
           );
           if (checkBigger == true) {
             showAlert("Return Date Cannot be before Going Date");
-            setTimeout(function () {
-              window.location.href = "http://localhost:3000/";
-            }, 3000);
+           // setTimeout(function () {
+             // window.location.href = "http://localhost:3000/";
+            //}, 3000);
           } else {
             if (data.going.length == 0 || data.returning.length == 0) {
-              setloadingSearch(false);
+              //setloadingSearch(false);
               showAlert("No Available Flights with this Date");
-              setTimeout(function () {
-                window.location.href = "http://localhost:3000/";
-              }, 3000);
+           //   setTimeout(function () {
+             //   window.location.href = "http://localhost:3000/";
+              //}, 3000);
             } else {
               history.push("/SelectEditFlight");
             }
@@ -180,7 +177,12 @@ const EditFlight = () => {
       <br />
       <br />
       <br />
-
+      <Alert
+        open={alertOpen}
+        setOpen={setalertOpen}
+        title={alertMessage}
+        desc=""
+      />
       <div
         style={{
           display: "flex",
@@ -203,12 +205,7 @@ const EditFlight = () => {
           <FontAwesomeIcon icon={faArrowRight} /> <b>Search</b>
         </h6>
       </div>
-      <Alert
-        open={alertOpen}
-        setOpen={setalertOpen}
-        title={alertMessage}
-        desc=""
-      />
+      
       <div
         className=" mt-5 col-sm-8 offset-sm-2 col-md-8 offset-md-2 col-lg-8 offset-lg-2 " //
         style={{
