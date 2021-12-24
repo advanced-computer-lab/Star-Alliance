@@ -265,8 +265,6 @@ const ReservationSummary = () => {
         ...searchFlights,
         selected: {
           ...searchFlights.selected,
-          flight1seat: [],
-          flight2seat: [],
           toBeEdited:false
         },
       });
