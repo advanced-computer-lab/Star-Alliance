@@ -38,6 +38,18 @@ MERN Stack was used to build the website
   3. `npm i && cd client && npm i && cd ..`
   3. `npm run dev`
 
+### .ENV file
+
+key|value
+---|---
+DB_URI|Mongodb connection string, for example `mongodb+srv://??:??@??db.k4yey.mongodb.net/myDatabase?retryWrites=true&w=majority`
+React_Server_Origin|Developement localhost for accessing react default `localhost:3000`
+email|Gmail account, used to Send the emails `???@gmail.com`
+pass|the Gamil's account password
+REFRESH_TOKEN_SECRET|Random refresh token secret
+ACCESS_TOKEN_SECRET|Random refresh token secret
+STRIPE_PRIVATE_KEY| Stripe's prive api key ex `sk_test_????`
+
 ## API reference
 - [Nodemailer](https://www.npmjs.com/package/nodemailer)
 - [Stripe](https://www.npmjs.com/package/stripe)
