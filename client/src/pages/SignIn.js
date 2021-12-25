@@ -93,12 +93,11 @@ const SignIn = () => {
         title={alertMessage}
         desc=""
       />
-      <div className="col-xs-10 offset-xs-1"
+      <div className="col-xs-8 offset-xs-2 col-md-6 offset-md-3"
         style={{
           borderRadius: "2rem",
           backgroundColor: "#112D4E",
-          marginLeft: "2rem",
-          marginRight: "2rem",
+         
         }}
       >
         <div style={{ marginLeft: "2rem", marginRight: "2rem", color: "white" }}>

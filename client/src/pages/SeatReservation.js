@@ -200,7 +200,7 @@ const SeatReservation = (props) => {
         <br />
         <br />
 
-        <div
+        <div 
           style={{
             display: "flex",
             flexDirection: "column",

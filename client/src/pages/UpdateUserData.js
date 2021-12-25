@@ -72,14 +72,15 @@ const UpdateUserData = () => {
 
   return (
     <div
-      className="mt-1 "
+      className="mt-1 col-xs-10 offset-xs-1"
       id="testing"
       style={{ fontFamily: "cursive", color: "white" }}
     >
       <br></br>
       <br></br>
       <br></br>
-      <div style={{display: "flex",
+      <div  className="mt-1 col-xs-10 offset-xs-1"
+      style={{display: "flex",
             flexDirection: "column",
             justifyContent: "center",
             alignItems: "center"}}>
@@ -94,25 +95,23 @@ const UpdateUserData = () => {
       />
       
       <div
-        className="mt-5"
+        className="mt-5 col-xs-8 offset-xs-2 col-md-6 offset-md-3 "
         style={{
-          borderRadius: "2rem",
+          borderRadius: "1rem",
           backgroundColor: "#112D4E",
-          width: "115vh",
-          marginLeft: "50vh",
           marginBottom: "15vh",
-          height: "45vh",
+          height: "50vh",
         }}
       >
         <div className="col-lg-10 offset-lg-1 col-md-8 offset-md-2">
-          <Form ref={updateFormRef} onSubmit={handleSubmit}>
+          <Form className="col-xs-10 offset-xs-1" ref={updateFormRef} onSubmit={handleSubmit}>
             <br />
-            <h3 className="mt-3 mb-2">
+            <h3 className="mt-2 mb-2 mx-2">
               My Profile <FontAwesomeIcon icon={faUser} />{" "}
             </h3>
 
-            <Row>
-              <Form.Group as={Col} controlId="formGridFirstName">
+            <Row className="mx-2">
+              <Form.Group  as={Col} controlId="formGridFirstName">
                 <Form.Label>First Name</Form.Label>
                 <Form.Control
                   name="firstName"
@@ -127,7 +126,7 @@ const UpdateUserData = () => {
                 />
               </Form.Group>
             </Row>
-            <Row>
+            <Row className="mx-2">
               <Form.Group as={Col} controlId="formGridPassportNumber">
                 <Form.Label>
                   Passport Number{" "}
@@ -149,16 +148,16 @@ const UpdateUserData = () => {
               </Form.Group>
             </Row>
                 
-            <div style={{ height: "3cm", width: "19cm", marginTop: "0.8cm" }}>
+            <div style={{ height: "3cm", marginTop: "0.8cm" }}>
             <Row>
 
-            <Col>
+            <Col className="mx-4">
               <Button type="submit" variant="primary">
                 Update Info. <FontAwesomeIcon icon={faUserEdit} />
               </Button>
               {/* <div style={{marginLeft:"0.5cm"}}> */}
-              <Link style={{marginLeft:"0.4cm"}} to="/ChangePassword">
-            <Button type="button" variant="primary">
+              <Link to="/ChangePassword">
+            <Button className="mx-1" type="button" variant="primary">
               Change Password
             </Button>
           </Link>

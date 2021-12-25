@@ -156,12 +156,11 @@ const SignUp = () => {
         <br></br>
 
         <div
-          className="col-xs-10 offset-xs-1"
+          className="col-xs-10 offset-xs-1 col-md-8 offset-md-2"
         style={{
           borderRadius: "2rem",
           backgroundColor: "#112D4E",
-          marginLeft: "2rem",
-          marginRight: "2rem",
+          
         }}
         >
           <div
@@ -179,7 +178,7 @@ const SignUp = () => {
                       <Form.Control
                         type="firstName"
                         name="firstName"
-                        placeholder="Enter Your First Namer"
+                        placeholder="Enter Your First Name"
                         required
                       />
                     </Form.Group>
@@ -195,7 +194,7 @@ const SignUp = () => {
                     </Form.Group>
                   </Col>
                 </Row>
-                <Row className="col-xs-10 offset-xs-1">
+                <Row className="">
                   <Form.Group as={Col} controlId="email">
                     <Form.Label>Email</Form.Label>
                     <Form.Control
@@ -209,7 +208,7 @@ const SignUp = () => {
               </div>
 
               <div style={{ display: activeStep !== 1 ? "none" : "" }}>
-                <Row className="col-xs-10 offset-xs-1">
+                <Row>
                   <Col>
                     <Form.Group style={{ width: "auto" }} controlId="birthDate">
                       <Form.Label>Birth Date</Form.Label>
@@ -228,7 +227,7 @@ const SignUp = () => {
                     </Form.Group>
                   </Col>
                 </Row>
-                <Row className="col-xs-10 offset-xs-1">
+                <Row >
                   <Col>
                     <Form.Group as={Col} controlId="formGridFirst">
                       <Form.Label>Country</Form.Label>
@@ -269,7 +268,7 @@ const SignUp = () => {
                   </Form.Group>
                 </Row>
 
-                <Row className="col-xs-10 offset-xs-1">
+                <Row>
                   <Col>
                     <Form.Group as={Col} controlId="countryCode">
                       <Form.Label>Country Code</Form.Label>
@@ -292,7 +291,7 @@ const SignUp = () => {
               </div>
 
               <div style={{ display: activeStep !== 2 ? "none" : "" }}>
-                <Row className="col-xs-10 offset-xs-1">
+                <Row>
                   <Form.Group as={Col} controlId="username">
                     <Form.Label>Username</Form.Label>
                     <Form.Control
@@ -314,7 +313,7 @@ const SignUp = () => {
                     />
                   </Form.Group>
                 </Row>
-                <Row className="col-xs-10 offset-xs-1">
+                <Row>
                   <Form.Group as={Col} controlId="confirmPassword">
                     <Form.Label>Confirm Password</Form.Label>
                     <Form.Control
