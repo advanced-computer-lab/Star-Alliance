@@ -202,11 +202,12 @@ const UserHomePage = () => {
 
       <ContinueReservingBar />
       <div
-        className="mt-5 col-sm-8 offset-sm-2 col-md-8 offset-md-2 col-lg-8 offset-lg-2 " //
+        className="mt-5 col-xs-8 offset-xs-2 col-md-8 offset-md-2 col-lg-8 offset-lg-2 " //
         style={{
-          borderRadius: "2rem",
+          borderRadius: "1rem",
           backgroundColor: "#112D4E",
           height: "auto",
+          padding: "1rem"
         }}
       >
         <div
@@ -378,10 +379,10 @@ const UserHomePage = () => {
       <br />
 
       <div
-        className="col-lg-10 offset-lg-1 col-md-10 offset-md-1 col-sm-10 offset-sm-1  "
-        style={{ backgroundColor: "#112D4E", borderRadius: "2.5rem" }}
+        className="col-lg-10 offset-lg-1 col-md-10 offset-md-1 col-sm-10 offset-sm-1"
+        style={{ backgroundColor: "#112D4E", borderRadius: "1rem", padding: "1rem"}}
       >
-        <div className="mt-3 col-lg-10 offset-lg-1 col-md-10 offset-md-1 col-sm-10 offset-sm-1 ">
+        <div className="col-lg-10 offset-lg-1 col-md-10 offset-md-1 col-sm-10 offset-sm-1 ">
           <br />
           <Row>
             <h2 as={Col}>
@@ -394,7 +395,7 @@ const UserHomePage = () => {
             className="col-lg-12 col-md-12 col-sm-12  "
             id="ytplayer"
             // width="1050"
-            height="600"
+            height="auto"
             src="https://www.youtube.com/embed/HwM86WQ-0vY?autoplay=1&mute=1&playlist=HwM86WQ-0vY,msJ_JJB8q3s,k3KqP69xuPc&loop=1"
           ></iframe>
         </div>

@@ -194,7 +194,7 @@ const SignUp = () => {
                     </Form.Group>
                   </Col>
                 </Row>
-                <Row className="">
+                <Row>
                   <Form.Group as={Col} controlId="email">
                     <Form.Label>Email</Form.Label>
                     <Form.Control

@@ -9,7 +9,7 @@ function App() {
   return (
     <GlobalContext>
       <UserHomeContext>
-        <div style={{ fontFamily: "Verdana " }}>
+        <div style={{ fontFamily: "Verdana" }}>
           <Naavbar />
           <br />
           <br />

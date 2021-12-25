@@ -74,7 +74,7 @@ const UpdateUserData = () => {
     <div
       className="mt-1 col-xs-10 offset-xs-1"
       id="testing"
-      style={{ fontFamily: "cursive", color: "white" }}
+      style={{ fontFamily: "Verdana", fontSize: "15px", color: "white" }}
     >
       <br></br>
       <br></br>
@@ -151,7 +151,7 @@ const UpdateUserData = () => {
             <div style={{ height: "3cm", marginTop: "0.8cm" }}>
             <Row>
 
-            <Col className="mx-4">
+            <Col className="mx-3">
               <Button type="submit" variant="primary">
                 Update Info. <FontAwesomeIcon icon={faUserEdit} />
               </Button>

@@ -258,7 +258,7 @@ const SelectFlight = () => {
           >
             <br />
 
-            <div className=" card-body">
+            <div className="card-body">
               <h4 class="card-title">
                 Flight Number: {flight.flightDet.flightNumber}{" "}
               </h4>

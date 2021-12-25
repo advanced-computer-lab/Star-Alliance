@@ -234,22 +234,20 @@ const SeatReservation = (props) => {
           </h6>
         </div>
         <br />
-        <Row>
+        <Row >
           <Col>
             <h2 className="mx-5 mb-5 mt-3">
               Choose Your Seats{" "}
               <img style={{ height: "1cm", width: "1cm" }} src={seat} />{" "}
             </h2>
           </Col>
-        </Row>
+        </Row >
         <div
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "space-evenly",
-          }}
+         
         >
-          <div>
+          <Row>
+          <Col>
+          <div >
             <h3 className="mx-3 mb-4">
               From {flight1.flightDet.departureAirport} ✈{" "}
               {flight1.flightDet.arrivalAirport}
@@ -262,6 +260,9 @@ const SeatReservation = (props) => {
               checkedSeates={flight1seatSt}
             />
           </div>
+         </Col>
+          <Col>
+       
           <div>
             <h3 className="mx-3 mb-4">
               {" "}
@@ -276,6 +277,8 @@ const SeatReservation = (props) => {
               checkedSeates={flight2seatSt}
             />
           </div>
+          </Col>
+          </Row>
         </div>
         <div
           className="mx-3 mb-4"

@@ -320,62 +320,72 @@ const ReservationView = () => {
       {
         field: "TicketName",
         headerName: "Name",
-
-        flex: 1,
+        width:100,
+        //flex: 1,
       },
       {
         field: "flightNumber",
         headerName: "Flight Number",
         headerClassName: "super-app-theme--header",
         headerAlign: "center",
-        flex: 1,
+        width:150,
+        //flex: 1,
       },
       {
         field: "departureAirport",
         headerName: "Departure Airport",
-        flex: 1,
+        width:150,
+        //flex: 1,
       },
       {
         field: "arrivalAirport",
         headerName: "Arrival Airport",
-        flex: 1,
+        width:150,
+        //flex: 1,
       },
       {
         field: "departureTime",
         headerName: "Departure Time",
-        flex: 1,
+        width:150,
+        //flex: 1,
       },
       {
         field: "arrivalTime",
         headerName: "Arrival Time",
-        flex: 1,
+        width:150,
+        //flex: 1,
       },
       {
         field: "duration",
         headerName: "Trip Duration",
-        flex: 1,
+        width:100,
+        //flex: 1,
       },
       {
         field: "cabin",
         headerName: "Cabin Class",
-        flex: 1,
+        width:100,
+        //flex: 1,
       },
       {
         field: "baggage",
         headerName: "Baggage Allowance",
-        flex: 1,
+        width:100,
+        //flex: 1,
       },
       {
         field: "seatNum",
         headerName: "Seat",
 
-        flex: 1,
+        width:100,
+        //flex: 1,
       },
 
       {
         field: "actions",
         type: "actions",
-        flex: 1,
+        width:200,
+        //flex: 1,
         getActions: (params) => [
           <GridActionsCellItem
             icon={<EditIcon />}
@@ -406,7 +416,6 @@ const ReservationView = () => {
     ],
     [CancelReservation, EditReservation, EditSeat, Mail]
   );
-
   useEffect(() => {
     // Initial load
 

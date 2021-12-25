@@ -70,9 +70,10 @@ const ContinueReservingBar = (props) => {
   return (
     <>
       <div 
-      className="col-6 offset-3 mt-3"
+      className="col-8 offset-2 mt-3"
         style={{
           display: "flex",
+          padding: "1rem",
           alignItems: "center",
           justifyContent: "center",
           backgroundColor: "#eeeeee",
