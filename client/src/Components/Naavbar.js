@@ -168,7 +168,7 @@ const Naavbar = () => {
             </Nav>
           </Navbar.Collapse>
           <Navbar.Collapse className="justify-content-end">
-            <Navbar.Text style={{ marginRight: "1cm" }}>
+            <Navbar.Text style={{ marginRight: "0.5rem" }}>
               {UserService.isLoggedIn() &&
                 (UserService.isAdmin()
                   ? `Welcome, ${user.name}`

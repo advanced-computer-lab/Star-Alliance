@@ -76,7 +76,7 @@ const SignIn = () => {
   };
 
   return (
-    <div
+    <div 
       class="align-items-center justify-content-center"
       style={{ fontFamily: "" }}
     >
@@ -89,32 +89,33 @@ const SignIn = () => {
         title={alertMessage}
         desc=""
       />
-      <div
+      <div className="col-xs-10 offset-xs-1"
         style={{
           borderRadius: "2rem",
           backgroundColor: "#112D4E",
-          marginLeft: "6cm",
-          marginRight: "6cm",
+          marginLeft: "2rem",
+          marginRight: "2rem",
         }}
       >
-        <div style={{ marginLeft: "2cm", marginRight: "2cm", color: "white" }}>
+        <div style={{ marginLeft: "2rem", marginRight: "2rem", color: "white" }}>
           <Form onSubmit={handleSubmit}>
             {/* <h3 classname="mb-1" >Create Flight</h3> */}
             <br />
             <br />
             <h2>Sign in</h2>
 
-            <Row>
+            <Row className="col-xs-10 offset-xs-1">
               <Form.Group as={Col} controlId="username">
                 <Form.Label>Username</Form.Label>
                 <Form.Control
+               
                   type="username"
                   name="username"
                   placeholder="Enter Your Username"
                 />
               </Form.Group>
             </Row>
-            <Row>
+            <Row className="col-xs-10 offset-xs-1">
               <Form.Group as={Col} controlId="password">
                 <Form.Label>Password</Form.Label>
                 <Form.Control

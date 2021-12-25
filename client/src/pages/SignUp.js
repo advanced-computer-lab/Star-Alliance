@@ -156,22 +156,23 @@ const SignUp = () => {
         <br></br>
 
         <div
-          style={{
-            borderRadius: "2rem",
-            backgroundColor: "#112D4E",
-            marginLeft: "6cm",
-            marginRight: "6cm",
-          }}
+          className="col-xs-10 offset-xs-1"
+        style={{
+          borderRadius: "2rem",
+          backgroundColor: "#112D4E",
+          marginLeft: "2rem",
+          marginRight: "2rem",
+        }}
         >
           <div
-            style={{ marginLeft: "2cm", marginRight: "2cm", color: "white" }}
+            style={{ marginLeft: "2rem", marginRight: "2rem", color: "white" }}
           >
             <Form ref={formRef} id="form1" onSubmit={handleSubmit}>
               <br />
               <br />
               <h2>Sign up</h2>
               <div style={{ display: activeStep !== 0 ? "none" : "" }}>
-                <Row>
+                <Row className="col-xs-10 offset-xs-1">
                   <Col>
                     <Form.Group as={Col} controlId="firstName">
                       <Form.Label>First Name</Form.Label>
@@ -194,7 +195,7 @@ const SignUp = () => {
                     </Form.Group>
                   </Col>
                 </Row>
-                <Row>
+                <Row className="col-xs-10 offset-xs-1">
                   <Form.Group as={Col} controlId="email">
                     <Form.Label>Email</Form.Label>
                     <Form.Control
@@ -208,7 +209,7 @@ const SignUp = () => {
               </div>
 
               <div style={{ display: activeStep !== 1 ? "none" : "" }}>
-                <Row>
+                <Row className="col-xs-10 offset-xs-1">
                   <Col>
                     <Form.Group style={{ width: "auto" }} controlId="birthDate">
                       <Form.Label>Birth Date</Form.Label>
@@ -227,7 +228,7 @@ const SignUp = () => {
                     </Form.Group>
                   </Col>
                 </Row>
-                <Row>
+                <Row className="col-xs-10 offset-xs-1">
                   <Col>
                     <Form.Group as={Col} controlId="formGridFirst">
                       <Form.Label>Country</Form.Label>
@@ -268,7 +269,7 @@ const SignUp = () => {
                   </Form.Group>
                 </Row>
 
-                <Row>
+                <Row className="col-xs-10 offset-xs-1">
                   <Col>
                     <Form.Group as={Col} controlId="countryCode">
                       <Form.Label>Country Code</Form.Label>
@@ -291,7 +292,7 @@ const SignUp = () => {
               </div>
 
               <div style={{ display: activeStep !== 2 ? "none" : "" }}>
-                <Row>
+                <Row className="col-xs-10 offset-xs-1">
                   <Form.Group as={Col} controlId="username">
                     <Form.Label>Username</Form.Label>
                     <Form.Control
@@ -313,7 +314,7 @@ const SignUp = () => {
                     />
                   </Form.Group>
                 </Row>
-                <Row>
+                <Row className="col-xs-10 offset-xs-1">
                   <Form.Group as={Col} controlId="confirmPassword">
                     <Form.Label>Confirm Password</Form.Label>
                     <Form.Control
@@ -349,6 +350,7 @@ const SignUp = () => {
                 sx={{ flexGrow: 1 }}
                 nextButton={
                   <Button
+                  
                     type="submit"
                     size="small"
                     onClick={handleNext}
@@ -367,7 +369,7 @@ const SignUp = () => {
                       </>
                     ) : (
                       <>
-                        {activeStep === 2 ? "SignUp" : "Next"}
+                        {activeStep === 2 ? "SignUp" : ""}
                         {theme.direction === "rtl" ? (
                           <KeyboardArrowLeft />
                         ) : (
