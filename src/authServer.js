@@ -18,16 +18,14 @@ const {
 } = require("../Models/export");
 
 const app = express();
-app.use(
-  cors({
-    origin: "http://localhost:3000",
-    credentials: true,
-    optionSuccessStatus: 200,
-  })
-);
+
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
+
+app.get("/b", function (req, res) {
+  res.send({ message: "hello from auth Server" });
+});
 
 const db = require("../Service/DBService.js");
 
@@ -118,6 +116,5 @@ function generateAccessToken(user) {
   return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, { expiresIn: "5s" });
 }
 
-const port = process.env.PORT || 2000;
-
-app.listen(port, () => console.log(`Auth Server at localhost:${port}`));
+// app.listen(port, () => console.log(`Auth Server at localhost:${port}`));
+module.exports = app;

@@ -15,7 +15,7 @@ const Refund = () => {
    
     let userID = user.id;
    
-    let data = {// TODO: new Reservation dynmaic user
+    let data = {
         reservationId: searchFlights.selected.resId
       };
       ReservationService.reserveRefund(data)

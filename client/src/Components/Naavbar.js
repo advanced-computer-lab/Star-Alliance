@@ -24,7 +24,6 @@ import AuthService from "../Services/AuthService.js";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
 
-//const logo= "	https://o.remove.bg/downloads/e14af0fc-8d3f-4a5a-8dc4-15aca52535d1/7-removebg-preview.png"
 const Naavbar = () => {
   const refUserName = useRef(null);
   const refUserPass = useRef(null);
@@ -76,9 +75,6 @@ const Naavbar = () => {
 
     return <Button onClick={handleBtnClick}>Login </Button>;
   };
-  // const newUser = UserService.getUser();
-
-  // console.log(newUser);
 
   const [popLogin, setpopLogin] = useState(false);
 
@@ -98,18 +94,6 @@ const Naavbar = () => {
   };
   return (
     <>
-      {/* <Navbar bg="dark" fixed="top">
-    <Container>
-    <Navbar.Brand href="#home">Navbar</Navbar.Brand>
-    <Nav className="me-auto">
-      <Nav.Link href="#home">Home</Nav.Link>
-      <Nav.Link href="#features">Features</Nav.Link>
-      <Nav.Link href="#pricing">Pricing</Nav.Link>
-    </Nav>
-    </Container>
-  </Navbar> */}
-      {/* <h1>Hello</h1> */}
-      {/* TODO: make fixed top have an actual hight? */}
       <Navbar
         fixed="top"
         style={{
@@ -132,6 +116,13 @@ const Naavbar = () => {
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
               {UserService.isUser() && (
+                <LinkContainer to="/">
+                  <Nav.Link style={{ color: "#DBE2EF" }}>
+                    Book Flight ✈
+                  </Nav.Link>
+                </LinkContainer>
+              )}
+              {UserService.isUser() && (
                 <LinkContainer to="/ReservationView">
                   <Nav.Link style={{ color: "#DBE2EF" }}>
                     My reservations <FontAwesomeIcon icon={faTicketAlt} />
@@ -145,13 +136,7 @@ const Naavbar = () => {
                   </Nav.Link>
                 </LinkContainer>
               )}
-              {UserService.isUser() && (
-                <LinkContainer to="/">
-                  <Nav.Link style={{ color: "#DBE2EF" }}>
-                    Book Flight ✈
-                  </Nav.Link>
-                </LinkContainer>
-              )}
+
               {UserService.isUser() && (
                 <LinkContainer to="ViewChild">
                   <Nav.Link style={{ color: "#DBE2EF" }}>
@@ -159,12 +144,6 @@ const Naavbar = () => {
                   </Nav.Link>
                 </LinkContainer>
               )}
-              {/* <Nav.Link href="#link" style={{ color: "#DBE2EF" }}>
-                Link
-              </Nav.Link>
-              <Nav.Link href="#link" style={{ color: "#DBE2EF" }}>
-                Login
-              </Nav.Link> */}
             </Nav>
           </Navbar.Collapse>
           <Navbar.Collapse className="justify-content-end">

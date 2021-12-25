@@ -1,7 +1,13 @@
 import axios from "axios";
+var url = "not set";
+if (!process.env.NODE_ENV || process.env.NODE_ENV === "development") {
+  url = "http://localhost:8080";
+} else {
+  url = "";
+}
 
 const axInstance = axios.create({
-  baseURL: "http://localhost:2000/",
+  baseURL: url,
   headers: {
     "Content-type": "application/json",
   },

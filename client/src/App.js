@@ -11,8 +11,8 @@ function App() {
       <UserHomeContext>
         <div style={{ fontFamily: "Verdana " }}>
           <Naavbar />
-          <br/>
-          <br/>
+          <br />
+          <br />
           <div style={{ marginTop: "80px" }}>
             {/*add margin top compansate for navbar*/}
             <Main />

@@ -2,6 +2,12 @@ import { useContext } from "react";
 import axios from "axios";
 import Cookies from "js-cookies";
 
+var url = "not set";
+if (!process.env.NODE_ENV || process.env.NODE_ENV === "development") {
+  url = "http://localhost:8080";
+} else {
+  url = "";
+}
 const axAuthServer = axios.create({
   headers: {
     "Content-type": "application/json",
@@ -10,7 +16,7 @@ const axAuthServer = axios.create({
 });
 
 const axResource = axios.create({
-  baseURL: "http://localhost:8080/",
+  baseURL: url,
   headers: {
     "Content-type": "application/json",
   },
@@ -113,7 +119,7 @@ axResource.interceptors.response.use(
       // if (isTokenExpired(Cookies.getItem("accessToken"))) {
       console.log("token expired trying to refresh");
       return axAuthServer
-        .post("http://localhost:2000/getaToken/", {})
+        .post(url + "/getaToken", {})
         .then((res) => {
           console.log(res);
           console.log(res.data);
