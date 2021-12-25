@@ -215,11 +215,14 @@ app.post("/GetRequestedFlights", async (req, res) => {
   console.log("testttt", Flight2.departureTime);
 
   if (Flight.departureTime == undefined && Flight2.departureTime != undefined) {
+    const typesm = type.toLowerCase();
+ 
     if (type == "Economy") {
       const checkAvailable = (result = await flight.find({
         economySeatsNum: { $gte: total },
         arrivalAirport: Flight.arrivalAirport,
         departureAirport: Flight.departureAirport,
+        [ "availableSeats." + typesm]: { $not: { $size: 0 } },
       }));
       for (let i = 0; i < checkAvailable.length; i++) {
         if (checkAvailable[i].availableSeats.economy.length >= total) {
@@ -231,6 +234,7 @@ app.post("/GetRequestedFlights", async (req, res) => {
         economySeatsNum: { $gte: total },
         arrivalAirport: Flight2.arrivalAirport,
         departureAirport: Flight2.departureAirport,
+        [ "availableSeats." + typesm]: { $not: { $size: 0 } },
       });
       for (let i = 0; i < checkAvailable2.length; i++) {
         if (checkAvailable2[i].availableSeats.economy.length >= total) {
@@ -255,6 +259,7 @@ app.post("/GetRequestedFlights", async (req, res) => {
         firstSeatsNum: { $gte: total },
         arrivalAirport: Flight.arrivalAirport,
         departureAirport: Flight.departureAirport,
+        [ "availableSeats." + typesm]: { $not: { $size: 0 } },
       });
 
       const checkAvailable2 = await flight.find({
@@ -262,6 +267,7 @@ app.post("/GetRequestedFlights", async (req, res) => {
         economySeatsNum: { $gte: total },
         arrivalAirport: Flight2.arrivalAirport,
         departureAirport: Flight2.departureAirport,
+        [ "availableSeats." + typesm]: { $not: { $size: 0 } },
       });
       for (let i = 0; i < checkAvailable.length; i++) {
         if (checkAvailable[i].availableSeats.first.length >= total) {
@@ -291,6 +297,7 @@ app.post("/GetRequestedFlights", async (req, res) => {
         businessSeatsNum: { $gte: total },
         arrivalAirport: Flight.arrivalAirport,
         departureAirport: Flight.departureAirport,
+        [ "availableSeats." + typesm]: { $not: { $size: 0 } },
       });
 
       const checkAvailable2 = await flight.find({
@@ -298,6 +305,7 @@ app.post("/GetRequestedFlights", async (req, res) => {
         economySeatsNum: { $gte: total },
         arrivalAirport: Flight2.arrivalAirport,
         departureAirport: Flight2.departureAirport,
+        [ "availableSeats." + typesm]: { $not: { $size: 0 } },
       });
 
       for (let i = 0; i < checkAvailable.length; i++) {
@@ -328,18 +336,21 @@ app.post("/GetRequestedFlights", async (req, res) => {
     Flight.departureTime != undefined &&
     Flight2.departureTime == undefined
   ) {
+
     if (type == "Economy") {
       const checkAvailable = await flight.find({
         departureTime: { $gte: date1, $lt: date2 },
         economySeatsNum: { $gte: total },
         arrivalAirport: Flight.arrivalAirport,
         departureAirport: Flight.departureAirport,
+        [ "availableSeats." + typesm]: { $not: { $size: 0 } },
       });
 
       const checkAvailable2 = await flight.find({
         economySeatsNum: { $gte: total },
         arrivalAirport: Flight2.arrivalAirport,
         departureAirport: Flight2.departureAirport,
+        [ "availableSeats." + typesm]: { $not: { $size: 0 } },
       });
 
       for (let i = 0; i < checkAvailable.length; i++) {
@@ -371,12 +382,14 @@ app.post("/GetRequestedFlights", async (req, res) => {
         firstSeatsNum: { $gte: total },
         arrivalAirport: Flight.arrivalAirport,
         departureAirport: Flight.departureAirport,
+        [ "availableSeats." + typesm]: { $not: { $size: 0 } },
       });
 
       const checkAvailable2 = await flight.find({
         economySeatsNum: { $gte: total },
         arrivalAirport: Flight2.arrivalAirport,
         departureAirport: Flight2.departureAirport,
+        [ "availableSeats." + typesm]: { $not: { $size: 0 } },
       });
 
       for (let i = 0; i < checkAvailable.length; i++) {
@@ -408,6 +421,7 @@ app.post("/GetRequestedFlights", async (req, res) => {
       businessSeatsNum: { $gte: total },
       arrivalAirport: Flight.arrivalAirport,
       departureAirport: Flight.departureAirport,
+      [ "availableSeats." + typesm]: { $not: { $size: 0 } },
     });
 
     const checkAvailable2 = await flight.find({
@@ -415,6 +429,7 @@ app.post("/GetRequestedFlights", async (req, res) => {
       economySeatsNum: { $gte: total },
       arrivalAirport: Flight2.arrivalAirport,
       departureAirport: Flight2.departureAirport,
+      [ "availableSeats." + typesm]: { $not: { $size: 0 } },
     });
     for (let i = 0; i < checkAvailable.length; i++) {
       if (checkAvailable[i].availableSeats.business.length >= total) {
@@ -450,6 +465,7 @@ app.post("/GetRequestedFlights", async (req, res) => {
         economySeatsNum: { $gte: total },
         arrivalAirport: Flight.arrivalAirport,
         departureAirport: Flight.departureAirport,
+        [ "availableSeats." + typesm]: { $not: { $size: 0 } },
       });
       //console.log("checkAvailable",checkAvailable)
 
@@ -457,6 +473,7 @@ app.post("/GetRequestedFlights", async (req, res) => {
         economySeatsNum: { $gte: total },
         arrivalAirport: Flight2.arrivalAirport,
         departureAirport: Flight2.departureAirport,
+        [ "availableSeats." + typesm]: { $not: { $size: 0 } },
       });
 
       for (let i = 0; i < checkAvailable.length; i++) {
@@ -488,12 +505,14 @@ app.post("/GetRequestedFlights", async (req, res) => {
         firstSeatsNum: { $gte: total },
         arrivalAirport: Flight.arrivalAirport,
         departureAirport: Flight.departureAirport,
+        [ "availableSeats." + typesm]: { $not: { $size: 0 } },
       });
 
       const checkAvailable2 = await flight.find({
         economySeatsNum: { $gte: total },
         arrivalAirport: Flight2.arrivalAirport,
         departureAirport: Flight2.departureAirport,
+        [ "availableSeats." + typesm]: { $not: { $size: 0 } },
       });
 
       for (let i = 0; i < checkAvailable.length; i++) {
@@ -524,12 +543,14 @@ app.post("/GetRequestedFlights", async (req, res) => {
         businessSeatsNum: { $gte: total },
         arrivalAirport: Flight.arrivalAirport,
         departureAirport: Flight.departureAirport,
+        [ "availableSeats." + typesm]: { $not: { $size: 0 } },
       });
 
       const checkAvailable2 = await flight.find({
         economySeatsNum: { $gte: total },
         arrivalAirport: Flight2.arrivalAirport,
         departureAirport: Flight2.departureAirport,
+        [ "availableSeats." + typesm]: { $not: { $size: 0 } },
       });
 
       for (let i = 0; i < checkAvailable.length; i++) {
@@ -561,12 +582,14 @@ app.post("/GetRequestedFlights", async (req, res) => {
     Flight2.departureTime != undefined
   ) {
     if (new Date(req.body.departureTime) <= new Date(Flight2.departureTime)) {
+      const typesm = type.toLowerCase();
       if (type == "Economy") {
         checkAvailable = await flight.find({
           departureTime: { $gte: date1, $lt: date2 },
           economySeatsNum: { $gte: total },
           arrivalAirport: Flight.arrivalAirport,
           departureAirport: Flight.departureAirport,
+          [ "availableSeats." + typesm]: { $not: { $size: 0 } },
         });
 
         const checkAvailable2 = await flight.find({
@@ -574,6 +597,7 @@ app.post("/GetRequestedFlights", async (req, res) => {
           economySeatsNum: { $gte: total },
           arrivalAirport: Flight2.arrivalAirport,
           departureAirport: Flight2.departureAirport,
+          [ "availableSeats." + typesm]: { $not: { $size: 0 } },
         });
         for (let i = 0; i < checkAvailable.length; i++) {
           if (checkAvailable[i].availableSeats.economy.length >= total) {
@@ -604,6 +628,7 @@ app.post("/GetRequestedFlights", async (req, res) => {
           firstSeatsNum: { $gte: total },
           arrivalAirport: Flight.arrivalAirport,
           departureAirport: Flight.departureAirport,
+          [ "availableSeats." + typesm]: { $not: { $size: 0 } },
         });
 
         const checkAvailable2 = await flight.find({
@@ -611,6 +636,7 @@ app.post("/GetRequestedFlights", async (req, res) => {
           economySeatsNum: { $gte: total },
           arrivalAirport: Flight2.arrivalAirport,
           departureAirport: Flight2.departureAirport,
+          [ "availableSeats." + typesm]: { $not: { $size: 0 } },
         });
         for (let i = 0; i < checkAvailable.length; i++) {
           if (checkAvailable[i].availableSeats.first.length >= total) {
@@ -641,6 +667,7 @@ app.post("/GetRequestedFlights", async (req, res) => {
           businessSeatsNum: { $gte: total },
           arrivalAirport: Flight.arrivalAirport,
           departureAirport: Flight.departureAirport,
+          [ "availableSeats." + typesm]: { $not: { $size: 0 } },
         });
 
         const checkAvailable2 = await flight.find({
@@ -648,6 +675,7 @@ app.post("/GetRequestedFlights", async (req, res) => {
           economySeatsNum: { $gte: total },
           arrivalAirport: Flight2.arrivalAirport,
           departureAirport: Flight2.departureAirport,
+          [ "availableSeats." + typesm]: { $not: { $size: 0 } },
         });
         for (let i = 0; i < checkAvailable.length; i++) {
           if (checkAvailable[i].availableSeats.business.length >= total) {

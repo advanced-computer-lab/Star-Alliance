@@ -21,13 +21,6 @@ db.once("open", async () => {
   console.log("Database connected");
   //const result = await user.syncIndexes();
   //console.log(result);
-  const first = "first"
-  const result = await flight.find({
-    "availableSeats.first": { $not: { $size: 0 } },
-    "availableSeats.business": { $not: { $size: 0 } },
-    "availableSeats.economy": { $not: { $size: 0 } },
-  });
-  console.log("result of finding flights with seats", result);
   // excute();
   // flight.find({}).then((res) => {
   //   console.log(res);
