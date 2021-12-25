@@ -23,16 +23,19 @@ const reservationSchema = new Schema({
 
   fligh1seats: { type: [String] },
   fligh2seats: { type: [String] },
-
-  isPaied: {
-    type: Boolean,
-    default: false,
-  },
+  TicketName: { type: String },
+  childName:{type:[String]},
+  flight1totalPrice: Number,
+  flight2totalPrice: Number,
 
   cabinClass: { type: String, enum: ["Business", "Economy", "First"] },
   baggageAllowance: {
     weight: { type: Number, default: 23 },
     number: { type: Number, default: 2 },
+  },
+  isCompanion: {
+    type: Boolean,
+    default: false,
   },
   totalPrice:{
     type: Number,

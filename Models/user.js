@@ -5,24 +5,24 @@ const reservation = require("./reservation");
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
+  email: { type: String },
+  username: { type: String, required: true, unique: true },
+  password: { type: String, required: true },
+  isAdmin: { type: Boolean, required: true },
+
   firstName: { type: String },
   lastName: { type: String },
   passportNumber: { type: String },
-  countryCode: { type: String },
   address: {
     country: String,
     city: String,
     street: String,
     buildingNumber: Number,
-    floorNumber: Number,
-    appartmentNumber: Number,
   },
-  password: { type: String },
-  birthDate: { type: String },
-  job: { type: String },
-  isAdmin: { type: Boolean },
+  birthDate: { type: Date },
+
+  countryCode: { type: String },
   phoneNumbers: [{ type: String }],
-  email: { type: String },
   creditcards: [
     {
       type: Schema.Types.ObjectId,

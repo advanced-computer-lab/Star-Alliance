@@ -12,7 +12,7 @@ const Footer = () => {
       style={{        
         backgroundColor: "#112D4E",
         color: "#DBE2EF",
-        fontFamily: "cursive",
+        fontFamily: "",
       }}
     >
       <div class="container">

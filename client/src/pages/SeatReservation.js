@@ -8,11 +8,13 @@ import PlaneSelection from "../Components/PlanSelection.js";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faExclamationCircle } from "@fortawesome/free-solid-svg-icons";
 import { faCheckCircle, faSearch } from "@fortawesome/free-solid-svg-icons";
+import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 
 import { useHistory } from "react-router-dom";
 import seat from "../images/seat.png";
 import back from "../images/back.png";
 import top from "../images/top.png";
+import UserService from "../Services/UserService";
 
 const assert = require("assert");
 
@@ -22,6 +24,12 @@ const SeatReservation = (props) => {
   const [searchFlights, setSearchFlights] = useContext(UserHomeCtx);
   const [flight1seatSt, setflight1seatSt] = useState([]);
   const [flight2seatSt, setflight2seatSt] = useState([]);
+
+  // This page is not allowed for Guests. if its a Guest, redirect to summary page
+  if (UserService.isGuest()) {
+    history.push("/ReservationSummary");
+    return null; // make sure nothing redered
+  }
 
   console.log("search flight in seat reservation", searchFlights);
 
@@ -191,37 +199,55 @@ const SeatReservation = (props) => {
       <>
         <br />
         <br />
-        <Row>
-          <br />
-          <Link to="/SelectReturnFlights">
-            <img
-              style={{
-                marginLeft: "0.4cm",
-                float: "left",
-                height: "50px",
-                width: "50px",
-              }}
-              src={back}
-            />
-          </Link>
-        </Row>
+
+        <div 
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <h6>
+            {" "}
+            <Link to="/" style={{ color: "black", textDecoration: "none" }}>
+              Home Page
+            </Link>{" "}
+            <FontAwesomeIcon icon={faArrowRight} />
+            <Link
+              to="/SelectFlight"
+              style={{ color: "black", textDecoration: "none" }}
+            >
+              {" "}
+              Select Flight{" "}
+            </Link>
+            <FontAwesomeIcon icon={faArrowRight} />
+            <Link
+              to="/SelectReturnFlights"
+              style={{ color: "black", textDecoration: "none" }}
+            >
+              {" "}
+              Select Return Flight{" "}
+            </Link>
+            <FontAwesomeIcon icon={faArrowRight} />
+            <b>Select Seats</b>
+          </h6>
+        </div>
         <br />
-        <Row>
+        <Row >
           <Col>
             <h2 className="mx-5 mb-5 mt-3">
               Choose Your Seats{" "}
               <img style={{ height: "1cm", width: "1cm" }} src={seat} />{" "}
             </h2>
           </Col>
-        </Row>
+        </Row >
         <div
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "space-evenly",
-          }}
+         
         >
-          <div>
+          <Row>
+          <Col>
+          <div >
             <h3 className="mx-3 mb-4">
               From {flight1.flightDet.departureAirport} ✈{" "}
               {flight1.flightDet.arrivalAirport}
@@ -234,6 +260,9 @@ const SeatReservation = (props) => {
               checkedSeates={flight1seatSt}
             />
           </div>
+         </Col>
+          <Col>
+       
           <div>
             <h3 className="mx-3 mb-4">
               {" "}
@@ -248,6 +277,8 @@ const SeatReservation = (props) => {
               checkedSeates={flight2seatSt}
             />
           </div>
+          </Col>
+          </Row>
         </div>
         <div
           className="mx-3 mb-4"

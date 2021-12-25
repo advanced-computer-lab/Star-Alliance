@@ -4,15 +4,21 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { Link } from "react-router-dom";
 import { UserHomeCtx } from "../Context/UserHomeContext";
+import { UserCtx } from "../Context/GlobalContext";
 import back from "../images/back.png";
 import top from "../images/top.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faExclamationCircle } from "@fortawesome/free-solid-svg-icons";
 import { faCalendarAlt } from "@fortawesome/free-solid-svg-icons";
 import { useHistory } from "react-router-dom";
+import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
+import UserService from "../Services/UserService";
+import Button from "react-bootstrap/Button";
 
 const SelectReturnFlights = (props) => {
   const [searchFlights, setSearchFlights] = useContext(UserHomeCtx);
+  const [User, setUser] = useContext(UserCtx);
+
   let history = useHistory();
 
   //   const allData = props.location.state;
@@ -25,7 +31,7 @@ const SelectReturnFlights = (props) => {
       history.push("/");
     }, 5000);
     return (
-      <div >
+      <div>
         <Row>
           <br />
           <br />
@@ -44,25 +50,27 @@ const SelectReturnFlights = (props) => {
           </Link>
         </Row>
         <br />
-       <div style={{
+        <div
+          style={{
             display: "flex",
             flexDirection: "column",
             justifyContent: "center",
             alignItems: "center",
-          }}>
-        <h1 style={{ marginLeft: "0.4cm" }}>
-          {" "}
-          <FontAwesomeIcon
-            style={{ color: "red" }}
-            icon={faExclamationCircle}
-          />{" "}
-          No Available returning flights with this date {" "}
-          <FontAwesomeIcon icon={faCalendarAlt} /> 
-        </h1>
-        <label>
+          }}
+        >
+          <h1 style={{ marginLeft: "0.4cm" }}>
+            {" "}
+            <FontAwesomeIcon
+              style={{ color: "red" }}
+              icon={faExclamationCircle}
+            />{" "}
+            No Available returning flights with this date{" "}
+            <FontAwesomeIcon icon={faCalendarAlt} />
+          </h1>
+          <label>
             <i>Redirecting to Home in 5 seconds</i>
           </label>
-        <br />
+          <br />
         </div>
       </div>
     );
@@ -141,27 +149,40 @@ const SelectReturnFlights = (props) => {
         flight1seat: [],
         flight2seat: [],
         companions: searchFlights.selected.companions,
+        companionNames: searchFlights.selected.companionNames,
       };
       setSearchFlights({ ...searchFlights, selected });
+      console.log("selectretyrjun", searchFlights);
     };
     return (
       <div>
         <br />
         <br />
-        <Row>
-          <br />
-          <Link to="/SelectFlight">
-            <img
-              style={{
-                marginLeft: "0.4cm",
-                float: "left",
-                height: "50px",
-                width: "50px",
-              }}
-              src={back}
-            />
-          </Link>
-        </Row>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <h6>
+            {" "}
+            <Link to="/" style={{ color: "black", textDecoration: "none" }}>
+              Home Page
+            </Link>{" "}
+            <FontAwesomeIcon icon={faArrowRight} />
+            <Link
+              to="/SelectFlight"
+              style={{ color: "black", textDecoration: "none" }}
+            >
+              {" "}
+              Select Flight{" "}
+            </Link>
+            <FontAwesomeIcon icon={faArrowRight} /> <b>Select Return Flight</b>
+          </h6>
+        </div>
+        {/* <h3>Home Page --{">"} Select Going Flight --{">"} Select Returning Flight </h3> */}
         <br />
         {/*  <h1>{allData.flights[0].flightDet.flightNumber}</h1> */}
         <Row>
@@ -241,7 +262,13 @@ const SelectReturnFlights = (props) => {
                 </Col>
               </Row>
               <Col>
-                <Link to={{ pathname: "/SeatReservation", state: allData }}>
+                <Link
+                  to={
+                    UserService.isGuest()
+                      ? "/ReservationSummary"
+                      : "/SeatReservation"
+                  }
+                >
                   <a
                     style={{ float: "right" }}
                     class="btn btn-primary"

@@ -49,47 +49,47 @@ const home = () => {
 
   return (
     <div style={{ backgroundColor: "white" }}>
-      <div style={{ height: "10cm" }}>
-        <Carousel>
-          <Carousel.Item>
-            <img
-              className="d-block w-100"
-              style={{ height: "10cm" }}
-              src="https://media.istockphoto.com/photos/passenger-airplane-flying-above-clouds-during-sunset-picture-id155439315?b=1&k=20&m=155439315&s=170667a&w=0&h=N2BzlH2GYabhWN0LXZTqTkVODuTb8qDAESQYCPzIig8="
-              alt="First slide"
-            />
-            <Carousel.Caption>
-              <h3>Above All, We Care</h3>
-              <p></p>
-            </Carousel.Caption>
-          </Carousel.Item>
-          <Carousel.Item>
-            <img
-              className="d-block w-100"
-              style={{ height: "10cm" }}
-              src="https://media.istockphoto.com/photos/corporate-jet-picture-id1305805559?b=1&k=20&m=1305805559&s=170667a&w=0&h=PgS30I7bdCmaWZXC7tHeRjhAUFoiv7LDgeqJBpfVorw="
-              alt="Second slide"
-            />
+      <div style={{ height: "15cm" }}>
+      <Carousel>
+        <Carousel.Item>
+          <img
+            className="d-block w-100 "
+            style={{ height: "70vh" }}
+            src="https://images.unsplash.com/photo-1512465467056-c049f745d95b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1173&q=80"
+            alt="First slide"
+          />
+          <Carousel.Caption>
+            <h3>Above All, We Care</h3>
+            <p></p>
+          </Carousel.Caption>
+        </Carousel.Item>
+        <Carousel.Item>
+          <img
+            className="d-block w-100"
+            style={{ height: "70vh" }}
+            src="https://images.unsplash.com/photo-1524592714635-d77511a4834d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
+            alt="Second slide"
+          />
 
-            <Carousel.Caption>
-              <h3>Above All, We Care</h3>
-              <p></p>
-            </Carousel.Caption>
-          </Carousel.Item>
-          <Carousel.Item>
-            <img
-              className="d-block w-100"
-              style={{ height: "10cm" }}
-              src="https://images.unsplash.com/photo-1617408701769-c8a8706fd58f?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MzJ8fGFpcmxpbmV8ZW58MHx8MHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
-              alt="Third slide"
-            />
+          <Carousel.Caption>
+            <h3>Above All, We Care</h3>
+            <p></p>
+          </Carousel.Caption>
+        </Carousel.Item>
+        <Carousel.Item>
+          <img
+            className="d-block w-100"
+            style={{ height: "70vh" }}
+            src="https://images.unsplash.com/photo-1532364158125-02d75a0f7fb9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80"
+            alt="Third slide"
+          />
 
-            <Carousel.Caption>
-              <h3>Above All, We Care</h3>
-              <p></p>
-            </Carousel.Caption>
-          </Carousel.Item>
-        </Carousel>
+          <Carousel.Caption>
+            <h3>Above All, We Care</h3>
+            <p></p>
+          </Carousel.Caption>
+        </Carousel.Item>
+      </Carousel>
       </div>
 
       <br></br>

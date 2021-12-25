@@ -23,6 +23,9 @@ import moment from "moment";
 import { unstable_composeClasses } from "@mui/core";
 import { faCheckCircle, faSearch } from "@fortawesome/free-solid-svg-icons";
 import { faEdit } from "@fortawesome/free-solid-svg-icons";
+import { UserCtx } from "../Context/GlobalContext";
+import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
+import UserService from "../Services/UserService.js";
 
 const FlightCard = ({
   title,
@@ -148,6 +151,8 @@ const ReservationSummary = () => {
   let history = useHistory();
   const [searchFlights, setSearchFlights] = useContext(UserHomeCtx);
   const [loadingConfirm, setloadingConfirm] = useState(false);
+  const [User, setUser] = useContext(UserCtx);
+  console.log("nono", User);
 
   const [popupOpen, setpopupOpen] = useState(false);
   const [popupChild, setpopupChild] = useState(null);
@@ -218,89 +223,104 @@ const ReservationSummary = () => {
     // TODO: check if there is some passed values from the previous page [reservation]
     // TODO: else query reservstion data from params
     console.log("searchFlights in Resrvation summary", searchFlights);
-    const handleSubmitReservation = () => {
-	  const resp = window.confirm("Are you sure you want to Reserve?", "");
-	  if(!resp) return;
-      setloadingConfirm(true);
-      let data = {
-        userId: "61a35fcdfd33ed54997b5271", // TODO: new Reservation dynmaic user
-        flight1num: flight1.flightDet.flightNumber,
-        flight2num: flight2.flightDet.flightNumber,
-        seatType: searchFlights.data.seatType,
-        flight1seat: flight1seat,
-        flight2seat: flight2seat,
-        companions: searchFlights.selected.companions,
-      };
-      ReservationService.reserveNew(data)
-        .then((res) => {
-          console.log("res", res);
-          const bookingNumber = res.data.bookingNumber;
-          console.log("OK ===> ", res);
+    const handleClickk = () => {
+      //const { user, rememberMe } = this.state;
+      //localStorage.setItem('reservation', JSON.stringify(searchFlights));
+      //localStorage.setItem('user', rememberMe ? user : '');
 
-          setloadingConfirm(false);
-          popupCloseCBref.current = () => {
-            history.push("/"); // navigate home
-            // clear every selection the user made
-            setSearchFlights({ ...searchFlights, selected: {} });
-          };
-          setpopupChild(
-            <>
-              <h2>Your Flights has been Reserved</h2>
-              <h2> Booking Number:</h2>
-              <h2>{bookingNumber}</h2>
-            </>
-          );
-          setpopupOpen(true);
+  const data ={
+           items:[
+            { id: 1, quantity: 1,price: totalPrice*100 },
+          ]
+        }
+  
+    ReservationService.reservePayment(data)
+    .then(res  => {
+      console.log("payment id resss", res);
+      setSearchFlights({
+        ...searchFlights,
+        payment_intent:res.data.payment_intent,
+        toBeEdited:false,
+        selected: {
+          ...searchFlights.selected,
+          
+        },
+      });
+      console.log("ressssss",res);
+        //console.log(url);
+        //console.log("urllllllll is hereee",url);
 
-          // alert(
-          //   `Your Flights has been Reserved, Booking Number ${bookingNumber}`,
-          //   res
-          // );
-        })
-        .catch((err) => {
-          // alert("Error", err);
-          console.log("errr <===", err.response);
-          const errorMessage = err.response.data;
-          // console.log("errorMessage", errorMessage);
-          alert("Error: " + errorMessage);
-        });
-    };
+        console.log("payment Id sentttt",searchFlights);
+       // history.push(res.data.url);
+        window.location = res.data.url
+    }).catch(e => {
+        console.error(e.error);
+    })
+    
+  }
+    
 
     const handleEditClick = () => {
       setSearchFlights({
         ...searchFlights,
         selected: {
           ...searchFlights.selected,
-          flight1seat: [],
-          flight2seat: [],
+          toBeEdited:false
         },
       });
     };
 
     return (
       <>
-        {/* <Link to="/ReservationSelection">{"<< Get Back"}</Link> */}
-
+        <br />
+        <br />
         <div
           style={{
             height: "150vh",
             backgroundColor: "#f5f5f5",
           }}
         >
-          <Row>
-            <Link to="/SeatReservation">
-              <img
-                style={{
-                  marginTop: "1cm",
-                  marginLeft: "0.4cm",
-                  float: "left",
-                  height: "50px",
-                  width: "50px",
-                }}
-                src={back}
-              />
-            </Link>
-          </Row>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <h6>
+              {" "}
+              <Link to="/" style={{ color: "black", textDecoration: "none" }}>
+                Home Page
+              </Link>{" "}
+              <FontAwesomeIcon icon={faArrowRight} />
+              <Link
+                to="/SelectFlight"
+                style={{ color: "black", textDecoration: "none" }}
+              >
+                {" "}
+                Select Flight{" "}
+              </Link>
+              <FontAwesomeIcon icon={faArrowRight} />
+              <Link
+                to="/SelectReturnFlights"
+                style={{ color: "black", textDecoration: "none" }}
+              >
+                {" "}
+                Select Return Flight{" "}
+              </Link>
+              <FontAwesomeIcon icon={faArrowRight} />
+              <Link
+                to="/SeatReservation"
+                style={{ color: "black", textDecoration: "none" }}
+              >
+                {" "}
+                Select Seats
+                {UserService.isGuest() ? " (requires an Account) " : " "}
+              </Link>
+              <FontAwesomeIcon icon={faArrowRight} /> <b>Reservation Summary</b>
+            </h6>
+          </div>
           <br />
           <div className="col-md-6 offset-md-3">
             <h1 style={{ padding: "1rem 0 1rem" }}>Summary</h1>
@@ -353,6 +373,13 @@ const ReservationSummary = () => {
               />
             </Card>
 
+            {UserService.isGuest() && (
+              <label className="mb-3">
+                Please <Link to="/signin">login</Link> or{" "}
+                <Link to="/signup">create an account</Link> first, to continue
+                reserving your flights.
+              </label>
+            )}
             <Stack
               direction="row"
               justifyContent="flex-end"
@@ -365,23 +392,14 @@ const ReservationSummary = () => {
                   Edit <FontAwesomeIcon icon={faEdit} />
                 </Button>
               </LinkContainer>
-              <Button
-                onClick={handleSubmitReservation}
-                disabled={loadingConfirm}
+
+              <button
+                className="btn btn-primary mx-3"
+                onClick={handleClickk}
+                disabled={UserService.isGuest()}
               >
-                Confirm {"  "}
-                {loadingConfirm ? (
-                  <Spinner
-                    as="span"
-                    animation="border"
-                    size="sm"
-                    role="status"
-                    aria-hidden="true"
-                  />
-                ) : (
-                  <FontAwesomeIcon icon={faCheckCircle} />
-                )}
-              </Button>
+                Checkout <FontAwesomeIcon icon={faCheckCircle} />
+              </button>
             </Stack>
           </div>
 

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 
 /** UserCtx Type
   type {
@@ -7,8 +7,10 @@ import React, { useState } from "react";
     2 = Admin
   }
 */
-const UserCtxInit = {
+export const UserCtxInit = {
+  id: null,
   type: 0,
+  name: "",
 };
 
 const UserCtx = React.createContext();
@@ -16,10 +18,9 @@ export { UserCtx };
 
 const GlobalContext = ({ children }) => {
   const [user, setUser] = useState(UserCtxInit);
+  const value = useMemo(() => [user, setUser], [user, setUser]);
 
-  return (
-    <UserCtx.Provider value={[user, setUser]}>{children}</UserCtx.Provider>
-  );
+  return <UserCtx.Provider value={value}>{children}</UserCtx.Provider>;
 };
 
 export default GlobalContext;

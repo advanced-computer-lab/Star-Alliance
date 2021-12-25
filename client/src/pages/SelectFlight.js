@@ -8,7 +8,7 @@ import { json } from "body-parser";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faStickyNote } from "@fortawesome/free-solid-svg-icons";
+import { faArrowRight, faStickyNote } from "@fortawesome/free-solid-svg-icons";
 import back from "../images/back.png";
 import top from "../images/top.png";
 import { faExclamationCircle } from "@fortawesome/free-solid-svg-icons";
@@ -17,6 +17,7 @@ import { faMapMarkerAlt } from "@fortawesome/free-solid-svg-icons";
 
 const SelectFlight = () => {
   const [searchFlights, setSearchFlights] = useContext(UserHomeCtx);
+  console.log("selectflightpage",searchFlights)
   let history = useHistory();
 
   let flights = searchFlights.data.going;
@@ -29,7 +30,8 @@ const SelectFlight = () => {
         <Row>
           <br />
           <br />
-
+          <br />
+          <br />
           <Link to="/">
             <img
               style={{
@@ -73,6 +75,9 @@ const SelectFlight = () => {
     return (
       <div>
         <Row>
+          <br />
+          <br />
+          <br />
           <br />
           <br />
 
@@ -200,6 +205,7 @@ const SelectFlight = () => {
         flight1seat: [],
         flight2seat: [],
         companions: searchFlights.selected.companions,
+        companionNames:searchFlights.companionNames
       };
 
       setSearchFlights({
@@ -213,20 +219,21 @@ const SelectFlight = () => {
         <br />
         <br />
         {/* <h2> Reservation Summary {JSON.stringify(flights)}</h2>   */}
-        <Row>
-          <br />
-          <Link to="/">
-            <img
-              style={{
-                marginLeft: "0.4cm",
-                float: "left",
-                height: "50px",
-                width: "50px",
-              }}
-              src={back}
-            />
-          </Link>
-        </Row>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <h6>
+            <Link to="/" style={{ color: "black", textDecoration: "none" }}>
+              Home Page{" "}
+            </Link>
+            <FontAwesomeIcon icon={faArrowRight} /> <b>Select Going Flight</b>
+          </h6>
+        </div>
         <br />
         <Row>
           <Col>
@@ -251,7 +258,7 @@ const SelectFlight = () => {
           >
             <br />
 
-            <div className=" card-body">
+            <div className="card-body">
               <h4 class="card-title">
                 Flight Number: {flight.flightDet.flightNumber}{" "}
               </h4>
