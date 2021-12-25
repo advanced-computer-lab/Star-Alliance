@@ -395,7 +395,7 @@ const UserHomePage = () => {
             className="col-lg-12 col-md-12 col-sm-12  "
             id="ytplayer"
             // width="1050"
-            height="auto"
+            height="400vh"
             src="https://www.youtube.com/embed/HwM86WQ-0vY?autoplay=1&mute=1&playlist=HwM86WQ-0vY,msJ_JJB8q3s,k3KqP69xuPc&loop=1"
           ></iframe>
         </div>

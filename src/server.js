@@ -213,9 +213,9 @@ app.post("/GetRequestedFlights", async (req, res) => {
 
   console.log("testttttt", Flight.departureTime);
   console.log("testttt", Flight2.departureTime);
-
+  const typesm = type.toLowerCase();
   if (Flight.departureTime == undefined && Flight2.departureTime != undefined) {
-    const typesm = type.toLowerCase();
+    
  
     if (type == "Economy") {
       const checkAvailable = (result = await flight.find({
@@ -582,7 +582,6 @@ app.post("/GetRequestedFlights", async (req, res) => {
     Flight2.departureTime != undefined
   ) {
     if (new Date(req.body.departureTime) <= new Date(Flight2.departureTime)) {
-      const typesm = type.toLowerCase();
       if (type == "Economy") {
         checkAvailable = await flight.find({
           departureTime: { $gte: date1, $lt: date2 },

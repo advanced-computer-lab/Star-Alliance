@@ -334,13 +334,13 @@ const ReservationView = () => {
       {
         field: "departureAirport",
         headerName: "Departure Airport",
-        width:150,
+        width:100,
         //flex: 1,
       },
       {
         field: "arrivalAirport",
         headerName: "Arrival Airport",
-        width:150,
+        width:100,
         //flex: 1,
       },
       {

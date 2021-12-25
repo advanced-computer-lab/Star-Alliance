@@ -85,6 +85,8 @@ const CreateFlight = () => {
               type="datetime-local"
               name="departureTime"
               placeholder="Enter Departure Time"
+              defaultValue={moment(new Date()).format("yyyy-MM-DD")}
+              min={moment(new Date()).format("yyyy-MM-DD")}
             />
           </Form.Group>
           </Col>
@@ -96,11 +98,12 @@ const CreateFlight = () => {
               type="datetime-local"
               name="arrivalTime"
               placeholder="Enter Arrival Time"
+              defaultValue={moment(new Date()).format("yyyy-MM-DD")}
+              min={moment(new Date()).format("yyyy-MM-DD")}
             />
           </Form.Group>
           </Col>
           
-         
 
         </Row>
 
