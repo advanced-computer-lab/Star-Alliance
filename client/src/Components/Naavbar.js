@@ -106,18 +106,17 @@ const Naavbar = () => {
         variant="dark"
       >
         <Container>
-        {UserService.isUser() && (
-          <LinkContainer  to="/">
+          <LinkContainer to="/">
             <Navbar.Brand style={{ color: "#DBE2EF" }}>
               <img style={{ height: "2cm", width: "2cm" }} src={logo} />
               Star-Alliance
             </Navbar.Brand>
-          </LinkContainer>)}
+          </LinkContainer>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
-            {UserService.isUser() && (
-                <LinkContainer  to="/">
+              {UserService.isUser() && (
+                <LinkContainer to="/">
                   <Nav.Link style={{ color: "#DBE2EF" }}>
                     Book Flight ✈
                   </Nav.Link>
@@ -137,7 +136,7 @@ const Naavbar = () => {
                   </Nav.Link>
                 </LinkContainer>
               )}
-              
+
               {UserService.isUser() && (
                 <LinkContainer to="ViewChild">
                   <Nav.Link style={{ color: "#DBE2EF" }}>

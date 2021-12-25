@@ -10,7 +10,7 @@
     "installDep": "npm install && npm install --prefix Client",
     "react": "npm start --prefix client",
     "authserver": "nodemon src/authServer.js",
-    "dev": "concurrently \"npm run start\" \"npm run authserver\" \"npm run react\""
+    "dev": "concurrently \"npm run start\" \"npm run react\""
   },
   "engines": {
     "node": "14.15.0",
