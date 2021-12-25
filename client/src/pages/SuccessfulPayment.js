@@ -161,8 +161,8 @@ const SuccessfulPayment = () => {
             <br></br>
             <br></br>
             <Alert severity="success" className="col-8 offset-2">
-            <h1 className="col-s-6 offset-s-3">Successful Payment</h1>
-            <h2 className="col-s-6 offset-s-3">your Booking number: {bookingNumber}</h2>
+            <h1 className="col-xs-6 offset-xs-3">Successful Payment</h1>
+            <h2 className="col-xs-6 offset-xs-3">your Booking number: {bookingNumber}</h2>
             </Alert>
         </div>
     );

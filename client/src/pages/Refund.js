@@ -101,7 +101,7 @@ const Refund = () => {
             <br></br>
             <br></br>
             <Alert severity="success" className="col-6 offset-3">
-            <h1 >Payment Refunded Successfuly</h1>
+            <h1 className="col-xs-6 offset-xs-3">Payment Refunded Successfuly</h1>
             
             </Alert>
         </div>

@@ -100,7 +100,7 @@ const UpdateUserData = () => {
           borderRadius: "1rem",
           backgroundColor: "#112D4E",
           marginBottom: "15vh",
-          height: "50vh",
+         
         }}
       >
         <div className="col-lg-10 offset-lg-1 col-md-8 offset-md-2">
